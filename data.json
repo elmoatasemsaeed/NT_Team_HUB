@@ -423,7 +423,7 @@
       "workingIn": [
         "Iteration"
       ],
-      "custom_1766584922755": "رجب"
+      "custom_1766584922755": "Ø±Ø¬Ø¨"
     },
     {
       "isVacation": false,
@@ -799,15 +799,28 @@
       "role": "user"
     }
   ],
-  "design": {
-    "cardHeight": "80",
-    "titleFont": "9",
-    "valueFont": "12",
-    "chartHeight": "300",
-    "chartWidth": "100",
-    "chartLegendFont": "11",
-    "gridCols": "6",
-    "sectionCols": "2"
-  },
-  "timestamp": "2025-12-25T14:04:43.786Z"
+  "visibility": {},
+  "charts": [
+    {
+      "id": "c1",
+      "title": "Developers Distribution",
+      "targetField": "area",
+      "filterRoles": [
+        "Dev",
+        "Senior"
+      ],
+      "type": "doughnut"
+    },
+    {
+      "id": "c2",
+      "title": "Testers Distribution",
+      "targetField": "area",
+      "filterRoles": [
+        "Tester",
+        "Senior tester"
+      ],
+      "type": "doughnut"
+    }
+  ],
+  "timestamp": "2025-12-25T15:33:27.673Z"
 }
