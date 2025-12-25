@@ -161,6 +161,21 @@
         </div>
     </div>
 
+    <div id="usersModal" class="fixed inset-0 z-[1100] bg-black/50 hidden flex items-center justify-center p-4">
+        <div class="bg-white large-modal p-8 shadow-2xl max-w-4xl">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-800 uppercase">User Management</h3>
+                <button onclick="closeUsersModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button>
+            </div>
+            <div id="usersList" class="space-y-3 mb-6 max-h-[50vh] overflow-y-auto pr-2">
+                </div>
+            <div class="flex flex-col md:flex-row gap-4">
+                <button onclick="addNewUser()" class="flex-1 py-3 bg-emerald-600 text-white rounded-xl font-bold uppercase">+ ADD NEW USER</button>
+                <button onclick="saveUsers()" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold uppercase">SAVE USERS</button>
+            </div>
+        </div>
+    </div>
+
     <div id="chartsSetupModal" class="fixed inset-0 z-[1100] bg-black/50 hidden flex items-center justify-center p-4">
         <div class="bg-white large-modal p-8 shadow-2xl max-w-4xl">
             <div class="flex justify-between items-center mb-6"><h3 class="text-2xl font-bold text-gray-800 uppercase">Charts Configuration</h3><button onclick="closeChartsSetupModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button></div>
@@ -189,10 +204,6 @@
         <div class="bg-white large-modal p-8 shadow-2xl"><div class="flex justify-between items-center mb-6"><h3 class="text-2xl font-bold text-gray-800 uppercase">Fields Setup</h3><button onclick="closeSetupModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button></div><div id="fieldsList" class="space-y-3 mb-6 max-h-[50vh] overflow-y-auto pr-2"></div><div class="flex flex-col md:flex-row gap-4"><button onclick="addNewFieldSetup()" class="flex-1 py-3 bg-emerald-600 text-white rounded-xl font-bold uppercase">+ ADD NEW FIELD</button><button onclick="saveSetup()" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold uppercase">SAVE & RELOAD</button></div></div>
     </div>
 
-    <div id="usersModal" class="fixed inset-0 z-[1100] bg-black/50 hidden flex items-center justify-center p-4">
-        <div class="bg-white large-modal p-8 shadow-2xl max-w-3xl"><div class="flex justify-between items-center mb-6"><h3 class="text-2xl font-bold text-gray-800 uppercase">User Management</h3><button onclick="closeUsersModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button></div><div id="usersList" class="space-y-3 mb-6 max-h-[50vh] overflow-y-auto pr-2"></div><div class="flex flex-col md:flex-row gap-4"><button onclick="addNewUser()" class="flex-1 py-3 bg-emerald-600 text-white rounded-xl font-bold uppercase">+ ADD NEW USER</button><button onclick="saveUsers()" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold uppercase">SAVE USERS</button></div></div>
-    </div>
-
     <div id="githubSettingsModal" class="fixed inset-0 z-[1200] bg-black/50 hidden flex items-center justify-center p-4">
         <div class="bg-white large-modal max-w-lg p-8 shadow-2xl"><div class="flex justify-between items-center mb-6 border-b pb-4"><h3 class="text-xl font-bold text-gray-800 uppercase flex items-center gap-2"><i data-lucide="github"></i> GitHub Config</h3><button onclick="closeGithubSettingsModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button></div><div class="space-y-4"><div><label class="block text-xs font-bold text-gray-500 mb-1 uppercase">Repo Path (User/Repo)</label><input type="text" id="gh_repoPath" class="w-full p-3 border rounded-xl outline-none"></div><div><label class="block text-xs font-bold text-gray-500 mb-1 uppercase">Branch</label><input type="text" id="gh_branch" class="w-full p-3 border rounded-xl outline-none"></div><div><label class="block text-xs font-bold text-gray-500 mb-1 uppercase">File Path</label><input type="text" id="gh_filePath" class="w-full p-3 border rounded-xl outline-none"></div><div><label class="block text-xs font-bold text-gray-500 mb-1 uppercase">Token (PAT)</label><input type="password" id="gh_token" class="w-full p-3 border rounded-xl outline-none"></div><div class="pt-4"><button onclick="saveGithubSettings()" class="w-full py-3 bg-gray-800 text-white rounded-xl font-bold uppercase">Save Config</button></div></div></div>
     </div>
@@ -213,7 +224,6 @@
         const VISIBILITY_KEY = 'team_hub_visibility_config';
         const CHARTS_KEY = 'team_hub_charts_config';
         const GITHUB_LOCAL_KEY = 'team_hub_github_creds';
-        const REMEMBER_ME_KEY = 'team_hub_remember_credentials';
 
         let fieldsConfig = [
             { id: 'name', label: 'Full Name', type: 'text', required: true, showInTable: true },
@@ -308,7 +318,6 @@
             const AREAS = (areaField && areaField.options) ? areaField.options.filter(a => a !== "Team Leader") : [];
             const isVisible = (area, type) => (!visibilityConfig[area] || visibilityConfig[area][type]);
 
-            // Render Grids
             document.getElementById('devCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'dev')).map(area => {
                 const devs = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && e.role==='Dev' && !e.isVacation).length;
                 const seniors = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && e.role==='Senior' && !e.isVacation).length;
@@ -332,7 +341,6 @@
             document.getElementById('devTotalLabel').innerText = "Total: " + employees.filter(e => ['Dev','Senior'].includes(e.role) && !e.isVacation).length;
             document.getElementById('testerTotalLabel').innerText = "Total: " + employees.filter(e => ['Tester','Senior tester'].includes(e.role) && !e.isVacation).length;
 
-            // Render Dynamic Charts
             const chartsGrid = document.getElementById('dynamicChartsGrid');
             chartsGrid.innerHTML = '';
             activeCharts.forEach(c => c.destroy());
@@ -359,7 +367,66 @@
             });
         }
 
-        // Charts Setup Logic
+        // --- User Management Logic (MODIFIED) ---
+        function openUsersModal() {
+            const listContainer = document.getElementById('usersList');
+            listContainer.innerHTML = users.map((u, idx) => `
+                <div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-4 gap-3 items-end shadow-sm">
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase">Username</label>
+                        <input type="text" value="${u.username}" onchange="updateUserField(${idx}, 'username', this.value)" class="w-full p-2 border rounded text-sm focus:ring-1 focus:ring-blue-400 outline-none">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase">Password</label>
+                        <input type="text" value="${u.password}" onchange="updateUserField(${idx}, 'password', this.value)" class="w-full p-2 border rounded text-sm focus:ring-1 focus:ring-blue-400 outline-none">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase">Role</label>
+                        <select onchange="updateUserField(${idx}, 'role', this.value)" class="w-full p-2 border rounded text-sm focus:ring-1 focus:ring-blue-400 outline-none">
+                            <option value="admin" ${u.role === 'admin' ? 'selected' : ''}>Admin</option>
+                            <option value="viewer" ${u.role === 'viewer' ? 'selected' : ''}>Viewer</option>
+                        </select>
+                    </div>
+                    <div class="flex justify-center">
+                        <button onclick="deleteUser(${idx})" class="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors" title="Delete User">
+                            <i data-lucide="trash-2" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('usersModal').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function updateUserField(idx, field, value) {
+            users[idx][field] = value;
+        }
+
+        function addNewUser() {
+            users.push({ username: 'new_user', password: '123', role: 'viewer' });
+            openUsersModal();
+        }
+
+        function deleteUser(idx) {
+            if (users.length === 1) return alert("System must have at least one user!");
+            if (confirm(`Delete user "${users[idx].username}"?`)) {
+                users.splice(idx, 1);
+                openUsersModal();
+            }
+        }
+
+        function saveUsers() {
+            localStorage.setItem(USERS_KEY, JSON.stringify(users));
+            syncToGitHub();
+            alert("Users saved successfully!");
+            closeUsersModal();
+        }
+
+        function closeUsersModal() {
+            document.getElementById('usersModal').classList.add('hidden');
+        }
+        // --- End User Management ---
+
         function openChartsSetupModal() {
             document.getElementById('chartsConfigList').innerHTML = chartsConfig.map((c, idx) => `
                 <div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-4 gap-3 items-end shadow-sm">
@@ -376,7 +443,6 @@
         function saveChartsConfig() { localStorage.setItem(CHARTS_KEY, JSON.stringify(chartsConfig)); syncToGitHub(); updateCapacity(); closeChartsSetupModal(); }
         function closeChartsSetupModal() { document.getElementById('chartsSetupModal').classList.add('hidden'); }
 
-        // Core Functions
         function renderTable() {
             const visibleFields = fieldsConfig.filter(f => f.showInTable !== false);
             document.getElementById('tableHeaderRow').innerHTML = visibleFields.map(f => `<th class="py-4 px-6 min-w-[150px]"><div class="sort-btn">${f.label}</div><input type="text" placeholder="Filter..." class="filter-input no-print" onkeyup="filterTable()"></th>`).join('') + `<th class="py-4 px-6 text-center">Vacation</th><th class="py-4 px-6">Status</th><th class="py-4 px-6 admin-cell no-print">Actions</th>`;
@@ -437,7 +503,6 @@
             save(); closeModal();
         };
 
-        // Visibility & Setup Helpers
         function openVisibilityModal() {
             const areas = fieldsConfig.find(f=>f.id==='area').options.filter(a=>a!=="Team Leader");
             document.getElementById('visibilityList').innerHTML = areas.map(a => {
@@ -470,11 +535,8 @@
         function saveSetup() { localStorage.setItem(SETUP_KEY, JSON.stringify(fieldsConfig)); syncToGitHub().then(()=>location.reload()); }
         function closeSetupModal() { document.getElementById('setupModal').classList.add('hidden'); }
 
-        // General Helpers
         function openModal() { document.getElementById('modal').classList.remove('hidden'); }
         function closeModal() { document.getElementById('modal').classList.add('hidden'); document.getElementById('employeeForm').reset(); document.getElementById('editIndex').value=""; }
-        function openUsersModal() { document.getElementById('usersModal').classList.remove('hidden'); }
-        function closeUsersModal() { document.getElementById('usersModal').classList.add('hidden'); }
         function openGithubSettingsModal() { document.getElementById('githubSettingsModal').classList.remove('hidden'); }
         function closeGithubSettingsModal() { document.getElementById('githubSettingsModal').classList.add('hidden'); }
         function saveGithubSettings() {
