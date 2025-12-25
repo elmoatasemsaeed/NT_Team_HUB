@@ -360,7 +360,7 @@
     </div>
 
 <script>
-    // --- إعدادات GitHub المباشرة ---
+    // --- إعدادات GitHub المدمجة ---
     const githubConfig = {
         repoUrl: 'https://github.com/elmoatasemsaeed/NT_Team_HUB',
         branch: 'main',
@@ -369,20 +369,25 @@
         fileSha: null
     };
 
+    // المفاتيح المحلية (كاحتياطي)
     const STORAGE_KEY = 'team_resource_db_v10';
     const SETUP_KEY = 'fields_setup_config';
     const USERS_KEY = 'team_hub_users';
     const DESIGN_KEY = 'team_hub_design_v1';
+    const BACKUP_SETTINGS_KEY = 'team_hub_backup_settings';
     const REMEMBER_ME_KEY = 'team_hub_remember_credentials';
 
+    // المتغيرات العامة
     let fieldsConfig = [];
     let employees = [];
     let users = [];
-    let designSettings = {};
+    let designSettings = { cardHeight: 80, gridCols: 6, sectionCols: 2, titleFont: 9, valueFont: 12 };
+    let backupSettings = { fileName: 'team_hub_backup' };
     let currentUserRole = null;
     let devChart = null, testerChart = null;
 
-    // --- وظائف المزامنة مع GitHub ---
+    // --- وظائف GitHub ---
+
     async function loadFromGitHub() {
         try {
             const repoPath = githubConfig.repoUrl.replace('https://github.com/', '').replace(/\/$/, '');
@@ -400,18 +405,19 @@
                 employees = content.employees || [];
                 fieldsConfig = content.fields || [];
                 users = content.users || [];
-                designSettings = content.design || {};
+                designSettings = content.design || designSettings;
                 
                 return true;
             }
             return false;
         } catch (err) {
-            console.error("GitHub Load Error:", err);
+            console.error("Load Error:", err);
             return false;
         }
     }
 
     async function syncToGitHub() {
+        if (!githubConfig.token) return;
         const fullData = { employees, fields: fieldsConfig, users, design: designSettings, lastUpdate: new Date().toISOString() };
         const repoPath = githubConfig.repoUrl.replace('https://github.com/', '').replace(/\/$/, '');
         const apiUrl = `https://api.github.com/repos/${repoPath}/contents/${githubConfig.filePath}`;
@@ -433,6 +439,7 @@
             if (response.ok) {
                 const resData = await response.json();
                 githubConfig.fileSha = resData.content.sha;
+                console.log("GitHub Synced Successfully");
             }
         } catch (err) { console.error("Sync Error:", err); }
     }
@@ -443,44 +450,57 @@
         if (render) renderAll();
     }
 
-    // --- نظام التنقل بين الصفحات (إصلاح الصفحات المختفية) ---
+    // --- نظام التنقل (إصلاح الصفحات المختفية) ---
     function showPage(pageId) {
         document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
         document.getElementById(pageId).classList.remove('hidden');
-        document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('bg-blue-50', 'text-blue-600', 'border-b-2', 'border-blue-600'));
+        
+        document.querySelectorAll('nav button').forEach(btn => {
+            btn.classList.remove('bg-blue-50', 'text-blue-600', 'border-b-2', 'border-blue-600');
+        });
         
         const activeBtn = document.querySelector(`nav button[onclick*="${pageId}"]`);
-        if(activeBtn) activeBtn.classList.add('bg-blue-50', 'text-blue-600', 'border-b-2', 'border-blue-600');
+        if (activeBtn) activeBtn.classList.add('bg-blue-50', 'text-blue-600', 'border-b-2', 'border-blue-600');
 
-        if (pageId === 'chartsPage') setTimeout(renderCharts, 100);
+        if (pageId === 'chartsPage') setTimeout(renderCharts, 200);
+        if (pageId === 'designPage') loadDesignInputs();
     }
 
     // --- تسجيل الدخول ---
     async function checkLogin() {
         const userVal = document.getElementById('userInput').value.trim();
         const passVal = document.getElementById('passInput').value;
+        const rememberMe = document.getElementById('rememberMe').checked;
         
-        // جلب البيانات أولاً للتأكد من المستخدمين
-        const loadingBtn = document.querySelector('#loginOverlay button');
-        loadingBtn.innerText = "Connecting...";
-        await loadFromGitHub();
+        const btn = document.querySelector('#loginOverlay button');
+        btn.innerText = "Connecting...";
+        
+        const loaded = await loadFromGitHub();
+        if (!loaded) {
+            alert("Could not connect to GitHub. Please check internet/token.");
+            btn.innerText = "Sign In";
+            return;
+        }
 
         const foundUser = users.find(u => u.username === userVal && u.password === passVal);
         
         if (foundUser) {
+            if (rememberMe) localStorage.setItem(REMEMBER_ME_KEY, JSON.stringify({u: userVal, p: passVal}));
             currentUserRole = foundUser.role;
             document.body.setAttribute('data-user-role', currentUserRole);
             document.getElementById('loginOverlay').style.display = 'none';
             document.getElementById('mainContent').classList.remove('hidden');
             document.getElementById('displayRole').innerText = `${foundUser.username} (${foundUser.role})`;
+            
+            applyDesign();
             renderAll();
         } else {
             document.getElementById('loginError').classList.remove('hidden');
-            loadingBtn.innerText = "Sign In";
+            btn.innerText = "Sign In";
         }
     }
 
-    // --- الرسم والعرض ---
+    // --- وظائف العرض والرسم ---
     function renderAll() {
         renderTable();
         updateCapacity();
@@ -493,7 +513,9 @@
         const searchTerm = document.getElementById('searchInput').value.toLowerCase();
         tbody.innerHTML = '';
 
-        employees.filter(emp => emp.name.toLowerCase().includes(searchTerm)).forEach((emp, index) => {
+        const filtered = employees.filter(emp => emp.name.toLowerCase().includes(searchTerm));
+
+        filtered.forEach((emp, index) => {
             const tr = document.createElement('tr');
             tr.className = "hover:bg-gray-50 border-b";
             if (emp.isVacation) tr.classList.add('bg-red-50');
@@ -510,8 +532,8 @@
             tr.innerHTML = `
                 ${cells}
                 <td class="p-3 text-right">
-                    <button onclick="editEmployee(${index})" class="p-1 text-blue-600 hover:bg-blue-50 rounded"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
-                    <button onclick="deleteEmployee(${index})" class="p-1 text-red-600 hover:bg-red-50 rounded admin-only"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                    <button onclick="editEmployee(${employees.indexOf(emp)})" class="p-1 text-blue-600 hover:bg-blue-50 rounded"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
+                    <button onclick="deleteEmployee(${employees.indexOf(emp)})" class="p-1 text-red-600 hover:bg-red-50 rounded admin-only"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                 </td>
             `;
             tbody.appendChild(tr);
@@ -521,10 +543,8 @@
 
     function updateCapacity() {
         const total = employees.length;
-        const onVacation = employees.filter(e => e.isVacation).length;
-        const active = total - onVacation;
+        const active = employees.filter(e => !e.isVacation).length;
         const percent = total > 0 ? Math.round((active/total)*100) : 0;
-
         document.getElementById('activeCount').innerText = active;
         document.getElementById('totalCount').innerText = total;
         document.getElementById('capacityPercent').innerText = percent + '%';
@@ -533,24 +553,18 @@
 
     function renderSummaryCards() {
         const container = document.getElementById('summaryCards');
-        if(!container) return;
+        if (!container) return;
         container.innerHTML = '';
-        
         const counts = {};
-        employees.forEach(emp => {
-            const area = Array.isArray(emp.area) ? emp.area[0] : emp.area;
-            counts[area] = (counts[area] || 0) + 1;
+        employees.forEach(e => {
+            const val = Array.isArray(e.area) ? e.area[0] : e.area;
+            counts[val] = (counts[val] || 0) + 1;
         });
-
-        Object.entries(counts).forEach(([area, count]) => {
-            const div = document.createElement('div');
-            div.className = "google-card p-4";
-            div.innerHTML = `<div class="text-sm text-gray-500">${area || 'Other'}</div><div class="text-2xl font-bold text-blue-600">${count}</div>`;
-            container.appendChild(div);
+        Object.entries(counts).forEach(([k, v]) => {
+            container.innerHTML += `<div class="google-card p-4"><div class="text-xs text-gray-500 uppercase font-bold">${k || 'N/A'}</div><div class="text-2xl font-bold text-blue-600">${v}</div></div>`;
         });
     }
 
-    // --- إحصائيات الرسوم البيانية ---
     function renderCharts() {
         const ctxDev = document.getElementById('devChart')?.getContext('2d');
         const ctxTester = document.getElementById('testerChart')?.getContext('2d');
@@ -559,48 +573,45 @@
         if (devChart) devChart.destroy();
         if (testerChart) testerChart.destroy();
 
-        const dataByRole = (roleName) => {
+        const getChartData = (role) => {
             const counts = {};
-            employees.filter(e => e.role === roleName).forEach(e => {
+            employees.filter(e => e.role === role).forEach(e => {
                 const area = Array.isArray(e.area) ? e.area[0] : e.area;
                 counts[area] = (counts[area] || 0) + 1;
             });
             return { labels: Object.keys(counts), data: Object.values(counts) };
         };
 
-        const devs = dataByRole('Dev');
+        const devs = getChartData('Dev');
         devChart = new Chart(ctxDev, {
             type: 'bar',
-            data: { labels: devs.labels, datasets: [{ label: 'Developers', data: devs.data, backgroundColor: '#4285f4' }] }
+            data: { labels: devs.labels, datasets: [{ label: 'Devs per Area', data: devs.data, backgroundColor: '#4285f4' }] },
+            options: { maintainAspectRatio: false }
         });
 
-        const testers = dataByRole('Tester');
+        const testers = getChartData('Tester');
         testerChart = new Chart(ctxTester, {
             type: 'bar',
-            data: { labels: testers.labels, datasets: [{ label: 'Testers', data: testers.data, backgroundColor: '#34a853' }] }
+            data: { labels: testers.labels, datasets: [{ label: 'Testers per Area', data: testers.data, backgroundColor: '#34a853' }] },
+            options: { maintainAspectRatio: false }
         });
     }
 
-    // --- وظائف الإدارة (Add/Edit/Delete) ---
-    async function addEmployee() {
-        const newEmp = { id: Date.now(), name: 'New Employee', isVacation: false };
-        fieldsConfig.forEach(f => newEmp[f.id] = f.type === 'select' ? f.options[0] : '');
-        employees.push(newEmp);
-        await save();
-        editEmployee(employees.length - 1);
-    }
-
+    // --- إدارة الموظفين ---
     function editEmployee(index) {
         const emp = employees[index];
         const container = document.getElementById('editFieldsContainer');
         container.innerHTML = `<input type="hidden" id="editEmployeeId" value="${emp.id}">`;
 
         fieldsConfig.forEach(f => {
-            const val = emp[f.id] || '';
+            const val = emp[f.id] || (f.type === 'multiselect' ? [] : '');
             let html = `<div class="mb-4"><label class="block text-sm font-medium mb-1">${f.label}</label>`;
             if (f.type === 'select' || f.type === 'multiselect') {
                 html += `<select id="edit_${f.id}" class="w-full p-2 border rounded" ${f.type==='multiselect'?'multiple':''}>`;
-                f.options.forEach(opt => html += `<option value="${opt}" ${val===opt || (Array.isArray(val)&&val.includes(opt))?'selected':''}>${opt}</option>`);
+                f.options.forEach(opt => {
+                    const selected = Array.isArray(val) ? val.includes(opt) : val === opt;
+                    html += `<option value="${opt}" ${selected?'selected':''}>${opt}</option>`;
+                });
                 html += `</select>`;
             } else {
                 html += `<input type="${f.type}" id="edit_${f.id}" value="${val}" class="w-full p-2 border rounded">`;
@@ -609,7 +620,6 @@
             container.insertAdjacentHTML('beforeend', html);
         });
 
-        // إضافة حقل الإجازة
         container.insertAdjacentHTML('beforeend', `
             <div class="flex items-center gap-2 mb-4">
                 <input type="checkbox" id="edit_isVacation" ${emp.isVacation?'checked':''}>
@@ -638,8 +648,16 @@
         }
     }
 
+    async function addEmployee() {
+        const newEmp = { id: Date.now(), name: 'New Employee', isVacation: false };
+        fieldsConfig.forEach(f => newEmp[f.id] = f.type === 'multiselect' ? [] : (f.options ? f.options[0] : ''));
+        employees.push(newEmp);
+        await save();
+        editEmployee(employees.length - 1);
+    }
+
     async function deleteEmployee(index) {
-        if (confirm('Delete this employee?')) {
+        if (confirm("Delete this employee?")) {
             employees.splice(index, 1);
             await save();
         }
@@ -650,10 +668,31 @@
         const list = document.getElementById('fieldsList');
         list.innerHTML = '';
         fieldsConfig.forEach((f, i) => {
-            list.innerHTML += `<div class="flex justify-between p-2 border-b"><span>${f.label} (${f.type})</span>
-            <button onclick="removeField(${i})" class="text-red-500">Remove</button></div>`;
+            list.innerHTML += `<div class="flex justify-between items-center p-2 border-b bg-gray-50 mb-1">
+                <span>${f.label} (${f.type})</span>
+                <button onclick="removeField(${i})" class="text-red-500 hover:text-red-700"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+            </div>`;
         });
         document.getElementById('fieldsSetupModal').classList.remove('hidden');
+        lucide.createIcons();
+    }
+
+    async function addField() {
+        const label = document.getElementById('newFieldLabel').value;
+        const type = document.getElementById('newFieldType').value;
+        if (!label) return;
+        fieldsConfig.push({ id: 'custom_' + Date.now(), label, type, options: [], showInTable: true });
+        document.getElementById('newFieldLabel').value = '';
+        await save();
+        openFieldsSetupModal();
+    }
+
+    async function removeField(index) {
+        if(confirm("Remove this field? Data in this field will be lost.")) {
+            fieldsConfig.splice(index, 1);
+            await save();
+            openFieldsSetupModal();
+        }
     }
 
     function openUsersModal() {
@@ -661,15 +700,31 @@
         list.innerHTML = '';
         users.forEach((u, i) => {
             list.innerHTML += `<div class="grid grid-cols-3 gap-2 mb-2">
-                <input value="${u.username}" onchange="users[${i}].username=this.value" class="p-1 border">
-                <input value="${u.password}" onchange="users[${i}].password=this.value" class="p-1 border">
-                <select onchange="users[${i}].role=this.value" class="p-1 border">
+                <input value="${u.username}" onchange="users[${i}].username=this.value" class="p-2 border rounded text-sm">
+                <input value="${u.password}" onchange="users[${i}].password=this.value" class="p-2 border rounded text-sm">
+                <select onchange="users[${i}].role=this.value" class="p-2 border rounded text-sm">
                     <option value="admin" ${u.role==='admin'?'selected':''}>Admin</option>
                     <option value="user" ${u.role==='user'?'selected':''}>User</option>
                 </select>
             </div>`;
         });
         document.getElementById('usersModal').classList.remove('hidden');
+    }
+
+    async function saveUsers() {
+        await save();
+        alert("Users Saved to GitHub");
+        document.getElementById('usersModal').classList.add('hidden');
+    }
+
+    // --- التصميم والاحتياطي ---
+    function applyDesign() {
+        const root = document.documentElement;
+        // هنا يمكنك إضافة منطق تطبيق الألوان والخطوط من designSettings
+    }
+
+    function loadDesignInputs() {
+        // تعبئة المدخلات في صفحة التصميم بناءً على designSettings
     }
 
     // --- تشغيل عند التحميل ---
@@ -680,12 +735,13 @@
             document.getElementById('userInput').value = u;
             document.getElementById('passInput').value = p;
         }
+        lucide.createIcons();
     };
 
-    function closeGitHubSetupModal() { document.getElementById('githubSetupModal').classList.add('hidden'); }
+    // دوال الإغلاق
+    function closeEmployeeModal() { document.getElementById('employeeModal').classList.add('hidden'); }
     function closeFieldsSetupModal() { document.getElementById('fieldsSetupModal').classList.add('hidden'); }
     function closeUsersModal() { document.getElementById('usersModal').classList.add('hidden'); }
-    function closeEmployeeModal() { document.getElementById('employeeModal').classList.add('hidden'); }
 
 </script>
 </body>
