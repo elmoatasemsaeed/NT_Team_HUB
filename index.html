@@ -360,37 +360,33 @@
     </div>
 
 <script>
-    // --- إعدادات GitHub المدمجة ---
+    // --- إعدادات GitHub المباشرة ---
     const githubConfig = {
         repoUrl: 'https://github.com/elmoatasemsaeed/NT_Team_HUB',
         branch: 'main',
         filePath: 'data.json',
-        token: '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',
+        token: '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', // التوكن الجديد
         fileSha: null
     };
 
-    // المفاتيح المحلية (كاحتياطي)
     const STORAGE_KEY = 'team_resource_db_v10';
     const SETUP_KEY = 'fields_setup_config';
     const USERS_KEY = 'team_hub_users';
     const DESIGN_KEY = 'team_hub_design_v1';
-    const BACKUP_SETTINGS_KEY = 'team_hub_backup_settings';
     const REMEMBER_ME_KEY = 'team_hub_remember_credentials';
 
-    // المتغيرات العامة
     let fieldsConfig = [];
     let employees = [];
     let users = [];
     let designSettings = { cardHeight: 80, gridCols: 6, sectionCols: 2, titleFont: 9, valueFont: 12 };
-    let backupSettings = { fileName: 'team_hub_backup' };
     let currentUserRole = null;
     let devChart = null, testerChart = null;
 
-    // --- وظائف GitHub ---
-
+    // --- وظائف المزامنة مع GitHub ---
     async function loadFromGitHub() {
         try {
             const repoPath = githubConfig.repoUrl.replace('https://github.com/', '').replace(/\/$/, '');
+            // إضافة Timestamp لمنع الكاش وجلب أحدث بيانات
             const apiUrl = `https://api.github.com/repos/${repoPath}/contents/${githubConfig.filePath}?ref=${githubConfig.branch}&t=${Date.now()}`;
             
             const response = await fetch(apiUrl, {
@@ -408,10 +404,12 @@
                 designSettings = content.design || designSettings;
                 
                 return true;
+            } else {
+                console.error("GitHub Response Error:", response.status);
+                return false;
             }
-            return false;
         } catch (err) {
-            console.error("Load Error:", err);
+            console.error("Connection Error:", err);
             return false;
         }
     }
@@ -439,7 +437,7 @@
             if (response.ok) {
                 const resData = await response.json();
                 githubConfig.fileSha = resData.content.sha;
-                console.log("GitHub Synced Successfully");
+                console.log("Synced to GitHub.");
             }
         } catch (err) { console.error("Sync Error:", err); }
     }
@@ -450,7 +448,46 @@
         if (render) renderAll();
     }
 
-    // --- نظام التنقل (إصلاح الصفحات المختفية) ---
+    // --- تسجيل الدخول (مع وضع الطوارئ) ---
+    async function checkLogin() {
+        const userVal = document.getElementById('userInput').value.trim();
+        const passVal = document.getElementById('passInput').value;
+        const rememberMe = document.getElementById('rememberMe').checked;
+        
+        const btn = document.querySelector('#loginOverlay button');
+        const originalText = btn.innerText;
+        btn.innerText = "Connecting...";
+        btn.disabled = true;
+
+        // محاولة جلب البيانات
+        const loaded = await loadFromGitHub();
+
+        // منطق الدخول: إما من البيانات المجلوبة أو "دخول طوارئ" ببيانات ثابتة
+        const isEmergencyAdmin = (userVal === 'admin' && passVal === '100300311');
+        const foundInDb = users.find(u => u.username === userVal && u.password === passVal);
+
+        if (isEmergencyAdmin || foundInDb) {
+            if (rememberMe) localStorage.setItem(REMEMBER_ME_KEY, JSON.stringify({u: userVal, p: passVal}));
+            
+            currentUserRole = foundInDb ? foundInDb.role : 'admin';
+            document.body.setAttribute('data-user-role', currentUserRole);
+            document.getElementById('loginOverlay').style.display = 'none';
+            document.getElementById('mainContent').classList.remove('hidden');
+            document.getElementById('displayRole').innerText = `${userVal} (${currentUserRole})`;
+            
+            if (!loaded) {
+                alert("تنبيه: تم الدخول بوضع الطوارئ (GitHub Offline). التعديلات قد لا تُحفظ على السيرفر.");
+            }
+            
+            renderAll();
+        } else {
+            document.getElementById('loginError').classList.remove('hidden');
+            btn.innerText = originalText;
+            btn.disabled = false;
+        }
+    }
+
+    // --- نظام التنقل بين التبويبات ---
     function showPage(pageId) {
         document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
         document.getElementById(pageId).classList.remove('hidden');
@@ -463,45 +500,9 @@
         if (activeBtn) activeBtn.classList.add('bg-blue-50', 'text-blue-600', 'border-b-2', 'border-blue-600');
 
         if (pageId === 'chartsPage') setTimeout(renderCharts, 200);
-        if (pageId === 'designPage') loadDesignInputs();
     }
 
-    // --- تسجيل الدخول ---
-    async function checkLogin() {
-if (userVal === 'admin' && passVal === '100300311') { currentUserRole = 'admin'; document.getElementById('loginOverlay').style.display = 'none'; document.getElementById('mainContent').classList.remove('hidden'); return; }
-        const userVal = document.getElementById('userInput').value.trim();
-        const passVal = document.getElementById('passInput').value;
-        const rememberMe = document.getElementById('rememberMe').checked;
-        
-        const btn = document.querySelector('#loginOverlay button');
-        btn.innerText = "Connecting...";
-        
-        const loaded = await loadFromGitHub();
-        if (!loaded) {
-            alert("Could not connect to GitHub. Please check internet/token.");
-            btn.innerText = "Sign In";
-            return;
-        }
-
-        const foundUser = users.find(u => u.username === userVal && u.password === passVal);
-        
-        if (foundUser) {
-            if (rememberMe) localStorage.setItem(REMEMBER_ME_KEY, JSON.stringify({u: userVal, p: passVal}));
-            currentUserRole = foundUser.role;
-            document.body.setAttribute('data-user-role', currentUserRole);
-            document.getElementById('loginOverlay').style.display = 'none';
-            document.getElementById('mainContent').classList.remove('hidden');
-            document.getElementById('displayRole').innerText = `${foundUser.username} (${foundUser.role})`;
-            
-            applyDesign();
-            renderAll();
-        } else {
-            document.getElementById('loginError').classList.remove('hidden');
-            btn.innerText = "Sign In";
-        }
-    }
-
-    // --- وظائف العرض والرسم ---
+    // --- وظائف العرض الأساسية ---
     function renderAll() {
         renderTable();
         updateCapacity();
@@ -514,9 +515,7 @@ if (userVal === 'admin' && passVal === '100300311') { currentUserRole = 'admin';
         const searchTerm = document.getElementById('searchInput').value.toLowerCase();
         tbody.innerHTML = '';
 
-        const filtered = employees.filter(emp => emp.name.toLowerCase().includes(searchTerm));
-
-        filtered.forEach((emp, index) => {
+        employees.filter(emp => emp.name.toLowerCase().includes(searchTerm)).forEach((emp, index) => {
             const tr = document.createElement('tr');
             tr.className = "hover:bg-gray-50 border-b";
             if (emp.isVacation) tr.classList.add('bg-red-50');
@@ -549,7 +548,7 @@ if (userVal === 'admin' && passVal === '100300311') { currentUserRole = 'admin';
         document.getElementById('activeCount').innerText = active;
         document.getElementById('totalCount').innerText = total;
         document.getElementById('capacityPercent').innerText = percent + '%';
-        document.getElementById('capacityBar').style.width = percent + '%';
+        if(document.getElementById('capacityBar')) document.getElementById('capacityBar').style.width = percent + '%';
     }
 
     function renderSummaryCards() {
@@ -586,48 +585,34 @@ if (userVal === 'admin' && passVal === '100300311') { currentUserRole = 'admin';
         const devs = getChartData('Dev');
         devChart = new Chart(ctxDev, {
             type: 'bar',
-            data: { labels: devs.labels, datasets: [{ label: 'Devs per Area', data: devs.data, backgroundColor: '#4285f4' }] },
-            options: { maintainAspectRatio: false }
+            data: { labels: devs.labels, datasets: [{ label: 'Devs', data: devs.data, backgroundColor: '#4285f4' }] }
         });
 
         const testers = getChartData('Tester');
         testerChart = new Chart(ctxTester, {
             type: 'bar',
-            data: { labels: testers.labels, datasets: [{ label: 'Testers per Area', data: testers.data, backgroundColor: '#34a853' }] },
-            options: { maintainAspectRatio: false }
+            data: { labels: testers.labels, datasets: [{ label: 'Testers', data: testers.data, backgroundColor: '#34a853' }] }
         });
     }
 
-    // --- إدارة الموظفين ---
+    // --- دوال الإدارة ---
     function editEmployee(index) {
         const emp = employees[index];
         const container = document.getElementById('editFieldsContainer');
         container.innerHTML = `<input type="hidden" id="editEmployeeId" value="${emp.id}">`;
-
         fieldsConfig.forEach(f => {
-            const val = emp[f.id] || (f.type === 'multiselect' ? [] : '');
+            const val = emp[f.id] || '';
             let html = `<div class="mb-4"><label class="block text-sm font-medium mb-1">${f.label}</label>`;
             if (f.type === 'select' || f.type === 'multiselect') {
                 html += `<select id="edit_${f.id}" class="w-full p-2 border rounded" ${f.type==='multiselect'?'multiple':''}>`;
-                f.options.forEach(opt => {
-                    const selected = Array.isArray(val) ? val.includes(opt) : val === opt;
-                    html += `<option value="${opt}" ${selected?'selected':''}>${opt}</option>`;
-                });
+                f.options.forEach(opt => html += `<option value="${opt}" ${(Array.isArray(val)?val.includes(opt):val===opt)?'selected':''}>${opt}</option>`);
                 html += `</select>`;
             } else {
                 html += `<input type="${f.type}" id="edit_${f.id}" value="${val}" class="w-full p-2 border rounded">`;
             }
-            html += `</div>`;
-            container.insertAdjacentHTML('beforeend', html);
+            container.insertAdjacentHTML('beforeend', html + `</div>`);
         });
-
-        container.insertAdjacentHTML('beforeend', `
-            <div class="flex items-center gap-2 mb-4">
-                <input type="checkbox" id="edit_isVacation" ${emp.isVacation?'checked':''}>
-                <label>On Vacation</label>
-            </div>
-        `);
-
+        container.insertAdjacentHTML('beforeend', `<div class="flex gap-2 mb-4"><input type="checkbox" id="edit_isVacation" ${emp.isVacation?'checked':''}> <label>On Vacation</label></div>`);
         document.getElementById('employeeModal').classList.remove('hidden');
     }
 
@@ -637,11 +622,7 @@ if (userVal === 'admin' && passVal === '100300311') { currentUserRole = 'admin';
         if (index > -1) {
             fieldsConfig.forEach(f => {
                 const el = document.getElementById(`edit_${f.id}`);
-                if (f.type === 'multiselect') {
-                    employees[index][f.id] = Array.from(el.selectedOptions).map(o => o.value);
-                } else {
-                    employees[index][f.id] = el.value;
-                }
+                employees[index][f.id] = f.type === 'multiselect' ? Array.from(el.selectedOptions).map(o => o.value) : el.value;
             });
             employees[index].isVacation = document.getElementById('edit_isVacation').checked;
             await save();
@@ -650,60 +631,25 @@ if (userVal === 'admin' && passVal === '100300311') { currentUserRole = 'admin';
     }
 
     async function addEmployee() {
-        const newEmp = { id: Date.now(), name: 'New Employee', isVacation: false };
-        fieldsConfig.forEach(f => newEmp[f.id] = f.type === 'multiselect' ? [] : (f.options ? f.options[0] : ''));
+        const newEmp = { id: Date.now(), name: 'New', isVacation: false };
+        fieldsConfig.forEach(f => newEmp[f.id] = f.type === 'multiselect' ? [] : '');
         employees.push(newEmp);
         await save();
         editEmployee(employees.length - 1);
     }
 
     async function deleteEmployee(index) {
-        if (confirm("Delete this employee?")) {
-            employees.splice(index, 1);
-            await save();
-        }
-    }
-
-    // --- إعدادات الحقول والمستخدمين ---
-    function openFieldsSetupModal() {
-        const list = document.getElementById('fieldsList');
-        list.innerHTML = '';
-        fieldsConfig.forEach((f, i) => {
-            list.innerHTML += `<div class="flex justify-between items-center p-2 border-b bg-gray-50 mb-1">
-                <span>${f.label} (${f.type})</span>
-                <button onclick="removeField(${i})" class="text-red-500 hover:text-red-700"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-            </div>`;
-        });
-        document.getElementById('fieldsSetupModal').classList.remove('hidden');
-        lucide.createIcons();
-    }
-
-    async function addField() {
-        const label = document.getElementById('newFieldLabel').value;
-        const type = document.getElementById('newFieldType').value;
-        if (!label) return;
-        fieldsConfig.push({ id: 'custom_' + Date.now(), label, type, options: [], showInTable: true });
-        document.getElementById('newFieldLabel').value = '';
-        await save();
-        openFieldsSetupModal();
-    }
-
-    async function removeField(index) {
-        if(confirm("Remove this field? Data in this field will be lost.")) {
-            fieldsConfig.splice(index, 1);
-            await save();
-            openFieldsSetupModal();
-        }
+        if(confirm("Delete?")) { employees.splice(index, 1); await save(); }
     }
 
     function openUsersModal() {
         const list = document.getElementById('usersList');
         list.innerHTML = '';
         users.forEach((u, i) => {
-            list.innerHTML += `<div class="grid grid-cols-3 gap-2 mb-2">
-                <input value="${u.username}" onchange="users[${i}].username=this.value" class="p-2 border rounded text-sm">
-                <input value="${u.password}" onchange="users[${i}].password=this.value" class="p-2 border rounded text-sm">
-                <select onchange="users[${i}].role=this.value" class="p-2 border rounded text-sm">
+            list.innerHTML += `<div class="grid grid-cols-3 gap-1 mb-2">
+                <input value="${u.username}" onchange="users[${i}].username=this.value" class="p-1 border rounded">
+                <input value="${u.password}" onchange="users[${i}].password=this.value" class="p-1 border rounded">
+                <select onchange="users[${i}].role=this.value" class="p-1 border rounded">
                     <option value="admin" ${u.role==='admin'?'selected':''}>Admin</option>
                     <option value="user" ${u.role==='user'?'selected':''}>User</option>
                 </select>
@@ -712,23 +658,9 @@ if (userVal === 'admin' && passVal === '100300311') { currentUserRole = 'admin';
         document.getElementById('usersModal').classList.remove('hidden');
     }
 
-    async function saveUsers() {
-        await save();
-        alert("Users Saved to GitHub");
-        document.getElementById('usersModal').classList.add('hidden');
-    }
+    async function saveUsers() { await save(); document.getElementById('usersModal').classList.add('hidden'); }
 
-    // --- التصميم والاحتياطي ---
-    function applyDesign() {
-        const root = document.documentElement;
-        // هنا يمكنك إضافة منطق تطبيق الألوان والخطوط من designSettings
-    }
-
-    function loadDesignInputs() {
-        // تعبئة المدخلات في صفحة التصميم بناءً على designSettings
-    }
-
-    // --- تشغيل عند التحميل ---
+    // --- تهيئة عند التحميل ---
     window.onload = () => {
         const saved = localStorage.getItem(REMEMBER_ME_KEY);
         if (saved) {
@@ -736,15 +668,10 @@ if (userVal === 'admin' && passVal === '100300311') { currentUserRole = 'admin';
             document.getElementById('userInput').value = u;
             document.getElementById('passInput').value = p;
         }
-        lucide.createIcons();
     };
 
-    // دوال الإغلاق
     function closeEmployeeModal() { document.getElementById('employeeModal').classList.add('hidden'); }
-    function closeFieldsSetupModal() { document.getElementById('fieldsSetupModal').classList.add('hidden'); }
     function closeUsersModal() { document.getElementById('usersModal').classList.add('hidden'); }
-
 </script>
 </body>
 </html>
-
