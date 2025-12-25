@@ -795,14 +795,14 @@
     }
   ],
   "design": {
-    "cardHeight": "80",
-    "titleFont": "9",
-    "valueFont": "12",
-    "chartHeight": "300",
-    "chartWidth": "100",
-    "chartLegendFont": "11",
-    "gridCols": "6",
-    "sectionCols": "2"
-  },
+    "cardHeight": 80,
+    "gridCols": 6,
+    "sectionCols": 2,
+    "titleFont": 9,
+    "valueFont": 12,
+    "chartHeight": 300,
+    "chartWidth": 100,
+    "chartLegendFont": 11
+},
   "timestamp": "2025-12-24T16:14:58.754Z"
 }
