@@ -3,110 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Hub - GitHub Online Sync</title>
+    <title>Team Hub - Online Cloud</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style id="dynamicStyles">
-        body { font-family: 'Roboto', sans-serif; background-color: #f8f9fa; color: #202124; }
-        .google-card { background: white; border: 1px solid #dadce0; border-radius: 8px; transition: all 0.2s; cursor: pointer; }
-        .google-card:hover { box-shadow: 0 4px 12px rgba(60,64,67,.15); transform: translateY(-1px); }
-        .vacation-row { background-color: #fce8e6 !important; border-left: 4px solid #d93025; }
+    <style>
+        body { font-family: 'Roboto', sans-serif; background-color: #f8f9fa; }
+        .tab-btn.active { color: #1a73e8; border-bottom: 3px solid #1a73e8; background-color: rgba(26, 115, 232, 0.05); }
         .admin-only { display: none !important; }
         body[data-user-role="admin"] .admin-only { display: inline-flex !important; }
-        body[data-user-role="admin"] .admin-cell { display: table-cell !important; }
-        .admin-cell { display: none; }
-        .tab-btn.active { color: #1a73e8; border-bottom: 3px solid #1a73e8; background-color: rgba(26, 115, 232, 0.05); }
-        .chart-container { height: 300px; width: 100%; }
-        @media print { .no-print { display: none !important; } }
+        .vacation-row { background-color: #fce8e6 !important; }
     </style>
 </head>
 <body class="p-4 md:p-6">
 
     <div id="loginOverlay" class="fixed inset-0 z-[9999] bg-white flex items-center justify-center">
-        <div class="relative text-center w-full max-sm:px-4 max-w-sm p-8 border rounded-2xl shadow-sm bg-white">
-            <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 text-white shadow-xl">
+        <div class="relative text-center w-full max-w-sm p-8 border rounded-2xl shadow-sm bg-white">
+            <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 text-white">
                 <i data-lucide="cloud-lightning" class="w-10 h-10"></i>
             </div>
             <h2 class="text-2xl mb-8 font-bold text-gray-800">Team Hub Cloud Login</h2>
-            <input type="text" id="userInput" placeholder="Username (admin/user)" class="w-full p-4 border rounded-xl mb-3 outline-none focus:ring-2 focus:ring-blue-500">
+            <input type="text" id="userInput" placeholder="Username (admin)" class="w-full p-4 border rounded-xl mb-3 outline-none focus:ring-2 focus:ring-blue-500">
             <input type="password" id="passInput" placeholder="Password (123)" onkeypress="if(event.key === 'Enter') checkLogin()" class="w-full p-4 border rounded-xl mb-4 outline-none focus:ring-2 focus:ring-blue-500">
             <button onclick="checkLogin()" id="loginBtn" class="w-full bg-[#1a73e8] text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition-all">Unlock & Sync</button>
-            <p id="loginError" class="text-red-600 mt-4 text-sm hidden font-medium"></p>
+            <p id="loginError" class="text-red-600 mt-4 text-xs hidden font-medium"></p>
         </div>
     </div>
 
-    <div id="mainContent" class="hidden max-w-[1600px] mx-auto">
-        <header class="flex flex-col md:flex-row-reverse justify-between items-center mb-6 pb-4 border-b gap-4 no-print">
+    <div id="mainContent" class="hidden max-w-[1400px] mx-auto">
+        <header class="flex flex-col md:flex-row-reverse justify-between items-center mb-6 pb-4 border-b gap-4">
             <div class="flex items-center gap-2">
                 <span id="displayRole" class="px-3 py-1 bg-blue-50 text-blue-700 text-[10px] rounded-full border font-black uppercase"></span>
                 <span class="text-2xl font-bold text-[#1a73e8]">Online Team Hub</span>
             </div>
-            <div class="flex flex-wrap gap-2 items-center">
-                <div id="syncStatus" class="flex items-center gap-2 text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-2 rounded-lg border border-emerald-100">
-                    <i data-lucide="refresh-cw" class="w-3 h-3"></i> LIVE SYNC
+            <div class="flex gap-2">
+                <div id="syncStatus" class="flex items-center gap-2 text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-2 rounded-lg border">
+                    <i data-lucide="refresh-cw" class="w-3 h-3"></i> LIVE CLOUD
                 </div>
-                <button onclick="window.print()" class="px-4 py-2 border rounded hover:bg-gray-50 flex items-center gap-2"><i data-lucide="printer" class="w-4 h-4"></i> Print</button>
-                <button onclick="openModal()" class="admin-only bg-[#1a73e8] text-white px-6 py-2 rounded shadow hover:bg-blue-700 font-medium">+ Add Member</button>
+                <button onclick="openModal()" class="admin-only bg-[#1a73e8] text-white px-6 py-2 rounded shadow hover:bg-blue-700">+ Add</button>
             </div>
         </header>
 
-        <div class="flex border-b border-gray-200 mb-6 no-print">
-            <button onclick="switchTab('capacityTab', this)" class="tab-btn active px-6 py-3 font-bold text-gray-500">Capacity Dashboard</button>
-            <button onclick="switchTab('tableTab', this)" class="tab-btn px-6 py-3 font-bold text-gray-500">Team Table</button>
+        <div class="flex border-b mb-6">
+            <button onclick="switchTab('capacityTab', this)" class="tab-btn active px-6 py-3 font-bold text-gray-500">Dashboard</button>
+            <button onclick="switchTab('tableTab', this)" class="tab-btn px-6 py-3 font-bold text-gray-500">Employees</button>
         </div>
 
         <div id="capacityTab" class="tab-content">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div class="p-4 border rounded-2xl bg-white shadow-sm">
-                    <h3 class="text-blue-700 font-bold mb-3 flex justify-between uppercase text-[10px] tracking-widest">Developers <span id="devTotalLabel"></span></h3>
+                <div class="p-4 border rounded-xl bg-white shadow-sm">
+                    <h3 class="text-blue-700 font-bold mb-3 uppercase text-xs">Developers Capacity</h3>
                     <div id="devCapacityGrid" class="grid grid-cols-2 lg:grid-cols-3 gap-2"></div>
                 </div>
-                <div class="p-4 border rounded-2xl bg-white shadow-sm">
-                    <h3 class="text-green-700 font-bold mb-3 flex justify-between uppercase text-[10px] tracking-widest">Testers <span id="testerTotalLabel"></span></h3>
+                <div class="p-4 border rounded-xl bg-white shadow-sm">
+                    <h3 class="text-green-700 font-bold mb-3 uppercase text-xs">Testers Capacity</h3>
                     <div id="testerCapacityGrid" class="grid grid-cols-2 lg:grid-cols-3 gap-2"></div>
                 </div>
             </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div class="p-6 border rounded-2xl bg-white shadow-sm"><canvas id="devPieChart"></canvas></div>
-                <div class="p-6 border rounded-2xl bg-white shadow-sm"><canvas id="testerPieChart"></canvas></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 h-[300px]">
+                <canvas id="devPieChart"></canvas>
+                <canvas id="testerPieChart"></canvas>
             </div>
         </div>
 
         <div id="tableTab" class="tab-content hidden">
-            <div class="bg-white border rounded-xl overflow-hidden">
-                <table class="w-full text-left text-sm">
-                    <thead class="bg-gray-50 border-b">
-                        <tr id="tableHeaderRow" class="text-gray-600"></tr>
-                    </thead>
-                    <tbody id="employeeTableBody" class="divide-y"></tbody>
-                </table>
-            </div>
+            <table class="w-full text-left bg-white border rounded-xl">
+                <thead class="bg-gray-50 border-b">
+                    <tr id="tableHeaderRow" class="text-gray-600 text-sm"></tr>
+                </thead>
+                <tbody id="employeeTableBody" class="divide-y"></tbody>
+            </table>
         </div>
     </div>
 
-    <div id="modal" class="fixed inset-0 z-[1000] bg-black/50 hidden flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-2xl p-8 rounded-2xl shadow-2xl">
-            <h3 class="text-xl font-bold mb-6">Manage Member</h3>
-            <form id="employeeForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div id="modal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-lg p-6 rounded-2xl">
+            <h3 class="text-xl font-bold mb-4">Member Info</h3>
+            <form id="employeeForm" class="space-y-4">
                 <input type="hidden" id="editIndex">
-                <div id="dynamicFieldsContainer" class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-                <div class="md:col-span-2 flex items-center gap-4 bg-gray-50 p-4 rounded-xl">
-                    <label class="flex items-center gap-2 font-bold"><input type="checkbox" id="empIsVacation" class="w-5 h-5"> On Vacation</label>
-                    <input type="date" id="empVacationEnd" class="p-2 border rounded-lg flex-1">
+                <div><label class="text-xs font-bold">Name</label><input type="text" id="fieldName" class="w-full p-2 border rounded" required></div>
+                <div>
+                    <label class="text-xs font-bold">Role</label>
+                    <select id="fieldRole" class="w-full p-2 border rounded">
+                        <option>Dev</option><option>Senior</option><option>Tester</option><option>Senior tester</option><option>Team Lead</option>
+                    </select>
                 </div>
-                <div class="md:col-span-2 flex gap-2">
-                    <button type="button" onclick="closeModal()" class="flex-1 py-3 bg-gray-100 rounded-xl font-bold">Cancel</button>
-                    <button type="submit" id="saveBtn" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold">Save & Sync</button>
+                <div>
+                    <label class="text-xs font-bold">Area</label>
+                    <select id="fieldArea" class="w-full p-2 border rounded">
+                        <option>Registration</option><option>Internal lab</option><option>Front and Financial</option><option>front end</option><option>Intgration</option><option>LDM_Intgration</option><option>elBORG</option><option>Team Leader</option>
+                    </select>
+                </div>
+                <div class="flex items-center gap-2"><input type="checkbox" id="fieldVacation"> <label>On Vacation</label></div>
+                <div class="flex gap-2">
+                    <button type="button" onclick="closeModal()" class="flex-1 py-2 bg-gray-100 rounded">Cancel</button>
+                    <button type="submit" class="flex-1 py-2 bg-blue-600 text-white rounded">Save & Sync</button>
                 </div>
             </form>
         </div>
     </div>
 
     <script>
-        // GitHub Config (Your Data)
         const githubConfig = {
             repoPath: 'elmoatasemsaeed/NT_Team_HUB',
             filePath: 'data.json',
@@ -115,32 +113,27 @@
             sha: null
         };
 
-        const fieldsConfig = [
-            { id: 'name', label: 'Name', type: 'text' },
-            { id: 'role', label: 'Role', type: 'select', options: ['Dev', 'Senior', 'Tester', 'Senior tester', 'Team Lead'] },
-            { id: 'area', label: 'Area', type: 'select', options: ["Registration", "Internal lab", "Front and Financial", "front end", "Intgration", "LDM_Intgration", "elBORG", "Team Leader"] }
-        ];
-
         let employees = [];
         let currentUserRole = null;
         let charts = {};
 
-        // GitHub Core Functions
-        async function fetchGitHubData() {
+        // GitHub API Communication
+        async function fetchFromGitHub() {
             try {
                 const url = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}?ref=${githubConfig.branch}`;
-                const res = await fetch(url, {
-                    headers: { 'Authorization': `token ${githubConfig.token}` }
-                });
+                const res = await fetch(url, { headers: { 'Authorization': `token ${githubConfig.token}` } });
+                
                 if (res.ok) {
                     const data = await res.json();
                     githubConfig.sha = data.sha;
                     const content = JSON.parse(decodeURIComponent(escape(atob(data.content))));
                     employees = content.employees || [];
-                    return true;
+                    return { success: true };
+                } else {
+                    const errorData = await res.json();
+                    return { success: false, status: res.status, message: errorData.message };
                 }
-                return false;
-            } catch (e) { return false; }
+            } catch (e) { return { success: false, message: e.message }; }
         }
 
         async function syncToGitHub() {
@@ -155,7 +148,7 @@
                     method: 'PUT',
                     headers: { 'Authorization': `token ${githubConfig.token}`, 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        message: "Update Team Data",
+                        message: "Cloud Sync Update",
                         content: content,
                         sha: githubConfig.sha,
                         branch: githubConfig.branch
@@ -165,153 +158,122 @@
                     const data = await res.json();
                     githubConfig.sha = data.content.sha;
                 }
-            } catch (e) { alert("Sync Failed! Check connection."); }
+            } catch (e) { alert("Cloud Save Failed!"); }
             
             statusIcon.classList.remove('animate-spin');
             renderAll();
         }
 
-        // Auth
         async function checkLogin() {
             const u = document.getElementById('userInput').value.toLowerCase();
             const p = document.getElementById('passInput').value;
             const btn = document.getElementById('loginBtn');
             const err = document.getElementById('loginError');
 
-            btn.disabled = true;
-            btn.innerText = "Syncing Cloud...";
+            if (!((u === 'admin' || u === 'user') && p === '123')) {
+                err.innerText = "Wrong Password!"; err.classList.remove('hidden'); return;
+            }
 
-            const apiSuccess = await fetchGitHubData();
-            
-            if ((u === 'admin' || u === 'user') && p === '123') {
+            btn.disabled = true; btn.innerText = "Connecting...";
+            const result = await fetchFromGitHub();
+
+            if (result.success) {
                 currentUserRole = u;
                 document.body.setAttribute('data-user-role', u);
                 document.getElementById('loginOverlay').classList.add('hidden');
                 document.getElementById('mainContent').classList.remove('hidden');
                 document.getElementById('displayRole').innerText = u;
-                if(!apiSuccess) alert("Connected, but data.json not found on GitHub. A new one will be created upon saving.");
                 renderAll();
             } else {
-                err.innerText = "Invalid credentials!";
+                let msg = "Cloud Error: ";
+                if(result.status === 404) msg += "File 'data.json' not found in repo!";
+                else if(result.status === 401) msg += "Token is invalid/expired!";
+                else msg += result.message;
+                
+                err.innerText = msg;
                 err.classList.remove('hidden');
-                btn.disabled = false;
-                btn.innerText = "Unlock & Sync";
+                btn.disabled = false; btn.innerText = "Retry Sync";
             }
         }
 
-        // UI Rendering
         function renderAll() {
-            renderTable();
-            updateCapacity();
-            renderFormFields();
-            lucide.createIcons();
+            renderTable(); updateCapacity(); lucide.createIcons();
         }
 
         function renderTable() {
             const header = document.getElementById('tableHeaderRow');
-            header.innerHTML = fieldsConfig.map(f => `<th class="p-4">${f.label}</th>`).join('') + '<th class="p-4">Status</th><th class="p-4 admin-only">Actions</th>';
-
+            header.innerHTML = '<th class="p-3">Name</th><th class="p-3">Role</th><th class="p-3">Area</th><th class="p-3">Status</th><th class="p-3 admin-only">Actions</th>';
+            
             const body = document.getElementById('employeeTableBody');
             body.innerHTML = employees.map((emp, idx) => `
                 <tr class="${emp.isVacation ? 'vacation-row' : ''}">
-                    ${fieldsConfig.map(f => `<td class="p-4">${emp[f.id] || ''}</td>`).join('')}
-                    <td class="p-4">${emp.isVacation ? '🔴 Vacation' : '🟢 Active'}</td>
-                    <td class="p-4 admin-only">
+                    <td class="p-3 font-medium">${emp.name}</td>
+                    <td class="p-3">${emp.role}</td>
+                    <td class="p-3 text-gray-500">${emp.area}</td>
+                    <td class="p-3">${emp.isVacation ? '🔴 Vac' : '🟢 Active'}</td>
+                    <td class="p-3 admin-only">
                         <button onclick="editMember(${idx})" class="text-blue-600 mr-2">Edit</button>
-                        <button onclick="deleteMember(${idx})" class="text-red-600">Delete</button>
+                        <button onclick="deleteMember(${idx})" class="text-red-600">Del</button>
                     </td>
-                </tr>
-            `).join('');
+                </tr>`).join('');
         }
 
         function updateCapacity() {
-            const areas = fieldsConfig.find(f => f.id === 'area').options;
-            const counts = (roleArr) => areas.map(a => employees.filter(e => e.area === a && roleArr.includes(e.role) && !e.isVacation).length);
+            const areas = ["Registration", "Internal lab", "Front and Financial", "front end", "Intgration", "LDM_Intgration", "elBORG", "Team Leader"];
+            const getCounts = (roles) => areas.map(a => employees.filter(e => e.area === a && roles.includes(e.role) && !e.isVacation).length);
 
-            const devData = counts(['Dev', 'Senior']);
-            const testData = counts(['Tester', 'Senior tester']);
+            const devData = getCounts(['Dev', 'Senior']);
+            const testData = getCounts(['Tester', 'Senior tester']);
 
-            renderChart('devPieChart', areas, devData, 'Developers Distribution', '#3b82f6');
-            renderChart('testerPieChart', areas, testData, 'Testers Distribution', '#10b981');
-            
-            // Render Grids
             document.getElementById('devCapacityGrid').innerHTML = areas.map((a, i) => `
-                <div class="p-2 border rounded bg-blue-50/50 text-center">
-                    <div class="text-[10px] font-bold text-gray-500">${a}</div>
-                    <div class="text-xl font-black text-blue-700">${devData[i]}</div>
-                </div>
-            `).join('');
+                <div class="p-2 border rounded bg-blue-50 text-center"><div class="text-[9px] font-bold text-gray-400">${a}</div><div class="text-lg font-bold text-blue-700">${devData[i]}</div></div>`).join('');
             
             document.getElementById('testerCapacityGrid').innerHTML = areas.map((a, i) => `
-                <div class="p-2 border rounded bg-green-50/50 text-center">
-                    <div class="text-[10px] font-bold text-gray-500">${a}</div>
-                    <div class="text-xl font-black text-green-700">${testData[i]}</div>
-                </div>
-            `).join('');
+                <div class="p-2 border rounded bg-green-50 text-center"><div class="text-[9px] font-bold text-gray-400">${a}</div><div class="text-lg font-bold text-green-700">${testData[i]}</div></div>`).join('');
+
+            renderPie('devPieChart', areas, devData, 'Devs', '#2563eb');
+            renderPie('testerPieChart', areas, testData, 'Testers', '#16a34a');
         }
 
-        function renderChart(id, labels, data, title, color) {
+        function renderPie(id, labels, data, label, color) {
             if (charts[id]) charts[id].destroy();
             charts[id] = new Chart(document.getElementById(id), {
                 type: 'doughnut',
-                data: { labels, datasets: [{ data, backgroundColor: [color, '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#ec4899', '#71717a'] }] },
-                options: { plugins: { title: { display: true, text: title } } }
+                data: { labels, datasets: [{ data, backgroundColor: [color, '#fbbf24', '#ef4444', '#8b5cf6', '#06b6d4', '#ec4899', '#374151', '#d4d4d8'] }] },
+                options: { maintainAspectRatio: false }
             });
         }
 
-        function renderFormFields() {
-            document.getElementById('dynamicFieldsContainer').innerHTML = fieldsConfig.map(f => `
-                <div>
-                    <label class="block text-xs font-bold mb-1">${f.label}</label>
-                    ${f.type === 'select' ? 
-                        `<select id="field_${f.id}" class="w-full p-2 border rounded-lg">${f.options.map(o => `<option value="${o}">${o}</option>`).join('')}</select>` : 
-                        `<input type="text" id="field_${f.id}" class="w-full p-2 border rounded-lg">`
-                    }
-                </div>
-            `).join('');
-        }
-
         // Actions
-        window.openModal = () => { document.getElementById('modal').classList.remove('hidden'); };
+        window.openModal = () => document.getElementById('modal').classList.remove('hidden');
         window.closeModal = () => { document.getElementById('modal').classList.add('hidden'); document.getElementById('employeeForm').reset(); document.getElementById('editIndex').value = ""; };
         
-        window.editMember = (idx) => {
-            const emp = employees[idx];
-            document.getElementById('editIndex').value = idx;
-            fieldsConfig.forEach(f => document.getElementById(`field_${f.id}`).value = emp[f.id]);
-            document.getElementById('empIsVacation').checked = emp.isVacation;
-            document.getElementById('empVacationEnd').value = emp.vacationEnd || "";
+        window.editMember = (i) => {
+            const e = employees[i]; document.getElementById('editIndex').value = i;
+            document.getElementById('fieldName').value = e.name; document.getElementById('fieldRole').value = e.role;
+            document.getElementById('fieldArea').value = e.area; document.getElementById('fieldVacation').checked = e.isVacation;
             openModal();
         };
 
-        window.deleteMember = (idx) => {
-            if(confirm("Delete this member and sync to cloud?")) {
-                employees.splice(idx, 1);
-                syncToGitHub();
-            }
-        };
+        window.deleteMember = (i) => { if(confirm("Delete?")) { employees.splice(i, 1); syncToGitHub(); } };
 
         document.getElementById('employeeForm').onsubmit = (e) => {
             e.preventDefault();
-            const idx = document.getElementById('editIndex').value;
-            const emp = {
-                isVacation: document.getElementById('empIsVacation').checked,
-                vacationEnd: document.getElementById('empVacationEnd').value
+            const i = document.getElementById('editIndex').value;
+            const emp = { 
+                name: document.getElementById('fieldName').value,
+                role: document.getElementById('fieldRole').value,
+                area: document.getElementById('fieldArea').value,
+                isVacation: document.getElementById('fieldVacation').checked
             };
-            fieldsConfig.forEach(f => emp[f.id] = document.getElementById(`field_${f.id}`).value);
-
-            if(idx === "") employees.push(emp);
-            else employees[idx] = emp;
-
-            closeModal();
-            syncToGitHub();
+            if(i === "") employees.push(emp); else employees[i] = emp;
+            closeModal(); syncToGitHub();
         };
 
         window.switchTab = (id, btn) => {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(id).classList.remove('hidden');
-            btn.classList.add('active');
+            document.getElementById(id).classList.remove('hidden'); btn.classList.add('active');
         };
 
         lucide.createIcons();
