@@ -10,10 +10,10 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body { font-family: 'Roboto', sans-serif; background-color: #f8f9fa; }
-        .tab-btn.active { color: #1a73e8; border-bottom: 3px solid #1a73e8; background-color: rgba(26, 115, 232, 0.05); }
         .admin-only { display: none !important; }
         body[data-user-role="admin"] .admin-only { display: inline-flex !important; }
         .vacation-row { background-color: #fce8e6 !important; }
+        .tab-btn.active { color: #1a73e8; border-bottom: 3px solid #1a73e8; background-color: rgba(26, 115, 232, 0.05); }
     </style>
 </head>
 <body class="p-4 md:p-6">
@@ -39,9 +39,9 @@
             </div>
             <div class="flex gap-2">
                 <div id="syncStatus" class="flex items-center gap-2 text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-2 rounded-lg border">
-                    <i data-lucide="refresh-cw" class="w-3 h-3"></i> LIVE CLOUD
+                    <i data-lucide="refresh-cw" class="w-3 h-3"></i> CLOUD ACTIVE
                 </div>
-                <button onclick="openModal()" class="admin-only bg-[#1a73e8] text-white px-6 py-2 rounded shadow hover:bg-blue-700">+ Add</button>
+                <button onclick="openModal()" class="admin-only bg-[#1a73e8] text-white px-6 py-2 rounded shadow hover:bg-blue-700 font-medium">+ Add Member</button>
             </div>
         </header>
 
@@ -53,52 +53,54 @@
         <div id="capacityTab" class="tab-content">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div class="p-4 border rounded-xl bg-white shadow-sm">
-                    <h3 class="text-blue-700 font-bold mb-3 uppercase text-xs">Developers Capacity</h3>
+                    <h3 class="text-blue-700 font-bold mb-3 uppercase text-[10px]">Developers</h3>
                     <div id="devCapacityGrid" class="grid grid-cols-2 lg:grid-cols-3 gap-2"></div>
                 </div>
                 <div class="p-4 border rounded-xl bg-white shadow-sm">
-                    <h3 class="text-green-700 font-bold mb-3 uppercase text-xs">Testers Capacity</h3>
+                    <h3 class="text-green-700 font-bold mb-3 uppercase text-[10px]">Testers</h3>
                     <div id="testerCapacityGrid" class="grid grid-cols-2 lg:grid-cols-3 gap-2"></div>
                 </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 h-[300px]">
-                <canvas id="devPieChart"></canvas>
-                <canvas id="testerPieChart"></canvas>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="h-[300px]"><canvas id="devPieChart"></canvas></div>
+                <div class="h-[300px]"><canvas id="testerPieChart"></canvas></div>
             </div>
         </div>
 
         <div id="tableTab" class="tab-content hidden">
-            <table class="w-full text-left bg-white border rounded-xl">
-                <thead class="bg-gray-50 border-b">
-                    <tr id="tableHeaderRow" class="text-gray-600 text-sm"></tr>
-                </thead>
-                <tbody id="employeeTableBody" class="divide-y"></tbody>
-            </table>
+            <div class="overflow-x-auto bg-white border rounded-xl">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-gray-50 border-b">
+                        <tr id="tableHeaderRow" class="text-gray-600"></tr>
+                    </thead>
+                    <tbody id="employeeTableBody" class="divide-y"></tbody>
+                </table>
+            </div>
         </div>
     </div>
 
     <div id="modal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-lg p-6 rounded-2xl">
-            <h3 class="text-xl font-bold mb-4">Member Info</h3>
+        <div class="bg-white w-full max-w-lg p-6 rounded-2xl shadow-xl">
+            <h3 class="text-xl font-bold mb-4">Member Details</h3>
             <form id="employeeForm" class="space-y-4">
                 <input type="hidden" id="editIndex">
-                <div><label class="text-xs font-bold">Name</label><input type="text" id="fieldName" class="w-full p-2 border rounded" required></div>
+                <div><label class="text-xs font-bold text-gray-500">FULL NAME</label><input type="text" id="fieldName" class="w-full p-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-500" required></div>
                 <div>
-                    <label class="text-xs font-bold">Role</label>
-                    <select id="fieldRole" class="w-full p-2 border rounded">
+                    <label class="text-xs font-bold text-gray-500">ROLE</label>
+                    <select id="fieldRole" class="w-full p-2 border rounded-lg">
                         <option>Dev</option><option>Senior</option><option>Tester</option><option>Senior tester</option><option>Team Lead</option>
                     </select>
                 </div>
                 <div>
-                    <label class="text-xs font-bold">Area</label>
-                    <select id="fieldArea" class="w-full p-2 border rounded">
+                    <label class="text-xs font-bold text-gray-500">AREA</label>
+                    <select id="fieldArea" class="w-full p-2 border rounded-lg">
                         <option>Registration</option><option>Internal lab</option><option>Front and Financial</option><option>front end</option><option>Intgration</option><option>LDM_Intgration</option><option>elBORG</option><option>Team Leader</option>
                     </select>
                 </div>
-                <div class="flex items-center gap-2"><input type="checkbox" id="fieldVacation"> <label>On Vacation</label></div>
-                <div class="flex gap-2">
-                    <button type="button" onclick="closeModal()" class="flex-1 py-2 bg-gray-100 rounded">Cancel</button>
-                    <button type="submit" class="flex-1 py-2 bg-blue-600 text-white rounded">Save & Sync</button>
+                <div class="flex items-center gap-2"><input type="checkbox" id="fieldVacation" class="w-5 h-5"> <label class="font-bold">On Vacation</label></div>
+                <div class="flex gap-2 pt-4">
+                    <button type="button" onclick="closeModal()" class="flex-1 py-3 bg-gray-100 rounded-xl font-bold">Cancel</button>
+                    <button type="submit" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold">Save & Sync</button>
                 </div>
             </form>
         </div>
@@ -108,7 +110,7 @@
         const githubConfig = {
             repoPath: 'elmoatasemsaeed/NT_Team_HUB',
             filePath: 'data.json',
-            token: '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',
+            token: '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', // تأكد أن التوكن فعال
             branch: 'main',
             sha: null
         };
@@ -117,11 +119,12 @@
         let currentUserRole = null;
         let charts = {};
 
-        // GitHub API Communication
         async function fetchFromGitHub() {
             try {
-                const url = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}?ref=${githubConfig.branch}`;
-                const res = await fetch(url, { headers: { 'Authorization': `token ${githubConfig.token}` } });
+                const url = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}?t=${Date.now()}`;
+                const res = await fetch(url, { 
+                    headers: { 'Authorization': `token ${githubConfig.token}`, 'Accept': 'application/vnd.github.v3+json' } 
+                });
                 
                 if (res.ok) {
                     const data = await res.json();
@@ -129,10 +132,8 @@
                     const content = JSON.parse(decodeURIComponent(escape(atob(data.content))));
                     employees = content.employees || [];
                     return { success: true };
-                } else {
-                    const errorData = await res.json();
-                    return { success: false, status: res.status, message: errorData.message };
                 }
+                return { success: false, status: res.status };
             } catch (e) { return { success: false, message: e.message }; }
         }
 
@@ -140,32 +141,33 @@
             const statusIcon = document.querySelector('#syncStatus i');
             statusIcon.classList.add('animate-spin');
             
-            const content = btoa(unescape(encodeURIComponent(JSON.stringify({ employees }))));
-            const url = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}`;
-            
             try {
+                const content = btoa(unescape(encodeURIComponent(JSON.stringify({ employees }))));
+                const url = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}`;
+                
                 const res = await fetch(url, {
                     method: 'PUT',
                     headers: { 'Authorization': `token ${githubConfig.token}`, 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        message: "Cloud Sync Update",
+                        message: "Cloud Data Update",
                         content: content,
                         sha: githubConfig.sha,
                         branch: githubConfig.branch
                     })
                 });
+                
                 if (res.ok) {
                     const data = await res.json();
                     githubConfig.sha = data.content.sha;
-                }
-            } catch (e) { alert("Cloud Save Failed!"); }
+                } else { alert("Sync Error!"); }
+            } catch (e) { alert("Network Error during sync!"); }
             
             statusIcon.classList.remove('animate-spin');
             renderAll();
         }
 
         async function checkLogin() {
-            const u = document.getElementById('userInput').value.toLowerCase();
+            const u = document.getElementById('userInput').value.trim().toLowerCase();
             const p = document.getElementById('passInput').value;
             const btn = document.getElementById('loginBtn');
             const err = document.getElementById('loginError');
@@ -174,7 +176,7 @@
                 err.innerText = "Wrong Password!"; err.classList.remove('hidden'); return;
             }
 
-            btn.disabled = true; btn.innerText = "Connecting...";
+            btn.disabled = true; btn.innerText = "Connecting to GitHub...";
             const result = await fetchFromGitHub();
 
             if (result.success) {
@@ -185,14 +187,14 @@
                 document.getElementById('displayRole').innerText = u;
                 renderAll();
             } else {
-                let msg = "Cloud Error: ";
-                if(result.status === 404) msg += "File 'data.json' not found in repo!";
-                else if(result.status === 401) msg += "Token is invalid/expired!";
-                else msg += result.message;
+                let msg = "Error: ";
+                if(result.status === 401) msg = "GitHub Token Expired or Invalid!";
+                else if(result.status === 404) msg = "File 'data.json' not found!";
+                else msg = "Check Internet or GitHub Status";
                 
                 err.innerText = msg;
                 err.classList.remove('hidden');
-                btn.disabled = false; btn.innerText = "Retry Sync";
+                btn.disabled = false; btn.innerText = "Retry";
             }
         }
 
@@ -202,18 +204,18 @@
 
         function renderTable() {
             const header = document.getElementById('tableHeaderRow');
-            header.innerHTML = '<th class="p-3">Name</th><th class="p-3">Role</th><th class="p-3">Area</th><th class="p-3">Status</th><th class="p-3 admin-only">Actions</th>';
+            header.innerHTML = '<th class="p-4">Name</th><th class="p-4">Role</th><th class="p-4">Area</th><th class="p-4">Status</th><th class="p-4 admin-only">Actions</th>';
             
             const body = document.getElementById('employeeTableBody');
             body.innerHTML = employees.map((emp, idx) => `
                 <tr class="${emp.isVacation ? 'vacation-row' : ''}">
-                    <td class="p-3 font-medium">${emp.name}</td>
-                    <td class="p-3">${emp.role}</td>
-                    <td class="p-3 text-gray-500">${emp.area}</td>
-                    <td class="p-3">${emp.isVacation ? '🔴 Vac' : '🟢 Active'}</td>
-                    <td class="p-3 admin-only">
-                        <button onclick="editMember(${idx})" class="text-blue-600 mr-2">Edit</button>
-                        <button onclick="deleteMember(${idx})" class="text-red-600">Del</button>
+                    <td class="p-4 font-bold text-gray-800">${emp.name}</td>
+                    <td class="p-4 text-gray-600">${emp.role}</td>
+                    <td class="p-4 text-blue-600 font-medium">${emp.area}</td>
+                    <td class="p-4">${emp.isVacation ? '🔴 Vacation' : '🟢 Active'}</td>
+                    <td class="p-4 admin-only">
+                        <button onclick="editMember(${idx})" class="text-blue-600 hover:underline mr-4">Edit</button>
+                        <button onclick="deleteMember(${idx})" class="text-red-500 hover:underline">Delete</button>
                     </td>
                 </tr>`).join('');
         }
@@ -226,25 +228,25 @@
             const testData = getCounts(['Tester', 'Senior tester']);
 
             document.getElementById('devCapacityGrid').innerHTML = areas.map((a, i) => `
-                <div class="p-2 border rounded bg-blue-50 text-center"><div class="text-[9px] font-bold text-gray-400">${a}</div><div class="text-lg font-bold text-blue-700">${devData[i]}</div></div>`).join('');
+                <div class="p-2 border rounded-lg bg-blue-50/50 text-center"><div class="text-[9px] font-bold text-gray-400">${a}</div><div class="text-lg font-black text-blue-700">${devData[i]}</div></div>`).join('');
             
             document.getElementById('testerCapacityGrid').innerHTML = areas.map((a, i) => `
-                <div class="p-2 border rounded bg-green-50 text-center"><div class="text-[9px] font-bold text-gray-400">${a}</div><div class="text-lg font-bold text-green-700">${testData[i]}</div></div>`).join('');
+                <div class="p-2 border rounded-lg bg-green-50/50 text-center"><div class="text-[9px] font-bold text-gray-400">${a}</div><div class="text-lg font-black text-green-700">${testData[i]}</div></div>`).join('');
 
-            renderPie('devPieChart', areas, devData, 'Devs', '#2563eb');
-            renderPie('testerPieChart', areas, testData, 'Testers', '#16a34a');
+            renderPie('devPieChart', areas, devData, '#3b82f6');
+            renderPie('testerPieChart', areas, testData, '#10b981');
         }
 
-        function renderPie(id, labels, data, label, color) {
+        function renderPie(id, labels, data, color) {
             if (charts[id]) charts[id].destroy();
             charts[id] = new Chart(document.getElementById(id), {
                 type: 'doughnut',
-                data: { labels, datasets: [{ data, backgroundColor: [color, '#fbbf24', '#ef4444', '#8b5cf6', '#06b6d4', '#ec4899', '#374151', '#d4d4d8'] }] },
-                options: { maintainAspectRatio: false }
+                data: { labels, datasets: [{ data, backgroundColor: [color, '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#ec4899', '#71717a', '#d1d5db'] }] },
+                options: { maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { boxWidth: 10 } } } }
             });
         }
 
-        // Actions
+        // Functions for Modal and Form
         window.openModal = () => document.getElementById('modal').classList.remove('hidden');
         window.closeModal = () => { document.getElementById('modal').classList.add('hidden'); document.getElementById('employeeForm').reset(); document.getElementById('editIndex').value = ""; };
         
@@ -255,7 +257,7 @@
             openModal();
         };
 
-        window.deleteMember = (i) => { if(confirm("Delete?")) { employees.splice(i, 1); syncToGitHub(); } };
+        window.deleteMember = (i) => { if(confirm("Delete this member and sync?")) { employees.splice(i, 1); syncToGitHub(); } };
 
         document.getElementById('employeeForm').onsubmit = (e) => {
             e.preventDefault();
