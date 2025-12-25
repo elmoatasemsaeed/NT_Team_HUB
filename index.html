@@ -14,7 +14,7 @@
         .google-card { background: white; border: 1px solid #dadce0; border-radius: 8px; transition: all 0.2s; }
         .google-card:hover { box-shadow: 0 4px 12px rgba(60,64,67,.15); transform: translateY(-1px); }
         .vacation-row { background-color: #fce8e6 !important; border-left: 4px solid #d93025; }
-        .sort-btn { cursor: pointer; display: inline-flex; align-items: center; gap: 4px; color: #5f6368; font-weight: bold; padding: 8px 0; }
+        .sort-btn { cursor: pointer; display: inline-flex; items-center; gap: 4px; color: #5f6368; font-weight: bold; padding: 8px 0; }
         .sort-btn:hover { color: #1a73e8; }
         .large-modal { width: 95%; max-width: 1000px; max-height: 90vh; overflow-y: auto; border-radius: 16px; }
         .admin-only { display: none !important; }
@@ -51,7 +51,13 @@
             <h2 class="text-2xl mb-8 font-bold text-gray-800">Team Hub Access</h2>
             <div id="loadingStatus" class="hidden mb-4 text-sm text-blue-600 font-bold italic anim-pulse">Checking credentials...</div>
             <input type="text" id="userInput" placeholder="Username" class="w-full p-4 border rounded-xl mb-3 outline-none focus:ring-2 focus:ring-blue-500">
-            <input type="password" id="passInput" placeholder="Password" onkeypress="if(event.key === 'Enter') checkLogin()" class="w-full p-4 border rounded-xl mb-4 outline-none focus:ring-2 focus:ring-blue-500">
+            <input type="password" id="passInput" placeholder="Password" onkeypress="if(event.key === 'Enter') checkLogin()" class="w-full p-4 border rounded-xl mb-3 outline-none focus:ring-2 focus:ring-blue-500">
+            
+            <div class="flex items-center gap-2 mb-4 px-1">
+                <input type="checkbox" id="rememberMe" class="w-4 h-4 accent-blue-600 cursor-pointer">
+                <label for="rememberMe" class="text-sm text-gray-600 cursor-pointer select-none">Remember me on this device</label>
+            </div>
+
             <button onclick="checkLogin()" class="w-full bg-[#1a73e8] text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition-all">Unlock System</button>
             <p id="loginError" class="text-red-600 mt-4 text-sm hidden font-medium">Invalid Username or Password!</p>
         </div>
@@ -240,6 +246,7 @@
         const VISIBILITY_KEY = 'team_hub_visibility_config';
         const CHARTS_KEY = 'team_hub_charts_config';
         const GITHUB_LOCAL_KEY = 'team_hub_github_creds';
+        const REMEMBER_KEY = 'team_hub_remembered_user'; // Key for Remember Me
 
         let fieldsConfig = [
             { id: 'name', label: 'Full Name', type: 'text', required: true, showInTable: true },
@@ -306,14 +313,26 @@
             } catch (err) { console.error(err); }
         }
 
+        // --- AUTHENTICATION WITH REMEMBER ME ---
+
         function checkLogin() {
             const userVal = document.getElementById('userInput').value.trim().toLowerCase();
             const passVal = document.getElementById('passInput').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+
             const localUsers = localStorage.getItem(USERS_KEY);
             if(localUsers) users = JSON.parse(localUsers);
 
             const foundUser = users.find(u => u.username.toLowerCase() === userVal && u.password === passVal);
+            
             if (foundUser) {
+                // Handle Remember Me
+                if (rememberMe) {
+                    localStorage.setItem(REMEMBER_KEY, JSON.stringify({ u: userVal, p: passVal }));
+                } else {
+                    localStorage.removeItem(REMEMBER_KEY);
+                }
+
                 currentUserRole = foundUser.role;
                 document.body.setAttribute('data-user-role', currentUserRole);
                 document.getElementById('loginOverlay').style.display = 'none';
@@ -326,7 +345,19 @@
             }
         }
 
+        function loadRememberedUser() {
+            const saved = localStorage.getItem(REMEMBER_KEY);
+            if (saved) {
+                const creds = JSON.parse(saved);
+                document.getElementById('userInput').value = creds.u;
+                document.getElementById('passInput').value = creds.p;
+                document.getElementById('rememberMe').checked = true;
+            }
+        }
+
         window.addEventListener('DOMContentLoaded', () => {
+            loadRememberedUser(); // Call Remember Me logic
+            
             const localData = [ 
                 [STORAGE_KEY, 'employees'], 
                 [SETUP_KEY, 'fieldsConfig'], 
@@ -503,7 +534,12 @@
             const roleList = roles.split(',');
             const list = employees.filter(e => roleList.includes(e.role) && e.isVacation === isVac);
             document.getElementById('popupTitle').innerText = `${isVac ? 'Vacation' : 'Active'} - ${roles}`;
-            document.getElementById('popupList').innerHTML = list.map(e => `<div class="p-4 border rounded-xl bg-gray-50"><b>${e.name}</b><br><small>${e.role} | ${e.area}</small></div>`).join('');
+            document.getElementById('popupList').innerHTML = list.map(e => `
+                <div class="p-4 border rounded-xl ${e.isVacation ? 'bg-red-50 border-red-100' : 'bg-gray-50'}">
+                    <b class="${e.isVacation ? 'line-through text-red-600' : ''}">${e.name}</b>
+                    <br>
+                    <small class="text-gray-500">${e.role} | ${e.area} ${e.isVacation ? '(Ends: '+(e.vacationEnd||'N/A')+')' : ''}</small>
+                </div>`).join('');
             document.getElementById('detailsPopup').classList.remove('hidden');
         }
 
@@ -630,10 +666,19 @@
         function showDetailsExtended(area, roles, isVac) {
             const roleList = roles.split(',');
             const list = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && roleList.includes(e.role) && e.isVacation === isVac);
+            
             document.getElementById('popupTitle').innerText = `${area} - ${isVac ? 'On Vacation' : 'Active Members'}`;
-            document.getElementById('popupList').innerHTML = list.map(e => `<div class="p-4 border rounded-xl bg-gray-50"><b>${e.name}</b><br><small>${e.role}</small></div>`).join('');
+            document.getElementById('popupList').innerHTML = list.length > 0 ? list.map(e => `
+                <div class="p-4 border rounded-xl ${e.isVacation ? 'bg-red-50 border-red-200' : 'bg-gray-50'}">
+                    <b class="${e.isVacation ? 'line-through text-red-600' : ''}">${e.name}</b>
+                    <br>
+                    <small class="text-gray-500">${e.role} ${e.isVacation ? '(Returns: ' + (e.vacationEnd || 'N/A') + ')' : ''}</small>
+                </div>
+            `).join('') : '<div class="col-span-full text-center text-gray-400 py-10 font-bold uppercase italic">No members found</div>';
+            
             document.getElementById('detailsPopup').classList.remove('hidden');
         }
+
         function closePopup() { document.getElementById('detailsPopup').classList.add('hidden'); }
         function clearFilters() { document.querySelectorAll('.filter-input').forEach(i=>i.value=""); filterTable(); }
         function performFullBackup() {
