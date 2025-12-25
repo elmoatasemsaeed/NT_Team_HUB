@@ -1,12 +1,17 @@
 {
   "employees": [
     {
-      "name": "Mohamed Fawzy111",
-      "role": "Team Lead",
-      "area": "Team Leader",
-      "workingIn": "Team Leader",
       "isVacation": false,
-      "vacationEnd": ""
+      "vacationEnd": "",
+      "name": "Mohamed Fawzy",
+      "role": "Team Lead",
+      "area": [
+        "Team Leader"
+      ],
+      "workingIn": [
+        "Team Leader"
+      ],
+      "custom_1766584922755": ""
     },
     {
       "name": "Sameh Abdellatef",
@@ -418,7 +423,7 @@
       "workingIn": [
         "Iteration"
       ],
-      "custom_1766584922755": "رجب"
+      "custom_1766584922755": "Ø±Ø¬Ø¨"
     },
     {
       "isVacation": false,
@@ -804,5 +809,5 @@
     "gridCols": "6",
     "sectionCols": "2"
   },
-  "timestamp": "2025-12-25T11:18:51.403Z"
+  "timestamp": "2025-12-25T12:03:36.284Z"
 }
