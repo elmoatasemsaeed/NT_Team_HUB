@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Hub - Professional GitHub Sync</title>
+    <title>Team Hub - GitHub Sync Fixed</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -14,66 +14,27 @@
         .google-card { background: white; border: 1px solid #dadce0; border-radius: 8px; transition: all 0.2s; cursor: pointer; }
         .google-card:hover { box-shadow: 0 4px 12px rgba(60,64,67,.15); transform: translateY(-1px); }
         .vacation-row { background-color: #fce8e6 !important; border-left: 4px solid #d93025; }
-        .sort-btn { cursor: pointer; display: inline-flex; align-items: center; gap: 4px; color: #5f6368; font-weight: bold; padding: 8px 0; }
-        .sort-btn:hover { color: #1a73e8; }
-        .large-modal { width: 95%; max-width: 1000px; max-height: 90vh; overflow-y: auto; border-radius: 16px; }
         .admin-only { display: none !important; }
         body[data-user-role="admin"] .admin-only { display: inline-flex !important; }
         body[data-user-role="admin"] .admin-cell { display: table-cell !important; }
         .admin-cell { display: none; }
         .dropdown:hover .dropdown-menu { display: block; }
         .tab-btn.active { color: #1a73e8; border-bottom: 3px solid #1a73e8; background-color: rgba(26, 115, 232, 0.05); }
-
-        .switch { position: relative; display: inline-block; width: 40px; height: 20px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 20px; }
-        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: #10b981; }
-        input:checked + .slider:before { transform: translateX(20px); }
-
-        .capacity-card { min-height: 80px; }
-        .capacity-title { font-size: 10px; }
-        .capacity-value { font-size: 12px; }
-        .chart-container { height: 300px; width: 100%; }
-
-        .hidden-cloud-trigger {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            opacity: 0.15;
-            cursor: pointer;
-            transition: opacity 0.3s;
-        }
-        .hidden-cloud-trigger:hover { opacity: 0.8; color: #1a73e8; }
-
-        @media print {
-            .tab-content { display: block !important; }
-            .tab-navigation, .no-print, .filter-input, .admin-only { display: none !important; }
-            .vacation-row { background-color: #fce8e6 !important; -webkit-print-color-adjust: exact; }
-            tr.hidden-by-filter { display: none !important; }
-            body { padding: 0; background: white; }
-            .google-card { border: none; box-shadow: none; }
-        }
+        .large-modal { width: 95%; max-width: 1000px; max-height: 90vh; overflow-y: auto; border-radius: 16px; }
     </style>
 </head>
 <body class="p-4 md:p-6">
 
     <div id="loginOverlay" class="fixed inset-0 z-[9999] bg-white flex items-center justify-center">
-        <div class="relative text-center w-full max-sm:px-4 max-w-sm p-8 border rounded-2xl shadow-sm bg-white">
+        <div class="text-center w-full max-w-sm p-8 border rounded-2xl shadow-sm bg-white">
             <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 text-white shadow-xl">
                 <i data-lucide="shield-check" class="w-10 h-10"></i>
             </div>
             <h2 class="text-2xl mb-8 font-bold text-gray-800">Team Hub Access</h2>
-            <div id="syncStatus" class="mb-4 text-xs font-bold text-amber-600 animate-pulse">Connecting to GitHub...</div>
+            <div id="syncStatus" class="mb-4 text-xs font-bold text-amber-600 animate-pulse">Initializing System...</div>
             <input type="text" id="userInput" placeholder="Username" class="w-full p-4 border rounded-xl mb-3 outline-none focus:ring-2 focus:ring-blue-500">
-            <input type="password" id="passInput" placeholder="Password" onkeypress="if(event.key === 'Enter') checkLogin()" class="w-full p-4 border rounded-xl mb-4 outline-none focus:ring-2 focus:ring-blue-500">
-            
-            <div class="flex items-center gap-2 mb-6 px-1">
-                <input type="checkbox" id="rememberMe" class="w-4 h-4 accent-blue-600 cursor-pointer">
-                <label for="rememberMe" class="text-sm text-gray-600 cursor-pointer select-none font-medium">Remember me on this device</label>
-            </div>
-
-            <button id="loginBtn" onclick="checkLogin()" disabled class="w-full bg-gray-400 text-white py-3 rounded-xl font-bold transition-all cursor-not-allowed">Wait for Sync...</button>
+            <input type="password" id="passInput" placeholder="Password" class="w-full p-4 border rounded-xl mb-4 outline-none focus:ring-2 focus:ring-blue-500">
+            <button id="loginBtn" onclick="checkLogin()" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold">Unlock System</button>
             <p id="loginError" class="text-red-600 mt-4 text-sm hidden font-medium">Invalid Username or Password!</p>
         </div>
     </div>
@@ -81,105 +42,58 @@
     <div id="mainContent" class="hidden max-w-[1600px] mx-auto">
         <header class="flex flex-col md:flex-row-reverse justify-between items-center mb-6 pb-4 border-b gap-4 no-print">
             <div class="flex items-center gap-2">
-                <span id="displayRole" class="mr-4 px-3 py-1 bg-blue-50 text-blue-700 text-[10px] rounded-full border font-black uppercase tracking-widest"></span>
+                <span id="displayRole" class="px-3 py-1 bg-blue-50 text-blue-700 text-[10px] rounded-full border font-black uppercase"></span>
                 <span class="text-2xl font-bold text-[#1a73e8]">Team Hub</span>
             </div>
             
             <div class="flex flex-wrap gap-2 items-center">
                 <div class="relative dropdown admin-only">
-                    <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded shadow-sm hover:bg-gray-200 transition-all font-bold flex items-center gap-2">
+                    <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded shadow-sm hover:bg-gray-200 font-bold flex items-center gap-2">
                         <i data-lucide="menu" class="w-4 h-4"></i> SETUP
                     </button>
                     <div class="dropdown-menu absolute left-0 mt-0 w-48 bg-white border rounded-xl shadow-xl hidden z-[2000]">
-                        <button onclick="openGitHubSetupModal()" class="w-full text-left px-4 py-3 hover:bg-emerald-50 flex items-center gap-2 text-sm border-b text-emerald-700 font-bold">
-                            <i data-lucide="github" class="w-4 h-4"></i> GitHub Config
-                        </button>
-                        <button onclick="openDesignModal()" class="w-full text-left px-4 py-3 hover:bg-amber-50 flex items-center gap-2 text-sm border-b text-amber-700 font-bold">
-                            <i data-lucide="palette" class="w-4 h-4"></i> Design Layout
-                        </button>
-                        <button onclick="openSetupModal()" class="w-full text-left px-4 py-3 hover:bg-blue-50 flex items-center gap-2 text-sm border-b">
-                            <i data-lucide="settings" class="w-4 h-4 text-blue-600"></i> Fields Setup
-                        </button>
-                        <button onclick="openUsersModal()" class="w-full text-left px-4 py-3 hover:bg-blue-50 flex items-center gap-2 text-sm">
-                            <i data-lucide="users" class="w-4 h-4 text-purple-600"></i> Setup Users
-                        </button>
+                        <button onclick="openDesignModal()" class="w-full text-left px-4 py-3 hover:bg-amber-50 flex items-center gap-2 text-sm border-b text-amber-700 font-bold"><i data-lucide="palette" class="w-4 h-4"></i> Design Layout</button>
+                        <button onclick="openSetupModal()" class="w-full text-left px-4 py-3 hover:bg-blue-50 flex items-center gap-2 text-sm border-b"><i data-lucide="settings" class="w-4 h-4 text-blue-600"></i> Fields Setup</button>
+                        <button onclick="openUsersModal()" class="w-full text-left px-4 py-3 hover:bg-blue-50 flex items-center gap-2 text-sm"><i data-lucide="users" class="w-4 h-4 text-purple-600"></i> Setup Users</button>
                     </div>
                 </div>
-
-                <div class="relative dropdown admin-only border-l pl-2">
-                    <button class="bg-emerald-50 text-emerald-700 px-4 py-2 rounded shadow-sm hover:bg-emerald-100 transition-all font-bold flex items-center gap-2 border border-emerald-200">
-                        <i data-lucide="database" class="w-4 h-4"></i> BACKUP & SYNC
-                    </button>
-                    <div class="dropdown-menu absolute left-0 mt-0 w-64 bg-white border rounded-xl shadow-xl hidden z-[2000] p-2">
-                        <button onclick="syncToGitHub(true)" class="w-full text-left px-3 py-3 hover:bg-emerald-50 flex items-center gap-2 text-sm rounded-lg transition-all">
-                            <i data-lucide="refresh-cw" class="w-4 h-4 text-emerald-600"></i> Force Sync to Cloud
-                        </button>
-                        <button onclick="performFullBackup()" class="w-full text-left px-3 py-3 hover:bg-blue-50 flex items-center gap-2 text-sm rounded-lg transition-all">
-                            <i data-lucide="download-cloud" class="w-4 h-4 text-blue-600"></i> Local JSON Backup
-                        </button>
-                    </div>
-                </div>
-
-                <button onclick="window.print()" class="px-4 py-2 border rounded hover:bg-gray-50 flex items-center gap-2"><i data-lucide="printer" class="w-4 h-4 text-gray-600"></i> Print</button>
-                <button onclick="openModal()" class="admin-only bg-[#1a73e8] text-white px-6 py-2 rounded shadow hover:bg-blue-700 transition-all font-medium">+ Add Member</button>
+                <button onclick="syncToGitHub(true)" class="admin-only bg-emerald-50 text-emerald-700 px-4 py-2 rounded border border-emerald-200 font-bold flex items-center gap-2">
+                    <i data-lucide="refresh-cw" class="w-4 h-4"></i> SYNC
+                </button>
+                <button onclick="window.print()" class="px-4 py-2 border rounded hover:bg-gray-50 flex items-center gap-2"><i data-lucide="printer" class="w-4 h-4"></i> Print</button>
+                <button onclick="openModal()" class="admin-only bg-[#1a73e8] text-white px-6 py-2 rounded shadow hover:bg-blue-700 font-medium">+ Add Member</button>
             </div>
         </header>
 
-        <div class="flex border-b border-gray-200 mb-6 no-print tab-navigation">
-            <button onclick="switchTab('capacityTab', this)" id="defaultTab" class="tab-btn px-6 py-3 font-bold text-gray-500 border-b-2 border-transparent hover:text-blue-600 transition-all active">
-                <div class="flex items-center gap-2"><i data-lucide="layout-dashboard" class="w-4 h-4"></i> Capacity Overview</div>
-            </button>
-            <button onclick="switchTab('tableTab', this)" class="tab-btn px-6 py-3 font-bold text-gray-500 border-b-2 border-transparent hover:text-blue-600 transition-all">
-                <div class="flex items-center gap-2"><i data-lucide="list" class="w-4 h-4"></i> Team Table</div>
-            </button>
+        <div class="flex border-b border-gray-200 mb-6 no-print">
+            <button onclick="switchTab('capacityTab', this)" id="defaultTab" class="tab-btn px-6 py-3 font-bold text-gray-500 border-b-2 border-transparent active">Capacity Overview</button>
+            <button onclick="switchTab('tableTab', this)" class="tab-btn px-6 py-3 font-bold text-gray-500 border-b-2 border-transparent">Team Table</button>
         </div>
 
         <div id="capacityTab" class="tab-content">
-            <div id="capacityMainGrid" class="grid grid-cols-1 gap-6 mb-8 no-print">
+            <div id="capacityMainGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div class="p-4 border rounded-2xl bg-white shadow-sm">
-                    <h3 class="text-blue-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest capacity-section-title">
-                        <span class="flex items-center gap-2"><i data-lucide="code" class="w-4 h-4"></i> Developers Capacity</span>
-                        <span id="devTotalLabel" class="bg-blue-100 px-2 py-0.5 rounded text-blue-800">Total: 0</span>
+                    <h3 class="text-blue-700 font-bold mb-3 border-b pb-2 uppercase text-[10px] tracking-widest flex justify-between">
+                        <span>Developers Capacity</span>
+                        <span id="devTotalLabel" class="bg-blue-100 px-2 rounded"></span>
                     </h3>
-                    <div id="devCapacityGrid" class="grid gap-2 mb-4"></div>
+                    <div id="devCapacityGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2"></div>
                 </div>
                 <div class="p-4 border rounded-2xl bg-white shadow-sm">
-                    <h3 class="text-green-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest capacity-section-title">
-                        <span class="flex items-center gap-2"><i data-lucide="check-square" class="w-4 h-4"></i> Testers Capacity</span>
-                        <span id="testerTotalLabel" class="bg-green-100 px-2 py-0.5 rounded text-green-800">Total: 0</span>
+                    <h3 class="text-green-700 font-bold mb-3 border-b pb-2 uppercase text-[10px] tracking-widest flex justify-between">
+                        <span>Testers Capacity</span>
+                        <span id="testerTotalLabel" class="bg-green-100 px-2 rounded"></span>
                     </h3>
-                    <div id="testerCapacityGrid" class="grid gap-2 mb-4"></div>
+                    <div id="testerCapacityGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2"></div>
                 </div>
             </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8 no-print">
-                <div class="p-6 border rounded-2xl bg-white shadow-sm flex flex-col items-center">
-                    <h3 class="text-blue-700 font-bold mb-6 text-center uppercase text-xs tracking-widest chart-title-font">Developers Distribution</h3>
-                    <div class="relative chart-container flex justify-center">
-                        <canvas id="devPieChart"></canvas>
-                    </div>
-                </div>
-                <div class="p-6 border rounded-2xl bg-white shadow-sm flex flex-col items-center">
-                    <h3 class="text-green-700 font-bold mb-6 text-center uppercase text-xs tracking-widest chart-title-font">Testers Distribution</h3>
-                    <div class="relative chart-container flex justify-center">
-                        <canvas id="testerPieChart"></canvas>
-                    </div>
-                </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="p-6 border rounded-2xl bg-white shadow-sm"><canvas id="devPieChart"></canvas></div>
+                <div class="p-6 border rounded-2xl bg-white shadow-sm"><canvas id="testerPieChart"></canvas></div>
             </div>
         </div>
 
         <div id="tableTab" class="tab-content hidden">
-            <div class="flex justify-between items-center mb-4 no-print">
-                <h3 class="text-lg font-bold text-gray-700">Team Members List</h3>
-                <div class="flex gap-2">
-                    <button onclick="clearFilters()" class="px-4 py-2 border rounded hover:bg-red-50 flex items-center gap-2 text-red-600 font-medium">
-                        <i data-lucide="filter-x" class="w-4 h-4"></i> Clear Filters
-                    </button>
-                    <button onclick="exportToExcel()" class="px-4 py-2 border rounded hover:bg-green-50 flex items-center gap-2 text-green-700 font-medium">
-                        <i data-lucide="file-spreadsheet" class="w-4 h-4"></i> Export Excel
-                    </button>
-                </div>
-            </div>
             <div class="google-card overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-sm" id="employeeTable">
@@ -191,124 +105,319 @@
         </div>
     </div>
 
-    <div id="githubSetupModal" class="fixed inset-0 z-[1200] bg-black/50 hidden flex items-center justify-center p-4">
-        <div class="bg-white large-modal max-w-xl p-8 shadow-2xl">
-            <div class="flex justify-between items-center mb-6 border-b pb-4">
-                <h3 class="text-xl font-bold text-gray-800 uppercase flex items-center gap-2">
-                    <i data-lucide="github" class="text-emerald-600"></i> GitHub Database Configuration
-                </h3>
-                <button onclick="closeGitHubSetupModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button>
-            </div>
-            <div class="p-4 bg-amber-50 text-amber-700 rounded-lg text-xs mb-4">
-                Note: These settings are hardcoded for current session. Update the source code to change them permanently.
-            </div>
-            <div class="space-y-4 mb-6">
-                <div>
-                    <label class="block text-xs font-bold text-gray-500 mb-1">GITHUB REPOSITORY URL</label>
-                    <input type="text" id="gh_repoUrl" class="w-full p-3 border rounded-xl bg-gray-50 outline-none">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-500 mb-1">BRANCH NAME</label>
-                    <input type="text" id="gh_branch" class="w-full p-3 border rounded-xl bg-gray-50 outline-none">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-500 mb-1">FILE PATH</label>
-                    <input type="text" id="gh_filePath" class="w-full p-3 border rounded-xl bg-gray-50 outline-none">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-500 mb-1">TOKEN</label>
-                    <input type="password" id="gh_token" class="w-full p-3 border rounded-xl bg-gray-50 outline-none">
-                </div>
-            </div>
-            <button onclick="closeGitHubSetupModal()" class="w-full py-3 bg-gray-100 text-gray-600 rounded-xl font-bold hover:bg-gray-200 uppercase">Close</button>
-        </div>
-    </div>
-
-    <div id="designModal" class="fixed inset-0 z-[1200] bg-black/50 hidden flex items-center justify-center p-4">
-        <div class="bg-white large-modal max-w-2xl p-8 shadow-2xl">
-            <div class="flex justify-between items-center mb-6 border-b pb-4">
-                <h3 class="text-xl font-bold text-gray-800 uppercase flex items-center gap-2">
-                    <i data-lucide="palette" class="text-amber-600"></i> Layout & Design Controls
-                </h3>
-                <button onclick="closeDesignModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                <div class="space-y-4">
-                    <h4 class="font-bold text-blue-700 border-b pb-1 text-sm">CAPACITY CARDS & GRID</h4>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-500 mb-1">CARDS PER ROW</label>
-                        <input type="range" id="control_gridCols" min="1" max="6" value="6" oninput="applyDesign()" class="w-full accent-blue-600">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-500 mb-1">SECTION LAYOUT</label>
-                        <input type="range" id="control_sectionCols" min="1" max="2" value="2" oninput="applyDesign()" class="w-full accent-blue-600">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-500 mb-1">CARD MIN-HEIGHT (px)</label>
-                        <input type="range" id="control_cardHeight" min="50" max="200" value="80" oninput="applyDesign()" class="w-full">
-                    </div>
-                    <div class="grid grid-cols-2 gap-2">
-                        <div><label class="block text-[10px] font-bold text-gray-500 mb-1">TITLE FONT</label><input type="number" id="control_titleFont" value="9" oninput="applyDesign()" class="w-full p-2 border rounded"></div>
-                        <div><label class="block text-[10px] font-bold text-gray-500 mb-1">VALUES FONT</label><input type="number" id="control_valueFont" value="12" oninput="applyDesign()" class="w-full p-2 border rounded"></div>
-                    </div>
-                </div>
-                <div class="space-y-4">
-                    <h4 class="font-bold text-emerald-700 border-b pb-1 text-sm">CHARTS DIMENSIONS</h4>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-500 mb-1">CHART HEIGHT (px)</label>
-                        <input type="range" id="control_chartHeight" min="150" max="600" value="300" oninput="applyDesign()" class="w-full">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-500 mb-1">CHART WIDTH (%)</label>
-                        <input type="range" id="control_chartWidth" min="50" max="100" value="100" oninput="applyDesign()" class="w-full">
-                    </div>
-                </div>
-            </div>
-            <div class="flex gap-3">
-                <button onclick="saveDesign()" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold shadow-lg hover:bg-blue-700">SAVE DESIGN</button>
-                <button onclick="resetDesign()" class="py-3 px-6 bg-gray-100 text-gray-600 rounded-xl font-bold hover:bg-gray-200">RESET</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="setupModal" class="fixed inset-0 z-[1100] bg-black/50 hidden flex items-center justify-center p-4">
-        <div class="bg-white large-modal p-8 shadow-2xl">
-            <div class="flex justify-between items-center mb-6"><h3 class="text-2xl font-bold text-gray-800 uppercase">Fields Setup</h3><button onclick="closeSetupModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button></div>
-            <div id="fieldsList" class="space-y-3 mb-6 max-h-[50vh] overflow-y-auto pr-2"></div>
-            <div class="flex flex-col md:flex-row gap-4">
-                <button onclick="addNewFieldSetup()" class="flex-1 py-3 bg-emerald-600 text-white rounded-xl font-bold uppercase">+ ADD NEW FIELD</button>
-                <button onclick="saveSetup()" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold uppercase">SAVE & SYNC</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="usersModal" class="fixed inset-0 z-[1100] bg-black/50 hidden flex items-center justify-center p-4">
-        <div class="bg-white large-modal p-8 shadow-2xl max-w-3xl">
-            <div class="flex justify-between items-center mb-6"><h3 class="text-2xl font-bold text-gray-800 uppercase">User Management</h3><button onclick="closeUsersModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button></div>
-            <div id="usersList" class="space-y-3 mb-6 max-h-[50vh] overflow-y-auto pr-2"></div>
-            <div class="flex flex-col md:flex-row gap-4">
-                <button onclick="addNewUser()" class="flex-1 py-3 bg-emerald-600 text-white rounded-xl font-bold uppercase">+ ADD NEW USER</button>
-                <button onclick="saveUsers()" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold uppercase">SAVE USERS</button>
-            </div>
-        </div>
-    </div>
-
     <div id="modal" class="fixed inset-0 z-[1000] bg-black/50 hidden flex items-center justify-center p-4">
         <div class="bg-white large-modal p-10 shadow-2xl">
-            <h3 class="text-2xl font-bold mb-8 text-gray-800">Member Configuration</h3>
+            <h3 class="text-2xl font-bold mb-8">Member Configuration</h3>
             <form id="employeeForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <input type="hidden" id="editIndex">
                 <div id="dynamicFieldsContainer" class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6"></div>
-                <div class="md:col-span-2 bg-rose-50 p-6 rounded-2xl border border-rose-100 flex flex-wrap items-center justify-between gap-4">
-                    <div class="flex items-center gap-4"><span class="font-bold text-rose-700">Set Vacation:</span><input type="checkbox" id="empIsVacation" class="w-6 h-6 accent-rose-600"></div>
-                    <div class="flex items-center gap-4"><span class="font-bold text-rose-700">Return Date:</span><input type="date" id="empVacationEnd" class="p-2 border rounded-xl outline-none"></div>
+                <div class="md:col-span-2 bg-rose-50 p-6 rounded-2xl border flex flex-wrap items-center justify-between gap-4">
+                    <div class="flex items-center gap-4"><span>Vacation:</span><input type="checkbox" id="empIsVacation" class="w-6 h-6"></div>
+                    <div class="flex items-center gap-4"><span>Return Date:</span><input type="date" id="empVacationEnd" class="p-2 border rounded-xl"></div>
                 </div>
                 <div class="md:col-span-2 flex gap-4 mt-4">
-                    <button type="button" onclick="closeModal()" class="flex-1 py-4 bg-gray-100 text-gray-600 rounded-xl font-bold uppercase">Cancel</button>
-                    <button type="submit" class="flex-1 py-4 bg-blue-600 text-white rounded-xl font-bold uppercase shadow-lg">Save & Sync</button>
+                    <button type="button" onclick="closeModal()" class="flex-1 py-4 bg-gray-100 rounded-xl font-bold">Cancel</button>
+                    <button type="submit" class="flex-1 py-4 bg-blue-600 text-white rounded-xl font-bold">Save Member</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <div id="detailsPopup" class="fixed inset-0 z-[2000] bg-black/50 hidden flex items-center justify
+    <div id="designModal" class="fixed inset-0 z-[1200] bg-black/50 hidden flex items-center justify-center p-4">
+        <div class="bg-white large-modal max-w-2xl p-8 shadow-2xl">
+            <h3 class="text-xl font-bold mb-6 border-b pb-4">Design Controls</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div>
+                    <label class="block text-xs font-bold mb-1">CARDS PER ROW</label>
+                    <input type="range" id="control_gridCols" min="1" max="6" value="6" oninput="applyDesign()" class="w-full">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">SECTION COLUMNS (1-2)</label>
+                    <input type="range" id="control_sectionCols" min="1" max="2" value="2" oninput="applyDesign()" class="w-full">
+                </div>
+            </div>
+            <button onclick="saveDesign()" class="w-full py-3 bg-blue-600 text-white rounded-xl font-bold">SAVE DESIGN & CLOUD SYNC</button>
+            <button onclick="closeDesignModal()" class="w-full mt-2 py-3 bg-gray-100 rounded-xl">Close</button>
+        </div>
+    </div>
+
+    <div id="setupModal" class="fixed inset-0 z-[1100] bg-black/50 hidden flex items-center justify-center p-4">
+        <div class="bg-white large-modal p-8 shadow-2xl">
+            <h3 class="text-2xl font-bold mb-6">Fields Setup</h3>
+            <div id="fieldsList" class="space-y-3 mb-6"></div>
+            <div class="flex gap-4">
+                <button onclick="addNewFieldSetup()" class="flex-1 py-3 bg-emerald-600 text-white rounded-xl font-bold">+ ADD FIELD</button>
+                <button onclick="saveSetup()" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold">SAVE & SYNC</button>
+            </div>
+            <button onclick="closeSetupModal()" class="w-full mt-4 py-2 text-gray-400">Close</button>
+        </div>
+    </div>
+
+    <div id="usersModal" class="fixed inset-0 z-[1100] bg-black/50 hidden flex items-center justify-center p-4">
+        <div class="bg-white large-modal p-8 shadow-2xl max-w-3xl">
+            <h3 class="text-2xl font-bold mb-6">User Management</h3>
+            <div id="usersList" class="space-y-3 mb-6"></div>
+            <div class="flex gap-4">
+                <button onclick="addNewUser()" class="flex-1 py-3 bg-emerald-600 text-white rounded-xl font-bold">+ ADD USER</button>
+                <button onclick="saveUsers()" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold">SAVE USERS</button>
+            </div>
+            <button onclick="closeUsersModal()" class="w-full mt-4 py-2 text-gray-400">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const githubConfig = {
+            repoUrl: 'https://github.com/elmoatasemsaeed/NT_Team_HUB',
+            branch: 'main',
+            filePath: 'data.json',
+            token: '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',
+            fileSha: null
+        };
+
+        let employees = [];
+        let fieldsConfig = [
+            { id: 'name', label: 'Name', type: 'text' },
+            { id: 'role', label: 'Role', type: 'select', options: ['Dev', 'Senior', 'Tester', 'Senior tester', 'Team Leader'] },
+            { id: 'area', label: 'Area', type: 'multiselect', options: ['Front end', 'Back end', 'Mobile', 'Quality', 'DevOps'] }
+        ];
+        let users = [{ username: 'admin', password: '123', role: 'admin' }];
+        let designSettings = { cardHeight: 80, gridCols: 6, sectionCols: 2, titleFont: 9, valueFont: 12 };
+        let currentUserRole = null;
+        let devChart = null, testerChart = null;
+
+        // --- CORE FUNCTIONS ---
+        window.onload = async () => {
+            lucide.createIcons();
+            await loadFromGitHub();
+            renderAll();
+        };
+
+        async function loadFromGitHub() {
+            try {
+                const repoPath = githubConfig.repoUrl.replace('https://github.com/', '').replace(/\/$/, '');
+                const apiUrl = `https://api.github.com/repos/${repoPath}/contents/${githubConfig.filePath}`;
+                const res = await fetch(apiUrl, { headers: { 'Authorization': `token ${githubConfig.token}` } });
+                
+                if (res.ok) {
+                    const data = await res.json();
+                    githubConfig.fileSha = data.sha;
+                    const content = JSON.parse(decodeURIComponent(escape(atob(data.content))));
+                    employees = content.employees || [];
+                    fieldsConfig = content.fields || fieldsConfig;
+                    users = content.users || users;
+                    designSettings = content.design || designSettings;
+                    document.getElementById('syncStatus').innerText = "GitHub Connected ✓";
+                    document.getElementById('syncStatus').className = "mb-4 text-xs font-bold text-emerald-600";
+                }
+            } catch (e) { console.error("Load failed", e); }
+        }
+
+        async function syncToGitHub(manual = false) {
+            const fullData = { employees, fields: fieldsConfig, users, design: designSettings };
+            const repoPath = githubConfig.repoUrl.replace('https://github.com/', '').replace(/\/$/, '');
+            const apiUrl = `https://api.github.com/repos/${repoPath}/contents/${githubConfig.filePath}`;
+            
+            try {
+                const res = await fetch(apiUrl, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `token ${githubConfig.token}`, 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: "Update data",
+                        content: btoa(unescape(encodeURIComponent(JSON.stringify(fullData, null, 2)))),
+                        sha: githubConfig.fileSha,
+                        branch: githubConfig.branch
+                    })
+                });
+                if (res.ok) {
+                    const resData = await res.json();
+                    githubConfig.fileSha = resData.content.sha;
+                    if(manual) alert("Cloud Sync Success!");
+                }
+            } catch (e) { alert("Sync Error"); }
+        }
+
+        function renderAll() {
+            renderTable();
+            updateCapacity();
+            renderDynamicForm();
+            applyDesign();
+            lucide.createIcons();
+        }
+
+        // --- UI LOGIC ---
+        function checkLogin() {
+            const u = document.getElementById('userInput').value.trim().toLowerCase();
+            const p = document.getElementById('passInput').value;
+            const user = users.find(x => x.username.toLowerCase() === u && x.password === p);
+            if (user) {
+                currentUserRole = user.role;
+                document.body.setAttribute('data-user-role', currentUserRole);
+                document.getElementById('loginOverlay').style.display = 'none';
+                document.getElementById('mainContent').classList.remove('hidden');
+                document.getElementById('displayRole').innerText = user.username;
+                renderAll();
+            } else {
+                document.getElementById('loginError').classList.remove('hidden');
+            }
+        }
+
+        function switchTab(id, btn) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).classList.remove('hidden');
+            btn.classList.add('active');
+            if(id === 'capacityTab') updateCapacity();
+        }
+
+        function applyDesign() {
+            const d = designSettings;
+            const s = document.getElementById('dynamicStyles');
+            // Re-inject core styles + dynamic
+            s.innerHTML += `
+                .capacity-card { min-height: ${d.cardHeight}px !important; }
+                #capacityMainGrid { grid-template-columns: repeat(${d.sectionCols}, minmax(0, 1fr)) !important; }
+                @media (min-width: 1024px) { 
+                    #devCapacityGrid, #testerCapacityGrid { grid-template-columns: repeat(${d.gridCols}, minmax(0, 1fr)) !important; } 
+                }
+            `;
+        }
+
+        function renderTable() {
+            const header = document.getElementById('tableHeaderRow');
+            header.innerHTML = fieldsConfig.map(f => `<th class="py-4 px-6">${f.label}</th>`).join('') + `<th>Vacation</th><th class="admin-cell">Actions</th>`;
+            
+            const body = document.getElementById('employeeTableBody');
+            body.innerHTML = employees.map((emp, i) => `
+                <tr class="${emp.isVacation ? 'vacation-row' : ''}">
+                    ${fieldsConfig.map(f => `<td class="py-4 px-6">${emp[f.id] || ''}</td>`).join('')}
+                    <td class="py-4 px-6">${emp.isVacation ? 'VAC' : 'ACT'}</td>
+                    <td class="py-4 px-6 admin-cell">
+                        <button onclick="editEmp(${i})" class="text-blue-600 mr-2">Edit</button>
+                        <button onclick="deleteEmp(${i})" class="text-red-500">Del</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function updateCapacity() {
+            const areaField = fieldsConfig.find(f => f.id === 'area');
+            const areas = areaField ? areaField.options : [];
+            
+            const devGrid = document.getElementById('devCapacityGrid');
+            devGrid.innerHTML = areas.map(a => {
+                const count = employees.filter(e => (Array.isArray(e.area) ? e.area.includes(a) : e.area === a) && (e.role==='Dev' || e.role==='Senior') && !e.isVacation).length;
+                return `<div class="google-card p-2 text-center capacity-card">
+                    <div class="text-[9px] font-bold">${a}</div>
+                    <div class="text-xl font-bold text-blue-600">${count}</div>
+                </div>`;
+            }).join('');
+
+            const testGrid = document.getElementById('testerCapacityGrid');
+            testGrid.innerHTML = areas.map(a => {
+                const count = employees.filter(e => (Array.isArray(e.area) ? e.area.includes(a) : e.area === a) && (e.role==='Tester' || e.role==='Senior tester') && !e.isVacation).length;
+                return `<div class="google-card p-2 text-center capacity-card">
+                    <div class="text-[9px] font-bold">${a}</div>
+                    <div class="text-xl font-bold text-green-600">${count}</div>
+                </div>`;
+            }).join('');
+            
+            renderCharts(areas);
+        }
+
+        function renderCharts(areas) {
+            const devData = areas.map(a => employees.filter(e => (Array.isArray(e.area) ? e.area.includes(a) : e.area === a) && (e.role==='Dev' || e.role==='Senior')).length);
+            const testData = areas.map(a => employees.filter(e => (Array.isArray(e.area) ? e.area.includes(a) : e.area === a) && (e.role==='Tester' || e.role==='Senior tester')).length);
+
+            if(devChart) devChart.destroy();
+            if(testerChart) testerChart.destroy();
+
+            devChart = new Chart(document.getElementById('devPieChart'), {
+                type: 'doughnut', data: { labels: areas, datasets: [{ data: devData, backgroundColor: ['#4285F4', '#34A853', '#FBBC05', '#EA4335', '#A142F4'] }] }
+            });
+            testerChart = new Chart(document.getElementById('testerPieChart'), {
+                type: 'doughnut', data: { labels: areas, datasets: [{ data: testData, backgroundColor: ['#4285F4', '#34A853', '#FBBC05', '#EA4335', '#A142F4'] }] }
+            });
+        }
+
+        function renderDynamicForm() {
+            const container = document.getElementById('dynamicFieldsContainer');
+            container.innerHTML = fieldsConfig.map(f => {
+                let input = `<input type="text" id="field_${f.id}" class="w-full p-3 border rounded-xl bg-gray-50">`;
+                if(f.type === 'select') input = `<select id="field_${f.id}" class="w-full p-3 border rounded-xl bg-gray-50">${f.options.map(o => `<option value="${o}">${o}</option>`).join('')}</select>`;
+                if(f.type === 'multiselect') input = `<div class="grid grid-cols-2 gap-2 p-3 border rounded-xl bg-gray-50">${f.options.map(o => `<label class="text-xs"><input type="checkbox" value="${o}" class="multi-val-${f.id}"> ${o}</label>`).join('')}</div>`;
+                return `<div><label class="text-[10px] font-bold uppercase">${f.label}</label>${input}</div>`;
+            }).join('');
+        }
+
+        // --- MODAL ACTIONS ---
+        function openModal() { document.getElementById('modal').classList.remove('hidden'); }
+        function closeModal() { document.getElementById('modal').classList.add('hidden'); document.getElementById('employeeForm').reset(); document.getElementById('editIndex').value = ""; }
+        
+        document.getElementById('employeeForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const idx = document.getElementById('editIndex').value;
+            const emp = { isVacation: document.getElementById('empIsVacation').checked, vacationEnd: document.getElementById('empVacationEnd').value };
+            fieldsConfig.forEach(f => {
+                if(f.type === 'multiselect') emp[f.id] = Array.from(document.querySelectorAll(`.multi-val-${f.id}:checked`)).map(c => c.value);
+                else emp[f.id] = document.getElementById(`field_${f.id}`).value;
+            });
+            if(idx !== "") employees[idx] = emp; else employees.push(emp);
+            closeModal(); renderAll(); await syncToGitHub();
+        };
+
+        function editEmp(i) {
+            const emp = employees[i];
+            document.getElementById('editIndex').value = i;
+            fieldsConfig.forEach(f => {
+                if(f.type === 'multiselect') {
+                    const vals = Array.isArray(emp[f.id]) ? emp[f.id] : [];
+                    document.querySelectorAll(`.multi-val-${f.id}`).forEach(c => c.checked = vals.includes(c.value));
+                } else document.getElementById(`field_${f.id}`).value = emp[f.id] || "";
+            });
+            document.getElementById('empIsVacation').checked = emp.isVacation;
+            openModal();
+        }
+
+        function deleteEmp(i) { if(confirm('Delete?')) { employees.splice(i,1); renderAll(); syncToGitHub(); } }
+
+        // --- SETUP & DESIGN HANDLERS ---
+        function openDesignModal() { document.getElementById('designModal').classList.remove('hidden'); }
+        function closeDesignModal() { document.getElementById('designModal').classList.add('hidden'); }
+        async function saveDesign() {
+            designSettings.gridCols = document.getElementById('control_gridCols').value;
+            designSettings.sectionCols = document.getElementById('control_sectionCols').value;
+            applyDesign(); await syncToGitHub(); alert('Design Synced');
+        }
+
+        function openSetupModal() {
+            const list = document.getElementById('fieldsList');
+            list.innerHTML = fieldsConfig.map((f, i) => `
+                <div class="flex gap-2 items-center p-2 border rounded">
+                    <input type="text" value="${f.label}" onchange="fieldsConfig[${i}].label=this.value" class="flex-1 p-1">
+                    <button onclick="fieldsConfig.splice(${i},1);openSetupModal()" class="text-red-500">Del</button>
+                </div>
+            `).join('');
+            document.getElementById('setupModal').classList.remove('hidden');
+        }
+        function closeSetupModal() { document.getElementById('setupModal').classList.add('hidden'); }
+        function addNewFieldSetup() { fieldsConfig.push({id: 'new_'+Date.now(), label:'New Field', type:'text'}); openSetupModal(); }
+        async function saveSetup() { await syncToGitHub(); location.reload(); }
+
+        function openUsersModal() {
+            const list = document.getElementById('usersList');
+            list.innerHTML = users.map((u, i) => `
+                <div class="flex gap-2 border p-2 rounded">
+                    <input type="text" value="${u.username}" onchange="users[${i}].username=this.value" class="w-1/3 p-1">
+                    <input type="text" value="${u.password}" onchange="users[${i}].password=this.value" class="w-1/3 p-1">
+                    <select onchange="users[${i}].role=this.value" class="w-1/3"><option value="admin" ${u.role==='admin'?'selected':''}>Admin</option><option value="user" ${u.role==='user'?'selected':''}>User</option></select>
+                </div>
+            `).join('');
+            document.getElementById('usersModal').classList.remove('hidden');
+        }
+        function closeUsersModal() { document.getElementById('usersModal').classList.add('hidden'); }
+        function addNewUser() { users.push({username:'new', password:'123', role:'user'}); openUsersModal(); }
+        async function saveUsers() { await syncToGitHub(); alert('Users Saved'); }
+    </script>
+</body>
+</html>
