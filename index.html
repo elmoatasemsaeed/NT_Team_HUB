@@ -16,6 +16,8 @@
         .vacation-row { background-color: #fce8e6 !important; border-left: 4px solid #d93025; }
         .sort-btn { cursor: pointer; display: inline-flex; items-center; gap: 4px; color: #5f6368; font-weight: bold; padding: 8px 0; }
         .sort-btn:hover { color: #1a73e8; }
+        .sortable-header { cursor: pointer; transition: background 0.2s; }
+        .sortable-header:hover { background-color: #f1f3f4; }
         .large-modal { width: 95%; max-width: 1000px; max-height: 90vh; overflow-y: auto; border-radius: 16px; }
         .admin-only { display: none !important; }
         body[data-user-role="admin"] .admin-only { display: inline-flex !important; }
@@ -246,7 +248,7 @@
         const VISIBILITY_KEY = 'team_hub_visibility_config';
         const CHARTS_KEY = 'team_hub_charts_config';
         const GITHUB_LOCAL_KEY = 'team_hub_github_creds';
-        const REMEMBER_KEY = 'team_hub_remembered_user'; // Key for Remember Me
+        const REMEMBER_KEY = 'team_hub_remembered_user';
 
         let fieldsConfig = [
             { id: 'name', label: 'Full Name', type: 'text', required: true, showInTable: true },
@@ -266,9 +268,9 @@
         let currentUserRole = null;
         let activeCharts = [];
         let currentEditingFieldIndex = null;
+        let currentSort = { column: null, direction: 'asc' };
 
         // --- Logic: Authentication & Synchronization ---
-
         async function loadFromGitHub(manual = false) {
             const savedCreds = JSON.parse(localStorage.getItem(GITHUB_LOCAL_KEY));
             if (savedCreds) Object.assign(githubConfig, savedCreds);
@@ -313,8 +315,6 @@
             } catch (err) { console.error(err); }
         }
 
-        // --- AUTHENTICATION WITH REMEMBER ME ---
-
         function checkLogin() {
             const userVal = document.getElementById('userInput').value.trim().toLowerCase();
             const passVal = document.getElementById('passInput').value;
@@ -326,7 +326,6 @@
             const foundUser = users.find(u => u.username.toLowerCase() === userVal && u.password === passVal);
             
             if (foundUser) {
-                // Handle Remember Me
                 if (rememberMe) {
                     localStorage.setItem(REMEMBER_KEY, JSON.stringify({ u: userVal, p: passVal }));
                 } else {
@@ -345,7 +344,7 @@
             }
         }
 
-        function loadRememberedUser() {
+        window.addEventListener('DOMContentLoaded', () => {
             const saved = localStorage.getItem(REMEMBER_KEY);
             if (saved) {
                 const creds = JSON.parse(saved);
@@ -353,11 +352,6 @@
                 document.getElementById('passInput').value = creds.p;
                 document.getElementById('rememberMe').checked = true;
             }
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            loadRememberedUser(); // Call Remember Me logic
-            
             const localData = [ 
                 [STORAGE_KEY, 'employees'], 
                 [SETUP_KEY, 'fieldsConfig'], 
@@ -374,7 +368,6 @@
         });
 
         // --- UI Rendering ---
-
         function renderAll() { updateCapacity(); renderTable(); renderDynamicForm(); lucide.createIcons(); }
 
         function renderDynamicForm() {
@@ -393,35 +386,98 @@
             }).join('');
         }
 
-        // --- Fields Setup Logic ---
+        // --- Table & Sorting Logic ---
+        function renderTable() {
+            const visibleFields = fieldsConfig.filter(f => f.showInTable !== false);
+            
+            // Build Headers
+            let headerHtml = visibleFields.map(f => `
+                <th class="py-4 px-6 min-w-[150px] sortable-header" onclick="sortTable('${f.id}')">
+                    <div class="sort-btn">
+                        ${f.label} 
+                        <i data-lucide="${currentSort.column === f.id ? (currentSort.direction === 'asc' ? 'arrow-up' : 'arrow-down') : 'arrow-up-down'}" class="w-3 h-3 ml-1 ${currentSort.column === f.id ? 'text-blue-600' : 'opacity-40'}"></i>
+                    </div>
+                    <input type="text" placeholder="Filter..." class="filter-input no-print" onclick="event.stopPropagation()" onkeyup="filterTable()">
+                </th>
+            `).join('');
 
+            headerHtml += `
+                <th class="py-4 px-6 text-center sortable-header" onclick="sortTable('isVacation')">
+                    Vacation <i data-lucide="arrow-up-down" class="w-3 h-3 ml-1 opacity-40"></i>
+                </th>
+                <th class="py-4 px-6">Status</th>
+                <th class="py-4 px-6 admin-cell no-print">Actions</th>
+            `;
+            
+            document.getElementById('tableHeaderRow').innerHTML = headerHtml;
+
+            // Build Body
+            document.getElementById('employeeTableBody').innerHTML = employees.map((emp, idx) => `
+                <tr class="${emp.isVacation ? 'vacation-row' : ''} hover:bg-gray-50">
+                    ${visibleFields.map(f => `<td class="py-4 px-6">${Array.isArray(emp[f.id]) ? emp[f.id].join(', ') : (emp[f.id] || '')}</td>`).join('')}
+                    <td class="py-4 px-6 text-center">
+                        <input type="checkbox" ${emp.isVacation ? 'checked' : ''} ${currentUserRole === 'admin' ? 'onchange="toggleVac(' + idx + ', this.checked)"' : 'disabled'} class="w-5 h-5 accent-red-600">
+                    </td>
+                    <td class="py-4 px-6 font-bold ${emp.isVacation ? 'text-red-500' : 'text-emerald-500'}">
+                        ${emp.isVacation ? 'Returns: ' + (emp.vacationEnd || 'N/A') : 'Active'}
+                    </td>
+                    <td class="py-4 px-6 admin-cell no-print">
+                        <div class="flex gap-4">
+                            <button onclick="editEmp(${idx})" class="text-blue-500"><i data-lucide="edit"></i></button>
+                            <button onclick="deleteEmp(${idx})" class="text-red-500"><i data-lucide="trash-2"></i></button>
+                        </div>
+                    </td>
+                </tr>`).join('');
+            lucide.createIcons();
+        }
+
+        function sortTable(columnId) {
+            if (currentSort.column === columnId) {
+                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.column = columnId;
+                currentSort.direction = 'asc';
+            }
+
+            employees.sort((a, b) => {
+                let valA = a[columnId] ?? '';
+                let valB = b[columnId] ?? '';
+
+                if (Array.isArray(valA)) valA = valA.join(', ');
+                if (Array.isArray(valB)) valB = valB.join(', ');
+
+                if (typeof valA === 'string') valA = valA.toLowerCase();
+                if (typeof valB === 'string') valB = valB.toLowerCase();
+
+                if (valA < valB) return currentSort.direction === 'asc' ? -1 : 1;
+                if (valA > valB) return currentSort.direction === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+            renderTable();
+        }
+
+        function filterTable() {
+            const filters = Array.from(document.querySelectorAll('.filter-input'));
+            const rows = document.querySelectorAll('#employeeTableBody tr');
+            rows.forEach(row => {
+                let show = true;
+                filters.forEach((input, i) => { 
+                    if(input.value && !row.cells[i].innerText.toLowerCase().includes(input.value.toLowerCase())) show = false; 
+                });
+                row.style.display = show ? '' : 'none';
+            });
+        }
+
+        // --- Rest of functions (Fields Setup, Capacity, etc.) ---
         function openSetupModal() {
             document.getElementById('fieldsList').innerHTML = fieldsConfig.map((f, i) => `
-                <div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-5 gap-3 items-end shadow-sm">
-                    <div>
-                        <label class="text-[10px] font-bold">LABEL</label>
-                        <input type="text" value="${f.label}" onchange="fieldsConfig[${i}].label=this.value" class="w-full p-2 border rounded text-sm">
-                    </div>
-                    <div>
-                        <label class="text-[10px] font-bold">TYPE</label>
-                        <select onchange="fieldsConfig[${i}].type=this.value; openSetupModal()" class="w-full p-2 border rounded text-sm">
-                            <option value="text" ${f.type==='text'?'selected':''}>Text</option>
-                            <option value="select" ${f.type==='select'?'selected':''}>Select</option>
-                            <option value="multiselect" ${f.type==='multiselect'?'selected':''}>Multi</option>
-                            <option value="date" ${f.type==='date'?'selected':''}>Date</option>
-                        </select>
-                    </div>
-                    <div class="md:col-span-2">
-                        ${['select','multiselect'].includes(f.type) ? `
-                            <label class="text-[10px] font-bold">OPTIONS</label>
-                            <button onclick="openOptionsManager(${i})" class="w-full p-2 bg-white border border-dashed border-blue-400 text-blue-600 rounded text-xs font-bold hover:bg-blue-50">
-                                Manage Options (${(f.options || []).length})
-                            </button>
-                        ` : '<div class="text-gray-400 text-[10px] italic">No options required</div>'}
-                    </div>
-                    <div class="flex justify-end">
-                        <button onclick="fieldsConfig.splice(${i},1); openSetupModal()" class="text-red-500 p-2"><i data-lucide="trash-2"></i></button>
-                    </div>
+                <div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-6 gap-3 items-end shadow-sm">
+                    <div><label class="text-[10px] font-bold uppercase">Label</label><input type="text" value="${f.label}" onchange="fieldsConfig[${i}].label=this.value" class="w-full p-2 border rounded text-sm"></div>
+                    <div><label class="text-[10px] font-bold uppercase">Type</label><select onchange="fieldsConfig[${i}].type=this.value; openSetupModal()" class="w-full p-2 border rounded text-sm"><option value="text" ${f.type==='text'?'selected':''}>Text</option><option value="select" ${f.type==='select'?'selected':''}>Select</option><option value="multiselect" ${f.type==='multiselect'?'selected':''}>Multi</option><option value="date" ${f.type==='date'?'selected':''}>Date</option></select></div>
+                    <div class="md:col-span-2">${['select','multiselect'].includes(f.type) ? `<label class="text-[10px] font-bold uppercase">Options</label><button onclick="openOptionsManager(${i})" class="w-full p-2 bg-white border border-dashed border-blue-400 text-blue-600 rounded text-xs font-bold hover:bg-blue-50">Manage Options (${(f.options || []).length})</button>` : '<div class="text-gray-400 text-[10px] italic">No options required</div>'}</div>
+                    <div class="flex flex-col items-center justify-center pb-2"><label class="text-[10px] font-bold mb-1 uppercase">Table Vis.</label><input type="checkbox" ${f.showInTable !== false ? 'checked' : ''} onchange="fieldsConfig[${i}].showInTable = this.checked" class="w-5 h-5 accent-blue-600 cursor-pointer"></div>
+                    <div class="flex justify-end"><button onclick="fieldsConfig.splice(${i},1); openSetupModal()" class="text-red-500 p-2"><i data-lucide="trash-2"></i></button></div>
                 </div>`).join('');
             document.getElementById('setupModal').classList.remove('hidden'); 
             lucide.createIcons();
@@ -438,12 +494,7 @@
         function renderOptionsList() {
             const list = fieldsConfig[currentEditingFieldIndex].options;
             const container = document.getElementById('optionsItemsContainer');
-            container.innerHTML = list.map((opt, i) => `
-                <div class="flex gap-2 bg-gray-50 p-1 rounded border">
-                    <input type="text" value="${opt}" onchange="updateOptionValue(${i}, this.value)" class="flex-1 p-2 border-none bg-transparent text-sm outline-none focus:ring-1 focus:ring-blue-300 rounded">
-                    <button onclick="removeOption(${i})" class="text-red-400 hover:text-red-600 p-2"><i data-lucide="x-circle" class="w-4 h-4"></i></button>
-                </div>
-            `).join('');
+            container.innerHTML = list.map((opt, i) => `<div class="flex gap-2 bg-gray-50 p-1 rounded border"><input type="text" value="${opt}" onchange="updateOptionValue(${i}, this.value)" class="flex-1 p-2 border-none bg-transparent text-sm outline-none focus:ring-1 focus:ring-blue-300 rounded"><button onclick="removeOption(${i})" class="text-red-400 hover:text-red-600 p-2"><i data-lucide="x-circle" class="w-4 h-4"></i></button></div>`).join('');
             lucide.createIcons();
         }
 
@@ -451,53 +502,33 @@
         function addOptionField() { fieldsConfig[currentEditingFieldIndex].options.push(""); renderOptionsList(); }
         function removeOption(idx) { fieldsConfig[currentEditingFieldIndex].options.splice(idx, 1); renderOptionsList(); }
         function closeOptionsManager() { document.getElementById('optionsModal').classList.add('hidden'); openSetupModal(); }
-        
         function addNewFieldSetup() { fieldsConfig.push({id:'f'+Date.now(), label:'New Field', type:'text', showInTable:true, options: []}); openSetupModal(); }
         function saveSetup() { localStorage.setItem(SETUP_KEY, JSON.stringify(fieldsConfig)); syncToGitHub().then(()=>location.reload()); }
         function closeSetupModal() { document.getElementById('setupModal').classList.add('hidden'); }
 
-        // --- Standard Logic (Capacity, Table, etc.) ---
-
+        // --- Capacity Logic ---
         function updateCapacity() {
             const areaField = fieldsConfig.find(f => f.id === 'area');
             const AREAS = (areaField && areaField.options) ? areaField.options.filter(a => a !== "Team Leader") : [];
             const isVisible = (area, type) => (!visibilityConfig[area] || visibilityConfig[area][type]);
 
-            // Developers Grid Rendering
             document.getElementById('devCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'dev')).map(area => {
                 const devsCount = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && e.role==='Dev' && !e.isVacation).length;
                 const seniorsCount = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && e.role==='Senior' && !e.isVacation).length;
                 const vacCount = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && ['Dev','Senior'].includes(e.role) && e.isVacation).length;
-                
                 return `<div class="google-card capacity-card border-l-2 border-l-blue-500 p-2 cursor-pointer hover:bg-blue-50 transition-all" onclick="showDetailsExtended('${area}', 'Dev,Senior', false)">
-                    <div class="flex justify-between border-b pb-1 mb-1">
-                        <span class="text-[9px] uppercase font-bold">${area}</span>
-                        <span class="font-bold text-blue-700">${devsCount + seniorsCount}</span>
-                    </div>
-                    <div class="text-[10px] space-y-1">
-                        <div class="p-0.5 rounded font-medium">Devs: ${devsCount}</div>
-                        <div class="p-0.5 rounded font-medium">Seniors: ${seniorsCount}</div>
-                        <div class="p-0.5 rounded text-red-500 font-bold border-t mt-1 pt-1 hover:bg-red-50" onclick="event.stopPropagation(); showDetailsExtended('${area}', 'Dev,Senior', true)">Vac: ${vacCount}</div>
-                    </div>
+                    <div class="flex justify-between border-b pb-1 mb-1"><span class="text-[9px] uppercase font-bold">${area}</span><span class="font-bold text-blue-700">${devsCount + seniorsCount}</span></div>
+                    <div class="text-[10px] space-y-1"><div class="p-0.5 rounded font-medium">Devs: ${devsCount}</div><div class="p-0.5 rounded font-medium">Seniors: ${seniorsCount}</div><div class="p-0.5 rounded text-red-500 font-bold border-t mt-1 pt-1 hover:bg-red-50" onclick="event.stopPropagation(); showDetailsExtended('${area}', 'Dev,Senior', true)">Vac: ${vacCount}</div></div>
                 </div>`;
             }).join('');
 
-            // Testers Grid Rendering
             document.getElementById('testerCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'tester')).map(area => {
                 const testersCount = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && e.role==='Tester' && !e.isVacation).length;
                 const sTestersCount = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && e.role==='Senior tester' && !e.isVacation).length;
                 const vacCount = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && ['Tester','Senior tester'].includes(e.role) && e.isVacation).length;
-                
                 return `<div class="google-card capacity-card border-l-2 border-l-green-500 p-2 cursor-pointer hover:bg-green-50 transition-all" onclick="showDetailsExtended('${area}', 'Tester,Senior tester', false)">
-                    <div class="flex justify-between border-b pb-1 mb-1">
-                        <span class="text-[9px] uppercase font-bold">${area}</span>
-                        <span class="font-bold text-green-700">${testersCount + sTestersCount}</span>
-                    </div>
-                    <div class="text-[10px] space-y-1">
-                        <div class="p-0.5 rounded font-medium">Testers: ${testersCount}</div>
-                        <div class="p-0.5 rounded font-medium">Seniors: ${sTestersCount}</div>
-                        <div class="p-0.5 rounded text-red-500 font-bold border-t mt-1 pt-1 hover:bg-red-50" onclick="event.stopPropagation(); showDetailsExtended('${area}', 'Tester,Senior tester', true)">Vac: ${vacCount}</div>
-                    </div>
+                    <div class="flex justify-between border-b pb-1 mb-1"><span class="text-[9px] uppercase font-bold">${area}</span><span class="font-bold text-green-700">${testersCount + sTestersCount}</span></div>
+                    <div class="text-[10px] space-y-1"><div class="p-0.5 rounded font-medium">Testers: ${testersCount}</div><div class="p-0.5 rounded font-medium">Seniors: ${sTestersCount}</div><div class="p-0.5 rounded text-red-500 font-bold border-t mt-1 pt-1 hover:bg-red-50" onclick="event.stopPropagation(); showDetailsExtended('${area}', 'Tester,Senior tester', true)">Vac: ${vacCount}</div></div>
                 </div>`;
             }).join('');
 
@@ -514,13 +545,11 @@
                 wrapper.className = 'p-6 border rounded-2xl bg-white shadow-sm flex flex-col items-center';
                 wrapper.innerHTML = `<h3 class="font-bold mb-6 text-center uppercase text-xs tracking-widest text-gray-600">${config.title}</h3><div class="relative chart-container"><canvas id="canvas_${config.id}"></canvas></div>`;
                 chartsGrid.appendChild(wrapper);
-
                 const stats = {};
                 employees.filter(e => !e.isVacation && (!config.filterRoles || config.filterRoles.length === 0 || config.filterRoles.includes(e.role))).forEach(emp => {
                     const val = emp[config.targetField] || 'N/A';
                     (Array.isArray(val) ? val : [val]).forEach(v => stats[v] = (stats[v]||0)+1);
                 });
-
                 const chart = new Chart(document.getElementById(`canvas_${config.id}`).getContext('2d'), {
                     type: config.type,
                     data: { labels: Object.keys(stats), datasets: [{ data: Object.values(stats), backgroundColor: ['#4285F4', '#34A853', '#FBBC05', '#EA4335', '#A142F4', '#24C1E0', '#FF7043'] }] },
@@ -530,42 +559,7 @@
             });
         }
 
-        function showGlobalDetails(roles, isVac) {
-            const roleList = roles.split(',');
-            const list = employees.filter(e => roleList.includes(e.role) && e.isVacation === isVac);
-            document.getElementById('popupTitle').innerText = `${isVac ? 'Vacation' : 'Active'} - ${roles}`;
-            document.getElementById('popupList').innerHTML = list.map(e => `
-                <div class="p-4 border rounded-xl ${e.isVacation ? 'bg-red-50 border-red-100' : 'bg-gray-50'}">
-                    <b class="${e.isVacation ? 'line-through text-red-600' : ''}">${e.name}</b>
-                    <br>
-                    <small class="text-gray-500">${e.role} | ${e.area} ${e.isVacation ? '(Ends: '+(e.vacationEnd||'N/A')+')' : ''}</small>
-                </div>`).join('');
-            document.getElementById('detailsPopup').classList.remove('hidden');
-        }
-
-        function renderTable() {
-            const visibleFields = fieldsConfig.filter(f => f.showInTable !== false);
-            document.getElementById('tableHeaderRow').innerHTML = visibleFields.map(f => `<th class="py-4 px-6 min-w-[150px]"><div class="sort-btn">${f.label}</div><input type="text" placeholder="Filter..." class="filter-input no-print" onkeyup="filterTable()"></th>`).join('') + `<th class="py-4 px-6 text-center">Vacation</th><th class="py-4 px-6">Status</th><th class="py-4 px-6 admin-cell no-print">Actions</th>`;
-            document.getElementById('employeeTableBody').innerHTML = employees.map((emp, idx) => `
-                <tr class="${emp.isVacation ? 'vacation-row' : ''} hover:bg-gray-50">
-                    ${visibleFields.map(f => `<td class="py-4 px-6">${Array.isArray(emp[f.id])?emp[f.id].join(', '):(emp[f.id]||'')}</td>`).join('')}
-                    <td class="py-4 px-6 text-center"><input type="checkbox" ${emp.isVacation?'checked':''} ${currentUserRole==='admin'?'onchange="toggleVac('+idx+', this.checked)"':'disabled'} class="w-5 h-5 accent-red-600"></td>
-                    <td class="py-4 px-6 font-bold ${emp.isVacation?'text-red-500':'text-emerald-500'}">${emp.isVacation ? 'Returns: '+(emp.vacationEnd||'N/A') : 'Active'}</td>
-                    <td class="py-4 px-6 admin-cell no-print"><div class="flex gap-4"><button onclick="editEmp(${idx})" class="text-blue-500"><i data-lucide="edit"></i></button><button onclick="deleteEmp(${idx})" class="text-red-500"><i data-lucide="trash-2"></i></button></div></td>
-                </tr>`).join('');
-            lucide.createIcons();
-        }
-
-        function filterTable() {
-            const filters = document.querySelectorAll('.filter-input');
-            const rows = document.querySelectorAll('#employeeTableBody tr');
-            rows.forEach(row => {
-                let show = true;
-                filters.forEach((input, i) => { if(input.value && !row.cells[i].innerText.toLowerCase().includes(input.value.toLowerCase())) show = false; });
-                row.style.display = show ? '' : 'none';
-            });
-        }
-
+        // --- Other Helpers ---
         function save(render = true) { localStorage.setItem(STORAGE_KEY, JSON.stringify(employees)); syncToGitHub(); if(render) renderAll(); }
         function toggleVac(idx, val) { employees[idx].isVacation = val; save(); }
         function deleteEmp(idx) { if(confirm('Delete?')) { employees.splice(idx,1); save(); } }
@@ -594,7 +588,6 @@
             save(); closeModal();
         };
 
-        // --- Utils & Modals Management ---
         function switchTab(tabId, btn) {
             document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -626,13 +619,7 @@
 
         function openUsersModal() {
             const listContainer = document.getElementById('usersList');
-            listContainer.innerHTML = users.map((u, idx) => `
-                <div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-4 gap-3 items-end shadow-sm">
-                    <div><label class="text-[10px] uppercase">Username</label><input type="text" value="${u.username}" onchange="users[${idx}].username=this.value" class="w-full p-2 border rounded text-sm"></div>
-                    <div><label class="text-[10px] uppercase">Password</label><input type="text" value="${u.password}" onchange="users[${idx}].password=this.value" class="w-full p-2 border rounded text-sm"></div>
-                    <div><label class="text-[10px] uppercase">Role</label><select onchange="users[${idx}].role=this.value" class="w-full p-2 border rounded text-sm"><option value="admin" ${u.role==='admin'?'selected':''}>Admin</option><option value="viewer" ${u.role==='viewer'?'selected':''}>Viewer</option></select></div>
-                    <button onclick="users.splice(${idx},1); openUsersModal()" class="p-2 text-red-500"><i data-lucide="trash-2"></i></button>
-                </div>`).join('');
+            listContainer.innerHTML = users.map((u, idx) => `<div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-4 gap-3 items-end shadow-sm"><div><label class="text-[10px] uppercase">Username</label><input type="text" value="${u.username}" onchange="users[${idx}].username=this.value" class="w-full p-2 border rounded text-sm"></div><div><label class="text-[10px] uppercase">Password</label><input type="text" value="${u.password}" onchange="users[${idx}].password=this.value" class="w-full p-2 border rounded text-sm"></div><div><label class="text-[10px] uppercase">Role</label><select onchange="users[${idx}].role=this.value" class="w-full p-2 border rounded text-sm"><option value="admin" ${u.role==='admin'?'selected':''}>Admin</option><option value="viewer" ${u.role==='viewer'?'selected':''}>Viewer</option></select></div><button onclick="users.splice(${idx},1); openUsersModal()" class="p-2 text-red-500"><i data-lucide="trash-2"></i></button></div>`).join('');
             document.getElementById('usersModal').classList.remove('hidden');
             lucide.createIcons();
         }
@@ -641,13 +628,7 @@
         function closeUsersModal() { document.getElementById('usersModal').classList.add('hidden'); }
 
         function openChartsSetupModal() {
-            document.getElementById('chartsConfigList').innerHTML = chartsConfig.map((c, idx) => `
-                <div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-4 gap-3 items-end shadow-sm">
-                    <div><label class="text-[10px] font-bold">TITLE</label><input type="text" value="${c.title}" onchange="chartsConfig[${idx}].title=this.value" class="w-full p-2 border rounded text-sm"></div>
-                    <div><label class="text-[10px] font-bold">FIELD</label><select onchange="chartsConfig[${idx}].targetField=this.value" class="w-full p-2 border rounded text-sm">${fieldsConfig.map(f => `<option value="${f.id}" ${c.targetField===f.id?'selected':''}>${f.label}</option>`).join('')}</select></div>
-                    <div><label class="text-[10px] font-bold">TYPE</label><select onchange="chartsConfig[${idx}].type=this.value" class="w-full p-2 border rounded text-sm"><option value="doughnut" ${c.type==='doughnut'?'selected':''}>Doughnut</option><option value="bar" ${c.type==='bar'?'selected':''}>Bar</option></select></div>
-                    <button onclick="chartsConfig.splice(${idx},1); openChartsSetupModal()" class="text-red-500 p-2"><i data-lucide="trash-2"></i></button>
-                </div>`).join('');
+            document.getElementById('chartsConfigList').innerHTML = chartsConfig.map((c, idx) => `<div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-4 gap-3 items-end shadow-sm"><div><label class="text-[10px] font-bold uppercase">Title</label><input type="text" value="${c.title}" onchange="chartsConfig[${idx}].title=this.value" class="w-full p-2 border rounded text-sm"></div><div><label class="text-[10px] font-bold uppercase">Field</label><select onchange="chartsConfig[${idx}].targetField=this.value" class="w-full p-2 border rounded text-sm">${fieldsConfig.map(f => `<option value="${f.id}" ${c.targetField===f.id?'selected':''}>${f.label}</option>`).join('')}</select></div><div><label class="text-[10px] font-bold uppercase">Type</label><select onchange="chartsConfig[${idx}].type=this.value" class="w-full p-2 border rounded text-sm"><option value="doughnut" ${c.type==='doughnut'?'selected':''}>Doughnut</option><option value="bar" ${c.type==='bar'?'selected':''}>Bar</option></select></div><button onclick="chartsConfig.splice(${idx},1); openChartsSetupModal()" class="text-red-500 p-2"><i data-lucide="trash-2"></i></button></div>`).join('');
             document.getElementById('chartsSetupModal').classList.remove('hidden');
             lucide.createIcons();
         }
@@ -666,16 +647,8 @@
         function showDetailsExtended(area, roles, isVac) {
             const roleList = roles.split(',');
             const list = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && roleList.includes(e.role) && e.isVacation === isVac);
-            
             document.getElementById('popupTitle').innerText = `${area} - ${isVac ? 'On Vacation' : 'Active Members'}`;
-            document.getElementById('popupList').innerHTML = list.length > 0 ? list.map(e => `
-                <div class="p-4 border rounded-xl ${e.isVacation ? 'bg-red-50 border-red-200' : 'bg-gray-50'}">
-                    <b class="${e.isVacation ? 'line-through text-red-600' : ''}">${e.name}</b>
-                    <br>
-                    <small class="text-gray-500">${e.role} ${e.isVacation ? '(Returns: ' + (e.vacationEnd || 'N/A') + ')' : ''}</small>
-                </div>
-            `).join('') : '<div class="col-span-full text-center text-gray-400 py-10 font-bold uppercase italic">No members found</div>';
-            
+            document.getElementById('popupList').innerHTML = list.length > 0 ? list.map(e => `<div class="p-4 border rounded-xl ${e.isVacation ? 'bg-red-50 border-red-200' : 'bg-gray-50'}"><b class="${e.isVacation ? 'line-through text-red-600' : ''}">${e.name}</b><br><small class="text-gray-500">${e.role} ${e.isVacation ? '(Returns: ' + (e.vacationEnd || 'N/A') + ')' : ''}</small></div>`).join('') : '<div class="col-span-full text-center text-gray-400 py-10 font-bold uppercase italic">No members found</div>';
             document.getElementById('detailsPopup').classList.remove('hidden');
         }
 
