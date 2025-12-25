@@ -360,75 +360,33 @@
     </div>
 
 <script>
-    const STORAGE_KEY = 'team_resource_db_v10';
-    const SETUP_KEY = 'fields_setup_config';
-    const USERS_KEY = 'team_hub_users';
-    const BACKUP_SETTINGS_KEY = 'team_hub_backup_settings';
-    const AUTO_BACKUP_STATUS_KEY = 'auto_backup_status';
-    const REMEMBER_ME_KEY = 'team_hub_remember_credentials';
-    const DESIGN_KEY = 'team_hub_design_v1';
-    const DEFAULT_DESIGN_KEY = 'team_hub_default_design_v1';
-    const GH_CONFIG_KEY = 'gh_config_persistent'; // مفتاح لتذكر إعدادات جيت هب
-
-    const defaultFields = [
-        { id: 'name', label: 'Full Name', type: 'text', required: true, showInTable: true },
-        { id: 'role', label: 'Current Role', type: 'select', options: ['Dev', 'Senior', 'Tester', 'Senior tester', 'Team Lead'], showInTable: true },
-        { id: 'area', label: 'Area / Squad', type: 'select', options: ["Registration", "Internal lab", "Front and Financial", "front end", "Intgration", "LDM_Intgration", "elBORG", "Team Leader"], showInTable: true },
-        { id: 'workingIn', label: 'Working ON', type: 'select', options: ['Regression', 'support', 'Iteration', 'elBORG', 'Senior', 'Team Leader'], showInTable: true }
-    ];
-
-    // تحميل الإعدادات الأولية
-    let fieldsConfig = JSON.parse(localStorage.getItem(SETUP_KEY)) || defaultFields;
-    let employees = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-    let users = JSON.parse(localStorage.getItem(USERS_KEY)) || [{ username: 'admin', password: '123', role: 'admin' }];
-    let backupSettings = JSON.parse(localStorage.getItem(BACKUP_SETTINGS_KEY)) || { fileName: 'team_hub_system_backup' };
-    let autoBackupEnabled = localStorage.getItem(AUTO_BACKUP_STATUS_KEY) !== 'false';
-    
-    let designSettings = JSON.parse(localStorage.getItem(DESIGN_KEY)) || {
-        cardHeight: 80, gridCols: 6, sectionCols: 2, titleFont: 9, valueFont: 12, chartHeight: 300, chartWidth: 100, chartLegendFont: 11
-    };
-
-    let currentUserRole = null;
-    let sortDirection = 1;
-    let devChart = null;
-    let testerChart = null;
-
-    // استعادة إعدادات GitHub من LocalStorage إن وجدت
-    let githubConfig = JSON.parse(localStorage.getItem(GH_CONFIG_KEY)) || {
-        repoUrl: '',
+    // --- إعدادات GitHub المباشرة ---
+    const githubConfig = {
+        repoUrl: 'https://github.com/elmoatasemsaeed/NT_Team_HUB',
         branch: 'main',
-        filePath: 'data.json', // تم التعديل ليكون الافتراضي كما طلبت
-        token: '',
-        connOption: 'github',
+        filePath: 'data.json',
+        token: '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',
         fileSha: null
     };
 
-    async function saveGitHubConfig() {
-        githubConfig.repoUrl = document.getElementById('gh_repoUrl').value.trim();
-        githubConfig.branch = document.getElementById('gh_branch').value.trim() || 'main';
-        githubConfig.filePath = document.getElementById('gh_filePath').value.trim() || 'data.json';
-        githubConfig.token = document.getElementById('gh_token').value.trim();
-        githubConfig.connOption = document.getElementById('gh_connOption').value;
+    const STORAGE_KEY = 'team_resource_db_v10';
+    const SETUP_KEY = 'fields_setup_config';
+    const USERS_KEY = 'team_hub_users';
+    const DESIGN_KEY = 'team_hub_design_v1';
+    const REMEMBER_ME_KEY = 'team_hub_remember_credentials';
 
-        if (!githubConfig.repoUrl || !githubConfig.token) {
-            alert("Repository URL and Token are required.");
-            return;
-        }
+    let fieldsConfig = [];
+    let employees = [];
+    let users = [];
+    let designSettings = {};
+    let currentUserRole = null;
+    let devChart = null, testerChart = null;
 
-        const success = await loadFromGitHub();
-        if (success) {
-            localStorage.setItem(GH_CONFIG_KEY, JSON.stringify(githubConfig));
-            alert("Connected and Data Fetched from GitHub successfully.");
-            closeGitHubSetupModal();
-            renderAll();
-        }
-    }
-
+    // --- وظائف المزامنة مع GitHub ---
     async function loadFromGitHub() {
-        if (!githubConfig.token || !githubConfig.repoUrl) return false;
         try {
             const repoPath = githubConfig.repoUrl.replace('https://github.com/', '').replace(/\/$/, '');
-            const apiUrl = `https://api.github.com/repos/${repoPath}/contents/${githubConfig.filePath}?ref=${githubConfig.branch}`;
+            const apiUrl = `https://api.github.com/repos/${repoPath}/contents/${githubConfig.filePath}?ref=${githubConfig.branch}&t=${Date.now()}`;
             
             const response = await fetch(apiUrl, {
                 headers: { 'Authorization': `token ${githubConfig.token}`, 'Accept': 'application/vnd.github.v3+json' }
@@ -436,54 +394,34 @@
 
             if (response.ok) {
                 const data = await response.json();
-                githubConfig.fileSha = data.sha; // حفظ الـ SHA للتحديث القادم
-                const content = JSON.parse(atob(data.content));
+                githubConfig.fileSha = data.sha;
+                const content = JSON.parse(decodeURIComponent(escape(atob(data.content))));
                 
-                // تحديث البيانات المحلية من GitHub
-                if (content.employees) employees = content.employees;
-                if (content.fields) fieldsConfig = content.fields;
-                if (content.users) users = content.users;
-                if (content.design) designSettings = content.design;
-                
-                // حفظ نسخة احتياطية محلية
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(employees));
-                localStorage.setItem(SETUP_KEY, JSON.stringify(fieldsConfig));
+                employees = content.employees || [];
+                fieldsConfig = content.fields || [];
+                users = content.users || [];
+                designSettings = content.design || {};
                 
                 return true;
-            } else {
-                const error = await response.json();
-                console.error("GitHub Error:", error.message);
-                return false;
             }
+            return false;
         } catch (err) {
-            console.error("Failed to fetch from GitHub:", err.message);
+            console.error("GitHub Load Error:", err);
             return false;
         }
     }
 
     async function syncToGitHub() {
-        if (!githubConfig.token || !githubConfig.repoUrl) {
-            console.warn("GitHub sync skipped: No config found.");
-            return;
-        }
-
-        const fullData = { 
-            employees, 
-            fields: fieldsConfig, 
-            users, 
-            design: designSettings, 
-            timestamp: new Date().toISOString() 
-        };
+        const fullData = { employees, fields: fieldsConfig, users, design: designSettings, lastUpdate: new Date().toISOString() };
+        const repoPath = githubConfig.repoUrl.replace('https://github.com/', '').replace(/\/$/, '');
+        const apiUrl = `https://api.github.com/repos/${repoPath}/contents/${githubConfig.filePath}`;
 
         try {
-            const repoPath = githubConfig.repoUrl.replace('https://github.com/', '').replace(/\/$/, '');
-            const apiUrl = `https://api.github.com/repos/${repoPath}/contents/${githubConfig.filePath}`;
-            
             const body = {
-                message: "Update Team Hub Data: " + new Date().toLocaleString(),
+                message: "Update Database: " + new Date().toLocaleString(),
                 content: btoa(unescape(encodeURIComponent(JSON.stringify(fullData, null, 2)))),
                 branch: githubConfig.branch,
-                sha: githubConfig.fileSha // ضروري جداً للتحديث
+                sha: githubConfig.fileSha
             };
 
             const response = await fetch(apiUrl, {
@@ -494,64 +432,261 @@
 
             if (response.ok) {
                 const resData = await response.json();
-                githubConfig.fileSha = resData.content.sha; // تحديث SHA للعملية القادمة
-                console.log("Synced to GitHub successfully");
-            } else {
-                const error = await response.json();
-                alert("GitHub Sync Error: " + error.message);
+                githubConfig.fileSha = resData.content.sha;
             }
-        } catch (err) {
-            console.error("Failed to sync to GitHub:", err.message);
-        }
+        } catch (err) { console.error("Sync Error:", err); }
     }
 
-    // تعديل وظيفة الحفظ الأساسية لتعمل مع GitHub تلقائياً
-    async function save(render = true) { 
-        // 1. حفظ محلي سريع
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(employees)); 
-        localStorage.setItem(SETUP_KEY, JSON.stringify(fieldsConfig));
-        
-        // 2. مزامنة مع GitHub
-        if (githubConfig.token && githubConfig.repoUrl) {
-            await syncToGitHub();
-        }
-        
-        if(render) renderAll(); 
+    async function save(render = true) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(employees));
+        await syncToGitHub();
+        if (render) renderAll();
     }
 
-    // دالة فحص تسجيل الدخول
+    // --- نظام التنقل بين الصفحات (إصلاح الصفحات المختفية) ---
+    function showPage(pageId) {
+        document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+        document.getElementById(pageId).classList.remove('hidden');
+        document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('bg-blue-50', 'text-blue-600', 'border-b-2', 'border-blue-600'));
+        
+        const activeBtn = document.querySelector(`nav button[onclick*="${pageId}"]`);
+        if(activeBtn) activeBtn.classList.add('bg-blue-50', 'text-blue-600', 'border-b-2', 'border-blue-600');
+
+        if (pageId === 'chartsPage') setTimeout(renderCharts, 100);
+    }
+
+    // --- تسجيل الدخول ---
     async function checkLogin() {
-        const userVal = document.getElementById('userInput').value.trim().toLowerCase();
+        const userVal = document.getElementById('userInput').value.trim();
         const passVal = document.getElementById('passInput').value;
-        const rememberMe = document.getElementById('rememberMe').checked;
         
-        const foundUser = users.find(u => u.username.toLowerCase() === userVal && u.password === passVal);
+        // جلب البيانات أولاً للتأكد من المستخدمين
+        const loadingBtn = document.querySelector('#loginOverlay button');
+        loadingBtn.innerText = "Connecting...";
+        await loadFromGitHub();
+
+        const foundUser = users.find(u => u.username === userVal && u.password === passVal);
         
         if (foundUser) {
-            if (rememberMe) localStorage.setItem(REMEMBER_ME_KEY, JSON.stringify({ u: userVal, p: passVal }));
-            else localStorage.removeItem(REMEMBER_ME_KEY);
-            
             currentUserRole = foundUser.role;
             document.body.setAttribute('data-user-role', currentUserRole);
             document.getElementById('loginOverlay').style.display = 'none';
             document.getElementById('mainContent').classList.remove('hidden');
-            document.getElementById('displayRole').innerText = `${foundUser.username} (${currentUserRole})`;
-            
-            // محاولة جلب أحدث بيانات من GitHub فور الدخول
-            if (githubConfig.token) {
-                await loadFromGitHub();
-            }
-            
-            applyDesign();
+            document.getElementById('displayRole').innerText = `${foundUser.username} (${foundUser.role})`;
             renderAll();
         } else {
             document.getElementById('loginError').classList.remove('hidden');
-            setTimeout(() => document.getElementById('loginError').classList.add('hidden'), 3000);
+            loadingBtn.innerText = "Sign In";
         }
     }
 
-    // --- باقي الوظائف (renderTable, updateCapacity, etc.) تبقى كما هي دون تغيير ---
-    // (يرجى الاحتفاظ بباقي الدوال من ملفك الأصلي هنا)
+    // --- الرسم والعرض ---
+    function renderAll() {
+        renderTable();
+        updateCapacity();
+        renderSummaryCards();
+        lucide.createIcons();
+    }
+
+    function renderTable() {
+        const tbody = document.getElementById('employeeTableBody');
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        tbody.innerHTML = '';
+
+        employees.filter(emp => emp.name.toLowerCase().includes(searchTerm)).forEach((emp, index) => {
+            const tr = document.createElement('tr');
+            tr.className = "hover:bg-gray-50 border-b";
+            if (emp.isVacation) tr.classList.add('bg-red-50');
+
+            let cells = '';
+            fieldsConfig.forEach(f => {
+                if(f.showInTable !== false) {
+                    let val = emp[f.id] || '';
+                    if (Array.isArray(val)) val = val.join(', ');
+                    cells += `<td class="p-3 text-sm">${val}</td>`;
+                }
+            });
+
+            tr.innerHTML = `
+                ${cells}
+                <td class="p-3 text-right">
+                    <button onclick="editEmployee(${index})" class="p-1 text-blue-600 hover:bg-blue-50 rounded"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
+                    <button onclick="deleteEmployee(${index})" class="p-1 text-red-600 hover:bg-red-50 rounded admin-only"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+        lucide.createIcons();
+    }
+
+    function updateCapacity() {
+        const total = employees.length;
+        const onVacation = employees.filter(e => e.isVacation).length;
+        const active = total - onVacation;
+        const percent = total > 0 ? Math.round((active/total)*100) : 0;
+
+        document.getElementById('activeCount').innerText = active;
+        document.getElementById('totalCount').innerText = total;
+        document.getElementById('capacityPercent').innerText = percent + '%';
+        document.getElementById('capacityBar').style.width = percent + '%';
+    }
+
+    function renderSummaryCards() {
+        const container = document.getElementById('summaryCards');
+        if(!container) return;
+        container.innerHTML = '';
+        
+        const counts = {};
+        employees.forEach(emp => {
+            const area = Array.isArray(emp.area) ? emp.area[0] : emp.area;
+            counts[area] = (counts[area] || 0) + 1;
+        });
+
+        Object.entries(counts).forEach(([area, count]) => {
+            const div = document.createElement('div');
+            div.className = "google-card p-4";
+            div.innerHTML = `<div class="text-sm text-gray-500">${area || 'Other'}</div><div class="text-2xl font-bold text-blue-600">${count}</div>`;
+            container.appendChild(div);
+        });
+    }
+
+    // --- إحصائيات الرسوم البيانية ---
+    function renderCharts() {
+        const ctxDev = document.getElementById('devChart')?.getContext('2d');
+        const ctxTester = document.getElementById('testerChart')?.getContext('2d');
+        if (!ctxDev || !ctxTester) return;
+
+        if (devChart) devChart.destroy();
+        if (testerChart) testerChart.destroy();
+
+        const dataByRole = (roleName) => {
+            const counts = {};
+            employees.filter(e => e.role === roleName).forEach(e => {
+                const area = Array.isArray(e.area) ? e.area[0] : e.area;
+                counts[area] = (counts[area] || 0) + 1;
+            });
+            return { labels: Object.keys(counts), data: Object.values(counts) };
+        };
+
+        const devs = dataByRole('Dev');
+        devChart = new Chart(ctxDev, {
+            type: 'bar',
+            data: { labels: devs.labels, datasets: [{ label: 'Developers', data: devs.data, backgroundColor: '#4285f4' }] }
+        });
+
+        const testers = dataByRole('Tester');
+        testerChart = new Chart(ctxTester, {
+            type: 'bar',
+            data: { labels: testers.labels, datasets: [{ label: 'Testers', data: testers.data, backgroundColor: '#34a853' }] }
+        });
+    }
+
+    // --- وظائف الإدارة (Add/Edit/Delete) ---
+    async function addEmployee() {
+        const newEmp = { id: Date.now(), name: 'New Employee', isVacation: false };
+        fieldsConfig.forEach(f => newEmp[f.id] = f.type === 'select' ? f.options[0] : '');
+        employees.push(newEmp);
+        await save();
+        editEmployee(employees.length - 1);
+    }
+
+    function editEmployee(index) {
+        const emp = employees[index];
+        const container = document.getElementById('editFieldsContainer');
+        container.innerHTML = `<input type="hidden" id="editEmployeeId" value="${emp.id}">`;
+
+        fieldsConfig.forEach(f => {
+            const val = emp[f.id] || '';
+            let html = `<div class="mb-4"><label class="block text-sm font-medium mb-1">${f.label}</label>`;
+            if (f.type === 'select' || f.type === 'multiselect') {
+                html += `<select id="edit_${f.id}" class="w-full p-2 border rounded" ${f.type==='multiselect'?'multiple':''}>`;
+                f.options.forEach(opt => html += `<option value="${opt}" ${val===opt || (Array.isArray(val)&&val.includes(opt))?'selected':''}>${opt}</option>`);
+                html += `</select>`;
+            } else {
+                html += `<input type="${f.type}" id="edit_${f.id}" value="${val}" class="w-full p-2 border rounded">`;
+            }
+            html += `</div>`;
+            container.insertAdjacentHTML('beforeend', html);
+        });
+
+        // إضافة حقل الإجازة
+        container.insertAdjacentHTML('beforeend', `
+            <div class="flex items-center gap-2 mb-4">
+                <input type="checkbox" id="edit_isVacation" ${emp.isVacation?'checked':''}>
+                <label>On Vacation</label>
+            </div>
+        `);
+
+        document.getElementById('employeeModal').classList.remove('hidden');
+    }
+
+    async function saveEmployeeData() {
+        const id = document.getElementById('editEmployeeId').value;
+        const index = employees.findIndex(e => e.id == id);
+        if (index > -1) {
+            fieldsConfig.forEach(f => {
+                const el = document.getElementById(`edit_${f.id}`);
+                if (f.type === 'multiselect') {
+                    employees[index][f.id] = Array.from(el.selectedOptions).map(o => o.value);
+                } else {
+                    employees[index][f.id] = el.value;
+                }
+            });
+            employees[index].isVacation = document.getElementById('edit_isVacation').checked;
+            await save();
+            document.getElementById('employeeModal').classList.add('hidden');
+        }
+    }
+
+    async function deleteEmployee(index) {
+        if (confirm('Delete this employee?')) {
+            employees.splice(index, 1);
+            await save();
+        }
+    }
+
+    // --- إعدادات الحقول والمستخدمين ---
+    function openFieldsSetupModal() {
+        const list = document.getElementById('fieldsList');
+        list.innerHTML = '';
+        fieldsConfig.forEach((f, i) => {
+            list.innerHTML += `<div class="flex justify-between p-2 border-b"><span>${f.label} (${f.type})</span>
+            <button onclick="removeField(${i})" class="text-red-500">Remove</button></div>`;
+        });
+        document.getElementById('fieldsSetupModal').classList.remove('hidden');
+    }
+
+    function openUsersModal() {
+        const list = document.getElementById('usersList');
+        list.innerHTML = '';
+        users.forEach((u, i) => {
+            list.innerHTML += `<div class="grid grid-cols-3 gap-2 mb-2">
+                <input value="${u.username}" onchange="users[${i}].username=this.value" class="p-1 border">
+                <input value="${u.password}" onchange="users[${i}].password=this.value" class="p-1 border">
+                <select onchange="users[${i}].role=this.value" class="p-1 border">
+                    <option value="admin" ${u.role==='admin'?'selected':''}>Admin</option>
+                    <option value="user" ${u.role==='user'?'selected':''}>User</option>
+                </select>
+            </div>`;
+        });
+        document.getElementById('usersModal').classList.remove('hidden');
+    }
+
+    // --- تشغيل عند التحميل ---
+    window.onload = () => {
+        const saved = localStorage.getItem(REMEMBER_ME_KEY);
+        if (saved) {
+            const {u, p} = JSON.parse(saved);
+            document.getElementById('userInput').value = u;
+            document.getElementById('passInput').value = p;
+        }
+    };
+
+    function closeGitHubSetupModal() { document.getElementById('githubSetupModal').classList.add('hidden'); }
+    function closeFieldsSetupModal() { document.getElementById('fieldsSetupModal').classList.add('hidden'); }
+    function closeUsersModal() { document.getElementById('usersModal').classList.add('hidden'); }
+    function closeEmployeeModal() { document.getElementById('employeeModal').classList.add('hidden'); }
+
 </script>
 </body>
 </html>
