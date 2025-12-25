@@ -360,13 +360,13 @@
     </div>
 
 <script>
-    // --- إعدادات GitHub المباشرة ---
+    // --- إعدادات GitHub المدمجة ---
     const githubConfig = {
         repoUrl: 'https://github.com/elmoatasemsaeed/NT_Team_HUB',
         branch: 'main',
         filePath: 'data.json',
-        token: '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', // التوكن الجديد
-        fileSha: null
+        token: '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',
+        fileSha: null 
     };
 
     const STORAGE_KEY = 'team_resource_db_v10';
@@ -383,10 +383,10 @@
     let devChart = null, testerChart = null;
 
     // --- وظائف المزامنة مع GitHub ---
+
     async function loadFromGitHub() {
         try {
             const repoPath = githubConfig.repoUrl.replace('https://github.com/', '').replace(/\/$/, '');
-            // إضافة Timestamp لمنع الكاش وجلب أحدث بيانات
             const apiUrl = `https://api.github.com/repos/${repoPath}/contents/${githubConfig.filePath}?ref=${githubConfig.branch}&t=${Date.now()}`;
             
             const response = await fetch(apiUrl, {
@@ -404,12 +404,10 @@
                 designSettings = content.design || designSettings;
                 
                 return true;
-            } else {
-                console.error("GitHub Response Error:", response.status);
-                return false;
             }
+            return false;
         } catch (err) {
-            console.error("Connection Error:", err);
+            console.error("Load Error:", err);
             return false;
         }
     }
@@ -437,7 +435,7 @@
             if (response.ok) {
                 const resData = await response.json();
                 githubConfig.fileSha = resData.content.sha;
-                console.log("Synced to GitHub.");
+                console.log("GitHub Synced Successfully");
             }
         } catch (err) { console.error("Sync Error:", err); }
     }
@@ -448,50 +446,15 @@
         if (render) renderAll();
     }
 
-    // --- تسجيل الدخول (مع وضع الطوارئ) ---
-    async function checkLogin() {
-        const userVal = document.getElementById('userInput').value.trim();
-        const passVal = document.getElementById('passInput').value;
-        const rememberMe = document.getElementById('rememberMe').checked;
-        
-        const btn = document.querySelector('#loginOverlay button');
-        const originalText = btn.innerText;
-        btn.innerText = "Connecting...";
-        btn.disabled = true;
+    // --- نظام التنقل بين الصفحات (إصلاح الصفحات المفقودة) ---
 
-        // محاولة جلب البيانات
-        const loaded = await loadFromGitHub();
-
-        // منطق الدخول: إما من البيانات المجلوبة أو "دخول طوارئ" ببيانات ثابتة
-        const isEmergencyAdmin = (userVal === 'admin' && passVal === '100300311');
-        const foundInDb = users.find(u => u.username === userVal && u.password === passVal);
-
-        if (isEmergencyAdmin || foundInDb) {
-            if (rememberMe) localStorage.setItem(REMEMBER_ME_KEY, JSON.stringify({u: userVal, p: passVal}));
-            
-            currentUserRole = foundInDb ? foundInDb.role : 'admin';
-            document.body.setAttribute('data-user-role', currentUserRole);
-            document.getElementById('loginOverlay').style.display = 'none';
-            document.getElementById('mainContent').classList.remove('hidden');
-            document.getElementById('displayRole').innerText = `${userVal} (${currentUserRole})`;
-            
-            if (!loaded) {
-                alert("تنبيه: تم الدخول بوضع الطوارئ (GitHub Offline). التعديلات قد لا تُحفظ على السيرفر.");
-            }
-            
-            renderAll();
-        } else {
-            document.getElementById('loginError').classList.remove('hidden');
-            btn.innerText = originalText;
-            btn.disabled = false;
-        }
-    }
-
-    // --- نظام التنقل بين التبويبات ---
     function showPage(pageId) {
+        // إخفاء كل الصفحات
         document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+        // إظهار الصفحة المطلوبة
         document.getElementById(pageId).classList.remove('hidden');
         
+        // تحديث شكل الأزرار في التنقل
         document.querySelectorAll('nav button').forEach(btn => {
             btn.classList.remove('bg-blue-50', 'text-blue-600', 'border-b-2', 'border-blue-600');
         });
@@ -499,10 +462,44 @@
         const activeBtn = document.querySelector(`nav button[onclick*="${pageId}"]`);
         if (activeBtn) activeBtn.classList.add('bg-blue-50', 'text-blue-600', 'border-b-2', 'border-blue-600');
 
+        // إعادة رندرة المخططات إذا كانت صفحة الإحصائيات
         if (pageId === 'chartsPage') setTimeout(renderCharts, 200);
     }
 
-    // --- وظائف العرض الأساسية ---
+    // --- تسجيل الدخول ---
+
+    async function checkLogin() {
+        const userVal = document.getElementById('userInput').value.trim();
+        const passVal = document.getElementById('passInput').value;
+        const rememberMe = document.getElementById('rememberMe').checked;
+        
+        const btn = document.querySelector('#loginOverlay button');
+        btn.innerText = "Connecting...";
+        
+        const loaded = await loadFromGitHub();
+        
+        // البحث عن المستخدم (سواء من الداتابيز المجلوبة أو دخول طوارئ)
+        const isEmergencyAdmin = (userVal === 'admin' && passVal === '100300311');
+        const foundUser = users.find(u => u.username === userVal && u.password === passVal);
+        
+        if (isEmergencyAdmin || foundUser) {
+            if (rememberMe) localStorage.setItem(REMEMBER_ME_KEY, JSON.stringify({u: userVal, p: passVal}));
+            
+            currentUserRole = foundUser ? foundUser.role : 'admin';
+            document.body.setAttribute('data-user-role', currentUserRole);
+            document.getElementById('loginOverlay').style.display = 'none';
+            document.getElementById('mainContent').classList.remove('hidden');
+            document.getElementById('displayRole').innerText = `${userVal} (${currentUserRole})`;
+            
+            renderAll();
+        } else {
+            document.getElementById('loginError').classList.remove('hidden');
+            btn.innerText = "Sign In";
+        }
+    }
+
+    // --- وظائف العرض (الجداول والإحصائيات) ---
+
     function renderAll() {
         renderTable();
         updateCapacity();
@@ -585,34 +582,45 @@
         const devs = getChartData('Dev');
         devChart = new Chart(ctxDev, {
             type: 'bar',
-            data: { labels: devs.labels, datasets: [{ label: 'Devs', data: devs.data, backgroundColor: '#4285f4' }] }
+            data: { labels: devs.labels, datasets: [{ label: 'Devs per Area', data: devs.data, backgroundColor: '#4285f4' }] }
         });
 
         const testers = getChartData('Tester');
         testerChart = new Chart(ctxTester, {
             type: 'bar',
-            data: { labels: testers.labels, datasets: [{ label: 'Testers', data: testers.data, backgroundColor: '#34a853' }] }
+            data: { labels: testers.labels, datasets: [{ label: 'Testers per Area', data: testers.data, backgroundColor: '#34a853' }] }
         });
     }
 
-    // --- دوال الإدارة ---
+    // --- إدارة الموظفين ---
+
     function editEmployee(index) {
         const emp = employees[index];
         const container = document.getElementById('editFieldsContainer');
         container.innerHTML = `<input type="hidden" id="editEmployeeId" value="${emp.id}">`;
+
         fieldsConfig.forEach(f => {
             const val = emp[f.id] || '';
             let html = `<div class="mb-4"><label class="block text-sm font-medium mb-1">${f.label}</label>`;
             if (f.type === 'select' || f.type === 'multiselect') {
                 html += `<select id="edit_${f.id}" class="w-full p-2 border rounded" ${f.type==='multiselect'?'multiple':''}>`;
-                f.options.forEach(opt => html += `<option value="${opt}" ${(Array.isArray(val)?val.includes(opt):val===opt)?'selected':''}>${opt}</option>`);
+                f.options.forEach(opt => {
+                    const selected = Array.isArray(val) ? val.includes(opt) : val === opt;
+                    html += `<option value="${opt}" ${selected?'selected':''}>${opt}</option>`;
+                });
                 html += `</select>`;
             } else {
                 html += `<input type="${f.type}" id="edit_${f.id}" value="${val}" class="w-full p-2 border rounded">`;
             }
             container.insertAdjacentHTML('beforeend', html + `</div>`);
         });
-        container.insertAdjacentHTML('beforeend', `<div class="flex gap-2 mb-4"><input type="checkbox" id="edit_isVacation" ${emp.isVacation?'checked':''}> <label>On Vacation</label></div>`);
+
+        container.insertAdjacentHTML('beforeend', `
+            <div class="flex items-center gap-2 mt-4">
+                <input type="checkbox" id="edit_isVacation" ${emp.isVacation?'checked':''}>
+                <label>On Vacation</label>
+            </div>
+        `);
         document.getElementById('employeeModal').classList.remove('hidden');
     }
 
@@ -631,7 +639,7 @@
     }
 
     async function addEmployee() {
-        const newEmp = { id: Date.now(), name: 'New', isVacation: false };
+        const newEmp = { id: Date.now(), name: 'New Employee', isVacation: false };
         fieldsConfig.forEach(f => newEmp[f.id] = f.type === 'multiselect' ? [] : '');
         employees.push(newEmp);
         await save();
@@ -639,7 +647,29 @@
     }
 
     async function deleteEmployee(index) {
-        if(confirm("Delete?")) { employees.splice(index, 1); await save(); }
+        if (confirm("Delete this record?")) {
+            employees.splice(index, 1);
+            await save();
+        }
+    }
+
+    // --- إعدادات الحقول والمستخدمين ---
+
+    function openFieldsSetupModal() {
+        const list = document.getElementById('fieldsList');
+        list.innerHTML = '';
+        fieldsConfig.forEach((f, i) => {
+            list.innerHTML += `<div class="flex justify-between items-center p-2 border-b bg-gray-50 mb-1">
+                <span>${f.label} (${f.type})</span>
+                <button onclick="removeField(${i})" class="text-red-500 hover:text-red-700"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+            </div>`;
+        });
+        document.getElementById('fieldsSetupModal').classList.remove('hidden');
+        lucide.createIcons();
+    }
+
+    async function removeField(index) {
+        if(confirm("Remove field?")) { fieldsConfig.splice(index, 1); await save(); openFieldsSetupModal(); }
     }
 
     function openUsersModal() {
@@ -647,9 +677,9 @@
         list.innerHTML = '';
         users.forEach((u, i) => {
             list.innerHTML += `<div class="grid grid-cols-3 gap-1 mb-2">
-                <input value="${u.username}" onchange="users[${i}].username=this.value" class="p-1 border rounded">
-                <input value="${u.password}" onchange="users[${i}].password=this.value" class="p-1 border rounded">
-                <select onchange="users[${i}].role=this.value" class="p-1 border rounded">
+                <input value="${u.username}" onchange="users[${i}].username=this.value" class="p-1 border rounded text-sm">
+                <input value="${u.password}" onchange="users[${i}].password=this.value" class="p-1 border rounded text-sm">
+                <select onchange="users[${i}].role=this.value" class="p-1 border rounded text-sm">
                     <option value="admin" ${u.role==='admin'?'selected':''}>Admin</option>
                     <option value="user" ${u.role==='user'?'selected':''}>User</option>
                 </select>
@@ -660,7 +690,7 @@
 
     async function saveUsers() { await save(); document.getElementById('usersModal').classList.add('hidden'); }
 
-    // --- تهيئة عند التحميل ---
+    // --- التشغيل عند التحميل ---
     window.onload = () => {
         const saved = localStorage.getItem(REMEMBER_ME_KEY);
         if (saved) {
@@ -671,7 +701,7 @@
     };
 
     function closeEmployeeModal() { document.getElementById('employeeModal').classList.add('hidden'); }
+    function closeFieldsSetupModal() { document.getElementById('fieldsSetupModal').classList.add('hidden'); }
     function closeUsersModal() { document.getElementById('usersModal').classList.add('hidden'); }
+
 </script>
-</body>
-</html>
