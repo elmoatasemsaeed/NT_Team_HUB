@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Hub - Cloud Database</title>
+    <title>Team Hub - Professional</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -14,344 +14,600 @@
         .google-card { background: white; border: 1px solid #dadce0; border-radius: 8px; transition: all 0.2s; cursor: pointer; }
         .google-card:hover { box-shadow: 0 4px 12px rgba(60,64,67,.15); transform: translateY(-1px); }
         .vacation-row { background-color: #fce8e6 !important; border-left: 4px solid #d93025; }
+        .sort-btn { cursor: pointer; display: inline-flex; align-items: center; gap: 4px; color: #5f6368; font-weight: bold; padding: 8px 0; }
+        .sort-btn:hover { color: #1a73e8; }
+        .large-modal { width: 95%; max-width: 1000px; max-height: 90vh; overflow-y: auto; border-radius: 16px; }
         .admin-only { display: none !important; }
         body[data-user-role="admin"] .admin-only { display: inline-flex !important; }
-        body[data-user-role="admin"] .admin-only-block { display: block !important; }
+        body[data-user-role="admin"] .admin-cell { display: table-cell !important; }
+        .admin-cell { display: none; }
         .dropdown:hover .dropdown-menu { display: block; }
         .tab-btn.active { color: #1a73e8; border-bottom: 3px solid #1a73e8; background-color: rgba(26, 115, 232, 0.05); }
-        .large-modal { width: 95%; max-width: 1000px; max-height: 90vh; overflow-y: auto; border-radius: 16px; }
+
+        .switch { position: relative; display: inline-block; width: 40px; height: 20px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 20px; }
+        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: #10b981; }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .capacity-card { min-height: 80px; }
+        .capacity-title { font-size: 10px; }
+        .capacity-value { font-size: 12px; }
+        .chart-container { height: 300px; width: 100%; }
+
+        /* Style for the hidden cloud restore icon */
+        .hidden-cloud-trigger {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            opacity: 0.15;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        .hidden-cloud-trigger:hover { opacity: 0.8; color: #1a73e8; }
+
+        @media print {
+            .tab-content { display: block !important; }
+            .tab-navigation, .no-print, .filter-input, .admin-only { display: none !important; }
+            .vacation-row { background-color: #fce8e6 !important; -webkit-print-color-adjust: exact; }
+            tr.hidden-by-filter { display: none !important; }
+            body { padding: 0; background: white; }
+            .google-card { border: none; box-shadow: none; }
+        }
     </style>
 </head>
-<body class="p-4 md:p-6" data-user-role="user">
+<body class="p-4 md:p-6">
 
     <div id="loginOverlay" class="fixed inset-0 z-[9999] bg-white flex items-center justify-center">
         <div class="relative text-center w-full max-sm:px-4 max-w-sm p-8 border rounded-2xl shadow-sm bg-white">
+            
+            <div class="hidden-cloud-trigger no-print" onclick="document.getElementById('externalRestoreInput').click()">
+                <i data-lucide="cloud-upload" style="width: 14px; height: 14px;"></i>
+            </div>
+            <input type="file" id="externalRestoreInput" class="hidden" accept=".json" onchange="performFullRestore(event)">
+
             <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 text-white shadow-xl">
                 <i data-lucide="shield-check" class="w-10 h-10"></i>
             </div>
-            <h2 class="text-2xl mb-8 font-bold text-gray-800">Team Hub Cloud</h2>
+            <h2 class="text-2xl mb-8 font-bold text-gray-800">Team Hub Access</h2>
             <input type="text" id="userInput" placeholder="Username" class="w-full p-4 border rounded-xl mb-3 outline-none focus:ring-2 focus:ring-blue-500">
             <input type="password" id="passInput" placeholder="Password" onkeypress="if(event.key === 'Enter') checkLogin()" class="w-full p-4 border rounded-xl mb-4 outline-none focus:ring-2 focus:ring-blue-500">
-            <button onclick="checkLogin()" class="w-full bg-[#1a73e8] text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition-all">Unlock</button>
-            <p id="loginError" class="text-red-600 mt-4 text-sm hidden">خطأ في البيانات!</p>
+            
+            <div class="flex items-center gap-2 mb-6 px-1">
+                <input type="checkbox" id="rememberMe" class="w-4 h-4 accent-blue-600 cursor-pointer">
+                <label for="rememberMe" class="text-sm text-gray-600 cursor-pointer select-none font-medium">Remember me on this device</label>
+            </div>
+
+            <button onclick="checkLogin()" class="w-full bg-[#1a73e8] text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition-all">Unlock System</button>
+            <p id="loginError" class="text-red-600 mt-4 text-sm hidden font-medium">Invalid Username or Password!</p>
         </div>
     </div>
 
     <div id="mainContent" class="hidden max-w-[1600px] mx-auto">
-        <header class="flex flex-col md:flex-row-reverse justify-between items-center mb-6 pb-4 border-b gap-4">
+        <header class="flex flex-col md:flex-row-reverse justify-between items-center mb-6 pb-4 border-b gap-4 no-print">
             <div class="flex items-center gap-2">
-                <div id="syncStatus" class="flex items-center gap-1 text-[10px] font-bold text-gray-400 mr-2 uppercase">
-                    <i data-lucide="cloud-off" class="w-3 h-3"></i> Offline
-                </div>
-                <span id="displayRole" class="px-3 py-1 bg-blue-50 text-blue-700 text-[10px] rounded-full border font-black uppercase"></span>
+                <span id="displayRole" class="mr-4 px-3 py-1 bg-blue-50 text-blue-700 text-[10px] rounded-full border font-black uppercase tracking-widest"></span>
+                <span class="text-2xl font-bold text-[#1a73e8]">Team Hub</span>
             </div>
             
             <div class="flex flex-wrap gap-2 items-center">
                 <div class="relative dropdown admin-only">
                     <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded shadow-sm hover:bg-gray-200 transition-all font-bold flex items-center gap-2">
-                        <i data-lucide="settings" class="w-4 h-4"></i> SETUP
+                        <i data-lucide="menu" class="w-4 h-4"></i> SETUP
                     </button>
-                    <div class="dropdown-menu absolute left-0 mt-0 w-56 bg-white border rounded-xl shadow-xl hidden z-[2000]">
-                        <button onclick="openCloudConfigModal()" class="w-full text-left px-4 py-3 hover:bg-blue-50 flex items-center gap-2 text-sm border-b text-blue-700 font-bold">
-                            <i data-lucide="database" class="w-4 h-4"></i> Database (GitHub)
+                    <div class="dropdown-menu absolute left-0 mt-0 w-48 bg-white border rounded-xl shadow-xl hidden z-[2000]">
+                        <button onclick="openGitHubSetupModal()" class="w-full text-left px-4 py-3 hover:bg-emerald-50 flex items-center gap-2 text-sm border-b text-emerald-700 font-bold">
+                            <i data-lucide="github" class="w-4 h-4"></i> GitHub Config
                         </button>
-                        <button onclick="openSetupModal()" class="w-full text-left px-4 py-3 hover:bg-blue-50 flex items-center gap-2 text-sm border-b">
-                            <i data-lucide="list" class="w-4 h-4"></i> Fields Setup
-                        </button>
-                        <button onclick="openDesignModal()" class="w-full text-left px-4 py-3 hover:bg-blue-50 flex items-center gap-2 text-sm border-b">
+                        <button onclick="openDesignModal()" class="w-full text-left px-4 py-3 hover:bg-amber-50 flex items-center gap-2 text-sm border-b text-amber-700 font-bold">
                             <i data-lucide="palette" class="w-4 h-4"></i> Design Layout
                         </button>
+                        <button onclick="openSetupModal()" class="w-full text-left px-4 py-3 hover:bg-blue-50 flex items-center gap-2 text-sm border-b">
+                            <i data-lucide="settings" class="w-4 h-4 text-blue-600"></i> Fields Setup
+                        </button>
                         <button onclick="openUsersModal()" class="w-full text-left px-4 py-3 hover:bg-blue-50 flex items-center gap-2 text-sm">
-                            <i data-lucide="users" class="w-4 h-4"></i> Manage Users
+                            <i data-lucide="users" class="w-4 h-4 text-purple-600"></i> Setup Users
                         </button>
                     </div>
                 </div>
-                <button onclick="syncWithCloud()" class="bg-blue-50 text-blue-700 px-4 py-2 rounded border border-blue-200 hover:bg-blue-100 font-bold flex items-center gap-2">
-                    <i data-lucide="refresh-cw" class="w-4 h-4"></i> Refresh Cloud
-                </button>
-                <button onclick="openModal()" class="admin-only bg-[#1a73e8] text-white px-6 py-2 rounded shadow hover:bg-blue-700 font-medium">+ Add Member</button>
+
+                <div class="relative dropdown admin-only border-l pl-2">
+                    <button class="bg-emerald-50 text-emerald-700 px-4 py-2 rounded shadow-sm hover:bg-emerald-100 transition-all font-bold flex items-center gap-2 border border-emerald-200">
+                        <i data-lucide="database" class="w-4 h-4"></i> BACKUP & RESTORE
+                    </button>
+                    <div class="dropdown-menu absolute left-0 mt-0 w-64 bg-white border rounded-xl shadow-xl hidden z-[2000] p-2">
+                        <div class="flex items-center justify-between px-3 py-3 border-b mb-1">
+                            <span class="text-[10px] font-bold text-gray-500 uppercase">Auto Backup</span>
+                            <label class="switch">
+                                <input type="checkbox" id="autoBackupToggle" onchange="toggleAutoBackup(this.checked)">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <button onclick="performFullBackup()" class="w-full text-left px-3 py-3 hover:bg-emerald-50 flex items-center gap-2 text-sm rounded-lg transition-all">
+                            <i data-lucide="download-cloud" class="w-4 h-4 text-emerald-600"></i> Manual Backup
+                        </button>
+                        <button onclick="document.getElementById('restoreFileInput').click()" class="w-full text-left px-3 py-3 hover:bg-amber-50 flex items-center gap-2 text-sm rounded-lg transition-all">
+                            <i data-lucide="upload-cloud" class="w-4 h-4 text-amber-600"></i> Restore from File
+                        </button>
+                        <input type="file" id="restoreFileInput" class="hidden" accept=".json" onchange="performFullRestore(event)">
+                        <button onclick="openBackupSettingsModal()" class="w-full text-left px-3 py-3 hover:bg-blue-50 flex items-center gap-2 text-sm rounded-lg border-t mt-1 transition-all">
+                            <i data-lucide="settings-2" class="w-4 h-4 text-blue-600"></i> Backup Settings
+                        </button>
+                    </div>
+                </div>
+
+                <button onclick="window.print()" class="px-4 py-2 border rounded hover:bg-gray-50 flex items-center gap-2"><i data-lucide="printer" class="w-4 h-4 text-gray-600"></i> Print</button>
+                <button onclick="openModal()" class="admin-only bg-[#1a73e8] text-white px-6 py-2 rounded shadow hover:bg-blue-700 transition-all font-medium">+ Add Member</button>
             </div>
         </header>
 
-        <div class="flex border-b border-gray-200 mb-6">
-            <button onclick="switchTab('capacityTab', this)" id="defaultTab" class="tab-btn active px-6 py-3 font-bold text-gray-500 border-b-2">Capacity</button>
-            <button onclick="switchTab('tableTab', this)" class="tab-btn px-6 py-3 font-bold text-gray-500 border-b-2">Team Table</button>
+        <div class="flex border-b border-gray-200 mb-6 no-print tab-navigation">
+            <button onclick="switchTab('capacityTab', this)" id="defaultTab" class="tab-btn px-6 py-3 font-bold text-gray-500 border-b-2 border-transparent hover:text-blue-600 transition-all active">
+                <div class="flex items-center gap-2"><i data-lucide="layout-dashboard" class="w-4 h-4"></i> Capacity Overview</div>
+            </button>
+            <button onclick="switchTab('tableTab', this)" class="tab-btn px-6 py-3 font-bold text-gray-500 border-b-2 border-transparent hover:text-blue-600 transition-all">
+                <div class="flex items-center gap-2"><i data-lucide="list" class="w-4 h-4"></i> Team Table</div>
+            </button>
         </div>
 
         <div id="capacityTab" class="tab-content">
-            <div id="capacityMainGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div id="capacityMainGrid" class="grid grid-cols-1 gap-6 mb-8 no-print">
                 <div class="p-4 border rounded-2xl bg-white shadow-sm">
-                    <h3 class="text-blue-700 font-bold mb-3 flex justify-between border-b pb-2 uppercase text-[10px] tracking-widest">
-                        <span><i data-lucide="code" class="inline w-4 h-4"></i> Developers</span>
-                        <span id="devTotalLabel">Total: 0</span>
+                    <h3 class="text-blue-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest capacity-section-title">
+                        <span class="flex items-center gap-2"><i data-lucide="code" class="w-4 h-4"></i> Developers Capacity</span>
+                        <span id="devTotalLabel" class="bg-blue-100 px-2 py-0.5 rounded text-blue-800">Total: 0</span>
                     </h3>
-                    <div id="devCapacityGrid" class="grid grid-cols-2 lg:grid-cols-3 gap-2"></div>
+                    <div id="devCapacityGrid" class="grid gap-2 mb-4"></div>
                 </div>
                 <div class="p-4 border rounded-2xl bg-white shadow-sm">
-                    <h3 class="text-green-700 font-bold mb-3 flex justify-between border-b pb-2 uppercase text-[10px] tracking-widest">
-                        <span><i data-lucide="check-square" class="inline w-4 h-4"></i> Testers</span>
-                        <span id="testerTotalLabel">Total: 0</span>
+                    <h3 class="text-green-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest capacity-section-title">
+                        <span class="flex items-center gap-2"><i data-lucide="check-square" class="w-4 h-4"></i> Testers Capacity</span>
+                        <span id="testerTotalLabel" class="bg-green-100 px-2 py-0.5 rounded text-green-800">Total: 0</span>
                     </h3>
-                    <div id="testerCapacityGrid" class="grid grid-cols-2 lg:grid-cols-3 gap-2"></div>
+                    <div id="testerCapacityGrid" class="grid gap-2 mb-4"></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8 no-print">
+                <div class="p-6 border rounded-2xl bg-white shadow-sm flex flex-col items-center">
+                    <h3 class="text-blue-700 font-bold mb-6 text-center uppercase text-xs tracking-widest chart-title-font">Developers Distribution</h3>
+                    <div class="relative chart-container flex justify-center">
+                        <canvas id="devPieChart"></canvas>
+                    </div>
+                </div>
+                <div class="p-6 border rounded-2xl bg-white shadow-sm flex flex-col items-center">
+                    <h3 class="text-green-700 font-bold mb-6 text-center uppercase text-xs tracking-widest chart-title-font">Testers Distribution</h3>
+                    <div class="relative chart-container flex justify-center">
+                        <canvas id="testerPieChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div id="tableTab" class="tab-content hidden">
+            <div class="flex justify-between items-center mb-4 no-print">
+                <h3 class="text-lg font-bold text-gray-700">Team Members List</h3>
+                <div class="flex gap-2">
+                    <button onclick="clearFilters()" class="px-4 py-2 border rounded hover:bg-red-50 flex items-center gap-2 text-red-600 font-medium">
+                        <i data-lucide="filter-x" class="w-4 h-4"></i> Clear Filters
+                    </button>
+                    <button onclick="exportToExcel()" class="px-4 py-2 border rounded hover:bg-green-50 flex items-center gap-2 text-green-700 font-medium">
+                        <i data-lucide="file-spreadsheet" class="w-4 h-4"></i> Export Excel
+                    </button>
+                </div>
+            </div>
             <div class="google-card overflow-hidden">
-                <table class="w-full text-left text-sm" id="employeeTable">
-                    <thead class="bg-gray-50"><tr id="tableHeaderRow" class="text-gray-600 border-b"></tr></thead>
-                    <tbody id="employeeTableBody" class="divide-y"></tbody>
-                </table>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm" id="employeeTable">
+                        <thead class="bg-gray-50"><tr id="tableHeaderRow" class="text-gray-600 border-b"></tr></thead>
+                        <tbody id="employeeTableBody" class="divide-y"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 
-    <div id="cloudConfigModal" class="fixed inset-0 z-[1200] bg-black/50 hidden flex items-center justify-center p-4">
-        <div class="bg-white large-modal max-w-lg p-8 shadow-2xl">
-            <h3 class="text-xl font-bold mb-6 flex items-center gap-2"><i data-lucide="database"></i> GitHub Cloud Config</h3>
-            <div class="space-y-4 mb-6">
-                <input type="text" id="dbRepo" placeholder="Repo (e.g. username/reponame)" class="w-full p-3 border rounded-xl">
-                <input type="text" id="dbPath" placeholder="File path (e.g. data.json)" class="w-full p-3 border rounded-xl">
-                <input type="password" id="dbToken" placeholder="GitHub Token (ghp_...)" class="w-full p-3 border rounded-xl">
+    <div id="githubSetupModal" class="fixed inset-0 z-[1200] bg-black/50 hidden flex items-center justify-center p-4">
+        <div class="bg-white large-modal max-w-xl p-8 shadow-2xl">
+            <div class="flex justify-between items-center mb-6 border-b pb-4">
+                <h3 class="text-xl font-bold text-gray-800 uppercase flex items-center gap-2">
+                    <i data-lucide="github" class="text-emerald-600"></i> GitHub Database Configuration
+                </h3>
+                <button onclick="closeGitHubSetupModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button>
             </div>
-            <button onclick="saveCloudConfig()" class="w-full py-3 bg-blue-600 text-white rounded-xl font-bold">Connect & Sync</button>
-            <button onclick="closeCloudConfigModal()" class="w-full mt-2 py-2 text-gray-500">Close</button>
+            <div class="space-y-4 mb-6">
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 mb-1">GITHUB REPOSITORY URL</label>
+                    <input type="text" id="gh_repoUrl" placeholder="https://github.com/user/repo" class="w-full p-3 border rounded-xl bg-gray-50 outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 mb-1">BRANCH NAME</label>
+                    <input type="text" id="gh_branch" placeholder="main" class="w-full p-3 border rounded-xl bg-gray-50 outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 mb-1">FILE PATH (e.g. data/db.json)</label>
+                    <input type="text" id="gh_filePath" placeholder="database.json" class="w-full p-3 border rounded-xl bg-gray-50 outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 mb-1">GITHUB ACCESS TOKEN</label>
+                    <input type="password" id="gh_token" placeholder="ghp_xxxxxxxxxxxx" class="w-full p-3 border rounded-xl bg-gray-50 outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 mb-1">CONNECTION OPTION</label>
+                    <select id="gh_connOption" class="w-full p-3 border rounded-xl bg-gray-50 outline-none focus:ring-2 focus:ring-emerald-500">
+                        <option value="github">GitHub Only</option>
+                        <option value="database">Database File Only</option>
+                        <option value="both">GitHub + Database</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex gap-3">
+                <button onclick="saveGitHubConfig()" class="flex-1 py-3 bg-emerald-600 text-white rounded-xl font-bold shadow-lg hover:bg-emerald-700 uppercase">Save & Connect</button>
+                <button onclick="closeGitHubSetupModal()" class="flex-1 py-3 bg-gray-100 text-gray-600 rounded-xl font-bold hover:bg-gray-200 uppercase">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="designModal" class="fixed inset-0 z-[1200] bg-black/50 hidden flex items-center justify-center p-4">
+        <div class="bg-white large-modal max-w-2xl p-8 shadow-2xl">
+            <div class="flex justify-between items-center mb-6 border-b pb-4">
+                <h3 class="text-xl font-bold text-gray-800 uppercase flex items-center gap-2">
+                    <i data-lucide="palette" class="text-amber-600"></i> Layout & Design Controls
+                </h3>
+                <button onclick="closeDesignModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div class="space-y-4">
+                    <h4 class="font-bold text-blue-700 border-b pb-1 text-sm">CAPACITY CARDS & GRID</h4>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 mb-1">CARDS PER ROW (Desktop)</label>
+                        <input type="range" id="control_gridCols" min="1" max="6" value="6" oninput="applyDesign()" class="w-full accent-blue-600">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 mb-1">SECTION LAYOUT (Dev/Tester)</label>
+                        <input type="range" id="control_sectionCols" min="1" max="2" value="2" oninput="applyDesign()" class="w-full accent-blue-600">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 mb-1">CARD MIN-HEIGHT (px)</label>
+                        <input type="range" id="control_cardHeight" min="50" max="200" value="80" oninput="applyDesign()" class="w-full">
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div><label class="block text-[10px] font-bold text-gray-500 mb-1">TITLE FONT</label><input type="number" id="control_titleFont" value="9" oninput="applyDesign()" class="w-full p-2 border rounded"></div>
+                        <div><label class="block text-[10px] font-bold text-gray-500 mb-1">VALUES FONT</label><input type="number" id="control_valueFont" value="12" oninput="applyDesign()" class="w-full p-2 border rounded"></div>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <h4 class="font-bold text-emerald-700 border-b pb-1 text-sm">CHARTS DIMENSIONS</h4>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 mb-1">CHART HEIGHT (px)</label>
+                        <input type="range" id="control_chartHeight" min="150" max="600" value="300" oninput="applyDesign()" class="w-full">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 mb-1">CHART WIDTH (%)</label>
+                        <input type="range" id="control_chartWidth" min="50" max="100" value="100" oninput="applyDesign()" class="w-full">
+                    </div>
+                    <div><label class="block text-xs font-bold text-gray-500 mb-1">CHART LEGEND FONT (px)</label><input type="number" id="control_chartLegendFont" value="11" oninput="applyDesign()" class="w-full p-2 border rounded"></div>
+                </div>
+            </div>
+            <div class="flex gap-3">
+                <button onclick="saveDesign()" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold shadow-lg hover:bg-blue-700">SAVE DESIGN</button>
+                <button onclick="setAsDefaultDesign()" class="flex-1 py-3 bg-emerald-600 text-white rounded-xl font-bold shadow-lg hover:bg-emerald-700">SET AS DEFAULT</button>
+                <button onclick="resetDesign()" class="py-3 px-6 bg-gray-100 text-gray-600 rounded-xl font-bold hover:bg-gray-200">RESET</button>
+            </div>
         </div>
     </div>
 
     <div id="setupModal" class="fixed inset-0 z-[1100] bg-black/50 hidden flex items-center justify-center p-4">
-        <div class="bg-white large-modal p-6 shadow-2xl">
-            <h3 class="font-bold mb-4">Fields Setup</h3>
-            <div id="fieldsContainer" class="space-y-2 mb-4"></div>
-            <button onclick="addField()" class="bg-gray-100 px-4 py-2 rounded text-sm font-bold mb-4">+ Add Field</button>
-            <div class="flex gap-2"><button onclick="saveSetup()" class="bg-blue-600 text-white px-6 py-2 rounded">Save</button><button onclick="closeSetupModal()" class="px-6 py-2">Cancel</button></div>
+        <div class="bg-white large-modal p-8 shadow-2xl">
+            <div class="flex justify-between items-center mb-6"><h3 class="text-2xl font-bold text-gray-800 uppercase">Fields Setup</h3><button onclick="closeSetupModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button></div>
+            <div id="fieldsList" class="space-y-3 mb-6 max-h-[50vh] overflow-y-auto pr-2"></div>
+            <div class="flex flex-col md:flex-row gap-4">
+                <button onclick="addNewFieldSetup()" class="flex-1 py-3 bg-emerald-600 text-white rounded-xl font-bold uppercase">+ ADD NEW FIELD</button>
+                <button onclick="saveSetup()" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold uppercase">SAVE & RELOAD</button>
+            </div>
         </div>
     </div>
 
-    <div id="memberModal" class="fixed inset-0 z-[1000] bg-black/50 hidden flex items-center justify-center p-4">
-        <div class="bg-white large-modal max-w-2xl p-6 shadow-2xl">
-            <h3 id="modalTitle" class="text-xl font-bold mb-6">Add New Member</h3>
-            <div id="dynamicFieldsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6"></div>
-            <div class="flex gap-3 justify-end"><button onclick="saveMember()" class="bg-blue-600 text-white px-8 py-2 rounded font-bold">Save</button><button onclick="closeModal()" class="bg-gray-200 px-8 py-2 rounded">Cancel</button></div>
+    <div id="usersModal" class="fixed inset-0 z-[1100] bg-black/50 hidden flex items-center justify-center p-4">
+        <div class="bg-white large-modal p-8 shadow-2xl max-w-3xl">
+            <div class="flex justify-between items-center mb-6"><h3 class="text-2xl font-bold text-gray-800 uppercase">User Management</h3><button onclick="closeUsersModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button></div>
+            <div id="usersList" class="space-y-3 mb-6 max-h-[50vh] overflow-y-auto pr-2"></div>
+            <div class="flex flex-col md:flex-row gap-4">
+                <button onclick="addNewUser()" class="flex-1 py-3 bg-emerald-600 text-white rounded-xl font-bold uppercase">+ ADD NEW USER</button>
+                <button onclick="saveUsers()" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold uppercase">SAVE USERS</button>
+            </div>
         </div>
     </div>
 
-    <div id="designModal" class="fixed inset-0 z-[1150] bg-black/50 hidden flex items-center justify-center p-4">
-        <div class="bg-white large-modal max-w-lg p-6 shadow-2xl">
-            <h3 class="font-bold mb-4">Design Layout</h3>
-            <textarea id="cssEditor" class="w-full h-64 font-mono text-xs p-4 border rounded bg-gray-900 text-green-400"></textarea>
-            <button onclick="saveDesign()" class="mt-4 bg-blue-600 text-white px-6 py-2 rounded">Apply CSS</button>
-            <button onclick="closeDesignModal()" class="mt-4 px-6 py-2">Close</button>
+    <div id="modal" class="fixed inset-0 z-[1000] bg-black/50 hidden flex items-center justify-center p-4">
+        <div class="bg-white large-modal p-10 shadow-2xl">
+            <h3 class="text-2xl font-bold mb-8 text-gray-800">Member Configuration</h3>
+            <form id="employeeForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <input type="hidden" id="editIndex">
+                <div id="dynamicFieldsContainer" class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+                <div class="md:col-span-2 bg-rose-50 p-6 rounded-2xl border border-rose-100 flex flex-wrap items-center justify-between gap-4">
+                    <div class="flex items-center gap-4"><span class="font-bold text-rose-700">Set Vacation:</span><input type="checkbox" id="empIsVacation" class="w-6 h-6 accent-rose-600"></div>
+                    <div class="flex items-center gap-4"><span class="font-bold text-rose-700">Return Date:</span><input type="date" id="empVacationEnd" class="p-2 border rounded-xl outline-none"></div>
+                </div>
+                <div class="md:col-span-2 flex gap-4 mt-4">
+                    <button type="button" onclick="closeModal()" class="flex-1 py-4 bg-gray-100 text-gray-600 rounded-xl font-bold uppercase">Cancel</button>
+                    <button type="submit" class="flex-1 py-4 bg-blue-600 text-white rounded-xl font-bold uppercase shadow-lg">Save Data</button>
+                </div>
+            </form>
         </div>
     </div>
 
-    <div id="usersModal" class="fixed inset-0 z-[1160] bg-black/50 hidden flex items-center justify-center p-4">
-        <div class="bg-white large-modal max-w-lg p-6 shadow-2xl">
-            <h3 class="font-bold mb-4">Users Management</h3>
-            <div id="usersList" class="space-y-3 mb-6"></div>
-            <button onclick="addNewUser()" class="bg-gray-100 w-full py-2 mb-4">+ Add User</button>
-            <button onclick="saveUsers()" class="bg-purple-600 text-white px-6 py-2 rounded w-full">Save Users</button>
-            <button onclick="closeUsersModal()" class="mt-2 w-full text-gray-500">Cancel</button>
+    <div id="backupSettingsModal" class="fixed inset-0 z-[1200] bg-black/50 hidden flex items-center justify-center p-4">
+        <div class="bg-white large-modal max-w-lg p-8 shadow-2xl">
+            <div class="flex justify-between items-center mb-6"><h3 class="text-xl font-bold text-gray-800">BACKUP SETTINGS</h3><button onclick="closeBackupSettingsModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button></div>
+            <div class="space-y-4">
+                <div class="p-4 bg-blue-50 border border-blue-100 rounded-xl">
+                    <label class="block text-xs font-bold text-blue-700 uppercase mb-2">Default Backup Filename</label>
+                    <input type="text" id="backupFileNameInput" placeholder="e.g. team_hub_backup" class="w-full p-3 border rounded-lg outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <button onclick="saveBackupSettings()" class="w-full py-3 bg-blue-600 text-white rounded-xl font-bold uppercase">Save Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="detailsPopup" class="fixed inset-0 z-[2000] bg-black/50 hidden flex items-center justify-center p-4" onclick="closePopup()">
+        <div class="bg-white large-modal shadow-2xl p-8" onclick="event.stopPropagation()">
+            <div class="flex justify-between items-center border-b pb-4 mb-6"><h2 id="popupTitle" class="text-2xl font-black text-blue-700 uppercase"></h2><button onclick="closePopup()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-8 h-8"></i></button></div>
+            <div id="popupList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+            <button onclick="closePopup()" class="w-full mt-8 py-3 bg-gray-100 rounded-xl font-bold text-gray-600 uppercase">CLOSE</button>
         </div>
     </div>
 
     <script>
-        // App State
         const STORAGE_KEY = 'team_resource_db_v10';
-        const CLOUD_CONFIG_KEY = 'team_hub_cloud_db_v1';
-        
-        let employees = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-        let cloudConfig = JSON.parse(localStorage.getItem(CLOUD_CONFIG_KEY)) || { repo: '', path: '', token: '' };
-        let fieldsConfig = JSON.parse(localStorage.getItem('fields_setup_config')) || [
+        const SETUP_KEY = 'fields_setup_config';
+        const USERS_KEY = 'team_hub_users';
+        const BACKUP_SETTINGS_KEY = 'team_hub_backup_settings';
+        const AUTO_BACKUP_STATUS_KEY = 'auto_backup_status';
+        const REMEMBER_ME_KEY = 'team_hub_remember_credentials';
+        const DESIGN_KEY = 'team_hub_design_v1';
+        const DEFAULT_DESIGN_KEY = 'team_hub_default_design_v1'; 
+
+        const defaultFields = [
             { id: 'name', label: 'Full Name', type: 'text', required: true, showInTable: true },
-            { id: 'role', label: 'Role', type: 'select', options: ['Dev', 'Senior', 'Tester', 'Senior tester'], showInTable: true },
-            { id: 'area', label: 'Area', type: 'select', options: ["Registration", "Internal lab", "Integration"], showInTable: true },
-            { id: 'status', label: 'Status', type: 'select', options: ['Active', 'Vacation'], showInTable: true }
+            { id: 'role', label: 'Current Role', type: 'select', options: ['Dev', 'Senior', 'Tester', 'Senior tester', 'Team Lead'], showInTable: true },
+            { id: 'area', label: 'Area / Squad', type: 'select', options: ["Registration", "Internal lab", "Front and Financial", "front end", "Intgration", "LDM_Intgration", "elBORG", "Team Leader"], showInTable: true },
+            { id: 'workingIn', label: 'Working ON', type: 'select', options: ['Regression', 'support', 'Iteration', 'elBORG', 'Senior', 'Team Leader'], showInTable: true }
         ];
-        let users = JSON.parse(localStorage.getItem('team_hub_users')) || [{ username: 'admin', password: '123', role: 'admin' }];
-        let currentEditId = null;
-        let fileSha = null;
 
-        // Login
-        function checkLogin() {
-            const u = document.getElementById('userInput').value;
-            const p = document.getElementById('passInput').value;
-            const found = users.find(x => x.username === u && x.password === p);
-            if(found) {
-                document.body.setAttribute('data-user-role', found.role);
-                document.getElementById('loginOverlay').style.display = 'none';
-                document.getElementById('mainContent').classList.remove('hidden');
-                document.getElementById('displayRole').innerText = `${found.username} (${found.role})`;
-                if(cloudConfig.token) syncWithCloud(); else renderAll();
-            } else { document.getElementById('loginError').classList.remove('hidden'); }
+        let fieldsConfig = JSON.parse(localStorage.getItem(SETUP_KEY)) || defaultFields;
+        let employees = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        let users = JSON.parse(localStorage.getItem(USERS_KEY)) || [{ username: 'admin', password: '123', role: 'admin' }];
+        let backupSettings = JSON.parse(localStorage.getItem(BACKUP_SETTINGS_KEY)) || { fileName: 'team_hub_system_backup' };
+        let autoBackupEnabled = localStorage.getItem(AUTO_BACKUP_STATUS_KEY) !== 'false';
+        
+        let designSettings = JSON.parse(localStorage.getItem(DESIGN_KEY)) || {
+            cardHeight: 80, gridCols: 6, sectionCols: 2, titleFont: 9, valueFont: 12, chartHeight: 300, chartWidth: 100, chartLegendFont: 11
+        };
+
+        let currentUserRole = null;
+        let sortDirection = 1;
+        let devChart = null;
+        let testerChart = null;
+
+        /** GitHub Global Config Object (In-Memory Only as per requirements) **/
+        let githubConfig = {
+            repoUrl: '',
+            branch: 'main',
+            filePath: 'database.json',
+            token: '',
+            connOption: 'github',
+            fileSha: null
+        };
+
+        async function saveGitHubConfig() {
+            githubConfig.repoUrl = document.getElementById('gh_repoUrl').value.trim();
+            githubConfig.branch = document.getElementById('gh_branch').value.trim() || 'main';
+            githubConfig.filePath = document.getElementById('gh_filePath').value.trim();
+            githubConfig.token = document.getElementById('gh_token').value.trim();
+            githubConfig.connOption = document.getElementById('gh_connOption').value;
+
+            if (!githubConfig.repoUrl || !githubConfig.token) {
+                alert("Repository URL and Token are required.");
+                return;
+            }
+
+            const success = await loadFromGitHub();
+            if (success) {
+                alert("Connected to GitHub successfully.");
+                closeGitHubSetupModal();
+                renderAll();
+            }
         }
 
-        // Cloud Core Logic
-        async function syncWithCloud() {
-            if(!cloudConfig.token) return;
-            updateSyncStatus('syncing', 'Connecting...');
+        function openGitHubSetupModal() {
+            document.getElementById('gh_repoUrl').value = githubConfig.repoUrl;
+            document.getElementById('gh_branch').value = githubConfig.branch;
+            document.getElementById('gh_filePath').value = githubConfig.filePath;
+            document.getElementById('gh_token').value = githubConfig.token;
+            document.getElementById('gh_connOption').value = githubConfig.connOption;
+            document.getElementById('githubSetupModal').classList.remove('hidden');
+        }
+
+        function closeGitHubSetupModal() {
+            document.getElementById('githubSetupModal').classList.add('hidden');
+        }
+
+        async function loadFromGitHub() {
+            if (!githubConfig.token || !githubConfig.repoUrl) return false;
             try {
-                const res = await fetch(`https://api.github.com/repos/${cloudConfig.repo}/contents/${cloudConfig.path}`, {
-                    headers: { 'Authorization': `token ${cloudConfig.token}` }
+                const repoPath = githubConfig.repoUrl.replace('https://github.com/', '').replace(/\/$/, '');
+                const apiUrl = `https://api.github.com/repos/${repoPath}/contents/${githubConfig.filePath}?ref=${githubConfig.branch}`;
+                
+                const response = await fetch(apiUrl, {
+                    headers: { 'Authorization': `token ${githubConfig.token}`, 'Accept': 'application/vnd.github.v3+json' }
                 });
-                if(res.ok) {
-                    const data = await res.json();
-                    fileSha = data.sha;
+
+                if (response.ok) {
+                    const data = await response.json();
+                    githubConfig.fileSha = data.sha;
                     const content = JSON.parse(atob(data.content));
-                    employees = content.employees || [];
-                    fieldsConfig = content.fieldsConfig || fieldsConfig;
-                    saveLocally();
-                    renderAll();
-                    updateSyncStatus('online', 'Cloud Sync Active');
-                } else { updateSyncStatus('offline', 'Error Path/Token'); }
-            } catch(e) { updateSyncStatus('offline', 'Network Error'); }
-        }
-
-        async function saveToCloud() {
-            if(!cloudConfig.token || !fileSha) return;
-            const fullData = { employees, fieldsConfig, lastUpdate: new Date() };
-            const content = btoa(unescape(encodeURIComponent(JSON.stringify(fullData))));
-            try {
-                const res = await fetch(`https://api.github.com/repos/${cloudConfig.repo}/contents/${cloudConfig.path}`, {
-                    method: 'PUT',
-                    headers: { 'Authorization': `token ${cloudConfig.token}` },
-                    body: JSON.stringify({ message: 'Update', content, sha: fileSha })
-                });
-                if(res.ok) {
-                    const data = await res.json();
-                    fileSha = data.content.sha;
-                    updateSyncStatus('online', 'Changes Saved');
+                    
+                    if (content.employees) employees = content.employees;
+                    if (content.fields) fieldsConfig = content.fields;
+                    if (content.users) users = content.users;
+                    if (content.design) designSettings = content.design;
+                    
+                    return true;
+                } else {
+                    const error = await response.json();
+                    alert("GitHub Error: " + error.message);
+                    return false;
                 }
-            } catch(e) { updateSyncStatus('offline', 'Save Failed'); }
+            } catch (err) {
+                alert("Failed to fetch from GitHub: " + err.message);
+                return false;
+            }
         }
 
-        function updateSyncStatus(status, text) {
-            const el = document.getElementById('syncStatus');
-            el.innerHTML = `<i data-lucide="${status === 'online' ? 'cloud-check' : (status === 'syncing' ? 'refresh-cw' : 'cloud-off')}"></i> ${text}`;
-            el.className = `flex items-center gap-1 text-[10px] font-bold mr-2 uppercase ${status === 'online' ? 'text-emerald-500' : (status === 'syncing' ? 'text-blue-500 animate-spin' : 'text-red-500')}`;
-            lucide.createIcons();
-        }
+        async function syncToGitHub() {
+            if (!githubConfig.token || !githubConfig.repoUrl) return;
 
-        // Render Functions
-        function renderAll() {
-            renderTable();
-            renderCapacity();
-            lucide.createIcons();
-        }
-
-        function renderTable() {
-            const header = document.getElementById('tableHeaderRow');
-            header.innerHTML = fieldsConfig.filter(f => f.showInTable).map(f => `<th class="px-4 py-3 font-bold">${f.label}</th>`).join('') + '<th class="px-4 py-3 admin-only">Actions</th>';
-            
-            const body = document.getElementById('employeeTableBody');
-            body.innerHTML = employees.map(emp => {
-                const isVacation = emp.status === 'Vacation';
-                return `<tr class="${isVacation ? 'vacation-row' : 'hover:bg-gray-50'}">
-                    ${fieldsConfig.filter(f => f.showInTable).map(f => `<td class="px-4 py-3">${emp[f.id] || ''}</td>`).join('')}
-                    <td class="px-4 py-3 admin-only">
-                        <button onclick="editMember('${emp.id}')" class="text-blue-600 mr-2"><i data-lucide="edit-3" class="w-4 h-4"></i></button>
-                        <button onclick="deleteMember('${emp.id}')" class="text-red-600"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-                    </td>
-                </tr>`;
-            }).join('');
-        }
-
-        function renderCapacity() {
-            const areas = fieldsConfig.find(f => f.id === 'area')?.options || [];
-            const devGrid = document.getElementById('devCapacityGrid');
-            const testerGrid = document.getElementById('testerCapacityGrid');
-            
-            let devTotal = 0, testerTotal = 0;
-
-            const createCard = (area, roleType) => {
-                const count = employees.filter(e => e.area === area && e.status !== 'Vacation' && e.role?.toLowerCase().includes(roleType)).length;
-                if(roleType === 'dev') devTotal += count; else testerTotal += count;
-                return `
-                    <div class="p-3 border rounded-xl bg-gray-50 flex flex-col items-center">
-                        <span class="text-[10px] text-gray-500 font-bold uppercase mb-1">${area}</span>
-                        <span class="text-2xl font-black ${roleType === 'dev' ? 'text-blue-600' : 'text-green-600'}">${count}</span>
-                    </div>`;
+            const fullData = { 
+                employees, 
+                fields: fieldsConfig, 
+                users, 
+                design: designSettings, 
+                timestamp: new Date().toISOString() 
             };
 
-            devGrid.innerHTML = areas.map(a => createCard(a, 'dev')).join('');
-            testerGrid.innerHTML = areas.map(a => createCard(a, 'tester')).join('');
-            document.getElementById('devTotalLabel').innerText = `Total: ${devTotal}`;
-            document.getElementById('testerTotalLabel').innerText = `Total: ${testerTotal}`;
-        }
+            try {
+                const repoPath = githubConfig.repoUrl.replace('https://github.com/', '').replace(/\/$/, '');
+                const apiUrl = `https://api.github.com/repos/${repoPath}/contents/${githubConfig.filePath}`;
+                
+                const body = {
+                    message: "Update Team Hub Data",
+                    content: btoa(JSON.stringify(fullData, null, 2)),
+                    branch: githubConfig.branch,
+                    sha: githubConfig.fileSha
+                };
 
-        // Member Logic
-        function openModal(id = null) {
-            currentEditId = id;
-            const emp = id ? employees.find(e => e.id === id) : {};
-            document.getElementById('modalTitle').innerText = id ? 'Edit Member' : 'Add Member';
-            const container = document.getElementById('dynamicFieldsContainer');
-            container.innerHTML = fieldsConfig.map(f => {
-                if(f.type === 'select') {
-                    return `<div><label class="block text-xs font-bold mb-1">${f.label}</label>
-                            <select id="field_${f.id}" class="w-full p-2 border rounded">
-                                ${f.options.map(opt => `<option value="${opt}" ${emp[f.id] === opt ? 'selected' : ''}>${opt}</option>`).join('')}
-                            </select></div>`;
+                const response = await fetch(apiUrl, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `token ${githubConfig.token}`, 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+
+                if (response.ok) {
+                    const resData = await response.json();
+                    githubConfig.fileSha = resData.content.sha;
+                } else {
+                    const error = await response.json();
+                    console.error("GitHub Sync Error: ", error.message);
                 }
-                return `<div><label class="block text-xs font-bold mb-1">${f.label}</label>
-                        <input type="${f.type}" id="field_${f.id}" value="${emp[f.id] || ''}" class="w-full p-2 border rounded"></div>`;
-            }).join('');
-            document.getElementById('memberModal').classList.remove('hidden');
+            } catch (err) {
+                console.error("Failed to sync to GitHub: ", err.message);
+            }
         }
 
-        function saveMember() {
-            const newEmp = { id: currentEditId || Date.now().toString() };
-            fieldsConfig.forEach(f => { newEmp[f.id] = document.getElementById(`field_${f.id}`).value; });
-            if(currentEditId) {
-                const idx = employees.findIndex(e => e.id === currentEditId);
-                employees[idx] = newEmp;
-            } else { employees.push(newEmp); }
-            save();
-            closeModal();
+        function checkLogin() {
+            const userVal = document.getElementById('userInput').value.trim().toLowerCase();
+            const passVal = document.getElementById('passInput').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+            const foundUser = users.find(u => u.username.toLowerCase() === userVal && u.password === passVal);
+            if (foundUser) {
+                if (rememberMe) localStorage.setItem(REMEMBER_ME_KEY, JSON.stringify({ u: userVal, p: passVal }));
+                else localStorage.removeItem(REMEMBER_ME_KEY);
+                currentUserRole = foundUser.role;
+                document.body.setAttribute('data-user-role', currentUserRole);
+                document.getElementById('loginOverlay').style.display = 'none';
+                document.getElementById('mainContent').classList.remove('hidden');
+                document.getElementById('displayRole').innerText = `${foundUser.username} (${currentUserRole})`;
+                document.getElementById('autoBackupToggle').checked = autoBackupEnabled;
+                applyDesign();
+                renderAll();
+            } else {
+                document.getElementById('loginError').classList.remove('hidden');
+                setTimeout(() => document.getElementById('loginError').classList.add('hidden'), 3000);
+            }
         }
 
-        function deleteMember(id) { if(confirm('Are you sure?')) { employees = employees.filter(e => e.id !== id); save(); } }
-
-        function save() {
-            saveLocally();
-            renderAll();
-            if(cloudConfig.token) saveToCloud();
-        }
-
-        function saveLocally() { localStorage.setItem(STORAGE_KEY, JSON.stringify(employees)); }
-
-        // Settings Modals
-        function openCloudConfigModal() {
-            document.getElementById('dbRepo').value = cloudConfig.repo;
-            document.getElementById('dbPath').value = cloudConfig.path;
-            document.getElementById('dbToken').value = cloudConfig.token;
-            document.getElementById('cloudConfigModal').classList.remove('hidden');
-        }
-        function saveCloudConfig() {
-            cloudConfig = { repo: document.getElementById('dbRepo').value, path: document.getElementById('dbPath').value, token: document.getElementById('dbToken').value };
-            localStorage.setItem(CLOUD_CONFIG_KEY, JSON.stringify(cloudConfig));
-            document.getElementById('cloudConfigModal').classList.add('hidden');
-            syncWithCloud();
-        }
-        function closeCloudConfigModal() { document.getElementById('cloudConfigModal').classList.add('hidden'); }
-        
-        // Setup Modal Logic
-        function openSetupModal() {
-            const container = document.getElementById('fieldsContainer');
-            container.innerHTML = fieldsConfig.map((f, i) => `
-                <div class="flex gap-2 items-center bg-gray-50 p-2 rounded">
-                    <input type="text" value="${f.label}" onchange="updateField(${i}, 'label', this.value)" class="p-1 border rounded text-xs flex-1">
-                    <select onchange="updateField(${i}, 'type', this.value)" class="text-xs p-1 border rounded">
-                        <option value="text" ${f.type === 'text' ? 'selected' : ''}>Text</option>
-                        <option value="select" ${f.type === 'select' ? 'selected' : ''}>Select</option>
-                    </select>
-                    <button onclick="removeField(${i})" class="text-red-500"><i data-lucide="x" class="w-4 h-4"></i></button>
-                </div>`).join('');
-            document.getElementById('setupModal').classList.remove('hidden');
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedData = localStorage.getItem(REMEMBER_ME_KEY);
+            if (savedData) {
+                const { u, p } = JSON.parse(savedData);
+                document.getElementById('userInput').value = u;
+                document.getElementById('passInput').value = p;
+                document.getElementById('rememberMe').checked = true;
+            }
             lucide.createIcons();
+        });
+
+        function performFullRestore(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            if (!confirm('Critical: All current data will be overwritten. Proceed with Restore?')) { 
+                event.target.value = ''; 
+                return; 
+            }
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const restoredData = JSON.parse(e.target.result);
+                    if (restoredData.employees && restoredData.fields) {
+                        employees = restoredData.employees;
+                        fieldsConfig = restoredData.fields;
+                        users = restoredData.users || users;
+                        designSettings = restoredData.design || designSettings;
+                        
+                        localStorage.setItem(STORAGE_KEY, JSON.stringify(employees));
+                        localStorage.setItem(SETUP_KEY, JSON.stringify(fieldsConfig));
+                        localStorage.setItem(USERS_KEY, JSON.stringify(users));
+                        localStorage.setItem(DESIGN_KEY, JSON.stringify(designSettings));
+                        
+                        alert('System Restored Successfully! Refreshing...');
+                        location.reload();
+                    } else {
+                        alert('Error: File format is not recognized.');
+                    }
+                } catch (err) { alert('Error: Invalid JSON File.'); }
+            };
+            reader.readAsText(file);
         }
 
-        // Tab Switching
+        function applyDesign() {
+            const d = designSettings;
+            const styleEl = document.getElementById('dynamicStyles');
+            styleEl.innerHTML = `
+                body { font-family: 'Roboto', sans-serif; background-color: #f8f9fa; color: #202124; }
+                .google-card { background: white; border: 1px solid #dadce0; border-radius: 8px; transition: all 0.2s; cursor: pointer; }
+                .google-card:hover { box-shadow: 0 4px 12px rgba(60,64,67,.15); transform: translateY(-1px); }
+                .vacation-row { background-color: #fce8e6 !important; border-left: 4px solid #d93025; }
+                .sort-btn { cursor: pointer; display: inline-flex; align-items: center; gap: 4px; color: #5f6368; font-weight: bold; padding: 8px 0; }
+                .large-modal { width: 95%; max-width: 1000px; max-height: 90vh; overflow-y: auto; border-radius: 16px; }
+                .admin-only { display: none !important; }
+                body[data-user-role="admin"] .admin-only { display: inline-flex !important; }
+                body[data-user-role="admin"] .admin-cell { display: table-cell !important; }
+                .admin-cell { display: none; }
+                .dropdown:hover .dropdown-menu { display: block; }
+                .tab-btn.active { color: #1a73e8; border-bottom: 3px solid #1a73e8; background-color: rgba(26, 115, 232, 0.05); }
+                .switch { position: relative; display: inline-block; width: 40px; height: 20px; }
+                .switch input { opacity: 0; width: 0; height: 0; }
+                .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 20px; }
+                .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+                input:checked + .slider { background-color: #10b981; }
+                input:checked + .slider:before { transform: translateX(20px); }
+                .capacity-card { min-height: ${d.cardHeight}px !important; }
+                .capacity-section-title { font-size: ${d.titleFont}px !important; }
+                .capacity-item { font-size: ${d.valueFont}px !important; }
+                .chart-container { height: ${d.chartHeight}px !important; width: ${d.chartWidth}% !important; }
+                .hidden-cloud-trigger { position: absolute; bottom: 10px; right: 10px; opacity: 0.15; cursor: pointer; transition: opacity 0.3s; }
+                .hidden-cloud-trigger:hover { opacity: 0.8; color: #1a73e8; }
+                #capacityMainGrid { grid-template-columns: repeat(${d.sectionCols}, minmax(0, 1fr)) !important; }
+                @media (min-width: 1024px) { #devCapacityGrid, #testerCapacityGrid { grid-template-columns: repeat(${d.gridCols}, minmax(0, 1fr)) !important; } }
+                @media (max-width: 1023px) { #devCapacityGrid, #testerCapacityGrid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } #capacityMainGrid { grid-template-columns: repeat(1, minmax(0, 1fr)) !important; } }
+                @media (max-width: 640px) { #devCapacityGrid, #testerCapacityGrid { grid-template-columns: repeat(1, minmax(0, 1fr)) !important; } }
+            `;
+            updateCapacity();
+        }
+
+        // Shared Functions
         function switchTab(tabId, btn) {
             document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -359,14 +615,274 @@
             btn.classList.add('active');
         }
 
-        function closeModal() { document.getElementById('memberModal').classList.add('hidden'); }
-        function closeSetupModal() { document.getElementById('setupModal').classList.add('hidden'); }
-        function openDesignModal() { document.getElementById('designModal').classList.remove('hidden'); }
-        function closeDesignModal() { document.getElementById('designModal').classList.add('hidden'); }
-        function openUsersModal() { document.getElementById('usersModal').classList.remove('hidden'); }
-        function closeUsersModal() { document.getElementById('usersModal').classList.add('hidden'); }
+        function renderAll() { updateCapacity(); renderTable(); renderDynamicForm(); lucide.createIcons(); }
 
-        window.onload = () => lucide.createIcons();
+        function renderTable() {
+            const currentFilters = Array.from(document.querySelectorAll('.filter-input')).map(input => input.value);
+            const visibleFields = fieldsConfig.filter(f => f.showInTable !== false);
+            const headerRow = document.getElementById('tableHeaderRow');
+            headerRow.innerHTML = visibleFields.map((field, idx) => `
+                <th class="py-4 px-6 min-w-[150px]">
+                    <div class="sort-btn" onclick="sortTable('${field.id}')">${field.label} <i data-lucide="chevrons-up-down" class="w-3 h-3"></i></div>
+                    <input type="text" placeholder="Filter..." class="filter-input no-print" onkeyup="filterTable()" value="${currentFilters[idx] || ''}">
+                </th>`).join('') + `
+                <th class="py-4 px-6 text-center">Vacation</th><th class="py-4 px-6">Status / Return</th><th class="py-4 px-6 admin-cell no-print">Actions</th>`;
+
+            const tbody = document.getElementById('employeeTableBody');
+            tbody.innerHTML = employees.map((emp) => {
+                const realIdx = employees.indexOf(emp);
+                const cellsHtml = visibleFields.map(field => {
+                    const val = emp[field.id];
+                    const displayVal = Array.isArray(val) ? val.join(', ') : (val || '---');
+                    if(field.id === 'role') return `<td class="py-4 px-6"><span class="text-[10px] font-black uppercase border px-2 py-1 rounded bg-white shadow-sm">${displayVal}</span></td>`;
+                    if(field.id === 'name') return `<td class="py-4 px-6 font-bold text-gray-800">${displayVal}</td>`;
+                    return `<td class="py-4 px-6 text-gray-500">${displayVal}</td>`;
+                }).join('');
+                return `<tr class="${emp.isVacation ? 'vacation-row' : ''} hover:bg-gray-50 transition-colors">${cellsHtml}
+                    <td class="py-4 px-6 text-center"><input type="checkbox" ${emp.isVacation?'checked':''} ${currentUserRole=='admin'?'onchange="toggleVacWithDate('+realIdx+', this.checked)"':'disabled'} class="w-5 h-5 accent-red-600 cursor-pointer"></td>
+                    <td class="py-4 px-6 font-black ${emp.isVacation?'text-red-600':'text-emerald-600'}">${emp.isVacation ? (emp.vacationEnd ? 'Returns: ' + emp.vacationEnd : 'ON VACATION') : 'ACTIVE'}</td>
+                    <td class="py-4 px-6 admin-cell no-print"><div class="flex gap-4"><button onclick="editEmp(${realIdx})" class="text-gray-400 hover:text-blue-600"><i data-lucide="edit" class="w-5 h-5"></i></button><button onclick="deleteEmp(${realIdx})" class="text-gray-400 hover:text-red-500"><i data-lucide="trash-2" class="w-5 h-5"></i></button></div></td></tr>`;
+            }).join('');
+            lucide.createIcons(); filterTable();
+        }
+
+        function filterTable() {
+            const filters = document.querySelectorAll('.filter-input');
+            const rows = document.querySelectorAll('#employeeTableBody tr');
+            rows.forEach(row => {
+                let isRowVisible = true;
+                const cells = row.getElementsByTagName('td');
+                filters.forEach((input, index) => {
+                    const filterValue = input.value.toLowerCase().trim();
+                    if (!filterValue) return;
+                    if (!cells[index].textContent.toLowerCase().includes(filterValue)) isRowVisible = false;
+                });
+                row.style.display = isRowVisible ? "" : "none";
+                if (!isRowVisible) row.classList.add('hidden-by-filter'); else row.classList.remove('hidden-by-filter');
+            });
+        }
+
+        function sortTable(key) { 
+            sortDirection *= -1; 
+            employees.sort((a, b) => {
+                let valA = (String(a[key]) || "").toLowerCase();
+                let valB = (String(b[key]) || "").toLowerCase();
+                return valA > valB ? sortDirection : -sortDirection;
+            }); 
+            renderTable(); 
+        }
+
+        function performFullBackup(isAuto = false) {
+            const fullData = { employees, fields: fieldsConfig, users, design: designSettings, timestamp: new Date().toISOString() };
+            const blob = new Blob([JSON.stringify(fullData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            const dateStr = new Date().toLocaleDateString().replace(/\//g, '-');
+            a.href = url;
+            a.download = `${isAuto ? "AUTO_" : ""}${backupSettings.fileName}_${dateStr}.json`;
+            a.click(); URL.revokeObjectURL(url);
+        }
+
+        function exportToExcel() {
+            const table = document.getElementById("employeeTable");
+            const rows = Array.from(table.querySelectorAll("tr")).filter(row => row.offsetParent !== null && !row.classList.contains('hidden-by-filter'));
+            const data = rows.map(row => {
+                const cells = Array.from(row.querySelectorAll("th, td"));
+                return cells.slice(0, -1).map(cell => {
+                    const chk = cell.querySelector('input[type="checkbox"]');
+                    return chk ? (chk.checked ? "YES" : "NO") : cell.innerText.trim();
+                });
+            });
+            const ws = XLSX.utils.aoa_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Team Export");
+            XLSX.writeFile(wb, "Team_Hub_Report.xlsx");
+        }
+
+        function updateCapacity() {
+            const areaField = fieldsConfig.find(f => f.id === 'area');
+            const AREAS = (areaField && areaField.options) ? areaField.options.filter(a => a !== "Team Leader") : [];
+            const isInArea = (emp, area) => Array.isArray(emp.area) ? emp.area.includes(area) : emp.area === area;
+            const getUniqueTotal = (roles) => employees.filter(e => roles.includes(e.role) && !e.isVacation).length;
+            const getCountByArea = (area, roles, isVacation = false) => employees.filter(e => isInArea(e, area) && roles.includes(e.role) && (!!e.isVacation === !!isVacation)).length;
+            
+            let devChartData = []; let devChartLabels = [];
+            let testerChartData = []; let testerChartLabels = [];
+            
+            document.getElementById('devCapacityGrid').innerHTML = AREAS.filter(area => area !== 'elBORG').map(area => {
+                const devs = getCountByArea(area, ['Dev']), seniors = getCountByArea(area, ['Senior']), vac = getCountByArea(area, ['Dev', 'Senior'], true), total = devs + seniors;
+                devChartData.push(total); devChartLabels.push(area);
+                return `<div class="google-card capacity-card border-l-2 border-l-blue-500 flex flex-col p-2" onclick="showDetailsExtended('${area}', 'Dev,Senior', false)">
+                    <div class="flex justify-between items-center border-b pb-1 mb-1">
+                        <span class="font-black uppercase text-gray-500 truncate mr-1 capacity-section-title">${area}</span>
+                        <span class="font-bold text-blue-700 bg-blue-50 px-1.5 rounded capacity-item">${total}</span>
+                    </div>
+                    <div class="space-y-0">
+                        <div class="flex justify-between capacity-item hover:bg-gray-50 rounded" onclick="event.stopPropagation(); showDetailsExtended('${area}', 'Dev', false)"><span>Devs:</span><b>${devs}</b></div>
+                        <div class="flex justify-between capacity-item hover:bg-gray-50 rounded" onclick="event.stopPropagation(); showDetailsExtended('${area}', 'Senior', false)"><span>Seniors:</span><b>${seniors}</b></div>
+                        <div class="flex justify-between text-red-600 mt-0.5 pt-0.5 border-t border-dotted capacity-item hover:bg-red-50 rounded" onclick="event.stopPropagation(); showDetailsExtended('${area}', 'Dev,Senior', true)"><span>Vac:</span><b>${vac}</b></div>
+                    </div>
+                </div>`;
+            }).join('');
+
+            document.getElementById('testerCapacityGrid').innerHTML = AREAS.filter(area => area.toLowerCase() !== 'front end').map(area => {
+                const testers = getCountByArea(area, ['Tester']), sTesters = getCountByArea(area, ['Senior tester']), vac = getCountByArea(area, ['Tester', 'Senior tester'], true), total = testers + sTesters;
+                testerChartData.push(total); testerChartLabels.push(area);
+                return `<div class="google-card capacity-card border-l-2 border-l-green-500 flex flex-col p-2" onclick="showDetailsExtended('${area}', 'Tester,Senior tester', false)">
+                    <div class="flex justify-between items-center border-b pb-1 mb-1">
+                        <span class="font-black uppercase text-gray-500 truncate mr-1 capacity-section-title">${area}</span>
+                        <span class="font-bold text-green-700 bg-green-50 px-1.5 rounded capacity-item">${total}</span>
+                    </div>
+                    <div class="space-y-0">
+                        <div class="flex justify-between capacity-item hover:bg-gray-50 rounded" onclick="event.stopPropagation(); showDetailsExtended('${area}', 'Tester', false)"><span>Testers:</span><b>${testers}</b></div>
+                        <div class="flex justify-between capacity-item hover:bg-gray-50 rounded" onclick="event.stopPropagation(); showDetailsExtended('${area}', 'Senior tester', false)"><span>Seniors:</span><b>${sTesters}</b></div>
+                        <div class="flex justify-between text-red-600 mt-0.5 pt-0.5 border-t border-dotted capacity-item hover:bg-red-50 rounded" onclick="event.stopPropagation(); showDetailsExtended('${area}', 'Tester,Senior tester', true)"><span>Vac:</span><b>${vac}</b></div>
+                    </div>
+                </div>`;
+            }).join('');
+            
+            document.getElementById('devTotalLabel').innerText = `Total: ${getUniqueTotal(['Dev', 'Senior'])}`;
+            document.getElementById('testerTotalLabel').innerText = `Total: ${getUniqueTotal(['Tester', 'Senior tester'])}`;
+            const palette20 = ['#4285F4', '#34A853', '#FBBC05', '#EA4335', '#A142F4', '#24C1E0', '#FF7043', '#8E24AA', '#009688', '#3F51B5', '#FFCA28', '#D81B60', '#7CB342', '#00ACC1', '#5C6BC0', '#9CCC65', '#F06292', '#4DD0E1', '#81C784', '#BA68C8'];
+            renderPieChart('devPieChart', devChartLabels, devChartData, 'Devs + Seniors', palette20, 'devChart');
+            renderPieChart('testerPieChart', testerChartLabels, testerChartData, 'Testers + Seniors', palette20, 'testerChart');
+        }
+
+        function renderPieChart(canvasId, labels, data, datasetLabel, colors, chartVar) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            if (chartVar === 'devChart' && devChart) devChart.destroy();
+            if (chartVar === 'testerChart' && testerChart) testerChart.destroy();
+            const config = {
+                type: 'doughnut', data: { labels: labels, datasets: [{ label: datasetLabel, data: data, backgroundColor: colors, borderColor: '#ffffff', borderWidth: 2, hoverOffset: 15 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 15, font: { size: parseInt(designSettings.chartLegendFont), weight: '500' }, usePointStyle: true } } }, cutout: '65%' }
+            };
+            if (chartVar === 'devChart') devChart = new Chart(ctx, config); else testerChart = new Chart(ctx, config);
+        }
+
+        window.showDetailsExtended = function(area, roleStr, isVacation) {
+            const roles = roleStr.split(',');
+            const isInArea = (emp, targetArea) => Array.isArray(emp.area) ? emp.area.includes(targetArea) : emp.area === targetArea;
+            const members = employees.filter(e => isInArea(e, area) && roles.includes(e.role) && (!!e.isVacation === !!isVacation));
+            document.getElementById('popupTitle').innerText = `${area} - ${isVacation ? "Vacation" : "Active"}`;
+            document.getElementById('popupList').innerHTML = members.length === 0 ? `<div class="col-span-full p-8 text-center text-gray-400 italic">No members found</div>` : members.map(e => `
+                <div class="p-4 border rounded-xl bg-gray-50 shadow-sm flex flex-col gap-1">
+                    <div class="font-bold text-gray-800">${e.name}</div>
+                    <div class="flex justify-between items-center mb-1"><span class="text-blue-600 text-[10px] font-black uppercase tracking-tighter">${e.role}</span>${e.isVacation && e.vacationEnd ? `<span class="text-[9px] text-red-500 font-bold italic">Returns: ${e.vacationEnd}</span>` : ''}</div>
+                </div>`).join('');
+            document.getElementById('detailsPopup').classList.remove('hidden');
+        };
+
+        function closePopup() { document.getElementById('detailsPopup').classList.add('hidden'); }
+        function save(render = true) { 
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(employees)); 
+            if (githubConfig.token && githubConfig.repoUrl) syncToGitHub();
+            if(render) renderAll(); 
+        }
+        function toggleVacWithDate(idx, isChecked) { employees[idx].isVacation = isChecked; if (!isChecked) employees[idx].vacationEnd = ""; save(); }
+        function editEmp(idx) {
+            const emp = employees[idx]; document.getElementById('editIndex').value = idx;
+            fieldsConfig.forEach(field => {
+                if (field.type === 'multiselect') {
+                    const values = Array.isArray(emp[field.id]) ? emp[field.id] : (emp[field.id] ? [emp[field.id]] : []);
+                    document.querySelectorAll(`.multi-val-${field.id}`).forEach(chk => chk.checked = values.includes(chk.value));
+                } else { const el = document.getElementById(`field_${field.id}`); if(el) el.value = emp[field.id] || ""; }
+            });
+            document.getElementById('empIsVacation').checked = emp.isVacation || false;
+            document.getElementById('empVacationEnd').value = emp.vacationEnd || ""; openModal();
+        }
+
+        document.getElementById('employeeForm').onsubmit = (e) => {
+            e.preventDefault(); const idx = document.getElementById('editIndex').value; const newName = document.getElementById('field_name').value.trim();
+            if (!newName) { alert("Full Name is mandatory!"); return; }
+            if (employees.some((emp, index) => (idx !== "" && index === parseInt(idx)) ? false : (emp.name || "").toLowerCase() === newName.toLowerCase())) { alert("Duplicate name!"); return; }
+            const emp = { isVacation: document.getElementById('empIsVacation').checked, vacationEnd: document.getElementById('empVacationEnd').value };
+            fieldsConfig.forEach(field => {
+                if (field.type === 'multiselect') { emp[field.id] = Array.from(document.querySelectorAll(`.multi-val-${field.id}:checked`)).map(c => c.value); }
+                else { const el = document.getElementById(`field_${field.id}`); if(el) emp[field.id] = el.value.trim(); }
+            });
+            if(idx !== "") employees[idx] = emp; else employees.push(emp); save(); closeModal();
+        };
+
+        function deleteEmp(i) { if(confirm('Delete?')) { employees.splice(i,1); save(); } }
+        function openModal() { document.getElementById('modal').classList.remove('hidden'); }
+        function closeModal() { document.getElementById('modal').classList.add('hidden'); document.getElementById('employeeForm').reset(); document.getElementById('editIndex').value = ""; }
+        function renderDynamicForm() {
+            document.getElementById('dynamicFieldsContainer').innerHTML = fieldsConfig.map(field => {
+                let inputHtml = '';
+                if (field.type === 'select') inputHtml = `<select id="field_${field.id}" class="w-full p-3 border rounded-xl bg-gray-50 outline-none"><option value="">-- Select --</option>${(field.options || []).map(opt => `<option value="${opt}">${opt}</option>`).join('')}</select>`;
+                else if (field.type === 'multiselect') inputHtml = `<div id="field_${field.id}" class="grid grid-cols-2 gap-2 p-3 border rounded-xl bg-gray-50 max-h-40 overflow-y-auto">${(field.options || []).map(opt => `<label class="flex items-center gap-2 text-sm cursor-pointer hover:bg-white p-1 rounded"><input type="checkbox" value="${opt}" class="w-4 h-4 accent-blue-600 multi-val-${field.id}"> ${opt}</label>`).join('')}</div>`;
+                else inputHtml = `<input type="${field.type}" id="field_${field.id}" ${field.required ? 'required' : ''} class="w-full p-3 border rounded-xl bg-gray-50 outline-none focus:ring-2 focus:ring-blue-500">`;
+                return `<div class="space-y-2"><label class="block text-sm font-bold text-gray-500 uppercase">${field.label}</label>${inputHtml}</div>`;
+            }).join('');
+        }
+
+        // Admin Setup Functions
+        function openDesignModal() {
+            const d = designSettings;
+            ['cardHeight','gridCols','sectionCols','titleFont','valueFont','chartHeight','chartWidth','chartLegendFont'].forEach(k => document.getElementById('control_'+k).value = d[k]);
+            document.getElementById('designModal').classList.remove('hidden');
+        }
+        function closeDesignModal() { document.getElementById('designModal').classList.add('hidden'); }
+        function saveDesign() { 
+            localStorage.setItem(DESIGN_KEY, JSON.stringify(designSettings)); 
+            if (githubConfig.token && githubConfig.repoUrl) syncToGitHub();
+            alert("Applied!"); closeDesignModal(); 
+        }
+        function setAsDefaultDesign() { 
+            applyDesign(); 
+            localStorage.setItem(DEFAULT_DESIGN_KEY, JSON.stringify(designSettings)); 
+            if (githubConfig.token && githubConfig.repoUrl) syncToGitHub();
+            alert("Saved as Default!"); 
+        }
+        function resetDesign() { if(confirm("Reset?")) { designSettings = JSON.parse(localStorage.getItem(DEFAULT_DESIGN_KEY)) || { cardHeight: 80, gridCols: 6, sectionCols: 2, titleFont: 9, valueFont: 12, chartHeight: 300, chartWidth: 100, chartLegendFont: 11 }; applyDesign(); openDesignModal(); } }
+
+        function openSetupModal() {
+            document.getElementById('fieldsList').innerHTML = fieldsConfig.map((field, idx) => `
+                <div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-5 gap-3 items-end shadow-sm">
+                    <div><label class="text-[10px]">LABEL</label><input type="text" value="${field.label}" onchange="fieldsConfig[${idx}].label=this.value" class="w-full p-2 border rounded text-sm"></div>
+                    <div><label class="text-[10px]">TYPE</label><select onchange="fieldsConfig[${idx}].type=this.value; openSetupModal()" class="w-full p-2 border rounded text-sm"><option value="text" ${field.type==='text'?'selected':''}>Text</option><option value="date" ${field.type==='date'?'selected':''}>Date</option><option value="select" ${field.type==='select'?'selected':''}>Select</option><option value="multiselect" ${field.type==='multiselect'?'selected':''}>Multi</option></select></div>
+                    <div>${(field.type==='select'||field.type==='multiselect')?`<label class="text-[10px]">OPTIONS (comma separated)</label><input type="text" value="${(field.options||[]).join(',')}" onchange="fieldsConfig[${idx}].options=this.value.split(',').map(s=>s.trim())" class="w-full p-2 border rounded text-sm">`:''}</div>
+                    <div class="flex flex-col items-center"><label class="text-[10px]">TABLE</label><input type="checkbox" ${field.showInTable!==false?'checked':''} onchange="fieldsConfig[${idx}].showInTable=this.checked" class="w-5 h-5 accent-blue-600"></div>
+                    <div class="flex justify-end">${field.id==='name'?'':`<button onclick="fieldsConfig.splice(${idx},1);openSetupModal()" class="text-red-500"><i data-lucide="trash-2"></i></button>`}</div>
+                </div>`).join('');
+            document.getElementById('setupModal').classList.remove('hidden'); lucide.createIcons();
+        }
+        function saveSetup() { 
+            localStorage.setItem(SETUP_KEY, JSON.stringify(fieldsConfig)); 
+            if (githubConfig.token && githubConfig.repoUrl) {
+                syncToGitHub().then(() => location.reload());
+            } else {
+                location.reload(); 
+            }
+        }
+        function closeSetupModal() { document.getElementById('setupModal').classList.add('hidden'); }
+        function addNewFieldSetup() { fieldsConfig.push({ id: 'custom_'+Date.now(), label: 'New Field', type: 'text', options: [], showInTable: true }); openSetupModal(); }
+
+        function openUsersModal() {
+            document.getElementById('usersList').innerHTML = users.map((u, idx) => `<div class="p-4 border rounded-xl bg-gray-50 flex gap-4 items-end">
+                <div class="flex-1"><label class="text-[10px]">User</label><input type="text" value="${u.username}" onchange="users[${idx}].username=this.value" class="w-full p-2 border rounded text-sm"></div>
+                <div class="flex-1"><label class="text-[10px]">Pass</label><input type="password" value="${u.password}" onchange="users[${idx}].password=this.value" class="w-full p-2 border rounded text-sm"></div>
+                <button onclick="users.splice(${idx},1);openUsersModal()" class="text-red-500 p-2"><i data-lucide="trash-2"></i></button></div>`).join('');
+            document.getElementById('usersModal').classList.remove('hidden'); lucide.createIcons();
+        }
+        function saveUsers() { 
+            localStorage.setItem(USERS_KEY, JSON.stringify(users)); 
+            if (githubConfig.token && githubConfig.repoUrl) syncToGitHub();
+            alert('Users Saved'); document.getElementById('usersModal').classList.add('hidden'); 
+        }
+        function closeUsersModal() { document.getElementById('usersModal').classList.add('hidden'); }
+        function addNewUser() { users.push({username:'', password:'', role:'user'}); openUsersModal(); }
+
+        function openBackupSettingsModal() { document.getElementById('backupFileNameInput').value = backupSettings.fileName; document.getElementById('backupSettingsModal').classList.remove('hidden'); }
+        function closeBackupSettingsModal() { document.getElementById('backupSettingsModal').classList.add('hidden'); }
+        function saveBackupSettings() { backupSettings.fileName = document.getElementById('backupFileNameInput').value.trim() || 'team_hub_backup'; localStorage.setItem(BACKUP_SETTINGS_KEY, JSON.stringify(backupSettings)); alert('Updated!'); closeBackupSettingsModal(); }
+        function toggleAutoBackup(isEnabled) { autoBackupEnabled = isEnabled; localStorage.setItem(AUTO_BACKUP_STATUS_KEY, isEnabled); }
+
+        window.addEventListener('beforeunload', (e) => { if (currentUserRole === 'admin' && autoBackupEnabled) performFullBackup(true); });
+        
+        lucide.createIcons();
     </script>
 </body>
 </html>
