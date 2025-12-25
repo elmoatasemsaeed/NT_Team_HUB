@@ -9,9 +9,6 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <script src="config.js"></script>
-
     <style id="dynamicStyles">
         body { font-family: 'Roboto', sans-serif; background-color: #f8f9fa; color: #202124; }
         .google-card { background: white; border: 1px solid #dadce0; border-radius: 8px; transition: all 0.2s; }
@@ -275,19 +272,9 @@
 
         // --- Logic: Authentication & Synchronization ---
         async function loadFromGitHub(manual = false) {
-            // الخطوة 1: محاولة جلب الإعدادات من الملف الخارجي config.js إذا وجد
-            if (typeof GLOBAL_GITHUB_CONFIG !== 'undefined') {
-                githubConfig = { ...githubConfig, ...GLOBAL_GITHUB_CONFIG };
-            } else {
-                // الخطوة 2: إذا لم يوجد الملف الخارجي، نعتمد على الذاكرة المحلية
-                const savedCreds = JSON.parse(localStorage.getItem(GITHUB_LOCAL_KEY));
-                if (savedCreds) Object.assign(githubConfig, savedCreds);
-            }
-            
-            if (!githubConfig.token || !githubConfig.repoPath) { 
-                if (manual) alert("GitHub Settings not configured in config.js or Local Settings!"); 
-                return; 
-            }
+            const savedCreds = JSON.parse(localStorage.getItem(GITHUB_LOCAL_KEY));
+            if (savedCreds) Object.assign(githubConfig, savedCreds);
+            if (!githubConfig.token || !githubConfig.repoPath) { if (manual) alert("GitHub Settings not configured!"); return; }
             
             document.getElementById('loadingStatus').classList.remove('hidden');
             try {
@@ -402,6 +389,8 @@
         // --- Table & Sorting Logic ---
         function renderTable() {
             const visibleFields = fieldsConfig.filter(f => f.showInTable !== false);
+            
+            // Build Headers
             let headerHtml = visibleFields.map(f => `
                 <th class="py-4 px-6 min-w-[150px] sortable-header" onclick="sortTable('${f.id}')">
                     <div class="sort-btn">
@@ -422,6 +411,7 @@
             
             document.getElementById('tableHeaderRow').innerHTML = headerHtml;
 
+            // Build Body
             document.getElementById('employeeTableBody').innerHTML = employees.map((emp, idx) => `
                 <tr class="${emp.isVacation ? 'vacation-row' : ''} hover:bg-gray-50">
                     ${visibleFields.map(f => `<td class="py-4 px-6">${Array.isArray(emp[f.id]) ? emp[f.id].join(', ') : (emp[f.id] || '')}</td>`).join('')}
@@ -448,17 +438,22 @@
                 currentSort.column = columnId;
                 currentSort.direction = 'asc';
             }
+
             employees.sort((a, b) => {
                 let valA = a[columnId] ?? '';
                 let valB = b[columnId] ?? '';
+
                 if (Array.isArray(valA)) valA = valA.join(', ');
                 if (Array.isArray(valB)) valB = valB.join(', ');
+
                 if (typeof valA === 'string') valA = valA.toLowerCase();
                 if (typeof valB === 'string') valB = valB.toLowerCase();
+
                 if (valA < valB) return currentSort.direction === 'asc' ? -1 : 1;
                 if (valA > valB) return currentSort.direction === 'asc' ? 1 : -1;
                 return 0;
             });
+
             renderTable();
         }
 
@@ -474,7 +469,7 @@
             });
         }
 
-        // --- Modal & Form Helpers ---
+        // --- Rest of functions (Fields Setup, Capacity, etc.) ---
         function openSetupModal() {
             document.getElementById('fieldsList').innerHTML = fieldsConfig.map((f, i) => `
                 <div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-6 gap-3 items-end shadow-sm">
@@ -555,22 +550,34 @@
                     const val = emp[config.targetField] || 'N/A';
                     (Array.isArray(val) ? val : [val]).forEach(v => stats[v] = (stats[v]||0)+1);
                 });
-                const chart = new Chart(document.getElementById(`canvas_${config.id}`).getContext('2d'), {
-                    type: config.type,
-                    data: { 
-                        labels: Object.keys(stats), 
-                        datasets: [{ 
-                            data: Object.values(stats), 
-                            backgroundColor: ['#4285F4', '#34A853', '#FBBC05', '#EA4335', '#673AB7', '#3F51B5', '#00BCD4', '#009688', '#FF9800', '#FF5722', '#795548', '#607D8B', '#E91E63', '#9C27B0', '#00E676', '#FFD600', '#1DE9B6', '#D4E157', '#FFAB40', '#90A4AE'] 
-                        }] 
-                    },
-                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
-                });
-                activeCharts.push(chart);
+const chart = new Chart(document.getElementById(`canvas_${config.id}`).getContext('2d'), {
+    type: config.type,
+    data: { 
+        labels: Object.keys(stats), 
+        datasets: [{ 
+            data: Object.values(stats), 
+            // مصفوفة الألوان الموسعة (20 لون)
+            backgroundColor: [
+                '#4285F4', '#34A853', '#FBBC05', '#EA4335', '#673AB7', 
+                '#3F51B5', '#00BCD4', '#009688', '#FF9800', '#FF5722', 
+                '#795548', '#607D8B', '#E91E63', '#9C27B0', '#00E676', 
+                '#FFD600', '#1DE9B6', '#D4E157', '#FFAB40', '#90A4AE'
+            ] 
+        }] 
+    },
+    options: { 
+        responsive: true, 
+        maintainAspectRatio: false, 
+        plugins: { 
+            legend: { position: 'bottom' } 
+        } 
+    }
+});
+activeCharts.push(chart);
             });
         }
 
-        // --- Other Helpers (Save, Edit, Modal Controls) ---
+        // --- Other Helpers ---
         function save(render = true) { localStorage.setItem(STORAGE_KEY, JSON.stringify(employees)); syncToGitHub(); if(render) renderAll(); }
         function toggleVac(idx, val) { employees[idx].isVacation = val; save(); }
         function deleteEmp(idx) { if(confirm('Delete?')) { employees.splice(idx,1); save(); } }
@@ -647,22 +654,12 @@
         function saveChartsConfig() { localStorage.setItem(CHARTS_KEY, JSON.stringify(chartsConfig)); syncToGitHub(); updateCapacity(); closeChartsSetupModal(); }
         function closeChartsSetupModal() { document.getElementById('chartsSetupModal').classList.add('hidden'); }
 
-        function openGithubSettingsModal() { 
-            // تعبئة الحقول من الإعدادات النشطة (سواء من ملف أو من الذاكرة)
-            document.getElementById('gh_repoPath').value = githubConfig.repoPath;
-            document.getElementById('gh_branch').value = githubConfig.branch;
-            document.getElementById('gh_filePath').value = githubConfig.filePath;
-            document.getElementById('gh_token').value = githubConfig.token;
-            document.getElementById('githubSettingsModal').classList.remove('hidden'); 
-        }
+        function openGithubSettingsModal() { document.getElementById('githubSettingsModal').classList.remove('hidden'); }
         function closeGithubSettingsModal() { document.getElementById('githubSettingsModal').classList.add('hidden'); }
         function saveGithubSettings() {
             const cfg = { repoPath: document.getElementById('gh_repoPath').value, branch: document.getElementById('gh_branch').value, filePath: document.getElementById('gh_filePath').value, token: document.getElementById('gh_token').value };
             localStorage.setItem(GITHUB_LOCAL_KEY, JSON.stringify(cfg));
-            Object.assign(githubConfig, cfg);
-            alert('Settings saved to Local Storage. Note: config.js will override this if present.'); 
-            loadFromGitHub(true); 
-            closeGithubSettingsModal();
+            alert('Saved'); loadFromGitHub(true); closeGithubSettingsModal();
         }
 
         function showDetailsExtended(area, roles, isVac) {
