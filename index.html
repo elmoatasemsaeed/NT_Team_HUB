@@ -97,8 +97,11 @@
                         <button onclick="openSetupModal()" class="w-full text-left px-4 py-3 hover:bg-blue-50 flex items-center gap-2 text-sm border-b">
                             <i data-lucide="settings" class="w-4 h-4 text-blue-600"></i> Fields Setup
                         </button>
-                        <button onclick="openUsersModal()" class="w-full text-left px-4 py-3 hover:bg-blue-50 flex items-center gap-2 text-sm">
+                        <button onclick="openUsersModal()" class="w-full text-left px-4 py-3 hover:bg-blue-50 flex items-center gap-2 text-sm border-b">
                             <i data-lucide="users" class="w-4 h-4 text-purple-600"></i> Setup Users
+                        </button>
+                        <button onclick="openGitHubSettingsModal()" class="w-full text-left px-4 py-3 hover:bg-slate-50 flex items-center gap-2 text-sm font-bold text-slate-700">
+                            <i data-lucide="github" class="w-4 h-4 text-black"></i> GitHub Connection
                         </button>
                     </div>
                 </div>
@@ -187,6 +190,43 @@
                         <tbody id="employeeTableBody" class="divide-y"></tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="githubSettingsModal" class="fixed inset-0 z-[1200] bg-black/50 hidden flex items-center justify-center p-4">
+        <div class="bg-white large-modal max-w-lg p-8 shadow-2xl">
+            <div class="flex justify-between items-center mb-6 border-b pb-4">
+                <h3 class="text-xl font-bold text-gray-800 uppercase flex items-center gap-2">
+                    <i data-lucide="github" class="text-gray-900"></i> Cloud Connection Settings
+                </h3>
+                <button onclick="closeGitHubSettingsModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Repository Path (User/Repo)</label>
+                    <input type="text" id="gh_repoPath" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Branch Name</label>
+                    <input type="text" id="gh_branch" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Data Filename (.json)</label>
+                    <input type="text" id="gh_filePath" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Personal Access Token (PAT)</label>
+                    <input type="password" id="gh_token" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                </div>
+                <div class="p-3 bg-amber-50 border border-amber-100 rounded-lg flex gap-3 items-start">
+                    <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-600 flex-shrink-0"></i>
+                    <p class="text-[11px] text-amber-800 italic">Settings are saved locally to this device. Changing these will refresh data from the new source.</p>
+                </div>
+            </div>
+            <div class="flex gap-3 mt-8">
+                <button onclick="saveGitHubSettings()" class="flex-1 py-3 bg-gray-900 text-white rounded-xl font-bold shadow-lg hover:bg-black uppercase">Save & Apply</button>
+                <button onclick="closeGitHubSettingsModal()" class="flex-1 py-3 bg-gray-100 text-gray-600 rounded-xl font-bold hover:bg-gray-200 uppercase">Cancel</button>
             </div>
         </div>
     </div>
@@ -303,7 +343,7 @@
 
     <script>
         /** GitHub Configuration **/
-        const githubConfig = {
+        let githubConfig = {
             repoPath: 'elmoatasemsaeed/NT_Team_HUB',
             filePath: 'data.json',
             token: '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', 
@@ -318,6 +358,7 @@
         const REMEMBER_ME_KEY = 'team_hub_remember_credentials';
         const DESIGN_KEY = 'team_hub_design_v1';
         const DEFAULT_DESIGN_KEY = 'team_hub_default_design_v1'; 
+        const GITHUB_SETTINGS_KEY = 'team_hub_github_creds';
 
         const defaultFields = [
             { id: 'name', label: 'Full Name', type: 'text', required: true, showInTable: true },
@@ -372,7 +413,6 @@
                 }
             } catch (err) {
                 console.error("GitHub Load Error:", err);
-                // Fallback to local storage if cloud fails
                 employees = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
                 fieldsConfig = JSON.parse(localStorage.getItem(SETUP_KEY)) || defaultFields;
                 users = JSON.parse(localStorage.getItem(USERS_KEY)) || users;
@@ -423,7 +463,6 @@
             const passVal = document.getElementById('passInput').value;
             const rememberMe = document.getElementById('rememberMe').checked;
             
-            // Check users (either from local cache or default)
             const foundUser = users.find(u => u.username.toLowerCase() === userVal && u.password === passVal);
             
             if (foundUser) {
@@ -436,7 +475,6 @@
                 document.getElementById('mainContent').classList.remove('hidden');
                 document.getElementById('displayRole').innerText = `${foundUser.username} (${currentUserRole})`;
                 
-                // Trigger GitHub Load on successful login
                 loadFromGitHub();
                 applyDesign();
             } else {
@@ -445,7 +483,47 @@
             }
         }
 
+        /** GitHub Settings Functions **/
+        function openGitHubSettingsModal() {
+            document.getElementById('gh_repoPath').value = githubConfig.repoPath;
+            document.getElementById('gh_branch').value = githubConfig.branch;
+            document.getElementById('gh_filePath').value = githubConfig.filePath;
+            document.getElementById('gh_token').value = githubConfig.token;
+            document.getElementById('githubSettingsModal').classList.remove('hidden');
+        }
+
+        function closeGitHubSettingsModal() {
+            document.getElementById('githubSettingsModal').classList.add('hidden');
+        }
+
+        function saveGitHubSettings() {
+            const newSettings = {
+                repoPath: document.getElementById('gh_repoPath').value.trim(),
+                branch: document.getElementById('gh_branch').value.trim() || 'main',
+                filePath: document.getElementById('gh_filePath').value.trim() || 'data.json',
+                token: document.getElementById('gh_token').value.trim()
+            };
+
+            if(!newSettings.repoPath || !newSettings.token) {
+                alert("Repo Path and Token are required!");
+                return;
+            }
+
+            Object.assign(githubConfig, newSettings);
+            localStorage.setItem(GITHUB_SETTINGS_KEY, JSON.stringify(newSettings));
+            
+            alert("Settings saved. Attempting to sync...");
+            closeGitHubSettingsModal();
+            loadFromGitHub(true);
+        }
+
         window.addEventListener('DOMContentLoaded', () => {
+            // Load saved GitHub credentials if exist
+            const savedGH = localStorage.getItem(GITHUB_SETTINGS_KEY);
+            if (savedGH) {
+                Object.assign(githubConfig, JSON.parse(savedGH));
+            }
+
             const savedData = localStorage.getItem(REMEMBER_ME_KEY);
             if (savedData) {
                 const { u, p } = JSON.parse(savedData);
@@ -638,10 +716,9 @@
 
         function closePopup() { document.getElementById('detailsPopup').classList.add('hidden'); }
         
-        /** Save Function - Global Hook for Cloud Sync **/
         function save(render = true) { 
             localStorage.setItem(STORAGE_KEY, JSON.stringify(employees)); 
-            syncToGitHub(); // Direct call to upload to GitHub
+            syncToGitHub();
             if(render) renderAll(); 
         }
 
@@ -653,125 +730,4 @@
                 if (field.type === 'multiselect') {
                     const values = Array.isArray(emp[field.id]) ? emp[field.id] : (emp[field.id] ? [emp[field.id]] : []);
                     document.querySelectorAll(`.multi-val-${field.id}`).forEach(chk => chk.checked = values.includes(chk.value));
-                } else { const el = document.getElementById(`field_${field.id}`); if(el) el.value = emp[field.id] || ""; }
-            });
-            document.getElementById('empIsVacation').checked = emp.isVacation || false;
-            document.getElementById('empVacationEnd').value = emp.vacationEnd || ""; openModal();
-        }
-
-        document.getElementById('employeeForm').onsubmit = (e) => {
-            e.preventDefault(); const idx = document.getElementById('editIndex').value; const newName = document.getElementById('field_name').value.trim();
-            if (!newName) { alert("Full Name is mandatory!"); return; }
-            const emp = { isVacation: document.getElementById('empIsVacation').checked, vacationEnd: document.getElementById('empVacationEnd').value };
-            fieldsConfig.forEach(field => {
-                if (field.type === 'multiselect') { emp[field.id] = Array.from(document.querySelectorAll(`.multi-val-${field.id}:checked`)).map(c => c.value); }
-                else { const el = document.getElementById(`field_${field.id}`); if(el) emp[field.id] = el.value.trim(); }
-            });
-            if(idx !== "") employees[idx] = emp; else employees.push(emp); save(); closeModal();
-        };
-
-        function deleteEmp(i) { if(confirm('Delete?')) { employees.splice(i,1); save(); } }
-        function openModal() { document.getElementById('modal').classList.remove('hidden'); }
-        function closeModal() { document.getElementById('modal').classList.add('hidden'); document.getElementById('employeeForm').reset(); document.getElementById('editIndex').value = ""; }
-        function renderDynamicForm() {
-            document.getElementById('dynamicFieldsContainer').innerHTML = fieldsConfig.map(field => {
-                let inputHtml = '';
-                if (field.type === 'select') inputHtml = `<select id="field_${field.id}" class="w-full p-3 border rounded-xl bg-gray-50 outline-none"><option value="">-- Select --</option>${(field.options || []).map(opt => `<option value="${opt}">${opt}</option>`).join('')}</select>`;
-                else if (field.type === 'multiselect') inputHtml = `<div id="field_${field.id}" class="grid grid-cols-2 gap-2 p-3 border rounded-xl bg-gray-50 max-h-40 overflow-y-auto">${(field.options || []).map(opt => `<label class="flex items-center gap-2 text-sm cursor-pointer hover:bg-white p-1 rounded"><input type="checkbox" value="${opt}" class="w-4 h-4 accent-blue-600 multi-val-${field.id}"> ${opt}</label>`).join('')}</div>`;
-                else inputHtml = `<input type="${field.type}" id="field_${field.id}" ${field.required ? 'required' : ''} class="w-full p-3 border rounded-xl bg-gray-50 outline-none focus:ring-2 focus:ring-blue-500">`;
-                return `<div class="space-y-2"><label class="block text-sm font-bold text-gray-500 uppercase">${field.label}</label>${inputHtml}</div>`;
-            }).join('');
-        }
-
-        function openDesignModal() {
-            const d = designSettings;
-            ['cardHeight','gridCols','sectionCols','titleFont','valueFont','chartHeight','chartWidth','chartLegendFont'].forEach(k => document.getElementById('control_'+k).value = d[k]);
-            document.getElementById('designModal').classList.remove('hidden');
-        }
-        function closeDesignModal() { document.getElementById('designModal').classList.add('hidden'); }
-        function saveDesign() { 
-            localStorage.setItem(DESIGN_KEY, JSON.stringify(designSettings)); 
-            syncToGitHub();
-            alert("Design Saved to Cloud!"); closeDesignModal(); 
-        }
-        function setAsDefaultDesign() { 
-            applyDesign(); 
-            localStorage.setItem(DEFAULT_DESIGN_KEY, JSON.stringify(designSettings)); 
-            syncToGitHub();
-            alert("Saved as Default!"); 
-        }
-        function resetDesign() { if(confirm("Reset?")) { designSettings = { cardHeight: 80, gridCols: 6, sectionCols: 2, titleFont: 9, valueFont: 12, chartHeight: 300, chartWidth: 100, chartLegendFont: 11 }; applyDesign(); openDesignModal(); } }
-
-        function openSetupModal() {
-            document.getElementById('fieldsList').innerHTML = fieldsConfig.map((field, idx) => `
-                <div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-5 gap-3 items-end shadow-sm">
-                    <div><label class="text-[10px]">LABEL</label><input type="text" value="${field.label}" onchange="fieldsConfig[${idx}].label=this.value" class="w-full p-2 border rounded text-sm"></div>
-                    <div><label class="text-[10px]">TYPE</label><select onchange="fieldsConfig[${idx}].type=this.value; openSetupModal()" class="w-full p-2 border rounded text-sm"><option value="text" ${field.type==='text'?'selected':''}>Text</option><option value="date" ${field.type==='date'?'selected':''}>Date</option><option value="select" ${field.type==='select'?'selected':''}>Select</option><option value="multiselect" ${field.type==='multiselect'?'selected':''}>Multi</option></select></div>
-                    <div>${(field.type==='select'||field.type==='multiselect')?`<label class="text-[10px]">OPTIONS (comma separated)</label><input type="text" value="${(field.options||[]).join(',')}" onchange="fieldsConfig[${idx}].options=this.value.split(',').map(s=>s.trim())" class="w-full p-2 border rounded text-sm">`:''}</div>
-                    <div class="flex flex-col items-center"><label class="text-[10px]">TABLE</label><input type="checkbox" ${field.showInTable!==false?'checked':''} onchange="fieldsConfig[${idx}].showInTable=this.checked" class="w-5 h-5 accent-blue-600"></div>
-                    <div class="flex justify-end">${field.id==='name'?'':`<button onclick="fieldsConfig.splice(${idx},1);openSetupModal()" class="text-red-500"><i data-lucide="trash-2"></i></button>`}</div>
-                </div>`).join('');
-            document.getElementById('setupModal').classList.remove('hidden'); lucide.createIcons();
-        }
-        function saveSetup() { 
-            localStorage.setItem(SETUP_KEY, JSON.stringify(fieldsConfig)); 
-            syncToGitHub().then(() => location.reload());
-        }
-        function closeSetupModal() { document.getElementById('setupModal').classList.add('hidden'); }
-        function addNewFieldSetup() { fieldsConfig.push({ id: 'custom_'+Date.now(), label: 'New Field', type: 'text', options: [], showInTable: true }); openSetupModal(); }
-
-        function openUsersModal() {
-            document.getElementById('usersList').innerHTML = users.map((u, idx) => `<div class="p-4 border rounded-xl bg-gray-50 flex gap-4 items-end">
-                <div class="flex-1"><label class="text-[10px]">User</label><input type="text" value="${u.username}" onchange="users[${idx}].username=this.value" class="w-full p-2 border rounded text-sm"></div>
-                <div class="flex-1"><label class="text-[10px]">Pass</label><input type="password" value="${u.password}" onchange="users[${idx}].password=this.value" class="w-full p-2 border rounded text-sm"></div>
-                <button onclick="users.splice(${idx},1);openUsersModal()" class="text-red-500 p-2"><i data-lucide="trash-2"></i></button></div>`).join('');
-            document.getElementById('usersModal').classList.remove('hidden'); lucide.createIcons();
-        }
-        function saveUsers() { 
-            localStorage.setItem(USERS_KEY, JSON.stringify(users)); 
-            syncToGitHub();
-            alert('Users Saved to Cloud'); document.getElementById('usersModal').classList.add('hidden'); 
-        }
-        function closeUsersModal() { document.getElementById('usersModal').classList.add('hidden'); }
-        function addNewUser() { users.push({username:'', password:'', role:'user'}); openUsersModal(); }
-
-        function openBackupSettingsModal() { document.getElementById('backupFileNameInput').value = backupSettings.fileName; document.getElementById('backupSettingsModal').classList.remove('hidden'); }
-        function closeBackupSettingsModal() { document.getElementById('backupSettingsModal').classList.add('hidden'); }
-        function saveBackupSettings() { backupSettings.fileName = document.getElementById('backupFileNameInput').value.trim() || 'team_hub_backup'; localStorage.setItem(BACKUP_SETTINGS_KEY, JSON.stringify(backupSettings)); alert('Settings Saved Locally'); closeBackupSettingsModal(); }
-
-        function performFullBackup() {
-            const fullData = { employees, fields: fieldsConfig, users, design: designSettings, timestamp: new Date().toISOString() };
-            const blob = new Blob([JSON.stringify(fullData, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            const dateStr = new Date().toLocaleDateString().replace(/\//g, '-');
-            a.href = url;
-            a.download = `${backupSettings.fileName}_${dateStr}.json`;
-            a.click(); URL.revokeObjectURL(url);
-        }
-
-        function clearFilters() {
-            document.querySelectorAll('.filter-input').forEach(i => i.value = '');
-            filterTable();
-        }
-
-        function exportToExcel() {
-            const table = document.getElementById("employeeTable");
-            const rows = Array.from(table.querySelectorAll("tr")).filter(row => row.offsetParent !== null && !row.classList.contains('hidden-by-filter'));
-            const data = rows.map(row => {
-                const cells = Array.from(row.querySelectorAll("th, td"));
-                return cells.slice(0, -1).map(cell => {
-                    const chk = cell.querySelector('input[type="checkbox"]');
-                    return chk ? (chk.checked ? "YES" : "NO") : cell.innerText.trim();
-                });
-            });
-            const ws = XLSX.utils.aoa_to_sheet(data);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Team Export");
-            XLSX.writeFile(wb, "Team_Hub_Report.xlsx");
-        }
-
-        lucide.createIcons();
-    </script>
-</body>
-</html>
+                } else { const el = document.getElementById(`field_${
