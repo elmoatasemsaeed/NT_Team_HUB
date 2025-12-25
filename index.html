@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style id="dynamicStyles">
         body { font-family: 'Roboto', sans-serif; background-color: #f8f9fa; color: #202124; }
-        .google-card { background: white; border: 1px solid #dadce0; border-radius: 8px; transition: all 0.2s; cursor: pointer; }
+        .google-card { background: white; border: 1px solid #dadce0; border-radius: 8px; transition: all 0.2s; }
         .google-card:hover { box-shadow: 0 4px 12px rgba(60,64,67,.15); transform: translateY(-1px); }
         .vacation-row { background-color: #fce8e6 !important; border-left: 4px solid #d93025; }
         .sort-btn { cursor: pointer; display: inline-flex; align-items: center; gap: 4px; color: #5f6368; font-weight: bold; padding: 8px 0; }
@@ -116,14 +116,14 @@
         <div id="capacityTab" class="tab-content">
             <div id="capacityMainGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 no-print">
                 <div class="p-4 border rounded-2xl bg-white shadow-sm">
-                    <h3 class="text-blue-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest">
+                    <h3 onclick="showGlobalDetails('Dev,Senior', false)" class="text-blue-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest cursor-pointer hover:text-blue-500">
                         <span class="flex items-center gap-2"><i data-lucide="code" class="w-4 h-4"></i> Developers Capacity</span>
                         <span id="devTotalLabel" class="bg-blue-100 px-2 py-0.5 rounded text-blue-800">Total: 0</span>
                     </h3>
                     <div id="devCapacityGrid" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2 mb-4"></div>
                 </div>
                 <div class="p-4 border rounded-2xl bg-white shadow-sm">
-                    <h3 class="text-green-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest">
+                    <h3 onclick="showGlobalDetails('Tester,Senior tester', false)" class="text-green-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest cursor-pointer hover:text-green-500">
                         <span class="flex items-center gap-2"><i data-lucide="check-square" class="w-4 h-4"></i> Testers Capacity</span>
                         <span id="testerTotalLabel" class="bg-green-100 px-2 py-0.5 rounded text-green-800">Total: 0</span>
                     </h3>
@@ -432,23 +432,41 @@
             const AREAS = (areaField && areaField.options) ? areaField.options.filter(a => a !== "Team Leader") : [];
             const isVisible = (area, type) => (!visibilityConfig[area] || visibilityConfig[area][type]);
 
+            // Developers Grid Rendering
             document.getElementById('devCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'dev')).map(area => {
-                const devs = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && e.role==='Dev' && !e.isVacation).length;
-                const seniors = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && e.role==='Senior' && !e.isVacation).length;
-                const vac = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && ['Dev','Senior'].includes(e.role) && e.isVacation).length;
-                return `<div class="google-card capacity-card border-l-2 border-l-blue-500 p-2" onclick="showDetailsExtended('${area}', 'Dev,Senior', false)">
-                    <div class="flex justify-between border-b pb-1 mb-1"><span class="text-[9px] uppercase font-bold">${area}</span><span class="font-bold text-blue-700">${devs+seniors}</span></div>
-                    <div class="text-[10px] space-y-1"><div>Devs: ${devs}</div><div>Seniors: ${seniors}</div><div class="text-red-500">Vac: ${vac}</div></div>
+                const devsCount = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && e.role==='Dev' && !e.isVacation).length;
+                const seniorsCount = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && e.role==='Senior' && !e.isVacation).length;
+                const vacCount = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && ['Dev','Senior'].includes(e.role) && e.isVacation).length;
+                
+                return `<div class="google-card capacity-card border-l-2 border-l-blue-500 p-2 cursor-pointer hover:bg-blue-50 transition-all" onclick="showDetailsExtended('${area}', 'Dev,Senior', false)">
+                    <div class="flex justify-between border-b pb-1 mb-1">
+                        <span class="text-[9px] uppercase font-bold">${area}</span>
+                        <span class="font-bold text-blue-700">${devsCount + seniorsCount}</span>
+                    </div>
+                    <div class="text-[10px] space-y-1">
+                        <div class="p-0.5 rounded font-medium">Devs: ${devsCount}</div>
+                        <div class="p-0.5 rounded font-medium">Seniors: ${seniorsCount}</div>
+                        <div class="p-0.5 rounded text-red-500 font-bold border-t mt-1 pt-1 hover:bg-red-50" onclick="event.stopPropagation(); showDetailsExtended('${area}', 'Dev,Senior', true)">Vac: ${vacCount}</div>
+                    </div>
                 </div>`;
             }).join('');
 
+            // Testers Grid Rendering
             document.getElementById('testerCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'tester')).map(area => {
-                const testers = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && e.role==='Tester' && !e.isVacation).length;
-                const sTesters = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && e.role==='Senior tester' && !e.isVacation).length;
-                const vac = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && ['Tester','Senior tester'].includes(e.role) && e.isVacation).length;
-                return `<div class="google-card capacity-card border-l-2 border-l-green-500 p-2" onclick="showDetailsExtended('${area}', 'Tester,Senior tester', false)">
-                    <div class="flex justify-between border-b pb-1 mb-1"><span class="text-[9px] uppercase font-bold">${area}</span><span class="font-bold text-green-700">${testers+sTesters}</span></div>
-                    <div class="text-[10px] space-y-1"><div>Testers: ${testers}</div><div>Seniors: ${sTesters}</div><div class="text-red-500">Vac: ${vac}</div></div>
+                const testersCount = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && e.role==='Tester' && !e.isVacation).length;
+                const sTestersCount = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && e.role==='Senior tester' && !e.isVacation).length;
+                const vacCount = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && ['Tester','Senior tester'].includes(e.role) && e.isVacation).length;
+                
+                return `<div class="google-card capacity-card border-l-2 border-l-green-500 p-2 cursor-pointer hover:bg-green-50 transition-all" onclick="showDetailsExtended('${area}', 'Tester,Senior tester', false)">
+                    <div class="flex justify-between border-b pb-1 mb-1">
+                        <span class="text-[9px] uppercase font-bold">${area}</span>
+                        <span class="font-bold text-green-700">${testersCount + sTestersCount}</span>
+                    </div>
+                    <div class="text-[10px] space-y-1">
+                        <div class="p-0.5 rounded font-medium">Testers: ${testersCount}</div>
+                        <div class="p-0.5 rounded font-medium">Seniors: ${sTestersCount}</div>
+                        <div class="p-0.5 rounded text-red-500 font-bold border-t mt-1 pt-1 hover:bg-red-50" onclick="event.stopPropagation(); showDetailsExtended('${area}', 'Tester,Senior tester', true)">Vac: ${vacCount}</div>
+                    </div>
                 </div>`;
             }).join('');
 
@@ -479,6 +497,14 @@
                 });
                 activeCharts.push(chart);
             });
+        }
+
+        function showGlobalDetails(roles, isVac) {
+            const roleList = roles.split(',');
+            const list = employees.filter(e => roleList.includes(e.role) && e.isVacation === isVac);
+            document.getElementById('popupTitle').innerText = `${isVac ? 'Vacation' : 'Active'} - ${roles}`;
+            document.getElementById('popupList').innerHTML = list.map(e => `<div class="p-4 border rounded-xl bg-gray-50"><b>${e.name}</b><br><small>${e.role} | ${e.area}</small></div>`).join('');
+            document.getElementById('detailsPopup').classList.remove('hidden');
         }
 
         function renderTable() {
@@ -604,7 +630,7 @@
         function showDetailsExtended(area, roles, isVac) {
             const roleList = roles.split(',');
             const list = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && roleList.includes(e.role) && e.isVacation === isVac);
-            document.getElementById('popupTitle').innerText = `${area} - Members`;
+            document.getElementById('popupTitle').innerText = `${area} - ${isVac ? 'On Vacation' : 'Active Members'}`;
             document.getElementById('popupList').innerHTML = list.map(e => `<div class="p-4 border rounded-xl bg-gray-50"><b>${e.name}</b><br><small>${e.role}</small></div>`).join('');
             document.getElementById('detailsPopup').classList.remove('hidden');
         }
