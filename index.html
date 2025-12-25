@@ -42,6 +42,7 @@
             .google-card { border: none; box-shadow: none; }
         }
     </style>
+    <script src="config.js"></script>
 </head>
 <body class="p-4 md:p-6">
 
@@ -241,7 +242,12 @@
 
     <script>
         // --- Core Variables ---
-        let githubConfig = { repoPath: '', filePath: '', token: '', branch: '', sha: null };
+       let githubConfig = { repoPath: '', filePath: '', token: '', branch: '', sha: null };
+
+// دمج الإعدادات من الملف الخارجي إذا وجد
+if (typeof GLOBAL_GITHUB_CONFIG !== 'undefined') {
+    Object.assign(githubConfig, GLOBAL_GITHUB_CONFIG);
+}
         const STORAGE_KEY = 'team_resource_db_v10';
         const SETUP_KEY = 'fields_setup_config';
         const USERS_KEY = 'team_hub_users';
@@ -684,3 +690,4 @@ activeCharts.push(chart);
     </script>
 </body>
 </html>
+
