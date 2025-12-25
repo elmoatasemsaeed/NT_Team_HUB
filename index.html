@@ -27,7 +27,7 @@
         .switch { position: relative; display: inline-block; width: 40px; height: 20px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 20px; }
-        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        .slider:before { position: absolute; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: #10b981; }
         input:checked + .slider:before { transform: translateX(20px); }
 
@@ -35,16 +35,6 @@
         .capacity-title { font-size: 10px; }
         .capacity-value { font-size: 12px; }
         .chart-container { height: 300px; width: 100%; }
-
-        .hidden-cloud-trigger {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            opacity: 0.15;
-            cursor: pointer;
-            transition: opacity 0.3s;
-        }
-        .hidden-cloud-trigger:hover { opacity: 0.8; color: #1a73e8; }
 
         @media print {
             .tab-content { display: block !important; }
@@ -90,7 +80,7 @@
                     <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded shadow-sm hover:bg-gray-200 transition-all font-bold flex items-center gap-2">
                         <i data-lucide="menu" class="w-4 h-4"></i> SETUP
                     </button>
-                    <div class="dropdown-menu absolute left-0 mt-0 w-48 bg-white border rounded-xl shadow-xl hidden z-[2000]">
+                    <div class="dropdown-menu absolute left-0 mt-0 w-56 bg-white border rounded-xl shadow-xl hidden z-[2000]">
                         <button onclick="openDesignModal()" class="w-full text-left px-4 py-3 hover:bg-amber-50 flex items-center gap-2 text-sm border-b text-amber-700 font-bold">
                             <i data-lucide="palette" class="w-4 h-4"></i> Design Layout
                         </button>
@@ -100,8 +90,8 @@
                         <button onclick="openUsersModal()" class="w-full text-left px-4 py-3 hover:bg-blue-50 flex items-center gap-2 text-sm border-b">
                             <i data-lucide="users" class="w-4 h-4 text-purple-600"></i> Setup Users
                         </button>
-                        <button onclick="openGitHubSettingsModal()" class="w-full text-left px-4 py-3 hover:bg-slate-50 flex items-center gap-2 text-sm font-bold text-slate-700">
-                            <i data-lucide="github" class="w-4 h-4 text-black"></i> GitHub Connection
+                        <button onclick="openGithubSettingsModal()" class="w-full text-left px-4 py-3 hover:bg-slate-50 flex items-center gap-2 text-sm text-slate-700 font-bold">
+                            <i data-lucide="github" class="w-4 h-4"></i> GitHub Sync Settings
                         </button>
                     </div>
                 </div>
@@ -194,43 +184,6 @@
         </div>
     </div>
 
-    <div id="githubSettingsModal" class="fixed inset-0 z-[1200] bg-black/50 hidden flex items-center justify-center p-4">
-        <div class="bg-white large-modal max-w-lg p-8 shadow-2xl">
-            <div class="flex justify-between items-center mb-6 border-b pb-4">
-                <h3 class="text-xl font-bold text-gray-800 uppercase flex items-center gap-2">
-                    <i data-lucide="github" class="text-gray-900"></i> Cloud Connection Settings
-                </h3>
-                <button onclick="closeGitHubSettingsModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button>
-            </div>
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Repository Path (User/Repo)</label>
-                    <input type="text" id="gh_repoPath" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm">
-                </div>
-                <div>
-                    <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Branch Name</label>
-                    <input type="text" id="gh_branch" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm">
-                </div>
-                <div>
-                    <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Data Filename (.json)</label>
-                    <input type="text" id="gh_filePath" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm">
-                </div>
-                <div>
-                    <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Personal Access Token (PAT)</label>
-                    <input type="password" id="gh_token" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm">
-                </div>
-                <div class="p-3 bg-amber-50 border border-amber-100 rounded-lg flex gap-3 items-start">
-                    <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-600 flex-shrink-0"></i>
-                    <p class="text-[11px] text-amber-800 italic">Settings are saved locally to this device. Changing these will refresh data from the new source.</p>
-                </div>
-            </div>
-            <div class="flex gap-3 mt-8">
-                <button onclick="saveGitHubSettings()" class="flex-1 py-3 bg-gray-900 text-white rounded-xl font-bold shadow-lg hover:bg-black uppercase">Save & Apply</button>
-                <button onclick="closeGitHubSettingsModal()" class="flex-1 py-3 bg-gray-100 text-gray-600 rounded-xl font-bold hover:bg-gray-200 uppercase">Cancel</button>
-            </div>
-        </div>
-    </div>
-
     <div id="designModal" class="fixed inset-0 z-[1200] bg-black/50 hidden flex items-center justify-center p-4">
         <div class="bg-white large-modal max-w-2xl p-8 shadow-2xl">
             <div class="flex justify-between items-center mb-6 border-b pb-4">
@@ -302,6 +255,39 @@
         </div>
     </div>
 
+    <div id="githubSettingsModal" class="fixed inset-0 z-[1200] bg-black/50 hidden flex items-center justify-center p-4">
+        <div class="bg-white large-modal max-w-lg p-8 shadow-2xl">
+            <div class="flex justify-between items-center mb-6 border-b pb-4">
+                <h3 class="text-xl font-bold text-gray-800 uppercase flex items-center gap-2">
+                    <i data-lucide="github" class="text-gray-700"></i> GitHub Sync Config
+                </h3>
+                <button onclick="closeGithubSettingsModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 mb-1">REPOSITORY PATH (User/Repo)</label>
+                    <input type="text" id="gh_repoPath" placeholder="e.g. username/repository" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 mb-1">BRANCH</label>
+                    <input type="text" id="gh_branch" placeholder="e.g. main" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 mb-1">DATA FILE PATH</label>
+                    <input type="text" id="gh_filePath" placeholder="e.g. data.json" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 mb-1">PERSONAL ACCESS TOKEN (PAT)</label>
+                    <input type="password" id="gh_token" placeholder="ghp_xxxxxxxxxxxx" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div class="pt-4 flex gap-3">
+                    <button onclick="saveGithubSettings()" class="flex-1 py-3 bg-gray-800 text-white rounded-xl font-bold shadow-lg hover:bg-black uppercase">Save Configuration</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="modal" class="fixed inset-0 z-[1000] bg-black/50 hidden flex items-center justify-center p-4">
         <div class="bg-white large-modal p-10 shadow-2xl">
             <h3 class="text-2xl font-bold mb-8 text-gray-800">Member Configuration</h3>
@@ -342,15 +328,7 @@
     </div>
 
     <script>
-        /** GitHub Configuration **/
-        let githubConfig = {
-            repoPath: 'elmoatasemsaeed/NT_Team_HUB',
-            filePath: 'data.json',
-            token: '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', 
-            branch: 'main',
-            sha: null
-        };
-
+        let githubConfig = { repoPath: '', filePath: '', token: '', branch: '', sha: null };
         const STORAGE_KEY = 'team_resource_db_v10';
         const SETUP_KEY = 'fields_setup_config';
         const USERS_KEY = 'team_hub_users';
@@ -358,7 +336,7 @@
         const REMEMBER_ME_KEY = 'team_hub_remember_credentials';
         const DESIGN_KEY = 'team_hub_design_v1';
         const DEFAULT_DESIGN_KEY = 'team_hub_default_design_v1'; 
-        const GITHUB_SETTINGS_KEY = 'team_hub_github_creds';
+        const GITHUB_LOCAL_KEY = 'team_hub_github_creds';
 
         const defaultFields = [
             { id: 'name', label: 'Full Name', type: 'text', required: true, showInTable: true },
@@ -367,7 +345,6 @@
             { id: 'workingIn', label: 'Working ON', type: 'select', options: ['Regression', 'support', 'Iteration', 'elBORG', 'Senior', 'Team Leader'], showInTable: true }
         ];
 
-        // Global State
         let fieldsConfig = defaultFields;
         let employees = [];
         let users = [{ username: 'admin', password: '123', role: 'admin' }];
@@ -379,8 +356,16 @@
         let devChart = null;
         let testerChart = null;
 
-        /** GitHub Sync Logic **/
+        /** GitHub Sync Logic - Updated for Offline Tolerance **/
         async function loadFromGitHub(manual = false) {
+            const savedCreds = JSON.parse(localStorage.getItem(GITHUB_LOCAL_KEY));
+            if (savedCreds) Object.assign(githubConfig, savedCreds);
+
+            if (!githubConfig.token || !githubConfig.repoPath) {
+                if (manual) alert("GitHub Settings not configured!");
+                return;
+            }
+
             const statusEl = document.getElementById('loadingStatus');
             statusEl.classList.remove('hidden');
             
@@ -400,7 +385,6 @@
                     if (content.users) users = content.users;
                     if (content.design) designSettings = content.design;
                     
-                    // Sync to Local Storage as cache
                     localStorage.setItem(STORAGE_KEY, JSON.stringify(employees));
                     localStorage.setItem(SETUP_KEY, JSON.stringify(fieldsConfig));
                     localStorage.setItem(USERS_KEY, JSON.stringify(users));
@@ -408,56 +392,41 @@
 
                     if(manual) alert("Cloud Sync Complete!");
                     renderAll();
-                } else if (response.status === 404) {
-                    console.log("File not found on GitHub, will create upon first save.");
+                } else {
+                    throw new Error("Invalid Token or Repo Path");
                 }
             } catch (err) {
                 console.error("GitHub Load Error:", err);
-                employees = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-                fieldsConfig = JSON.parse(localStorage.getItem(SETUP_KEY)) || defaultFields;
-                users = JSON.parse(localStorage.getItem(USERS_KEY)) || users;
+                alert("تنبيه: تعذر الاتصال بـ GitHub (تأكد من التوكن أو الإنترنت). أنت تعمل الآن في وضع الأوفلاين بسبب خطأ في التوكن.");
             } finally {
                 statusEl.classList.add('hidden');
             }
         }
 
         async function syncToGitHub() {
-            const fullData = { 
-                employees, 
-                fields: fieldsConfig, 
-                users, 
-                design: designSettings, 
-                timestamp: new Date().toISOString() 
-            };
-
+            if (!githubConfig.token || !githubConfig.repoPath) return;
+            const fullData = { employees, fields: fieldsConfig, users, design: designSettings, timestamp: new Date().toISOString() };
             try {
                 const url = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}`;
                 const body = {
-                    message: "Update Team Hub Data via Web App",
+                    message: "Update Team Hub Data",
                     content: btoa(unescape(encodeURIComponent(JSON.stringify(fullData, null, 2)))),
                     branch: githubConfig.branch,
                     sha: githubConfig.sha
                 };
-
                 const response = await fetch(url, {
                     method: 'PUT',
                     headers: { 'Authorization': `token ${githubConfig.token}`, 'Content-Type': 'application/json' },
                     body: JSON.stringify(body)
                 });
-
                 if (response.ok) {
                     const resData = await response.json();
                     githubConfig.sha = resData.content.sha;
-                    console.log("GitHub Sync Successful");
-                } else {
-                    const error = await response.json();
-                    console.error("GitHub Sync Error: ", error.message);
                 }
-            } catch (err) {
-                console.error("Failed to sync to GitHub: ", err.message);
-            }
+            } catch (err) { console.error("Sync failed:", err.message); }
         }
 
+        /** Updated Login to Allow Login then Async Load **/
         function checkLogin() {
             const userVal = document.getElementById('userInput').value.trim().toLowerCase();
             const passVal = document.getElementById('passInput').value;
@@ -469,71 +438,55 @@
                 if (rememberMe) localStorage.setItem(REMEMBER_ME_KEY, JSON.stringify({ u: userVal, p: passVal }));
                 else localStorage.removeItem(REMEMBER_ME_KEY);
                 
-                currentUserRole = foundUser.role;
+                currentUserRole = foundUser.role || 'user';
                 document.body.setAttribute('data-user-role', currentUserRole);
+                
+                // Show content immediately
                 document.getElementById('loginOverlay').style.display = 'none';
                 document.getElementById('mainContent').classList.remove('hidden');
                 document.getElementById('displayRole').innerText = `${foundUser.username} (${currentUserRole})`;
                 
-                loadFromGitHub();
-                applyDesign();
+                // Load Cloud data in background
+                loadFromGitHub().then(() => {
+                    applyDesign();
+                    renderAll();
+                });
             } else {
                 document.getElementById('loginError').classList.remove('hidden');
                 setTimeout(() => document.getElementById('loginError').classList.add('hidden'), 3000);
             }
         }
 
-        /** GitHub Settings Functions **/
-        function openGitHubSettingsModal() {
-            document.getElementById('gh_repoPath').value = githubConfig.repoPath;
-            document.getElementById('gh_branch').value = githubConfig.branch;
-            document.getElementById('gh_filePath').value = githubConfig.filePath;
-            document.getElementById('gh_token').value = githubConfig.token;
-            document.getElementById('githubSettingsModal').classList.remove('hidden');
-        }
-
-        function closeGitHubSettingsModal() {
-            document.getElementById('githubSettingsModal').classList.add('hidden');
-        }
-
-        function saveGitHubSettings() {
-            const newSettings = {
-                repoPath: document.getElementById('gh_repoPath').value.trim(),
-                branch: document.getElementById('gh_branch').value.trim() || 'main',
-                filePath: document.getElementById('gh_filePath').value.trim() || 'data.json',
-                token: document.getElementById('gh_token').value.trim()
-            };
-
-            if(!newSettings.repoPath || !newSettings.token) {
-                alert("Repo Path and Token are required!");
-                return;
-            }
-
-            Object.assign(githubConfig, newSettings);
-            localStorage.setItem(GITHUB_SETTINGS_KEY, JSON.stringify(newSettings));
-            
-            alert("Settings saved. Attempting to sync...");
-            closeGitHubSettingsModal();
-            loadFromGitHub(true);
-        }
-
+        // Initialize App on DOM Load
         window.addEventListener('DOMContentLoaded', () => {
-            // Load saved GitHub credentials if exist
-            const savedGH = localStorage.getItem(GITHUB_SETTINGS_KEY);
-            if (savedGH) {
-                Object.assign(githubConfig, JSON.parse(savedGH));
-            }
+            const savedUsers = localStorage.getItem(USERS_KEY);
+            if (savedUsers) users = JSON.parse(savedUsers);
 
-            const savedData = localStorage.getItem(REMEMBER_ME_KEY);
-            if (savedData) {
-                const { u, p } = JSON.parse(savedData);
+            const savedEmployees = localStorage.getItem(STORAGE_KEY);
+            if (savedEmployees) employees = JSON.parse(savedEmployees);
+
+            const savedFields = localStorage.getItem(SETUP_KEY);
+            if (savedFields) fieldsConfig = JSON.parse(savedFields);
+
+            const savedDesign = localStorage.getItem(DESIGN_KEY);
+            if (savedDesign) designSettings = JSON.parse(savedDesign);
+
+            const savedCreds = JSON.parse(localStorage.getItem(GITHUB_LOCAL_KEY));
+            if (savedCreds) Object.assign(githubConfig, savedCreds);
+
+            const savedLogin = localStorage.getItem(REMEMBER_ME_KEY);
+            if (savedLogin) {
+                const { u, p } = JSON.parse(savedLogin);
                 document.getElementById('userInput').value = u;
                 document.getElementById('passInput').value = p;
                 document.getElementById('rememberMe').checked = true;
             }
             lucide.createIcons();
+            applyDesign();
+            renderAll();
         });
 
+        // Helper Functions (Same as original)
         function applyDesign() {
             const d = designSettings;
             const styleEl = document.getElementById('dynamicStyles');
@@ -550,22 +503,12 @@
                 .admin-cell { display: none; }
                 .dropdown:hover .dropdown-menu { display: block; }
                 .tab-btn.active { color: #1a73e8; border-bottom: 3px solid #1a73e8; background-color: rgba(26, 115, 232, 0.05); }
-                .switch { position: relative; display: inline-block; width: 40px; height: 20px; }
-                .switch input { opacity: 0; width: 0; height: 0; }
-                .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 20px; }
-                .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-                input:checked + .slider { background-color: #10b981; }
-                input:checked + .slider:before { transform: translateX(20px); }
                 .capacity-card { min-height: ${d.cardHeight}px !important; }
                 .capacity-section-title { font-size: ${d.titleFont}px !important; }
                 .capacity-item { font-size: ${d.valueFont}px !important; }
                 .chart-container { height: ${d.chartHeight}px !important; width: ${d.chartWidth}% !important; }
-                .hidden-cloud-trigger { position: absolute; bottom: 10px; right: 10px; opacity: 0.15; cursor: pointer; transition: opacity 0.3s; }
-                .hidden-cloud-trigger:hover { opacity: 0.8; color: #1a73e8; }
                 #capacityMainGrid { grid-template-columns: repeat(${d.sectionCols}, minmax(0, 1fr)) !important; }
                 @media (min-width: 1024px) { #devCapacityGrid, #testerCapacityGrid { grid-template-columns: repeat(${d.gridCols}, minmax(0, 1fr)) !important; } }
-                @media (max-width: 1023px) { #devCapacityGrid, #testerCapacityGrid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } #capacityMainGrid { grid-template-columns: repeat(1, minmax(0, 1fr)) !important; } }
-                @media (max-width: 640px) { #devCapacityGrid, #testerCapacityGrid { grid-template-columns: repeat(1, minmax(0, 1fr)) !important; } }
             `;
             updateCapacity();
         }
@@ -592,8 +535,7 @@
                 <th class="py-4 px-6 min-w-[150px]">
                     <div class="sort-btn" onclick="sortTable('${field.id}')">${field.label} <i data-lucide="chevrons-up-down" class="w-3 h-3"></i></div>
                     <input type="text" placeholder="Filter..." class="filter-input no-print" onkeyup="filterTable()" value="${currentFilters[idx] || ''}">
-                </th>`).join('') + `
-                <th class="py-4 px-6 text-center">Vacation</th><th class="py-4 px-6">Status / Return</th><th class="py-4 px-6 admin-cell no-print">Actions</th>`;
+                </th>`).join('') + `<th class="py-4 px-6 text-center">Vacation</th><th class="py-4 px-6">Status / Return</th><th class="py-4 px-6 admin-cell no-print">Actions</th>`;
 
             const tbody = document.getElementById('employeeTableBody');
             tbody.innerHTML = employees.map((emp) => {
@@ -718,7 +660,7 @@
         
         function save(render = true) { 
             localStorage.setItem(STORAGE_KEY, JSON.stringify(employees)); 
-            syncToGitHub();
+            syncToGitHub(); 
             if(render) renderAll(); 
         }
 
@@ -730,4 +672,123 @@
                 if (field.type === 'multiselect') {
                     const values = Array.isArray(emp[field.id]) ? emp[field.id] : (emp[field.id] ? [emp[field.id]] : []);
                     document.querySelectorAll(`.multi-val-${field.id}`).forEach(chk => chk.checked = values.includes(chk.value));
-                } else { const el = document.getElementById(`field_${
+                } else { const el = document.getElementById(`field_${field.id}`); if(el) el.value = emp[field.id] || ""; }
+            });
+            document.getElementById('empIsVacation').checked = emp.isVacation || false;
+            document.getElementById('empVacationEnd').value = emp.vacationEnd || ""; openModal();
+        }
+
+        document.getElementById('employeeForm').onsubmit = (e) => {
+            e.preventDefault(); const idx = document.getElementById('editIndex').value; const newName = document.getElementById('field_name').value.trim();
+            if (!newName) { alert("Full Name is mandatory!"); return; }
+            const emp = { isVacation: document.getElementById('empIsVacation').checked, vacationEnd: document.getElementById('empVacationEnd').value };
+            fieldsConfig.forEach(field => {
+                if (field.type === 'multiselect') { emp[field.id] = Array.from(document.querySelectorAll(`.multi-val-${field.id}:checked`)).map(c => c.value); }
+                else { const el = document.getElementById(`field_${field.id}`); if(el) emp[field.id] = el.value.trim(); }
+            });
+            if(idx !== "") employees[idx] = emp; else employees.push(emp); save(); closeModal();
+        };
+
+        function deleteEmp(i) { if(confirm('Delete?')) { employees.splice(i,1); save(); } }
+        function openModal() { document.getElementById('modal').classList.remove('hidden'); }
+        function closeModal() { document.getElementById('modal').classList.add('hidden'); document.getElementById('employeeForm').reset(); document.getElementById('editIndex').value = ""; }
+        
+        function renderDynamicForm() {
+            document.getElementById('dynamicFieldsContainer').innerHTML = fieldsConfig.map(field => {
+                let inputHtml = '';
+                if (field.type === 'select') inputHtml = `<select id="field_${field.id}" class="w-full p-3 border rounded-xl bg-gray-50 outline-none"><option value="">-- Select --</option>${(field.options || []).map(opt => `<option value="${opt}">${opt}</option>`).join('')}</select>`;
+                else if (field.type === 'multiselect') inputHtml = `<div id="field_${field.id}" class="grid grid-cols-2 gap-2 p-3 border rounded-xl bg-gray-50 max-h-40 overflow-y-auto">${(field.options || []).map(opt => `<label class="flex items-center gap-2 text-sm cursor-pointer hover:bg-white p-1 rounded"><input type="checkbox" value="${opt}" class="w-4 h-4 accent-blue-600 multi-val-${field.id}"> ${opt}</label>`).join('')}</div>`;
+                else inputHtml = `<input type="${field.type}" id="field_${field.id}" ${field.required ? 'required' : ''} class="w-full p-3 border rounded-xl bg-gray-50 outline-none focus:ring-2 focus:ring-blue-500">`;
+                return `<div class="space-y-2"><label class="block text-sm font-bold text-gray-500 uppercase">${field.label}</label>${inputHtml}</div>`;
+            }).join('');
+        }
+
+        function openDesignModal() {
+            const d = designSettings;
+            ['cardHeight','gridCols','sectionCols','titleFont','valueFont','chartHeight','chartWidth','chartLegendFont'].forEach(k => { const el = document.getElementById('control_'+k); if(el) el.value = d[k]; });
+            document.getElementById('designModal').classList.remove('hidden');
+        }
+        function closeDesignModal() { document.getElementById('designModal').classList.add('hidden'); }
+        function saveDesign() { localStorage.setItem(DESIGN_KEY, JSON.stringify(designSettings)); syncToGitHub(); alert("Design Saved!"); closeDesignModal(); }
+        function setAsDefaultDesign() { applyDesign(); localStorage.setItem(DEFAULT_DESIGN_KEY, JSON.stringify(designSettings)); alert("Saved as Default!"); }
+        function resetDesign() { if(confirm("Reset?")) { designSettings = { cardHeight: 80, gridCols: 6, sectionCols: 2, titleFont: 9, valueFont: 12, chartHeight: 300, chartWidth: 100, chartLegendFont: 11 }; applyDesign(); openDesignModal(); } }
+
+        function openSetupModal() {
+            document.getElementById('fieldsList').innerHTML = fieldsConfig.map((field, idx) => `
+                <div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-5 gap-3 items-end shadow-sm">
+                    <div><label class="text-[10px]">LABEL</label><input type="text" value="${field.label}" onchange="fieldsConfig[${idx}].label=this.value" class="w-full p-2 border rounded text-sm"></div>
+                    <div><label class="text-[10px]">TYPE</label><select onchange="fieldsConfig[${idx}].type=this.value; openSetupModal()" class="w-full p-2 border rounded text-sm"><option value="text" ${field.type==='text'?'selected':''}>Text</option><option value="date" ${field.type==='date'?'selected':''}>Date</option><option value="select" ${field.type==='select'?'selected':''}>Select</option><option value="multiselect" ${field.type==='multiselect'?'selected':''}>Multi</option></select></div>
+                    <div>${(field.type==='select'||field.type==='multiselect')?`<label class="text-[10px]">OPTIONS</label><input type="text" value="${(field.options||[]).join(',')}" onchange="fieldsConfig[${idx}].options=this.value.split(',').map(s=>s.trim())" class="w-full p-2 border rounded text-sm">`:''}</div>
+                    <div class="flex flex-col items-center"><label class="text-[10px]">TABLE</label><input type="checkbox" ${field.showInTable!==false?'checked':''} onchange="fieldsConfig[${idx}].showInTable=this.checked" class="w-5 h-5 accent-blue-600"></div>
+                    <div class="flex justify-end">${field.id==='name'?'':`<button onclick="fieldsConfig.splice(${idx},1);openSetupModal()" class="text-red-500"><i data-lucide="trash-2"></i></button>`}</div>
+                </div>`).join('');
+            document.getElementById('setupModal').classList.remove('hidden'); lucide.createIcons();
+        }
+        function saveSetup() { localStorage.setItem(SETUP_KEY, JSON.stringify(fieldsConfig)); syncToGitHub().then(() => location.reload()); }
+        function closeSetupModal() { document.getElementById('setupModal').classList.add('hidden'); }
+        function addNewFieldSetup() { fieldsConfig.push({ id: 'custom_'+Date.now(), label: 'New Field', type: 'text', options: [], showInTable: true }); openSetupModal(); }
+
+        function openUsersModal() {
+            document.getElementById('usersList').innerHTML = users.map((u, idx) => `<div class="p-4 border rounded-xl bg-gray-50 flex gap-4 items-end">
+                <div class="flex-1"><label class="text-[10px]">User</label><input type="text" value="${u.username}" onchange="users[${idx}].username=this.value" class="w-full p-2 border rounded text-sm"></div>
+                <div class="flex-1"><label class="text-[10px]">Pass</label><input type="password" value="${u.password}" onchange="users[${idx}].password=this.value" class="w-full p-2 border rounded text-sm"></div>
+                <button onclick="users.splice(${idx},1);openUsersModal()" class="text-red-500 p-2"><i data-lucide="trash-2"></i></button></div>`).join('');
+            document.getElementById('usersModal').classList.remove('hidden'); lucide.createIcons();
+        }
+        function saveUsers() { localStorage.setItem(USERS_KEY, JSON.stringify(users)); syncToGitHub(); alert('Users Saved'); document.getElementById('usersModal').classList.add('hidden'); }
+        function closeUsersModal() { document.getElementById('usersModal').classList.add('hidden'); }
+        function addNewUser() { users.push({username:'', password:'', role:'user'}); openUsersModal(); }
+
+        function openGithubSettingsModal() {
+            const savedCreds = JSON.parse(localStorage.getItem(GITHUB_LOCAL_KEY)) || {};
+            document.getElementById('gh_repoPath').value = savedCreds.repoPath || '';
+            document.getElementById('gh_branch').value = savedCreds.branch || 'main';
+            document.getElementById('gh_filePath').value = savedCreds.filePath || 'data.json';
+            document.getElementById('gh_token').value = savedCreds.token || '';
+            document.getElementById('githubSettingsModal').classList.remove('hidden');
+        }
+        function closeGithubSettingsModal() { document.getElementById('githubSettingsModal').classList.add('hidden'); }
+        function saveGithubSettings() {
+            const newConfig = { repoPath: document.getElementById('gh_repoPath').value.trim(), branch: document.getElementById('gh_branch').value.trim(), filePath: document.getElementById('gh_filePath').value.trim(), token: document.getElementById('gh_token').value.trim() };
+            if(!newConfig.repoPath || !newConfig.token) { alert("Repo Path and Token are required!"); return; }
+            localStorage.setItem(GITHUB_LOCAL_KEY, JSON.stringify(newConfig));
+            Object.assign(githubConfig, newConfig);
+            alert("GitHub Settings saved successfully!");
+            closeGithubSettingsModal();
+            loadFromGitHub(true);
+        }
+
+        function openBackupSettingsModal() { document.getElementById('backupFileNameInput').value = backupSettings.fileName; document.getElementById('backupSettingsModal').classList.remove('hidden'); }
+        function closeBackupSettingsModal() { document.getElementById('backupSettingsModal').classList.add('hidden'); }
+        function saveBackupSettings() { backupSettings.fileName = document.getElementById('backupFileNameInput').value.trim() || 'team_hub_backup'; localStorage.setItem(BACKUP_SETTINGS_KEY, JSON.stringify(backupSettings)); alert('Settings Saved Locally'); closeBackupSettingsModal(); }
+
+        function performFullBackup() {
+            const fullData = { employees, fields: fieldsConfig, users, design: designSettings, timestamp: new Date().toISOString() };
+            const blob = new Blob([JSON.stringify(fullData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            const dateStr = new Date().toLocaleDateString().replace(/\//g, '-');
+            a.href = url; a.download = `${backupSettings.fileName}_${dateStr}.json`; a.click(); URL.revokeObjectURL(url);
+        }
+
+        function clearFilters() { document.querySelectorAll('.filter-input').forEach(i => i.value = ''); filterTable(); }
+
+        function exportToExcel() {
+            const table = document.getElementById("employeeTable");
+            const rows = Array.from(table.querySelectorAll("tr")).filter(row => row.offsetParent !== null && !row.classList.contains('hidden-by-filter'));
+            const data = rows.map(row => {
+                const cells = Array.from(row.querySelectorAll("th, td"));
+                return cells.slice(0, -1).map(cell => {
+                    const chk = cell.querySelector('input[type="checkbox"]');
+                    return chk ? (chk.checked ? "YES" : "NO") : cell.innerText.trim();
+                });
+            });
+            const ws = XLSX.utils.aoa_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Team Export");
+            XLSX.writeFile(wb, "Team_Hub_Report.xlsx");
+        }
+        lucide.createIcons();
+    </script>
+</body>
+</html>
