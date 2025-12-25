@@ -61,9 +61,9 @@
                     <div id="testerCapacityGrid" class="grid grid-cols-2 lg:grid-cols-3 gap-2"></div>
                 </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="h-[300px]"><canvas id="devPieChart"></canvas></div>
-                <div class="h-[300px]"><canvas id="testerPieChart"></canvas></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 h-[350px]">
+                <canvas id="devPieChart"></canvas>
+                <canvas id="testerPieChart"></canvas>
             </div>
         </div>
 
@@ -84,20 +84,20 @@
             <h3 class="text-xl font-bold mb-4">Member Details</h3>
             <form id="employeeForm" class="space-y-4">
                 <input type="hidden" id="editIndex">
-                <div><label class="text-xs font-bold text-gray-500">FULL NAME</label><input type="text" id="fieldName" class="w-full p-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-500" required></div>
+                <div><label class="text-xs font-bold text-gray-500 uppercase">Name</label><input type="text" id="fieldName" class="w-full p-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-500" required></div>
                 <div>
-                    <label class="text-xs font-bold text-gray-500">ROLE</label>
+                    <label class="text-xs font-bold text-gray-500 uppercase">Role</label>
                     <select id="fieldRole" class="w-full p-2 border rounded-lg">
                         <option>Dev</option><option>Senior</option><option>Tester</option><option>Senior tester</option><option>Team Lead</option>
                     </select>
                 </div>
                 <div>
-                    <label class="text-xs font-bold text-gray-500">AREA</label>
+                    <label class="text-xs font-bold text-gray-500 uppercase">Area</label>
                     <select id="fieldArea" class="w-full p-2 border rounded-lg">
                         <option>Registration</option><option>Internal lab</option><option>Front and Financial</option><option>front end</option><option>Intgration</option><option>LDM_Intgration</option><option>elBORG</option><option>Team Leader</option>
                     </select>
                 </div>
-                <div class="flex items-center gap-2"><input type="checkbox" id="fieldVacation" class="w-5 h-5"> <label class="font-bold">On Vacation</label></div>
+                <div class="flex items-center gap-2 pt-2"><input type="checkbox" id="fieldVacation" class="w-5 h-5"> <label class="font-bold">On Vacation</label></div>
                 <div class="flex gap-2 pt-4">
                     <button type="button" onclick="closeModal()" class="flex-1 py-3 bg-gray-100 rounded-xl font-bold">Cancel</button>
                     <button type="submit" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold">Save & Sync</button>
@@ -110,7 +110,7 @@
         const githubConfig = {
             repoPath: 'elmoatasemsaeed/NT_Team_HUB',
             filePath: 'data.json',
-            token: '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', // تأكد أن التوكن فعال
+            token: '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', 
             branch: 'main',
             sha: null
         };
@@ -121,9 +121,13 @@
 
         async function fetchFromGitHub() {
             try {
+                // استخدام Timestamp لمنع الـ Cache وضمان جلب أحدث بيانات
                 const url = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}?t=${Date.now()}`;
                 const res = await fetch(url, { 
-                    headers: { 'Authorization': `token ${githubConfig.token}`, 'Accept': 'application/vnd.github.v3+json' } 
+                    headers: { 
+                        'Authorization': `token ${githubConfig.token}`,
+                        'Accept': 'application/vnd.github.v3+json'
+                    } 
                 });
                 
                 if (res.ok) {
@@ -133,7 +137,7 @@
                     employees = content.employees || [];
                     return { success: true };
                 }
-                return { success: false, status: res.status };
+                return { success: false, status: res.status, statusText: res.statusText };
             } catch (e) { return { success: false, message: e.message }; }
         }
 
@@ -159,7 +163,7 @@
                 if (res.ok) {
                     const data = await res.json();
                     githubConfig.sha = data.content.sha;
-                } else { alert("Sync Error!"); }
+                } else { alert("Sync Error: Could not save to GitHub."); }
             } catch (e) { alert("Network Error during sync!"); }
             
             statusIcon.classList.remove('animate-spin');
@@ -173,10 +177,10 @@
             const err = document.getElementById('loginError');
 
             if (!((u === 'admin' || u === 'user') && p === '123')) {
-                err.innerText = "Wrong Password!"; err.classList.remove('hidden'); return;
+                err.innerText = "Wrong Password or Username!"; err.classList.remove('hidden'); return;
             }
 
-            btn.disabled = true; btn.innerText = "Connecting to GitHub...";
+            btn.disabled = true; btn.innerText = "Connecting Cloud...";
             const result = await fetchFromGitHub();
 
             if (result.success) {
@@ -187,14 +191,14 @@
                 document.getElementById('displayRole').innerText = u;
                 renderAll();
             } else {
-                let msg = "Error: ";
-                if(result.status === 401) msg = "GitHub Token Expired or Invalid!";
-                else if(result.status === 404) msg = "File 'data.json' not found!";
-                else msg = "Check Internet or GitHub Status";
+                let msg = "Connection Failed: ";
+                if(result.status === 401) msg += "Token is Invalid/Expired";
+                else if(result.status === 404) msg += "File 'data.json' not found";
+                else msg += "Check Connection";
                 
                 err.innerText = msg;
                 err.classList.remove('hidden');
-                btn.disabled = false; btn.innerText = "Retry";
+                btn.disabled = false; btn.innerText = "Try Again";
             }
         }
 
@@ -246,7 +250,6 @@
             });
         }
 
-        // Functions for Modal and Form
         window.openModal = () => document.getElementById('modal').classList.remove('hidden');
         window.closeModal = () => { document.getElementById('modal').classList.add('hidden'); document.getElementById('employeeForm').reset(); document.getElementById('editIndex').value = ""; };
         
@@ -257,7 +260,7 @@
             openModal();
         };
 
-        window.deleteMember = (i) => { if(confirm("Delete this member and sync?")) { employees.splice(i, 1); syncToGitHub(); } };
+        window.deleteMember = (i) => { if(confirm("Delete this member?")) { employees.splice(i, 1); syncToGitHub(); } };
 
         document.getElementById('employeeForm').onsubmit = (e) => {
             e.preventDefault();
