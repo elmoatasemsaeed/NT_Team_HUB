@@ -423,7 +423,7 @@
       "workingIn": [
         "Iteration"
       ],
-      "custom_1766584922755": "Ø±Ø¬Ø¨"
+      "custom_1766584922755": "ÃÂ±ÃÂ¬ÃÂ¨"
     },
     {
       "isVacation": false,
@@ -799,7 +799,56 @@
       "role": "user"
     }
   ],
-  "visibility": {},
+  "visibility": {
+    "Registration": {
+      "dev": true,
+      "tester": true
+    },
+    "Internal lab": {
+      "dev": true,
+      "tester": true
+    },
+    "Front and Financial": {
+      "dev": true,
+      "tester": true
+    },
+    "front end": {
+      "dev": true,
+      "tester": false
+    },
+    "Integration": {
+      "dev": true,
+      "tester": true
+    },
+    "LDM_Integration": {
+      "dev": true,
+      "tester": true
+    },
+    "elBORG": {
+      "dev": false,
+      "tester": true
+    },
+    "Mobile App": {
+      "dev": true,
+      "tester": true
+    },
+    "Automation": {
+      "dev": false,
+      "tester": true
+    },
+    "MMS": {
+      "dev": true,
+      "tester": true
+    },
+    "ADFACA": {
+      "dev": true,
+      "tester": true
+    },
+    "Home Visit": {
+      "dev": true,
+      "tester": true
+    }
+  },
   "charts": [
     {
       "id": "c1",
@@ -822,5 +871,5 @@
       "type": "doughnut"
     }
   ],
-  "timestamp": "2025-12-25T15:33:27.673Z"
+  "timestamp": "2025-12-25T15:40:31.189Z"
 }
