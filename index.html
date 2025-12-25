@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Hub - Professional Online</title>
+    <title>Team Hub - Online</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -21,159 +21,209 @@
 <body class="p-4 md:p-6" data-user-role="user">
 
     <div id="loginOverlay" class="fixed inset-0 z-[9999] bg-white flex items-center justify-center">
-        <div class="text-center w-full max-w-sm p-8 border rounded-2xl shadow-sm">
-            <h2 class="text-2xl mb-8 font-bold">Team Hub Access</h2>
-            <input type="text" id="userInput" placeholder="Username" class="w-full p-4 border rounded-xl mb-3 outline-none">
-            <input type="password" id="passInput" placeholder="Password" onkeypress="if(event.key === 'Enter') checkLogin()" class="w-full p-4 border rounded-xl mb-4 outline-none">
-            <button onclick="checkLogin()" class="w-full bg-[#1a73e8] text-white py-3 rounded-xl font-bold">Login</button>
-            <p id="loginError" class="text-red-600 mt-4 text-sm hidden">Invalid credentials!</p>
+        <div class="text-center w-full max-w-sm p-8 border rounded-2xl shadow-sm bg-white">
+            <h2 class="text-2xl mb-8 font-bold text-gray-800">Team Hub Access</h2>
+            <div id="loadingStatus" class="text-sm text-blue-600 mb-2 hidden italic">Checking cloud data...</div>
+            <input type="text" id="userInput" placeholder="Username" class="w-full p-4 border rounded-xl mb-3 outline-none focus:ring-2 focus:ring-blue-500">
+            <input type="password" id="passInput" placeholder="Password" onkeypress="if(event.key === 'Enter') checkLogin()" class="w-full p-4 border rounded-xl mb-4 outline-none focus:ring-2 focus:ring-blue-500">
+            <button id="loginBtn" onclick="checkLogin()" class="w-full bg-[#1a73e8] text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition-all">Login</button>
+            <p id="loginError" class="text-red-600 mt-4 text-sm hidden font-medium">Invalid credentials or Connection error!</p>
         </div>
     </div>
 
-    <div id="mainContent" class="hidden">
+    <div id="mainContent" class="hidden max-w-[1600px] mx-auto">
         <header class="flex justify-between items-center mb-6 pb-4 border-b">
             <div class="flex items-center gap-2">
                 <span class="text-2xl font-bold text-[#1a73e8]">Team Hub</span>
-                <span id="displayRole" class="px-2 py-1 bg-gray-100 text-[10px] rounded uppercase"></span>
+                <span id="displayRole" class="px-2 py-1 bg-blue-50 text-blue-700 text-[10px] rounded border font-bold"></span>
             </div>
+            
             <div class="flex gap-2">
                 <div class="relative dropdown admin-only">
-                    <button class="bg-gray-100 px-4 py-2 rounded font-bold">SETUP</button>
+                    <button class="bg-gray-100 px-4 py-2 rounded font-bold flex items-center gap-2">
+                        <i data-lucide="settings" class="w-4 h-4"></i> SETUP
+                    </button>
                     <div class="dropdown-menu absolute right-0 mt-0 w-48 bg-white border rounded shadow-xl hidden z-50">
-                        <button onclick="openSetupModal()" class="w-full text-left px-4 py-2 hover:bg-gray-100">Fields Setup</button>
-                        <button onclick="openUsersModal()" class="w-full text-left px-4 py-2 hover:bg-gray-100">User Management</button>
-                        </div>
+                        <button onclick="openSetupModal()" class="w-full text-left px-4 py-3 hover:bg-gray-100 border-b flex items-center gap-2">
+                            <i data-lucide="list" class="w-4 h-4 text-blue-600"></i> Fields Setup
+                        </button>
+                        <button onclick="openUsersModal()" class="w-full text-left px-4 py-3 hover:bg-gray-100 border-b flex items-center gap-2">
+                            <i data-lucide="users" class="w-4 h-4 text-purple-600"></i> User Management
+                        </button>
+                        <button onclick="openDesignModal()" class="w-full text-left px-4 py-3 hover:bg-gray-100 flex items-center gap-2">
+                            <i data-lucide="palette" class="w-4 h-4 text-amber-600"></i> Design Layout
+                        </button>
+                    </div>
                 </div>
-                <button onclick="openModal()" class="admin-only bg-blue-600 text-white px-4 py-2 rounded">+ Add</button>
+                <button onclick="openModal()" class="admin-only bg-blue-600 text-white px-4 py-2 rounded shadow">+ Add Member</button>
             </div>
         </header>
 
-        </div>
+        <div id="contentArea">
+            </div>
+    </div>
 
     <script>
-        // الإعدادات الخاصة بك
-        let githubConfig = {
-            repoPath: 'elmoatasemsaeed/NT_Team_HUB',
-            filePath: 'data.json',
+        // --- إعدادات GitHub ---
+        const GITHUB_CONFIG = {
+            repo: 'elmoatasemsaeed/NT_Team_HUB',
+            path: 'data.json',
             token: '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',
             branch: 'main',
             sha: null
         };
 
-        const STORAGE_KEY = 'team_hub_data_v1';
+        const STORAGE_KEY = 'team_hub_full_data';
+
+        // متغيرات النظام
         let employees = [], fieldsConfig = [], users = [], designSettings = {};
+        let currentUserRole = 'user';
 
-        // 1. دالة الحفظ المركزية (ترفع كل شيء للـ Cloud)
-        async function syncAllToGitHub() {
-            if (!githubConfig.token) return;
-
-            const fullData = {
-                employees,
-                fields: fieldsConfig,
-                users,
+        // 1. وظيفة المزامنة الشاملة (للموظفين، الحقول، المستخدمين، التصميم)
+        async function syncDataToCloud() {
+            const fullData = { 
+                employees, 
+                fields: fieldsConfig, 
+                users, 
                 design: designSettings,
-                lastSync: new Date().toISOString()
+                timestamp: new Date().toISOString()
             };
 
-            // حفظ محلي أولاً
+            // حفظ محلي للطوارئ
             localStorage.setItem(STORAGE_KEY, JSON.stringify(fullData));
 
+            if (!GITHUB_CONFIG.token) return;
+
             try {
-                // جلب الـ SHA الأحدث لتجنب الخطأ
-                const getFile = await fetch(`https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}`, {
-                    headers: { 'Authorization': `token ${githubConfig.token}` }
+                // جلب SHA الحالي للملف
+                const getFile = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.path}?ref=${GITHUB_CONFIG.branch}`, {
+                    headers: { 'Authorization': `token ${GITHUB_CONFIG.token}` }
                 });
+                
                 if (getFile.ok) {
-                    const fileData = await getFile.json();
-                    githubConfig.sha = fileData.sha;
+                    const fileInfo = await getFile.json();
+                    GITHUB_CONFIG.sha = fileInfo.sha;
                 }
 
-                const response = await fetch(`https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}`, {
+                // رفع البيانات الجديدة
+                const response = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.path}`, {
                     method: 'PUT',
-                    headers: {
-                        'Authorization': `token ${githubConfig.token}`,
+                    headers: { 
+                        'Authorization': `token ${GITHUB_CONFIG.token}`,
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        message: "Cloud Update: " + new Date().toLocaleString(),
+                        message: "System-wide Sync: " + new Date().toLocaleString(),
                         content: btoa(unescape(encodeURIComponent(JSON.stringify(fullData, null, 2)))),
-                        sha: githubConfig.sha,
-                        branch: githubConfig.branch
+                        sha: GITHUB_CONFIG.sha,
+                        branch: GITHUB_CONFIG.branch
                     })
                 });
 
-                if (response.ok) console.log("✅ Synced to GitHub");
+                if (response.ok) {
+                    console.log("✅ Cloud Sync Success");
+                }
             } catch (err) {
-                console.error("❌ Sync Error:", err);
+                console.error("❌ Cloud Sync Failed:", err);
             }
         }
 
-        // 2. دالة جلب البيانات عند الفتح
-        async function loadDataFromCloud() {
+        // 2. تحميل البيانات من GitHub
+        async function loadCloudData() {
             try {
-                const res = await fetch(`https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}?ref=${githubConfig.branch}`, {
-                    headers: { 'Authorization': `token ${githubConfig.token}` }
+                const res = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.path}?ref=${GITHUB_CONFIG.branch}`, {
+                    headers: { 'Authorization': `token ${GITHUB_CONFIG.token}` },
+                    cache: 'no-store'
                 });
                 if (res.ok) {
                     const data = await res.json();
-                    githubConfig.sha = data.sha;
+                    GITHUB_CONFIG.sha = data.sha;
                     const content = JSON.parse(decodeURIComponent(escape(atob(data.content))));
                     
-                    // توزيع البيانات
                     employees = content.employees || [];
                     fieldsConfig = content.fields || [];
                     users = content.users || [];
                     designSettings = content.design || {};
-                    
-                    renderAll(); // تحديث الشاشة
+                    return true;
                 }
-            } catch (e) { console.error("Load error", e); }
-        }
-
-        // 3. تعديل دوال الحفظ في المنيوهات لتستخدم المزامنة
-        async function saveEmployee() {
-            // ... منطق الإضافة الأصلي الخاص بك ...
-            // في نهاية الدالة استبدل localStorage.setItem بـ:
-            await syncAllToGitHub();
-            renderAll();
-        }
-
-        async function saveSetup() {
-            // (كود تعديل الحقول الخاص بك)
-            await syncAllToGitHub();
-            location.reload(); // لإعادة بناء الأعمدة
-        }
-
-        async function saveUsers() {
-            // (كود تعديل المستخدمين الخاص بك)
-            await syncAllToGitHub();
-            alert("Users Updated Online");
-        }
-
-        // 4. دالة تسجيل الدخول
-        async function checkLogin() {
-            const u = document.getElementById('userInput').value;
-            const p = document.getElementById('passInput').value;
-            
-            // محاولة جلب البيانات أولاً للتأكد من المستخدمين الأونلاين
-            await loadDataFromCloud();
-            
-            const found = users.find(x => x.username === u && x.password === p);
-            if (found) {
-                document.body.setAttribute('data-user-role', found.role);
-                document.getElementById('loginOverlay').style.display = 'none';
-                document.getElementById('mainContent').classList.remove('hidden');
-                lucide.createIcons();
-            } else {
-                document.getElementById('loginError').classList.remove('hidden');
+            } catch (e) {
+                console.error("Load Error:", e);
+                // محاولة التحميل من LocalStorage إذا فشل الـ Cloud
+                const local = JSON.parse(localStorage.getItem(STORAGE_KEY));
+                if(local) {
+                    employees = local.employees; users = local.users; 
+                    fieldsConfig = local.fields; designSettings = local.design;
+                    return true;
+                }
             }
+            return false;
         }
 
-        // تشغيل الأيقونات
-        window.onload = () => {
-            if (typeof lucide !== 'undefined') lucide.createIcons();
-        };
+        // 3. عملية تسجيل الدخول المحسنة
+        async function checkLogin() {
+            const u = document.getElementById('userInput').value.trim();
+            const p = document.getElementById('passInput').value.trim();
+            const btn = document.getElementById('loginBtn');
+            const status = document.getElementById('loadingStatus');
 
+            if(!u || !p) return;
+
+            btn.disabled = true;
+            status.classList.remove('hidden');
+            document.getElementById('loginError').classList.add('hidden');
+
+            // انتظار تحميل البيانات من السحابة أولاً
+            const loaded = await loadCloudData();
+
+            if (loaded) {
+                const found = users.find(x => x.username === u && x.password === p);
+                if (found) {
+                    currentUserRole = found.role;
+                    document.body.setAttribute('data-user-role', currentUserRole);
+                    document.getElementById('loginOverlay').style.display = 'none';
+                    document.getElementById('mainContent').classList.remove('hidden');
+                    document.getElementById('displayRole').innerText = `${u} (${currentUserRole})`;
+                    renderAll(); // استدعاء دالة الرسم الأصلية الخاصة بك
+                    lucide.createIcons();
+                } else {
+                    document.getElementById('loginError').classList.remove('hidden');
+                }
+            } else {
+                alert("Could not connect to GitHub. Please check your token or internet.");
+            }
+            
+            btn.disabled = false;
+            status.classList.add('hidden');
+        }
+
+        // 4. توجيه جميع دوال الحفظ لاستخدام السحابة
+        // استبدل دوال الحفظ القديمة في ملفك بهذه النسخ:
+
+        async function saveEmployeeData() { 
+            // ... (كود جمع بيانات الموظف الخاص بك) ...
+            await syncDataToCloud(); 
+            renderAll(); 
+        }
+
+        async function saveFieldsSetup() { 
+            // ... (كود تعديل الحقول الخاص بك) ...
+            await syncDataToCloud(); 
+            location.reload(); 
+        }
+
+        async function saveUserSettings() { 
+            // ... (كود تعديل المستخدمين الخاص بك) ...
+            await syncDataToCloud(); 
+            alert("Users Saved Online");
+        }
+
+        async function saveDesignSettings() {
+             // ... (كود تعديل التصميم الخاص بك) ...
+             await syncDataToCloud();
+             alert("Design Saved Online");
+        }
+
+        window.onload = () => lucide.createIcons();
     </script>
 </body>
 </html>
