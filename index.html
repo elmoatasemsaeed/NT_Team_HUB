@@ -60,7 +60,7 @@
                 <label for="rememberMe" class="text-sm text-gray-600 cursor-pointer select-none">Remember me on this device</label>
             </div>
 
-            <button onclick="checkLogin()" class="w-full bg-[#1a73e8] text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition-all">Unlock System</button>
+            <button onclick="checkLogin()" id="unlockBtn" class="w-full bg-[#1a73e8] text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition-all disabled:opacity-50">Unlock System</button>
             <p id="loginError" class="text-red-600 mt-4 text-sm hidden font-medium">Invalid Username or Password!</p>
         </div>
     </div>
@@ -235,7 +235,7 @@
     <script>
         // --- Core GitHub Config ---
         let githubConfig = { 
-            repoPath: 'elmoatasemsaeed/NT_Team_HUB', // Fixed: Should be User/Repo
+            repoPath: 'elmoatasemsaeed/NT_Team_HUB', 
             filePath: 'data.json',
             branch: 'main',
             token: '',
@@ -262,7 +262,7 @@
         ];
 
         let employees = [];
-        let users = [{ username: 'admin', password: '123', role: 'admin' }];
+        let users = [{ username: 'admin', password: '123', role: 'admin' }]; // Default fallback
         let visibilityConfig = {};
         let currentUserRole = null;
         let activeCharts = [];
@@ -274,19 +274,21 @@
             return urlParams.get('gh_token');
         }
 
+        // --- Modified Sync Logic ---
         async function loadFromGitHub(manual = false) {
             const urlToken = getAuthTokenFromURL();
             if (urlToken) githubConfig.token = urlToken;
 
-            if (!githubConfig.token || !githubConfig.repoPath) { 
-                if (manual) alert("GitHub Token is missing! Please provide ?gh_token=... in the URL."); 
-                return; 
+            if (!githubConfig.token) { 
+                if (manual) alert("GitHub Token is missing!"); 
+                return false; 
             }
             
             document.getElementById('loadingStatus').classList.remove('hidden');
             try {
-                const url = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}?ref=${githubConfig.branch}`;
+                const url = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}?ref=${githubConfig.branch}&t=${new Date().getTime()}`;
                 const response = await fetch(url, { headers: { 'Authorization': `token ${githubConfig.token}` } });
+                
                 if (response.ok) {
                     const data = await response.json();
                     githubConfig.sha = data.sha;
@@ -303,17 +305,27 @@
                     
                     renderAll();
                     if(manual) alert("Cloud Sync Complete!");
+                    return true;
                 }
             } catch (err) { 
-                console.error(err); 
-                if(manual) alert("Cloud Sync Failed. Check console.");
+                console.error("Sync Error:", err); 
+                if(manual) alert("Cloud Sync Failed.");
+            } finally { 
+                document.getElementById('loadingStatus').classList.add('hidden'); 
             }
-            finally { document.getElementById('loadingStatus').classList.add('hidden'); }
+            return false;
         }
 
         async function syncToGitHub() {
             if (!githubConfig.token || !githubConfig.repoPath) return;
-            const fullData = { employees, fields: fieldsConfig, users, visibility: visibilityConfig, charts: chartsConfig, timestamp: new Date().toISOString() };
+            const fullData = { 
+                employees, 
+                fields: fieldsConfig, 
+                users, 
+                visibility: visibilityConfig, 
+                charts: chartsConfig, 
+                timestamp: new Date().toISOString() 
+            };
             try {
                 const url = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}`;
                 const contentBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(fullData, null, 2))));
@@ -330,21 +342,19 @@
                 });
                 if (response.ok) { 
                     const resData = await response.json(); 
-                    githubConfig.sha = resData.content.sha; // Update SHA for next sync
-                } else {
-                    const err = await response.json();
-                    console.error("Sync Failed:", err.message);
+                    githubConfig.sha = resData.content.sha;
                 }
-            } catch (err) { console.error(err); }
+            } catch (err) { console.error("Update Error:", err); }
         }
 
-        function checkLogin() {
+        // --- Modified Login Logic ---
+        async function checkLogin() {
             const userVal = document.getElementById('userInput').value.trim().toLowerCase();
             const passVal = document.getElementById('passInput').value;
             const rememberMe = document.getElementById('rememberMe').checked;
 
-            const localUsers = localStorage.getItem(USERS_KEY);
-            if(localUsers) users = JSON.parse(localUsers);
+            // Ensure we have latest users from Cloud if possible
+            if (users.length <= 1) await loadFromGitHub();
 
             const foundUser = users.find(u => u.username.toLowerCase() === userVal && u.password === passVal);
             
@@ -357,14 +367,29 @@
                 document.getElementById('loginOverlay').style.display = 'none';
                 document.getElementById('mainContent').classList.remove('hidden');
                 document.getElementById('displayRole').innerText = `${foundUser.username} (${foundUser.role})`;
-                loadFromGitHub();
+                
+                // Final Sync & Render
+                await loadFromGitHub();
+                renderAll();
             } else {
                 document.getElementById('loginError').classList.remove('hidden');
                 setTimeout(() => document.getElementById('loginError').classList.add('hidden'), 3000);
             }
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
+        // --- Page Lifecycle ---
+        window.addEventListener('DOMContentLoaded', async () => {
+            // 1. Prepare UI
+            lucide.createIcons();
+            
+            // 2. Try to sync before login
+            const urlToken = getAuthTokenFromURL();
+            if (urlToken) {
+                githubConfig.token = urlToken;
+                await loadFromGitHub(); 
+            }
+
+            // 3. Handle "Remember Me"
             const saved = localStorage.getItem(REMEMBER_KEY);
             if (saved) {
                 const creds = JSON.parse(saved);
@@ -372,8 +397,6 @@
                 document.getElementById('passInput').value = creds.p;
                 document.getElementById('rememberMe').checked = true;
             }
-            lucide.createIcons();
-            renderAll();
         });
 
         // --- UI Rendering ---
@@ -483,7 +506,6 @@
         }
 
         async function save(render = true) { 
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(employees)); 
             await syncToGitHub(); 
             if(render) renderAll(); 
         }
@@ -515,7 +537,7 @@
             await save(); closeModal();
         };
 
-        // --- Navigation & Modals ---
+        // --- Navigation ---
         function switchTab(tabId, btn) {
             document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
