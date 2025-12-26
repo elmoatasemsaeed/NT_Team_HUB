@@ -61,6 +61,11 @@
                 <input type="password" id="ghTokenInput" placeholder="Paste Token for Sync" onkeypress="if(event.key === 'Enter') checkLogin()" class="w-full p-4 border rounded-xl outline-none focus:ring-2 focus:ring-emerald-500 bg-emerald-50/30">
             </div>
 
+            <div class="flex items-center gap-2 mb-6 px-1">
+                <input type="checkbox" id="rememberMe" class="w-4 h-4 cursor-pointer accent-blue-600">
+                <label for="rememberMe" class="text-sm text-gray-600 cursor-pointer font-medium">Remember me</label>
+            </div>
+
             <button onclick="checkLogin()" class="w-full bg-[#1a73e8] text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition-all">Unlock System</button>
             <p id="loginError" class="text-red-600 mt-4 text-sm hidden font-medium">Authentication Failed!</p>
         </div>
@@ -221,12 +226,13 @@
         };
 
         const USERS_KEY = 'team_hub_users';
+        const STORAGE_KEY = 'rememberedUser'; // مفتاح تخزين بيانات الدخول
         
         // App State
         let fieldsConfig = [];
         let chartsConfig = [];
         let employees = [];
-        let users = []; // Empty: will be filled from GitHub on login
+        let users = []; 
         let visibilityConfig = {};
         let currentUserRole = null;
         let activeCharts = [];
@@ -290,23 +296,28 @@
             const userVal = document.getElementById('userInput').value.trim().toLowerCase();
             const passVal = document.getElementById('passInput').value;
             const tokenVal = document.getElementById('ghTokenInput').value.trim();
+            const rememberMe = document.getElementById('rememberMe').checked;
 
             if (!userVal || !passVal) {
                 alert("Please enter username and password");
                 return;
             }
 
-            // 1. Set token temporarily to try sync
             githubConfig.token = tokenVal;
 
-            // 2. Try to sync with cloud to get latest user list
             const syncOk = await loadFromGitHub(false);
             
             if (syncOk) {
-                // 3. Check credentials against fetched users
                 const foundUser = users.find(u => u.username.toLowerCase() === userVal && u.password === passVal);
                 
                 if (foundUser) {
+                    // إدارة تذكر البيانات
+                    if (rememberMe) {
+                        localStorage.setItem(STORAGE_KEY, JSON.stringify({ user: userVal, pass: passVal, token: tokenVal }));
+                    } else {
+                        localStorage.removeItem(STORAGE_KEY);
+                    }
+
                     currentUserRole = foundUser.role;
                     document.body.setAttribute('data-user-role', currentUserRole);
                     document.getElementById('loginOverlay').style.display = 'none';
@@ -325,6 +336,16 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
+            
+            // استرجاع البيانات المحفوظة تلقائياً
+            const savedData = localStorage.getItem(STORAGE_KEY);
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                document.getElementById('userInput').value = data.user || '';
+                document.getElementById('passInput').value = data.pass || '';
+                document.getElementById('ghTokenInput').value = data.token || '';
+                document.getElementById('rememberMe').checked = true;
+            }
         });
 
         // --- Rendering Logic ---
@@ -349,7 +370,7 @@
         function renderTable() {
             const visibleFields = fieldsConfig.filter(f => f.showInTable !== false);
             let headerHtml = visibleFields.map(f => `<th class="py-4 px-6 min-w-[150px] sortable-header" onclick="sortTable('${f.id}')"><div class="sort-btn">${f.label} <i data-lucide="${currentSort.column === f.id ? (currentSort.direction === 'asc' ? 'arrow-up' : 'arrow-down') : 'arrow-up-down'}" class="w-3 h-3 ml-1 ${currentSort.column === f.id ? 'text-blue-600' : 'opacity-40'}"></i></div><input type="text" placeholder="Filter..." class="filter-input no-print" onclick="event.stopPropagation()" onkeyup="filterTable()"></th>`).join('');
-            headerHtml += `<th class="py-4 px-6 text-center sortable-header" onclick="sortTable('isVacation')">Vacation <i data-lucide="arrow-up-down" class="w-3 h-3 ml-1 opacity-40"></i></th><th class="py-4 px-6">Status</th><th class="py-4 px-6 admin-cell no-print">Actions</th>`;
+            headerHtml += `<th class="py-4 px-6 text-center sortable-header" onclick="sortTable('isVacation')">Vacation <i data-lucide="arrow-up-down" class="w-3 h-3 ml-1 opacity-40"></i></th><th class="py-4 px-6 status-cell">Status</th><th class="py-4 px-6 admin-cell no-print">Actions</th>`;
             document.getElementById('tableHeaderRow').innerHTML = headerHtml;
             document.getElementById('employeeTableBody').innerHTML = employees.map((emp, idx) => `<tr class="${emp.isVacation ? 'vacation-row' : ''} hover:bg-gray-50">${visibleFields.map(f => `<td class="py-4 px-6">${Array.isArray(emp[f.id]) ? emp[f.id].join(', ') : (emp[f.id] || '')}</td>`).join('')}<td class="py-4 px-6 text-center"><input type="checkbox" ${emp.isVacation ? 'checked' : ''} ${currentUserRole === 'admin' ? 'onchange="toggleVac(' + idx + ', this.checked)"' : 'disabled'} class="w-5 h-5 accent-red-600"></td><td class="py-4 px-6 font-bold ${emp.isVacation ? 'text-red-500' : 'text-emerald-500'}">${emp.isVacation ? 'Returns: ' + (emp.vacationEnd || 'N/A') : 'Active'}</td><td class="py-4 px-6 admin-cell no-print"><div class="flex gap-4"><button onclick="editEmp(${idx})" class="text-blue-500"><i data-lucide="edit"></i></button><button onclick="deleteEmp(${idx})" class="text-red-500"><i data-lucide="trash-2"></i></button></div></td></tr>`).join('');
             lucide.createIcons();
