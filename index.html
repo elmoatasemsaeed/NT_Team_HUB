@@ -10,13 +10,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style id="dynamicStyles">
-        body { font-family: 'Roboto', sans-serif; background-color: #f8f9fa; color: #202124; }
-        .google-card { background: white; border: 1px solid #dadce0; border-radius: 8px; transition: all 0.2s; }
+        :root {
+            --card-padding: 0.5rem;
+            --card-title-size: 9px;
+            --card-body-size: 10px;
+            --chart-height: 300px;
+            --global-font-size: 14px;
+        }
+        body { font-family: 'Roboto', sans-serif; background-color: #f8f9fa; color: #202124; font-size: var(--global-font-size); }
+        .google-card { background: white; border: 1px solid #dadce0; border-radius: 8px; transition: all 0.2s; padding: var(--card-padding); }
         .google-card:hover { box-shadow: 0 4px 12px rgba(60,64,67,.15); transform: translateY(-1px); }
+        
+        /* Capacity Card Specific Styles */
+        .cap-title { font-size: var(--card-title-size); }
+        .cap-body { font-size: var(--card-body-size); }
+        .chart-container { height: var(--chart-height); }
+
         .vacation-row { background-color: #fce8e6 !important; border-left: 4px solid #d93025; }
         .sort-btn { cursor: pointer; display: inline-flex; items-center; gap: 4px; color: #5f6368; font-weight: bold; padding: 8px 0; }
-        .sort-btn:hover { color: #1a73e8; }
-        .sortable-header { cursor: pointer; transition: background 0.2s; }
         .sortable-header:hover { background-color: #f1f3f4; }
         .large-modal { width: 95%; max-width: 1000px; max-height: 90vh; overflow-y: auto; border-radius: 16px; }
         .admin-only { display: none !important; }
@@ -26,17 +37,13 @@
         .dropdown:hover .dropdown-menu { display: block; }
         .tab-btn.active { color: #1a73e8; border-bottom: 3px solid #1a73e8; background-color: rgba(26, 115, 232, 0.05); }
         
-        .popup-card { border-radius: 12px; padding: 1.25rem; background: #ffffff; border: 1px solid #e5e7eb; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: transform 0.2s; display: flex; flex-direction: column; justify-content: space-between; }
-        .popup-card:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
-        .status-badge { font-size: 0.65rem; padding: 2px 10px; border-radius: 999px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
+        .popup-card { border-radius: 12px; padding: 1.25rem; background: #ffffff; border: 1px solid #e5e7eb; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; }
+        .status-badge { font-size: 0.65rem; padding: 2px 10px; border-radius: 999px; font-weight: 800; text-transform: uppercase; }
 
         @media print {
             .tab-content { display: block !important; }
             .tab-navigation, .no-print, .filter-input, .admin-only { display: none !important; }
-            .vacation-row { background-color: #fce8e6 !important; -webkit-print-color-adjust: exact; }
-            tr.hidden-by-filter { display: none !important; }
             body { padding: 0; background: white; }
-            .google-card { border: none; box-shadow: none; }
         }
     </style>
 </head>
@@ -49,16 +56,13 @@
             </div>
             <h2 class="text-2xl mb-8 font-bold text-gray-800">Team Hub Access</h2>
             <div id="loadingStatus" class="hidden mb-4 text-sm text-blue-600 font-bold italic anim-pulse">Syncing with GitHub...</div>
-            
             <input type="text" id="userInput" placeholder="Username" class="w-full p-4 border rounded-xl mb-3 outline-none focus:ring-2 focus:ring-blue-500">
             <input type="password" id="passInput" placeholder="Password" class="w-full p-4 border rounded-xl mb-3 outline-none focus:ring-2 focus:ring-blue-500">
             <input type="password" id="ghTokenInput" placeholder="GitHub Access Token" onkeypress="if(event.key === 'Enter') checkLogin()" class="w-full p-4 border rounded-xl outline-none mb-4 focus:ring-2 focus:ring-emerald-500 bg-emerald-50/30">
-
             <div class="flex items-center gap-2 mb-6 px-1">
                 <input type="checkbox" id="rememberMe" class="w-4 h-4 cursor-pointer accent-blue-600">
                 <label for="rememberMe" class="text-sm text-gray-600 cursor-pointer font-medium">Remember me</label>
             </div>
-
             <button onclick="checkLogin()" class="w-full bg-[#1a73e8] text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition-all">Unlock System</button>
             <p id="loginError" class="text-red-600 mt-4 text-sm hidden font-medium">Authentication Failed!</p>
         </div>
@@ -84,6 +88,9 @@
                         </button>
                         <button onclick="openChartsSetupModal()" class="w-full text-left px-4 py-3 hover:bg-emerald-50 flex items-center gap-2 text-sm border-b">
                             <i data-lucide="bar-chart-3" class="w-4 h-4 text-emerald-600"></i> Charts Setup
+                        </button>
+                        <button onclick="openUISetupModal()" class="w-full text-left px-4 py-3 hover:bg-purple-50 flex items-center gap-2 text-sm border-b">
+                            <i data-lucide="palette" class="w-4 h-4 text-purple-600"></i> UI & Click Setup
                         </button>
                         <button onclick="openUsersModal()" class="w-full text-left px-4 py-3 hover:bg-blue-50 flex items-center gap-2 text-sm">
                             <i data-lucide="users" class="w-4 h-4 text-purple-600"></i> Setup Users
@@ -160,6 +167,54 @@
         </div>
     </div>
 
+    <div id="uiSetupModal" class="fixed inset-0 z-[1100] bg-black/50 hidden flex items-center justify-center p-4">
+        <div class="bg-white large-modal p-8 shadow-2xl max-w-2xl">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-800 uppercase">UI & Controls Setup</h3>
+                <button onclick="closeUISetupModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-4 border-r pr-4">
+                    <h4 class="font-bold text-blue-600 border-b pb-2">Dimensions & Sizes</h4>
+                    <div>
+                        <label class="text-xs font-bold block mb-1">Card Padding (px)</label>
+                        <input type="number" id="ui_cardPadding" class="w-full p-2 border rounded" onchange="updateUIPreview()">
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold block mb-1">Card Title Font Size (px)</label>
+                        <input type="number" id="ui_titleSize" class="w-full p-2 border rounded" onchange="updateUIPreview()">
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold block mb-1">Card Body Font Size (px)</label>
+                        <input type="number" id="ui_bodySize" class="w-full p-2 border rounded" onchange="updateUIPreview()">
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold block mb-1">Chart Height (px)</label>
+                        <input type="number" id="ui_chartHeight" class="w-full p-2 border rounded" onchange="updateUIPreview()">
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h4 class="font-bold text-emerald-600 border-b pb-2">Interactivity (Click Events)</h4>
+                    <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
+                        <span class="text-sm">Enable Role Clicks</span>
+                        <input type="checkbox" id="ui_clickRole" class="w-5 h-5 accent-blue-600">
+                    </div>
+                    <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
+                        <span class="text-sm">Enable Vacation Clicks</span>
+                        <input type="checkbox" id="ui_clickVacation" class="w-5 h-5 accent-red-600">
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex gap-4 mt-8">
+                <button onclick="closeUISetupModal()" class="flex-1 py-3 bg-gray-100 text-gray-600 rounded-xl font-bold uppercase">Cancel</button>
+                <button onclick="saveUISetup()" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold uppercase shadow-lg">Apply & Save</button>
+            </div>
+        </div>
+    </div>
+
     <div id="usersModal" class="fixed inset-0 z-[1100] bg-black/50 hidden flex items-center justify-center p-4">
         <div class="bg-white large-modal p-8 shadow-2xl max-w-4xl">
             <div class="flex justify-between items-center mb-6"><h3 class="text-2xl font-bold text-gray-800 uppercase">User Management</h3><button onclick="closeUsersModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button></div>
@@ -225,6 +280,14 @@
         let employees = [];
         let users = []; 
         let visibilityConfig = {};
+        let uiConfig = {
+            cardPadding: 8,
+            titleSize: 9,
+            bodySize: 10,
+            chartHeight: 300,
+            clickRole: true,
+            clickVacation: true
+        };
         let currentUserRole = null;
         let activeCharts = [];
         let currentEditingFieldIndex = null;
@@ -246,6 +309,9 @@
                     if (content.users) { users = content.users; localStorage.setItem(USERS_KEY, JSON.stringify(users)); }
                     if (content.visibility) visibilityConfig = content.visibility;
                     if (content.charts) chartsConfig = content.charts;
+                    if (content.ui) uiConfig = {...uiConfig, ...content.ui}; // Load UI config
+                    
+                    applyUIStyles();
                     renderAll();
                     if(manual) alert("Sync Success!");
                     return true;
@@ -257,7 +323,15 @@
 
         async function syncToGitHub() {
             if (!githubConfig.token) return;
-            const fullData = { employees, fields: fieldsConfig, users, visibility: visibilityConfig, charts: chartsConfig, timestamp: new Date().toISOString() };
+            const fullData = { 
+                employees, 
+                fields: fieldsConfig, 
+                users, 
+                visibility: visibilityConfig, 
+                charts: chartsConfig, 
+                ui: uiConfig,
+                timestamp: new Date().toISOString() 
+            };
             try {
                 const url = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}`;
                 const body = { message: "Update Data Hub", content: btoa(unescape(encodeURIComponent(JSON.stringify(fullData, null, 2)))), branch: githubConfig.branch, sha: githubConfig.sha };
@@ -266,6 +340,102 @@
             } catch (err) { console.error(err); }
         }
 
+        // --- UI Setup Functions ---
+        function openUISetupModal() {
+            document.getElementById('ui_cardPadding').value = uiConfig.cardPadding;
+            document.getElementById('ui_titleSize').value = uiConfig.titleSize;
+            document.getElementById('ui_bodySize').value = uiConfig.bodySize;
+            document.getElementById('ui_chartHeight').value = uiConfig.chartHeight;
+            document.getElementById('ui_clickRole').checked = uiConfig.clickRole;
+            document.getElementById('ui_clickVacation').checked = uiConfig.clickVacation;
+            document.getElementById('uiSetupModal').classList.remove('hidden');
+        }
+
+        function closeUISetupModal() { document.getElementById('uiSetupModal').classList.add('hidden'); }
+
+        function updateUIPreview() {
+            const tempConfig = {
+                cardPadding: document.getElementById('ui_cardPadding').value,
+                titleSize: document.getElementById('ui_titleSize').value,
+                bodySize: document.getElementById('ui_bodySize').value,
+                chartHeight: document.getElementById('ui_chartHeight').value
+            };
+            const root = document.documentElement;
+            root.style.setProperty('--card-padding', `${tempConfig.cardPadding}px`);
+            root.style.setProperty('--card-title-size', `${tempConfig.titleSize}px`);
+            root.style.setProperty('--card-body-size', `${tempConfig.bodySize}px`);
+            root.style.setProperty('--chart-height', `${tempConfig.chartHeight}px`);
+        }
+
+        function applyUIStyles() {
+            const root = document.documentElement;
+            root.style.setProperty('--card-padding', `${uiConfig.cardPadding}px`);
+            root.style.setProperty('--card-title-size', `${uiConfig.titleSize}px`);
+            root.style.setProperty('--card-body-size', `${uiConfig.bodySize}px`);
+            root.style.setProperty('--chart-height', `${uiConfig.chartHeight}px`);
+        }
+
+        function saveUISetup() {
+            uiConfig = {
+                cardPadding: parseInt(document.getElementById('ui_cardPadding').value),
+                titleSize: parseInt(document.getElementById('ui_titleSize').value),
+                bodySize: parseInt(document.getElementById('ui_bodySize').value),
+                chartHeight: parseInt(document.getElementById('ui_chartHeight').value),
+                clickRole: document.getElementById('ui_clickRole').checked,
+                clickVacation: document.getElementById('ui_clickVacation').checked
+            };
+            applyUIStyles();
+            save();
+            closeUISetupModal();
+        }
+
+        // --- Modified Capacity Rendering with Click Control ---
+        function updateCapacity() {
+            const areaField = fieldsConfig.find(f => f.id === 'area');
+            const AREAS = (areaField && areaField.options) ? areaField.options.filter(a => a !== "Team Leader") : [];
+            const isVisible = (area, type) => (!visibilityConfig[area] || visibilityConfig[area][type]);
+
+            const renderCard = (area, roles, color) => {
+                const roleA = roles[0];
+                const roleB = roles[1];
+                
+                const countA = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && e.role === roleA && !e.isVacation).length;
+                const countB = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && e.role === roleB && !e.isVacation).length;
+                const vacCount = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && roles.includes(e.role) && e.isVacation).length;
+
+                const roleClickAttr = uiConfig.clickRole ? `onclick="showDetailsExtended('${area}', '${roleA}', false)"` : '';
+                const seniorClickAttr = uiConfig.clickRole ? `onclick="showDetailsExtended('${area}', '${roleB}', false)"` : '';
+                const vacClickAttr = uiConfig.clickVacation ? `onclick="showDetailsExtended('${area}', '${roles.join(',')}', true)"` : '';
+
+                return `
+                <div class="google-card border-l-2 border-l-${color}-500 hover:bg-${color}-50 transition-all">
+                    <div class="flex justify-between border-b pb-1 mb-2">
+                        <span class="cap-title uppercase font-bold text-gray-500">${area}</span>
+                        <span class="font-bold text-${color}-700 text-xs">${countA + countB}</span>
+                    </div>
+                    <div class="grid grid-cols-1 gap-1 cap-body">
+                        <div ${roleClickAttr} class="flex justify-between ${uiConfig.clickRole ? 'cursor-pointer hover:bg-white' : ''} p-1 rounded border border-transparent">
+                            <span>${roleA}:</span> <span class="font-bold">${countA}</span>
+                        </div>
+                        <div ${seniorClickAttr} class="flex justify-between ${uiConfig.clickRole ? 'cursor-pointer hover:bg-white' : ''} p-1 rounded border border-transparent">
+                            <span>Senior:</span> <span class="font-bold">${countB}</span>
+                        </div>
+                        <div ${vacClickAttr} class="mt-1 pt-1 border-t text-red-500 font-bold ${uiConfig.clickVacation ? 'cursor-pointer hover:bg-white' : ''} flex justify-between">
+                            <span>Vacation:</span> <span>${vacCount}</span>
+                        </div>
+                    </div>
+                </div>`;
+            };
+
+            document.getElementById('devCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'dev')).map(a => renderCard(a, ['Dev','Senior'], 'blue')).join('');
+            document.getElementById('testerCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'tester')).map(a => renderCard(a, ['Tester','Senior tester'], 'green')).join('');
+            
+            document.getElementById('devTotalLabel').innerText = "Total: " + employees.filter(e => ['Dev','Senior'].includes(e.role) && !e.isVacation).length;
+            document.getElementById('testerTotalLabel').innerText = "Total: " + employees.filter(e => ['Tester','Senior tester'].includes(e.role) && !e.isVacation).length;
+            renderCharts();
+        }
+
+        // --- Auth & Generic functions ---
         async function checkLogin() {
             const userVal = document.getElementById('userInput').value.trim().toLowerCase();
             const passVal = document.getElementById('passInput').value;
@@ -325,49 +495,6 @@
             lucide.createIcons();
         }
 
-        // --- NEW IMPROVED CAPACITY LOGIC ---
-        function updateCapacity() {
-            const areaField = fieldsConfig.find(f => f.id === 'area');
-            const AREAS = (areaField && areaField.options) ? areaField.options.filter(a => a !== "Team Leader") : [];
-            const isVisible = (area, type) => (!visibilityConfig[area] || visibilityConfig[area][type]);
-
-            const renderCard = (area, roles, color) => {
-                const roleA = roles[0]; // e.g., Dev or Tester
-                const roleB = roles[1]; // e.g., Senior or Senior tester
-                
-                const countA = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && e.role === roleA && !e.isVacation).length;
-                const countB = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && e.role === roleB && !e.isVacation).length;
-                const vacCount = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && roles.includes(e.role) && e.isVacation).length;
-
-                return `
-                <div class="google-card border-l-2 border-l-${color}-500 p-2 hover:bg-${color}-50 transition-all">
-                    <div class="flex justify-between border-b pb-1 mb-2">
-                        <span class="text-[9px] uppercase font-bold text-gray-500">${area}</span>
-                        <span class="font-bold text-${color}-700 text-xs">${countA + countB}</span>
-                    </div>
-                    <div class="grid grid-cols-1 gap-1 text-[10px]">
-                        <div onclick="showDetailsExtended('${area}', '${roleA}', false)" class="flex justify-between cursor-pointer hover:bg-white p-1 rounded border border-transparent hover:border-gray-200">
-                            <span>${roleA}:</span> <span class="font-bold">${countA}</span>
-                        </div>
-                        <div onclick="showDetailsExtended('${area}', '${roleB}', false)" class="flex justify-between cursor-pointer hover:bg-white p-1 rounded border border-transparent hover:border-gray-200">
-                            <span>Senior:</span> <span class="font-bold">${countB}</span>
-                        </div>
-                        <div onclick="showDetailsExtended('${area}', '${roles.join(',')}', true)" class="mt-1 pt-1 border-t text-red-500 font-bold cursor-pointer flex justify-between">
-                            <span>Vacation:</span> <span>${vacCount}</span>
-                        </div>
-                    </div>
-                </div>`;
-            };
-
-            document.getElementById('devCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'dev')).map(a => renderCard(a, ['Dev','Senior'], 'blue')).join('');
-            document.getElementById('testerCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'tester')).map(a => renderCard(a, ['Tester','Senior tester'], 'green')).join('');
-            
-            document.getElementById('devTotalLabel').innerText = "Total: " + employees.filter(e => ['Dev','Senior'].includes(e.role) && !e.isVacation).length;
-            document.getElementById('testerTotalLabel').innerText = "Total: " + employees.filter(e => ['Tester','Senior tester'].includes(e.role) && !e.isVacation).length;
-            renderCharts();
-        }
-
-        // --- UPDATED POPUP LOGIC ---
         function showDetailsExtended(area, roles, isVac) {
             const roleList = roles.split(',');
             const list = employees.filter(e => 
@@ -400,27 +527,16 @@
                             ${isVac ? 'Away' : 'Available'}
                         </span>
                     </div>
-                    
                     <div class="pt-4 border-t border-gray-100 space-y-2.5">
-                        ${isVac ? `
-                        <div class="flex items-center gap-3 text-[11px] text-red-600 font-bold">
-                            <i data-lucide="calendar-x" class="w-3.5 h-3.5"></i>
-                            <span>Return Date: ${e.vacationEnd || 'TBD'}</span>
-                        </div>` : ''}
+                        ${isVac ? `<div class="flex items-center gap-3 text-[11px] text-red-600 font-bold"><i data-lucide="calendar-x" class="w-3.5 h-3.5"></i><span>Return Date: ${e.vacationEnd || 'TBD'}</span></div>` : ''}
                     </div>
                 </div>
-            `).join('') : `
-                <div class="col-span-full flex flex-col items-center justify-center py-20 text-gray-300">
-                    <i data-lucide="search-x" class="w-16 h-16 mb-4 opacity-20"></i>
-                    <p class="font-bold uppercase tracking-widest text-sm">No records found</p>
-                </div>
-            `;
+            `).join('') : `<div class="col-span-full text-center py-20 text-gray-300 font-bold uppercase">No records found</div>`;
 
             document.getElementById('detailsPopup').classList.remove('hidden');
             lucide.createIcons();
         }
 
-        // --- Other Helpers (Charts, Filters, UI) ---
         function renderCharts() {
             const chartsGrid = document.getElementById('dynamicChartsGrid');
             chartsGrid.innerHTML = '';
@@ -429,7 +545,7 @@
             chartsConfig.forEach(config => {
                 const wrapper = document.createElement('div');
                 wrapper.className = 'p-6 border rounded-2xl bg-white shadow-sm flex flex-col items-center';
-                wrapper.innerHTML = `<h3 class="font-bold mb-6 text-center uppercase text-xs tracking-widest text-gray-600">${config.title}</h3><div class="relative h-[300px] w-full"><canvas id="canvas_${config.id}"></canvas></div>`;
+                wrapper.innerHTML = `<h3 class="font-bold mb-6 text-center uppercase text-xs tracking-widest text-gray-600">${config.title}</h3><div class="chart-container relative w-full"><canvas id="canvas_${config.id}"></canvas></div>`;
                 chartsGrid.appendChild(wrapper);
                 const stats = {};
                 employees.filter(e => !e.isVacation).forEach(emp => {
@@ -444,6 +560,7 @@
             });
         }
 
+        // --- Standard functions unchanged ---
         function sortTable(columnId) {
             if (currentSort.column === columnId) currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
             else { currentSort.column = columnId; currentSort.direction = 'asc'; }
@@ -499,7 +616,6 @@
         function closePopup() { document.getElementById('detailsPopup').classList.add('hidden'); }
         function clearFilters() { document.querySelectorAll('.filter-input').forEach(i=>i.value=""); filterTable(); }
 
-        // Setup Management Functions
         function openSetupModal() {
             document.getElementById('fieldsList').innerHTML = fieldsConfig.map((f, i) => `<div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-6 gap-3 items-end shadow-sm"><div><label class="text-[10px] font-bold uppercase">Label</label><input type="text" value="${f.label}" onchange="fieldsConfig[${i}].label=this.value" class="w-full p-2 border rounded text-sm"></div><div><label class="text-[10px] font-bold uppercase">Type</label><select onchange="fieldsConfig[${i}].type=this.value; openSetupModal()" class="w-full p-2 border rounded text-sm"><option value="text" ${f.type==='text'?'selected':''}>Text</option><option value="select" ${f.type==='select'?'selected':''}>Select</option><option value="multiselect" ${f.type==='multiselect'?'selected':''}>Multi</option><option value="date" ${f.type==='date'?'selected':''}>Date</option></select></div><div class="md:col-span-2">${['select','multiselect'].includes(f.type) ? `<button onclick="openOptionsManager(${i})" class="w-full p-2 bg-white border border-dashed border-blue-400 text-blue-600 rounded text-xs font-bold">Options (${(f.options || []).length})</button>` : ''}</div><div class="flex flex-col items-center justify-center pb-2"><input type="checkbox" ${f.showInTable !== false ? 'checked' : ''} onchange="fieldsConfig[${i}].showInTable = this.checked" class="w-5 h-5 accent-blue-600"></div><button onclick="fieldsConfig.splice(${i},1); openSetupModal()" class="text-red-500 p-2"><i data-lucide="trash-2"></i></button></div>`).join('');
             document.getElementById('setupModal').classList.remove('hidden'); lucide.createIcons();
@@ -548,7 +664,7 @@
         function closeChartsSetupModal() { document.getElementById('chartsSetupModal').classList.add('hidden'); }
 
         function performFullBackup() {
-            const blob = new Blob([JSON.stringify({employees, fields:fieldsConfig, users, visibility:visibilityConfig, charts:chartsConfig}, null, 2)], {type:'application/json'});
+            const blob = new Blob([JSON.stringify({employees, fields:fieldsConfig, users, visibility:visibilityConfig, charts:chartsConfig, ui: uiConfig}, null, 2)], {type:'application/json'});
             const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'backup.json'; a.click();
         }
         function exportToExcel() {
