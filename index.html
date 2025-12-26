@@ -32,6 +32,7 @@
         input:checked + .slider { background-color: #10b981; }
         input:checked + .slider:before { transform: translateX(20px); }
         .capacity-card { min-height: 80px; }
+        .role-badge { display: flex; justify-content: space-between; padding: 1px 4px; border-radius: 4px; margin-bottom: 2px; background: rgba(0,0,0,0.03); }
         .chart-container { height: 300px; width: 100%; }
         @media print {
             .tab-content { display: block !important; }
@@ -226,9 +227,8 @@
         };
 
         const USERS_KEY = 'team_hub_users';
-        const STORAGE_KEY = 'rememberedUser'; // مفتاح تخزين بيانات الدخول
+        const STORAGE_KEY = 'rememberedUser';
         
-        // App State
         let fieldsConfig = [];
         let chartsConfig = [];
         let employees = [];
@@ -242,38 +242,28 @@
         // --- Logic: Authentication & Synchronization ---
         async function loadFromGitHub(manual = false) {
             if (!githubConfig.token) { if (manual) alert("No Token provided!"); return false; }
-            
             document.getElementById('loadingStatus').classList.remove('hidden');
             try {
                 const url = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}?ref=${githubConfig.branch}`;
                 const response = await fetch(url, { headers: { 'Authorization': `token ${githubConfig.token}` } });
-                
                 if (response.ok) {
                     const data = await response.json();
                     githubConfig.sha = data.sha;
                     const content = JSON.parse(decodeURIComponent(escape(atob(data.content))));
-                    
                     if (content.employees) employees = content.employees;
                     if (content.fields) fieldsConfig = content.fields;
-                    if (content.users) {
-                        users = content.users;
-                        localStorage.setItem(USERS_KEY, JSON.stringify(users));
-                    }
+                    if (content.users) { users = content.users; localStorage.setItem(USERS_KEY, JSON.stringify(users)); }
                     if (content.visibility) visibilityConfig = content.visibility;
                     if (content.charts) chartsConfig = content.charts;
-                    
                     renderAll();
                     if(manual) alert("Sync Success!");
                     return true;
-                } else {
-                    throw new Error("Failed to fetch data");
-                }
+                } else { throw new Error("Failed to fetch data"); }
             } catch (err) { 
                 console.error(err); 
                 if(manual) alert("Cloud Sync Failed. Check Token and Connection.");
                 return false;
-            }
-            finally { document.getElementById('loadingStatus').classList.add('hidden'); }
+            } finally { document.getElementById('loadingStatus').classList.add('hidden'); }
         }
 
         async function syncToGitHub() {
@@ -297,27 +287,14 @@
             const passVal = document.getElementById('passInput').value;
             const tokenVal = document.getElementById('ghTokenInput').value.trim();
             const rememberMe = document.getElementById('rememberMe').checked;
-
-            if (!userVal || !passVal) {
-                alert("Please enter username and password");
-                return;
-            }
-
+            if (!userVal || !passVal) { alert("Please enter username and password"); return; }
             githubConfig.token = tokenVal;
-
             const syncOk = await loadFromGitHub(false);
-            
             if (syncOk) {
                 const foundUser = users.find(u => u.username.toLowerCase() === userVal && u.password === passVal);
-                
                 if (foundUser) {
-                    // إدارة تذكر البيانات
-                    if (rememberMe) {
-                        localStorage.setItem(STORAGE_KEY, JSON.stringify({ user: userVal, pass: passVal, token: tokenVal }));
-                    } else {
-                        localStorage.removeItem(STORAGE_KEY);
-                    }
-
+                    if (rememberMe) localStorage.setItem(STORAGE_KEY, JSON.stringify({ user: userVal, pass: passVal, token: tokenVal }));
+                    else localStorage.removeItem(STORAGE_KEY);
                     currentUserRole = foundUser.role;
                     document.body.setAttribute('data-user-role', currentUserRole);
                     document.getElementById('loginOverlay').style.display = 'none';
@@ -336,8 +313,6 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
-            
-            // استرجاع البيانات المحفوظة تلقائياً
             const savedData = localStorage.getItem(STORAGE_KEY);
             if (savedData) {
                 const data = JSON.parse(savedData);
@@ -398,25 +373,43 @@
             });
         }
 
+        // --- UPDATED CAPACITY LOGIC ---
         function updateCapacity() {
             const areaField = fieldsConfig.find(f => f.id === 'area');
             const AREAS = (areaField && areaField.options) ? areaField.options.filter(a => a !== "Team Leader") : [];
             const isVisible = (area, type) => (!visibilityConfig[area] || visibilityConfig[area][type]);
 
             const renderCard = (area, roleFilter, color) => {
-                const active = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && roleFilter.includes(e.role) && !e.isVacation);
-                const vac = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && roleFilter.includes(e.role) && e.isVacation);
-                return `<div class="google-card capacity-card border-l-2 border-l-${color}-500 p-2 cursor-pointer hover:bg-${color}-50 transition-all" onclick="showDetailsExtended('${area}', '${roleFilter.join(',')}', false)">
-                    <div class="flex justify-between border-b pb-1 mb-1"><span class="text-[9px] uppercase font-bold">${area}</span><span class="font-bold text-${color}-700">${active.length}</span></div>
-                    <div class="text-[10px] space-y-1"><div class="p-0.5 rounded text-red-500 font-bold hover:bg-red-50" onclick="event.stopPropagation(); showDetailsExtended('${area}', '${roleFilter.join(',')}', true)">Vac: ${vac.length}</div></div>
-                </div>`;
+                const areaEmps = employees.filter(e => (Array.isArray(e.area) ? e.area.includes(area) : e.area === area) && roleFilter.includes(e.role));
+                const active = areaEmps.filter(e => !e.isVacation);
+                const vac = areaEmps.filter(e => e.isVacation);
+
+                const detailsHtml = roleFilter.map(role => {
+                    const count = active.filter(e => e.role === role).length;
+                    return count > 0 ? `<div class="role-badge"><span class="opacity-70">${role}:</span><span class="font-bold">${count}</span></div>` : '';
+                }).join('');
+
+                return `
+                    <div class="google-card capacity-card border-l-4 border-l-${color}-500 p-3 cursor-pointer hover:bg-${color}-50 transition-all" 
+                         onclick="showDetailsExtended('${area}', '${roleFilter.join(',')}', false)">
+                        <div class="flex justify-between items-center border-b pb-2 mb-2">
+                            <span class="text-[10px] uppercase font-black text-gray-600">${area}</span>
+                            <span class="bg-${color}-100 text-${color}-700 px-2 py-0.5 rounded-full text-xs font-bold">${active.length}</span>
+                        </div>
+                        <div class="text-[10px] text-gray-700">${detailsHtml || '<div class="text-gray-400 italic">No active members</div>'}</div>
+                        <div class="mt-2 pt-2 border-t border-dashed">
+                            <div class="text-[10px] p-1 rounded text-red-500 font-bold hover:bg-red-100 flex justify-between" 
+                                 onclick="event.stopPropagation(); showDetailsExtended('${area}', '${roleFilter.join(',')}', true)">
+                                <span>VACATION:</span><span>${vac.length}</span>
+                            </div>
+                        </div>
+                    </div>`;
             };
 
             document.getElementById('devCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'dev')).map(a => renderCard(a, ['Dev','Senior'], 'blue')).join('');
             document.getElementById('testerCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'tester')).map(a => renderCard(a, ['Tester','Senior tester'], 'green')).join('');
             document.getElementById('devTotalLabel').innerText = "Total: " + employees.filter(e => ['Dev','Senior'].includes(e.role) && !e.isVacation).length;
             document.getElementById('testerTotalLabel').innerText = "Total: " + employees.filter(e => ['Tester','Senior tester'].includes(e.role) && !e.isVacation).length;
-
             renderCharts();
         }
 
@@ -425,7 +418,6 @@
             chartsGrid.innerHTML = '';
             activeCharts.forEach(c => c.destroy());
             activeCharts = [];
-
             chartsConfig.forEach(config => {
                 const wrapper = document.createElement('div');
                 wrapper.className = 'p-6 border rounded-2xl bg-white shadow-sm flex flex-col items-center';
@@ -449,7 +441,6 @@
         function save(render = true) { syncToGitHub(); if(render) renderAll(); }
         function toggleVac(idx, val) { employees[idx].isVacation = val; save(); }
         function deleteEmp(idx) { if(confirm('Delete?')) { employees.splice(idx,1); save(); } }
-        
         function editEmp(idx) {
             const emp = employees[idx]; document.getElementById('editIndex').value = idx;
             fieldsConfig.forEach(f => {
@@ -478,13 +469,12 @@
         function openModal() { document.getElementById('modal').classList.remove('hidden'); }
         function closeModal() { document.getElementById('modal').classList.add('hidden'); document.getElementById('employeeForm').reset(); document.getElementById('editIndex').value=""; }
         
-        // Setup management
         function openSetupModal() {
             document.getElementById('fieldsList').innerHTML = fieldsConfig.map((f, i) => `<div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-6 gap-3 items-end shadow-sm"><div><label class="text-[10px] font-bold uppercase">Label</label><input type="text" value="${f.label}" onchange="fieldsConfig[${i}].label=this.value" class="w-full p-2 border rounded text-sm"></div><div><label class="text-[10px] font-bold uppercase">Type</label><select onchange="fieldsConfig[${i}].type=this.value; openSetupModal()" class="w-full p-2 border rounded text-sm"><option value="text" ${f.type==='text'?'selected':''}>Text</option><option value="select" ${f.type==='select'?'selected':''}>Select</option><option value="multiselect" ${f.type==='multiselect'?'selected':''}>Multi</option><option value="date" ${f.type==='date'?'selected':''}>Date</option></select></div><div class="md:col-span-2">${['select','multiselect'].includes(f.type) ? `<button onclick="openOptionsManager(${i})" class="w-full p-2 bg-white border border-dashed border-blue-400 text-blue-600 rounded text-xs font-bold">Options (${(f.options || []).length})</button>` : ''}</div><div class="flex flex-col items-center justify-center pb-2"><input type="checkbox" ${f.showInTable !== false ? 'checked' : ''} onchange="fieldsConfig[${i}].showInTable = this.checked" class="w-5 h-5 accent-blue-600"></div><button onclick="fieldsConfig.splice(${i},1); openSetupModal()" class="text-red-500 p-2"><i data-lucide="trash-2"></i></button></div>`).join('');
             document.getElementById('setupModal').classList.remove('hidden'); lucide.createIcons();
         }
         function openOptionsManager(idx) { currentEditingFieldIndex = idx; renderOptionsList(); document.getElementById('optionsModal').classList.remove('hidden'); }
-        function renderOptionsList() { const list = fieldsConfig[currentEditingFieldIndex].options; document.getElementById('optionsItemsContainer').innerHTML = list.map((opt, i) => `<div class="flex gap-2 bg-gray-50 p-1 rounded border"><input type="text" value="${opt}" onchange="fieldsConfig[${currentEditingFieldIndex}].options[${i}]=this.value" class="flex-1 p-2 bg-transparent text-sm outline-none rounded"><button onclick="fieldsConfig[${currentEditingFieldIndex}].options.splice(${i},1); renderOptionsList()" class="text-red-400 p-2"><i data-lucide="x-circle" class="w-4 h-4"></i></button></div>`).join(''); lucide.createIcons(); }
+        function renderOptionsList() { const list = fieldsConfig[currentEditingFieldIndex].options; document.getElementById('optionsItemsContainer').innerHTML = list.map((opt, i) => `<div class="flex gap-2 bg-gray-50 p-1 rounded border"><input type="text" value="${opt}" onchange="fieldsConfig[${currentEditingFieldIndex}].options[${i}]=this.value" class="flex-1 p-2 bg-transparent text-sm outline-none rounded"><button onclick="fieldsConfig[currentEditingFieldIndex}].options.splice(${i},1); renderOptionsList()" class="text-red-400 p-2"><i data-lucide="x-circle" class="w-4 h-4"></i></button></div>`).join(''); lucide.createIcons(); }
         function addOptionField() { fieldsConfig[currentEditingFieldIndex].options.push(""); renderOptionsList(); }
         function closeOptionsManager() { document.getElementById('optionsModal').classList.add('hidden'); openSetupModal(); }
         function addNewFieldSetup() { fieldsConfig.push({id:'f'+Date.now(), label:'New Field', type:'text', showInTable:true, options: []}); openSetupModal(); }
@@ -492,7 +482,8 @@
         function closeSetupModal() { document.getElementById('setupModal').classList.add('hidden'); }
 
         function openVisibilityModal() {
-            const areas = fieldsConfig.find(f=>f.id==='area').options.filter(a=>a!=="Team Leader");
+            const areaField = fieldsConfig.find(f=>f.id==='area');
+            const areas = areaField ? areaField.options.filter(a=>a!=="Team Leader") : [];
             document.getElementById('visibilityList').innerHTML = areas.map(a => {
                 const cfg = visibilityConfig[a] || {dev:true, tester:true};
                 return `<tr><td class="p-4 font-bold">${a}</td><td class="text-center"><input type="checkbox" class="v-dev" data-area="${a}" ${cfg.dev?'checked':''}></td><td class="text-center"><input type="checkbox" class="v-tester" data-area="${a}" ${cfg.tester?'checked':''}></td></tr>`;
