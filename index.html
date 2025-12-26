@@ -211,33 +211,22 @@
     </div>
 
     <script>
-        // --- Core Static Configuration (No more localStorage dependency for sync) ---
+        // --- Core Configuration ---
         const githubConfig = { 
             repoPath: 'elmoatasemsaeed/NT_Team_HUB', 
-            filePath: 'data.json', // الملف السحابي
+            filePath: 'data.json',
             branch: 'main', 
-            token: '', // سيتم ملؤه من شاشة الدخول
+            token: '', 
             sha: null 
         };
 
-        const STORAGE_KEY = 'team_resource_db_v10';
         const USERS_KEY = 'team_hub_users';
         
-        // Default Initial Setup (If cloud is empty)
-        let fieldsConfig = [
-            { id: 'name', label: 'Full Name', type: 'text', required: true, showInTable: true },
-            { id: 'role', label: 'Current Role', type: 'select', options: ['Dev', 'Senior', 'Tester', 'Senior tester', 'Team Lead'], showInTable: true },
-            { id: 'area', label: 'Area / Squad', type: 'select', options: ["Registration", "Internal lab", "Front and Financial", "front end", "Intgration", "LDM_Intgration", "elBORG", "Team Leader"], showInTable: true },
-            { id: 'workingIn', label: 'Working ON', type: 'select', options: ['Regression', 'support', 'Iteration', 'elBORG', 'Senior', 'Team Leader'], showInTable: true }
-        ];
-
-        let chartsConfig = [
-            { id: 'c1', title: 'Developers Distribution', targetField: 'area', filterRoles: ['Dev', 'Senior'], type: 'doughnut' },
-            { id: 'c2', title: 'Testers Distribution', targetField: 'area', filterRoles: ['Tester', 'Senior tester'], type: 'doughnut' }
-        ];
-
+        // App State
+        let fieldsConfig = [];
+        let chartsConfig = [];
         let employees = [];
-        let users = [{ username: 'admin', password: '123', role: 'admin' }]; // Default user
+        let users = []; // Empty: will be filled from GitHub on login
         let visibilityConfig = {};
         let currentUserRole = null;
         let activeCharts = [];
@@ -246,7 +235,7 @@
 
         // --- Logic: Authentication & Synchronization ---
         async function loadFromGitHub(manual = false) {
-            if (!githubConfig.token) { if (manual) alert("No Token provided!"); return; }
+            if (!githubConfig.token) { if (manual) alert("No Token provided!"); return false; }
             
             document.getElementById('loadingStatus').classList.remove('hidden');
             try {
@@ -302,39 +291,43 @@
             const passVal = document.getElementById('passInput').value;
             const tokenVal = document.getElementById('ghTokenInput').value.trim();
 
-            // Check against local/cached users first
-            const localUsers = JSON.parse(localStorage.getItem(USERS_KEY) || JSON.stringify(users));
-            const foundUser = localUsers.find(u => u.username.toLowerCase() === userVal && u.password === passVal);
+            if (!userVal || !passVal) {
+                alert("Please enter username and password");
+                return;
+            }
+
+            // 1. Set token temporarily to try sync
+            githubConfig.token = tokenVal;
+
+            // 2. Try to sync with cloud to get latest user list
+            const syncOk = await loadFromGitHub(false);
             
-            if (foundUser) {
-                githubConfig.token = tokenVal; // Set token for session
-                currentUserRole = foundUser.role;
+            if (syncOk) {
+                // 3. Check credentials against fetched users
+                const foundUser = users.find(u => u.username.toLowerCase() === userVal && u.password === passVal);
                 
-                // Try to sync with cloud immediately
-                const syncOk = await loadFromGitHub(false);
-                
-                if (syncOk || !tokenVal) { // Allow entry if sync ok OR if user didn't provide token (offline mode)
+                if (foundUser) {
+                    currentUserRole = foundUser.role;
                     document.body.setAttribute('data-user-role', currentUserRole);
                     document.getElementById('loginOverlay').style.display = 'none';
                     document.getElementById('mainContent').classList.remove('hidden');
                     document.getElementById('displayRole').innerText = `${foundUser.username} (${foundUser.role})`;
+                    renderAll();
                 } else {
-                    document.getElementById('loginError').innerText = "GitHub Token Invalid!";
+                    document.getElementById('loginError').innerText = "Access Denied: User not found in Cloud Database!";
                     document.getElementById('loginError').classList.remove('hidden');
                 }
             } else {
-                document.getElementById('loginError').innerText = "Invalid Credentials!";
+                document.getElementById('loginError').innerText = "GitHub Sync Failed! Invalid Token or Repo unreachable.";
                 document.getElementById('loginError').classList.remove('hidden');
-                setTimeout(() => document.getElementById('loginError').classList.add('hidden'), 3000);
             }
         }
 
         window.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
-            // In this version, we don't render until login
         });
 
-        // --- Standard UI Rendering Logic (Same as original) ---
+        // --- Rendering Logic ---
         function renderAll() { updateCapacity(); renderTable(); renderDynamicForm(); lucide.createIcons(); }
 
         function renderDynamicForm() {
@@ -389,7 +382,7 @@
             const AREAS = (areaField && areaField.options) ? areaField.options.filter(a => a !== "Team Leader") : [];
             const isVisible = (area, type) => (!visibilityConfig[area] || visibilityConfig[area][type]);
 
-            const renderCard = (area, roleFilter, color, type) => {
+            const renderCard = (area, roleFilter, color) => {
                 const active = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && roleFilter.includes(e.role) && !e.isVacation);
                 const vac = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && roleFilter.includes(e.role) && e.isVacation);
                 return `<div class="google-card capacity-card border-l-2 border-l-${color}-500 p-2 cursor-pointer hover:bg-${color}-50 transition-all" onclick="showDetailsExtended('${area}', '${roleFilter.join(',')}', false)">
@@ -398,8 +391,8 @@
                 </div>`;
             };
 
-            document.getElementById('devCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'dev')).map(a => renderCard(a, ['Dev','Senior'], 'blue', 'dev')).join('');
-            document.getElementById('testerCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'tester')).map(a => renderCard(a, ['Tester','Senior tester'], 'green', 'tester')).join('');
+            document.getElementById('devCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'dev')).map(a => renderCard(a, ['Dev','Senior'], 'blue')).join('');
+            document.getElementById('testerCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'tester')).map(a => renderCard(a, ['Tester','Senior tester'], 'green')).join('');
             document.getElementById('devTotalLabel').innerText = "Total: " + employees.filter(e => ['Dev','Senior'].includes(e.role) && !e.isVacation).length;
             document.getElementById('testerTotalLabel').innerText = "Total: " + employees.filter(e => ['Tester','Senior tester'].includes(e.role) && !e.isVacation).length;
 
@@ -424,17 +417,18 @@
                 });
                 const chart = new Chart(document.getElementById(`canvas_${config.id}`).getContext('2d'), {
                     type: config.type,
-                    data: { labels: Object.keys(stats), datasets: [{ data: Object.values(stats), backgroundColor: ['#4285F4', '#34A853', '#FBBC05', '#EA4335', '#673AB7', '#3F51B5', '#00BCD4', '#009688', '#FF9800', '#FF5722', '#795548', '#607D8B', '#E91E63', '#9C27B0', '#00E676', '#FFD600', '#1DE9B6', '#D4E157', '#FFAB40', '#90A4AE'] }] },
+                    data: { labels: Object.keys(stats), datasets: [{ data: Object.values(stats), backgroundColor: ['#4285F4', '#34A853', '#FBBC05', '#EA4335', '#673AB7', '#3F51B5', '#00BCD4', '#009688', '#FF9800', '#FF5722'] }] },
                     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
                 });
                 activeCharts.push(chart);
             });
         }
 
-        // --- Standard Helper Functions ---
+        // --- Helper Functions & Modals ---
         function save(render = true) { syncToGitHub(); if(render) renderAll(); }
         function toggleVac(idx, val) { employees[idx].isVacation = val; save(); }
         function deleteEmp(idx) { if(confirm('Delete?')) { employees.splice(idx,1); save(); } }
+        
         function editEmp(idx) {
             const emp = employees[idx]; document.getElementById('editIndex').value = idx;
             fieldsConfig.forEach(f => {
@@ -446,6 +440,7 @@
             document.getElementById('empVacationEnd').value = emp.vacationEnd || '';
             openModal();
         }
+
         document.getElementById('employeeForm').onsubmit = (e) => {
             e.preventDefault();
             const idx = document.getElementById('editIndex').value;
@@ -462,9 +457,9 @@
         function openModal() { document.getElementById('modal').classList.remove('hidden'); }
         function closeModal() { document.getElementById('modal').classList.add('hidden'); document.getElementById('employeeForm').reset(); document.getElementById('editIndex').value=""; }
         
-        // Setup modals logic...
+        // Setup management
         function openSetupModal() {
-            document.getElementById('fieldsList').innerHTML = fieldsConfig.map((f, i) => `<div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-6 gap-3 items-end shadow-sm"><div><label class="text-[10px] font-bold uppercase">Label</label><input type="text" value="${f.label}" onchange="fieldsConfig[${i}].label=this.value" class="w-full p-2 border rounded text-sm"></div><div><label class="text-[10px] font-bold uppercase">Type</label><select onchange="fieldsConfig[${i}].type=this.value; openSetupModal()" class="w-full p-2 border rounded text-sm"><option value="text" ${f.type==='text'?'selected':''}>Text</option><option value="select" ${f.type==='select'?'selected':''}>Select</option><option value="multiselect" ${f.type==='multiselect'?'selected':''}>Multi</option><option value="date" ${f.type==='date'?'selected':''}>Date</option></select></div><div class="md:col-span-2">${['select','multiselect'].includes(f.type) ? `<button onclick="openOptionsManager(${i})" class="w-full p-2 bg-white border border-dashed border-blue-400 text-blue-600 rounded text-xs font-bold">Manage Options (${(f.options || []).length})</button>` : ''}</div><div class="flex flex-col items-center justify-center pb-2"><input type="checkbox" ${f.showInTable !== false ? 'checked' : ''} onchange="fieldsConfig[${i}].showInTable = this.checked" class="w-5 h-5 accent-blue-600"></div><button onclick="fieldsConfig.splice(${i},1); openSetupModal()" class="text-red-500 p-2"><i data-lucide="trash-2"></i></button></div>`).join('');
+            document.getElementById('fieldsList').innerHTML = fieldsConfig.map((f, i) => `<div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-6 gap-3 items-end shadow-sm"><div><label class="text-[10px] font-bold uppercase">Label</label><input type="text" value="${f.label}" onchange="fieldsConfig[${i}].label=this.value" class="w-full p-2 border rounded text-sm"></div><div><label class="text-[10px] font-bold uppercase">Type</label><select onchange="fieldsConfig[${i}].type=this.value; openSetupModal()" class="w-full p-2 border rounded text-sm"><option value="text" ${f.type==='text'?'selected':''}>Text</option><option value="select" ${f.type==='select'?'selected':''}>Select</option><option value="multiselect" ${f.type==='multiselect'?'selected':''}>Multi</option><option value="date" ${f.type==='date'?'selected':''}>Date</option></select></div><div class="md:col-span-2">${['select','multiselect'].includes(f.type) ? `<button onclick="openOptionsManager(${i})" class="w-full p-2 bg-white border border-dashed border-blue-400 text-blue-600 rounded text-xs font-bold">Options (${(f.options || []).length})</button>` : ''}</div><div class="flex flex-col items-center justify-center pb-2"><input type="checkbox" ${f.showInTable !== false ? 'checked' : ''} onchange="fieldsConfig[${i}].showInTable = this.checked" class="w-5 h-5 accent-blue-600"></div><button onclick="fieldsConfig.splice(${i},1); openSetupModal()" class="text-red-500 p-2"><i data-lucide="trash-2"></i></button></div>`).join('');
             document.getElementById('setupModal').classList.remove('hidden'); lucide.createIcons();
         }
         function openOptionsManager(idx) { currentEditingFieldIndex = idx; renderOptionsList(); document.getElementById('optionsModal').classList.remove('hidden'); }
