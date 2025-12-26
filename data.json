@@ -872,12 +872,13 @@
     }
   ],
   "ui": {
-    "cardPadding": 3,
-    "titleSize": 10,
-    "bodySize": 10,
+    "cardPadding": "3",
+    "titleSize": "10",
+    "bodySize": "36",
     "chartHeight": 284,
+    "clickCombined": true,
     "clickRole": true,
     "clickVacation": true
   },
-  "timestamp": "2025-12-26T09:15:54.729Z"
+  "timestamp": "2025-12-26T09:22:40.794Z"
 }
