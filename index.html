@@ -51,7 +51,7 @@
                 <i data-lucide="shield-check" class="w-10 h-10"></i>
             </div>
             <h2 class="text-2xl mb-8 font-bold text-gray-800">Team Hub Access</h2>
-            <div id="loadingStatus" class="hidden mb-4 text-sm text-blue-600 font-bold italic anim-pulse">Checking credentials...</div>
+            <div id="loadingStatus" class="hidden mb-4 text-sm text-blue-600 font-bold italic anim-pulse">Syncing with Cloud...</div>
             <input type="text" id="userInput" placeholder="Username" class="w-full p-4 border rounded-xl mb-3 outline-none focus:ring-2 focus:ring-blue-500">
             <input type="password" id="passInput" placeholder="Password" onkeypress="if(event.key === 'Enter') checkLogin()" class="w-full p-4 border rounded-xl mb-3 outline-none focus:ring-2 focus:ring-blue-500">
             
@@ -121,14 +121,14 @@
         <div id="capacityTab" class="tab-content">
             <div id="capacityMainGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 no-print">
                 <div class="p-4 border rounded-2xl bg-white shadow-sm">
-                    <h3 onclick="showGlobalDetails('Dev,Senior', false)" class="text-blue-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest cursor-pointer hover:text-blue-500">
+                    <h3 onclick="showDetailsExtended('Registration', 'Dev,Senior', false)" class="text-blue-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest cursor-pointer hover:text-blue-500">
                         <span class="flex items-center gap-2"><i data-lucide="code" class="w-4 h-4"></i> Developers Capacity</span>
                         <span id="devTotalLabel" class="bg-blue-100 px-2 py-0.5 rounded text-blue-800">Total: 0</span>
                     </h3>
                     <div id="devCapacityGrid" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2 mb-4"></div>
                 </div>
                 <div class="p-4 border rounded-2xl bg-white shadow-sm">
-                    <h3 onclick="showGlobalDetails('Tester,Senior tester', false)" class="text-green-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest cursor-pointer hover:text-green-500">
+                    <h3 onclick="showDetailsExtended('Registration', 'Tester,Senior tester', false)" class="text-green-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest cursor-pointer hover:text-green-500">
                         <span class="flex items-center gap-2"><i data-lucide="check-square" class="w-4 h-4"></i> Testers Capacity</span>
                         <span id="testerTotalLabel" class="bg-green-100 px-2 py-0.5 rounded text-green-800">Total: 0</span>
                     </h3>
@@ -233,12 +233,12 @@
     </div>
 
     <script>
-        // --- Core GitHub Config (دمج البيانات الثابتة) ---
+        // --- Core GitHub Config ---
         let githubConfig = { 
-            repoPath: 'elmoatasemsaeed.github.io/NT_Team_HUB', // ضع هنا مسار المستودع
-            filePath: 'data.json',               // اسم الملف على جيت هب
-            branch: 'main',                      // اسم الفرع
-            token: '',                           // سيتم جلبه من الـ URL
+            repoPath: 'elmoatasemsaeed/NT_Team_HUB', // Fixed: Should be User/Repo
+            filePath: 'data.json',
+            branch: 'main',
+            token: '',
             sha: null 
         };
 
@@ -247,7 +247,6 @@
         const USERS_KEY = 'team_hub_users';
         const VISIBILITY_KEY = 'team_hub_visibility_config';
         const CHARTS_KEY = 'team_hub_charts_config';
-        const GITHUB_LOCAL_KEY = 'team_hub_github_creds';
         const REMEMBER_KEY = 'team_hub_remembered_user';
 
         let fieldsConfig = [
@@ -270,15 +269,12 @@
         let currentEditingFieldIndex = null;
         let currentSort = { column: null, direction: 'asc' };
 
-        // --- وظيفة استخراج التوكن من الرابط ---
         function getAuthTokenFromURL() {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get('gh_token');
         }
 
-        // --- Logic: Authentication & Synchronization ---
         async function loadFromGitHub(manual = false) {
-            // التحقق أولاً إذا كان التوكن ممرراً في الرابط
             const urlToken = getAuthTokenFromURL();
             if (urlToken) githubConfig.token = urlToken;
 
@@ -294,7 +290,7 @@
                 if (response.ok) {
                     const data = await response.json();
                     githubConfig.sha = data.sha;
-                    const content = JSON.parse(atob(data.content));
+                    const content = JSON.parse(decodeURIComponent(escape(atob(data.content))));
                     
                     if (content.employees) employees = content.employees;
                     if (content.fields) fieldsConfig = content.fields;
@@ -320,9 +316,25 @@
             const fullData = { employees, fields: fieldsConfig, users, visibility: visibilityConfig, charts: chartsConfig, timestamp: new Date().toISOString() };
             try {
                 const url = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}`;
-                const body = { message: "Update Data", content: btoa(unescape(encodeURIComponent(JSON.stringify(fullData, null, 2)))), branch: githubConfig.branch, sha: githubConfig.sha };
-                const response = await fetch(url, { method: 'PUT', headers: { 'Authorization': `token ${githubConfig.token}` }, body: JSON.stringify(body) });
-                if (response.ok) { const resData = await response.json(); githubConfig.sha = resData.content.sha; }
+                const contentBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(fullData, null, 2))));
+                const body = { 
+                    message: "Update Team Hub Data", 
+                    content: contentBase64, 
+                    branch: githubConfig.branch, 
+                    sha: githubConfig.sha 
+                };
+                const response = await fetch(url, { 
+                    method: 'PUT', 
+                    headers: { 'Authorization': `token ${githubConfig.token}`, 'Content-Type': 'application/json' }, 
+                    body: JSON.stringify(body) 
+                });
+                if (response.ok) { 
+                    const resData = await response.json(); 
+                    githubConfig.sha = resData.content.sha; // Update SHA for next sync
+                } else {
+                    const err = await response.json();
+                    console.error("Sync Failed:", err.message);
+                }
             } catch (err) { console.error(err); }
         }
 
@@ -337,11 +349,8 @@
             const foundUser = users.find(u => u.username.toLowerCase() === userVal && u.password === passVal);
             
             if (foundUser) {
-                if (rememberMe) {
-                    localStorage.setItem(REMEMBER_KEY, JSON.stringify({ u: userVal, p: passVal }));
-                } else {
-                    localStorage.removeItem(REMEMBER_KEY);
-                }
+                if (rememberMe) localStorage.setItem(REMEMBER_KEY, JSON.stringify({ u: userVal, p: passVal }));
+                else localStorage.removeItem(REMEMBER_KEY);
 
                 currentUserRole = foundUser.role;
                 document.body.setAttribute('data-user-role', currentUserRole);
@@ -363,22 +372,11 @@
                 document.getElementById('passInput').value = creds.p;
                 document.getElementById('rememberMe').checked = true;
             }
-            const localData = [ 
-                [STORAGE_KEY, 'employees'], 
-                [SETUP_KEY, 'fieldsConfig'], 
-                [USERS_KEY, 'users'], 
-                [VISIBILITY_KEY, 'visibilityConfig'], 
-                [CHARTS_KEY, 'chartsConfig'] 
-            ];
-            localData.forEach(([key, variable]) => {
-                const val = localStorage.getItem(key);
-                if(val) window[variable] = JSON.parse(val);
-            });
             lucide.createIcons();
             renderAll();
         });
 
-        // --- UI Rendering Functions (Same as Original) ---
+        // --- UI Rendering ---
         function renderAll() { updateCapacity(); renderTable(); renderDynamicForm(); lucide.createIcons(); }
 
         function renderDynamicForm() {
@@ -410,15 +408,12 @@
             `).join('');
 
             headerHtml += `
-                <th class="py-4 px-6 text-center sortable-header" onclick="sortTable('isVacation')">
-                    Vacation <i data-lucide="arrow-up-down" class="w-3 h-3 ml-1 opacity-40"></i>
-                </th>
+                <th class="py-4 px-6 text-center sortable-header" onclick="sortTable('isVacation')">Vacation</th>
                 <th class="py-4 px-6">Status</th>
                 <th class="py-4 px-6 admin-cell no-print">Actions</th>
             `;
             
             document.getElementById('tableHeaderRow').innerHTML = headerHtml;
-
             document.getElementById('employeeTableBody').innerHTML = employees.map((emp, idx) => `
                 <tr class="${emp.isVacation ? 'vacation-row' : ''} hover:bg-gray-50">
                     ${visibleFields.map(f => `<td class="py-4 px-6">${Array.isArray(emp[f.id]) ? emp[f.id].join(', ') : (emp[f.id] || '')}</td>`).join('')}
@@ -437,74 +432,6 @@
                 </tr>`).join('');
             lucide.createIcons();
         }
-
-        function sortTable(columnId) {
-            if (currentSort.column === columnId) {
-                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
-            } else {
-                currentSort.column = columnId;
-                currentSort.direction = 'asc';
-            }
-            employees.sort((a, b) => {
-                let valA = a[columnId] ?? ''; let valB = b[columnId] ?? '';
-                if (Array.isArray(valA)) valA = valA.join(', ');
-                if (Array.isArray(valB)) valB = valB.join(', ');
-                if (typeof valA === 'string') valA = valA.toLowerCase();
-                if (typeof valB === 'string') valB = valB.toLowerCase();
-                if (valA < valB) return currentSort.direction === 'asc' ? -1 : 1;
-                if (valA > valB) return currentSort.direction === 'asc' ? 1 : -1;
-                return 0;
-            });
-            renderTable();
-        }
-
-        function filterTable() {
-            const filters = Array.from(document.querySelectorAll('.filter-input'));
-            const rows = document.querySelectorAll('#employeeTableBody tr');
-            rows.forEach(row => {
-                let show = true;
-                filters.forEach((input, i) => { 
-                    if(input.value && !row.cells[i].innerText.toLowerCase().includes(input.value.toLowerCase())) show = false; 
-                });
-                row.style.display = show ? '' : 'none';
-            });
-        }
-
-        function openSetupModal() {
-            document.getElementById('fieldsList').innerHTML = fieldsConfig.map((f, i) => `
-                <div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-6 gap-3 items-end shadow-sm">
-                    <div><label class="text-[10px] font-bold uppercase">Label</label><input type="text" value="${f.label}" onchange="fieldsConfig[${i}].label=this.value" class="w-full p-2 border rounded text-sm"></div>
-                    <div><label class="text-[10px] font-bold uppercase">Type</label><select onchange="fieldsConfig[${i}].type=this.value; openSetupModal()" class="w-full p-2 border rounded text-sm"><option value="text" ${f.type==='text'?'selected':''}>Text</option><option value="select" ${f.type==='select'?'selected':''}>Select</option><option value="multiselect" ${f.type==='multiselect'?'selected':''}>Multi</option><option value="date" ${f.type==='date'?'selected':''}>Date</option></select></div>
-                    <div class="md:col-span-2">${['select','multiselect'].includes(f.type) ? `<label class="text-[10px] font-bold uppercase">Options</label><button onclick="openOptionsManager(${i})" class="w-full p-2 bg-white border border-dashed border-blue-400 text-blue-600 rounded text-xs font-bold hover:bg-blue-50">Manage Options (${(f.options || []).length})</button>` : '<div class="text-gray-400 text-[10px] italic">No options required</div>'}</div>
-                    <div class="flex flex-col items-center justify-center pb-2"><label class="text-[10px] font-bold mb-1 uppercase">Table Vis.</label><input type="checkbox" ${f.showInTable !== false ? 'checked' : ''} onchange="fieldsConfig[${i}].showInTable = this.checked" class="w-5 h-5 accent-blue-600 cursor-pointer"></div>
-                    <div class="flex justify-end"><button onclick="fieldsConfig.splice(${i},1); openSetupModal()" class="text-red-500 p-2"><i data-lucide="trash-2"></i></button></div>
-                </div>`).join('');
-            document.getElementById('setupModal').classList.remove('hidden'); 
-            lucide.createIcons();
-        }
-
-        function openOptionsManager(index) {
-            currentEditingFieldIndex = index;
-            const field = fieldsConfig[index];
-            if (!field.options) field.options = [];
-            renderOptionsList();
-            document.getElementById('optionsModal').classList.remove('hidden');
-        }
-
-        function renderOptionsList() {
-            const list = fieldsConfig[currentEditingFieldIndex].options;
-            const container = document.getElementById('optionsItemsContainer');
-            container.innerHTML = list.map((opt, i) => `<div class="flex gap-2 bg-gray-50 p-1 rounded border"><input type="text" value="${opt}" onchange="updateOptionValue(${i}, this.value)" class="flex-1 p-2 border-none bg-transparent text-sm outline-none focus:ring-1 focus:ring-blue-300 rounded"><button onclick="removeOption(${i})" class="text-red-400 hover:text-red-600 p-2"><i data-lucide="x-circle" class="w-4 h-4"></i></button></div>`).join('');
-            lucide.createIcons();
-        }
-
-        function updateOptionValue(idx, val) { fieldsConfig[currentEditingFieldIndex].options[idx] = val; }
-        function addOptionField() { fieldsConfig[currentEditingFieldIndex].options.push(""); renderOptionsList(); }
-        function removeOption(idx) { fieldsConfig[currentEditingFieldIndex].options.splice(idx, 1); renderOptionsList(); }
-        function closeOptionsManager() { document.getElementById('optionsModal').classList.add('hidden'); openSetupModal(); }
-        function addNewFieldSetup() { fieldsConfig.push({id:'f'+Date.now(), label:'New Field', type:'text', showInTable:true, options: []}); openSetupModal(); }
-        function saveSetup() { localStorage.setItem(SETUP_KEY, JSON.stringify(fieldsConfig)); syncToGitHub().then(()=>location.reload()); }
-        function closeSetupModal() { document.getElementById('setupModal').classList.add('hidden'); }
 
         function updateCapacity() {
             const areaField = fieldsConfig.find(f => f.id === 'area');
@@ -536,7 +463,6 @@
 
             const chartsGrid = document.getElementById('dynamicChartsGrid');
             chartsGrid.innerHTML = ''; activeCharts.forEach(c => c.destroy()); activeCharts = [];
-
             chartsConfig.forEach(config => {
                 const wrapper = document.createElement('div');
                 wrapper.className = 'p-6 border rounded-2xl bg-white shadow-sm flex flex-col items-center';
@@ -549,14 +475,19 @@
                 });
                 const chart = new Chart(document.getElementById(`canvas_${config.id}`).getContext('2d'), {
                     type: config.type,
-                    data: { labels: Object.keys(stats), datasets: [{ data: Object.values(stats), backgroundColor: ['#4285F4', '#34A853', '#FBBC05', '#EA4335', '#673AB7', '#3F51B5', '#00BCD4', '#009688', '#FF9800', '#FF5722', '#795548', '#607D8B', '#E91E63', '#9C27B0', '#00E676', '#FFD600', '#1DE9B6', '#D4E157', '#FFAB40', '#90A4AE'] }] },
+                    data: { labels: Object.keys(stats), datasets: [{ data: Object.values(stats), backgroundColor: ['#4285F4', '#34A853', '#FBBC05', '#EA4335', '#673AB7'] }] },
                     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
                 });
                 activeCharts.push(chart);
             });
         }
 
-        function save(render = true) { localStorage.setItem(STORAGE_KEY, JSON.stringify(employees)); syncToGitHub(); if(render) renderAll(); }
+        async function save(render = true) { 
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(employees)); 
+            await syncToGitHub(); 
+            if(render) renderAll(); 
+        }
+
         function toggleVac(idx, val) { employees[idx].isVacation = val; save(); }
         function deleteEmp(idx) { if(confirm('Delete?')) { employees.splice(idx,1); save(); } }
         
@@ -572,7 +503,7 @@
             openModal();
         }
 
-        document.getElementById('employeeForm').onsubmit = (e) => {
+        document.getElementById('employeeForm').onsubmit = async (e) => {
             e.preventDefault();
             const idx = document.getElementById('editIndex').value;
             const emp = { isVacation: document.getElementById('empIsVacation').checked, vacationEnd: document.getElementById('empVacationEnd').value };
@@ -581,9 +512,10 @@
                 else emp[f.id] = document.getElementById(`field_${f.id}`).value;
             });
             if(idx !== "") employees[idx] = emp; else employees.push(emp);
-            save(); closeModal();
+            await save(); closeModal();
         };
 
+        // --- Navigation & Modals ---
         function switchTab(tabId, btn) {
             document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -593,7 +525,62 @@
 
         function openModal() { document.getElementById('modal').classList.remove('hidden'); }
         function closeModal() { document.getElementById('modal').classList.add('hidden'); document.getElementById('employeeForm').reset(); document.getElementById('editIndex').value=""; }
+
+        function openSetupModal() {
+            document.getElementById('fieldsList').innerHTML = fieldsConfig.map((f, i) => `
+                <div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-6 gap-3 items-end shadow-sm">
+                    <div><label class="text-[10px] font-bold uppercase">Label</label><input type="text" value="${f.label}" onchange="fieldsConfig[${i}].label=this.value" class="w-full p-2 border rounded text-sm"></div>
+                    <div><label class="text-[10px] font-bold uppercase">Type</label><select onchange="fieldsConfig[${i}].type=this.value; openSetupModal()" class="w-full p-2 border rounded text-sm"><option value="text" ${f.type==='text'?'selected':''}>Text</option><option value="select" ${f.type==='select'?'selected':''}>Select</option><option value="multiselect" ${f.type==='multiselect'?'selected':''}>Multi</option></select></div>
+                    <div class="md:col-span-2">${['select','multiselect'].includes(f.type) ? `<button onclick="openOptionsManager(${i})" class="w-full p-2 bg-white border rounded text-xs">Manage Options (${(f.options || []).length})</button>` : ''}</div>
+                    <div class="flex justify-end"><button onclick="fieldsConfig.splice(${i},1); openSetupModal()" class="text-red-500 p-2"><i data-lucide="trash-2"></i></button></div>
+                </div>`).join('');
+            document.getElementById('setupModal').classList.remove('hidden'); 
+            lucide.createIcons();
+        }
+
+        async function saveSetup() { await syncToGitHub(); location.reload(); }
+        function closeSetupModal() { document.getElementById('setupModal').classList.add('hidden'); }
+
+        function showDetailsExtended(area, roles, isVac) {
+            const roleList = roles.split(',');
+            const list = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && roleList.includes(e.role) && e.isVacation === isVac);
+            document.getElementById('popupTitle').innerText = `${area} - ${isVac ? 'On Vacation' : 'Active Members'}`;
+            document.getElementById('popupList').innerHTML = list.length > 0 ? list.map(e => `<div class="p-4 border rounded-xl bg-gray-50"><b>${e.name}</b><br><small>${e.role}</small></div>`).join('') : '<div class="col-span-full text-center py-10">No members found</div>';
+            document.getElementById('detailsPopup').classList.remove('hidden');
+        }
+        function closePopup() { document.getElementById('detailsPopup').classList.add('hidden'); }
         
+        function openOptionsManager(index) {
+            currentEditingFieldIndex = index;
+            renderOptionsList();
+            document.getElementById('optionsModal').classList.remove('hidden');
+        }
+        function renderOptionsList() {
+            const list = fieldsConfig[currentEditingFieldIndex].options || [];
+            document.getElementById('optionsItemsContainer').innerHTML = list.map((opt, i) => `<div class="flex gap-2 p-1"><input type="text" value="${opt}" onchange="fieldsConfig[${currentEditingFieldIndex].options[${i}]=this.value" class="flex-1 p-2 border rounded"><button onclick="fieldsConfig[${currentEditingFieldIndex].options.splice(${i},1); renderOptionsList()" class="text-red-500">X</button></div>`).join('');
+        }
+        function addOptionField() { 
+            if(!fieldsConfig[currentEditingFieldIndex].options) fieldsConfig[currentEditingFieldIndex].options = [];
+            fieldsConfig[currentEditingFieldIndex].options.push(""); 
+            renderOptionsList(); 
+        }
+        function closeOptionsManager() { document.getElementById('optionsModal').classList.add('hidden'); openSetupModal(); }
+
+        function openUsersModal() {
+            document.getElementById('usersList').innerHTML = users.map((u, idx) => `<div class="p-4 border rounded grid grid-cols-4 gap-2"><div><input type="text" value="${u.username}" onchange="users[${idx}].username=this.value" class="w-full p-2 border"></div><div><input type="text" value="${u.password}" onchange="users[${idx}].password=this.value" class="w-full p-2 border"></div><div><select onchange="users[${idx}].role=this.value" class="w-full p-2 border"><option value="admin" ${u.role==='admin'?'selected':''}>Admin</option><option value="viewer" ${u.role==='viewer'?'selected':''}>Viewer</option></select></div><button onclick="users.splice(${idx},1); openUsersModal()">Delete</button></div>`).join('');
+            document.getElementById('usersModal').classList.remove('hidden');
+        }
+        function addNewUser() { users.push({username:'user', password:'123', role:'viewer'}); openUsersModal(); }
+        async function saveUsers() { await syncToGitHub(); alert('Users Saved'); }
+        function closeUsersModal() { document.getElementById('usersModal').classList.add('hidden'); }
+
+        function openChartsSetupModal() {
+            document.getElementById('chartsConfigList').innerHTML = chartsConfig.map((c, idx) => `<div class="p-4 border rounded grid grid-cols-4 gap-2"><div><input type="text" value="${c.title}" onchange="chartsConfig[${idx}].title=this.value" class="w-full p-2 border"></div><div><select onchange="chartsConfig[${idx}].targetField=this.value" class="w-full p-2 border">${fieldsConfig.map(f => `<option value="${f.id}" ${c.targetField===f.id?'selected':''}>${f.label}</option>`).join('')}</select></div><button onclick="chartsConfig.splice(${idx},1); openChartsSetupModal()">Delete</button></div>`).join('');
+            document.getElementById('chartsSetupModal').classList.remove('hidden');
+        }
+        async function saveChartsConfig() { await syncToGitHub(); updateCapacity(); closeChartsSetupModal(); }
+        function closeChartsSetupModal() { document.getElementById('chartsSetupModal').classList.add('hidden'); }
+
         function openVisibilityModal() {
             const areas = fieldsConfig.find(f=>f.id==='area').options.filter(a=>a!=="Team Leader");
             document.getElementById('visibilityList').innerHTML = areas.map(a => {
@@ -602,46 +589,15 @@
             }).join('');
             document.getElementById('visibilityModal').classList.remove('hidden');
         }
-
-        function saveVisibility() {
+        async function saveVisibility() {
             document.querySelectorAll('#visibilityList tr').forEach(tr => {
                 const area = tr.querySelector('.v-dev').dataset.area;
                 visibilityConfig[area] = { dev: tr.querySelector('.v-dev').checked, tester: tr.querySelector('.v-tester').checked };
             });
-            localStorage.setItem(VISIBILITY_KEY, JSON.stringify(visibilityConfig));
-            syncToGitHub(); updateCapacity(); closeVisibilityModal();
+            await syncToGitHub(); updateCapacity(); closeVisibilityModal();
         }
         function closeVisibilityModal() { document.getElementById('visibilityModal').classList.add('hidden'); }
 
-        function openUsersModal() {
-            const listContainer = document.getElementById('usersList');
-            listContainer.innerHTML = users.map((u, idx) => `<div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-4 gap-3 items-end shadow-sm"><div><label class="text-[10px] uppercase">Username</label><input type="text" value="${u.username}" onchange="users[${idx}].username=this.value" class="w-full p-2 border rounded text-sm"></div><div><label class="text-[10px] uppercase">Password</label><input type="text" value="${u.password}" onchange="users[${idx}].password=this.value" class="w-full p-2 border rounded text-sm"></div><div><label class="text-[10px] uppercase">Role</label><select onchange="users[${idx}].role=this.value" class="w-full p-2 border rounded text-sm"><option value="admin" ${u.role==='admin'?'selected':''}>Admin</option><option value="viewer" ${u.role==='viewer'?'selected':''}>Viewer</option></select></div><button onclick="users.splice(${idx},1); openUsersModal()" class="p-2 text-red-500"><i data-lucide="trash-2"></i></button></div>`).join('');
-            document.getElementById('usersModal').classList.remove('hidden');
-            lucide.createIcons();
-        }
-        function addNewUser() { users.push({username:'user', password:'123', role:'viewer'}); openUsersModal(); }
-        function saveUsers() { localStorage.setItem(USERS_KEY, JSON.stringify(users)); syncToGitHub(); alert('Users Saved'); }
-        function closeUsersModal() { document.getElementById('usersModal').classList.add('hidden'); }
-
-        function openChartsSetupModal() {
-            document.getElementById('chartsConfigList').innerHTML = chartsConfig.map((c, idx) => `<div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-4 gap-3 items-end shadow-sm"><div><label class="text-[10px] font-bold uppercase">Title</label><input type="text" value="${c.title}" onchange="chartsConfig[${idx}].title=this.value" class="w-full p-2 border rounded text-sm"></div><div><label class="text-[10px] font-bold uppercase">Field</label><select onchange="chartsConfig[${idx}].targetField=this.value" class="w-full p-2 border rounded text-sm">${fieldsConfig.map(f => `<option value="${f.id}" ${c.targetField===f.id?'selected':''}>${f.label}</option>`).join('')}</select></div><div><label class="text-[10px] font-bold uppercase">Type</label><select onchange="chartsConfig[${idx}].type=this.value" class="w-full p-2 border rounded text-sm"><option value="doughnut" ${c.type==='doughnut'?'selected':''}>Doughnut</option><option value="bar" ${c.type==='bar'?'selected':''}>Bar</option></select></div><button onclick="chartsConfig.splice(${idx},1); openChartsSetupModal()" class="text-red-500 p-2"><i data-lucide="trash-2"></i></button></div>`).join('');
-            document.getElementById('chartsSetupModal').classList.remove('hidden');
-            lucide.createIcons();
-        }
-        function addNewChartConfig() { chartsConfig.push({ id: 'c'+Date.now(), title: 'Analysis', targetField: 'area', type: 'doughnut' }); openChartsSetupModal(); }
-        function saveChartsConfig() { localStorage.setItem(CHARTS_KEY, JSON.stringify(chartsConfig)); syncToGitHub(); updateCapacity(); closeChartsSetupModal(); }
-        function closeChartsSetupModal() { document.getElementById('chartsSetupModal').classList.add('hidden'); }
-
-        function showDetailsExtended(area, roles, isVac) {
-            const roleList = roles.split(',');
-            const list = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && roleList.includes(e.role) && e.isVacation === isVac);
-            document.getElementById('popupTitle').innerText = `${area} - ${isVac ? 'On Vacation' : 'Active Members'}`;
-            document.getElementById('popupList').innerHTML = list.length > 0 ? list.map(e => `<div class="p-4 border rounded-xl ${e.isVacation ? 'bg-red-50 border-red-200' : 'bg-gray-50'}"><b class="${e.isVacation ? 'line-through text-red-600' : ''}">${e.name}</b><br><small class="text-gray-500">${e.role} ${e.isVacation ? '(Returns: ' + (e.vacationEnd || 'N/A') + ')' : ''}</small></div>`).join('') : '<div class="col-span-full text-center text-gray-400 py-10 font-bold uppercase italic">No members found</div>';
-            document.getElementById('detailsPopup').classList.remove('hidden');
-        }
-
-        function closePopup() { document.getElementById('detailsPopup').classList.add('hidden'); }
-        function clearFilters() { document.querySelectorAll('.filter-input').forEach(i=>i.value=""); filterTable(); }
         function performFullBackup() {
             const blob = new Blob([JSON.stringify({employees, fields:fieldsConfig, users, visibility:visibilityConfig, charts:chartsConfig}, null, 2)], {type:'application/json'});
             const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'backup.json'; a.click();
@@ -650,6 +606,29 @@
             const ws = XLSX.utils.json_to_sheet(employees);
             const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Team");
             XLSX.writeFile(wb, "Team_Report.xlsx");
+        }
+        function clearFilters() { document.querySelectorAll('.filter-input').forEach(i=>i.value=""); filterTable(); }
+        function filterTable() {
+            const filters = Array.from(document.querySelectorAll('.filter-input'));
+            const rows = document.querySelectorAll('#employeeTableBody tr');
+            rows.forEach(row => {
+                let show = true;
+                filters.forEach((input, i) => { 
+                    if(input.value && !row.cells[i].innerText.toLowerCase().includes(input.value.toLowerCase())) show = false; 
+                });
+                row.style.display = show ? '' : 'none';
+            });
+        }
+        function sortTable(columnId) {
+            if (currentSort.column === columnId) currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+            else { currentSort.column = columnId; currentSort.direction = 'asc'; }
+            employees.sort((a, b) => {
+                let valA = a[columnId] || ''; let valB = b[columnId] || '';
+                if (valA < valB) return currentSort.direction === 'asc' ? -1 : 1;
+                if (valA > valB) return currentSort.direction === 'asc' ? 1 : -1;
+                return 0;
+            });
+            renderTable();
         }
     </script>
 </body>
