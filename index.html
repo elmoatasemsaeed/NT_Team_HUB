@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -89,9 +88,6 @@
                         </button>
                         <button onclick="openUsersModal()" class="w-full text-left px-4 py-3 hover:bg-blue-50 flex items-center gap-2 text-sm border-b">
                             <i data-lucide="users" class="w-4 h-4 text-purple-600"></i> Setup Users
-                        </button>
-                        <button onclick="openGithubSettingsModal()" class="w-full text-left px-4 py-3 hover:bg-slate-50 flex items-center gap-2 text-sm text-slate-700 font-bold">
-                            <i data-lucide="github" class="w-4 h-4"></i> GitHub Sync Settings
                         </button>
                     </div>
                 </div>
@@ -228,10 +224,6 @@
         </div>
     </div>
 
-    <div id="githubSettingsModal" class="fixed inset-0 z-[1200] bg-black/50 hidden flex items-center justify-center p-4">
-        <div class="bg-white large-modal max-w-lg p-8 shadow-2xl"><div class="flex justify-between items-center mb-6 border-b pb-4"><h3 class="text-xl font-bold text-gray-800 uppercase flex items-center gap-2"><i data-lucide="github"></i> GitHub Config</h3><button onclick="closeGithubSettingsModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button></div><div class="space-y-4"><div><label class="block text-xs font-bold text-gray-500 mb-1 uppercase">Repo Path (User/Repo)</label><input type="text" id="gh_repoPath" class="w-full p-3 border rounded-xl outline-none"></div><div><label class="block text-xs font-bold text-gray-500 mb-1 uppercase">Branch</label><input type="text" id="gh_branch" class="w-full p-3 border rounded-xl outline-none"></div><div><label class="block text-xs font-bold text-gray-500 mb-1 uppercase">File Path</label><input type="text" id="gh_filePath" class="w-full p-3 border rounded-xl outline-none"></div><div><label class="block text-xs font-bold text-gray-500 mb-1 uppercase">Token (PAT)</label><input type="password" id="gh_token" class="w-full p-3 border rounded-xl outline-none"></div><div class="pt-4"><button onclick="saveGithubSettings()" class="w-full py-3 bg-gray-800 text-white rounded-xl font-bold uppercase">Save Config</button></div></div></div>
-    </div>
-
     <div id="modal" class="fixed inset-0 z-[1000] bg-black/50 hidden flex items-center justify-center p-4">
         <div class="bg-white large-modal p-10 shadow-2xl"><h3 class="text-2xl font-bold mb-8 text-gray-800">Member Configuration</h3><form id="employeeForm" class="grid grid-cols-1 md:grid-cols-2 gap-6"><input type="hidden" id="editIndex"><div id="dynamicFieldsContainer" class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6"></div><div class="md:col-span-2 bg-rose-50 p-6 rounded-2xl border border-rose-100 flex flex-wrap items-center justify-between gap-4"><div class="flex items-center gap-4"><span class="font-bold text-rose-700">Set Vacation:</span><input type="checkbox" id="empIsVacation" class="w-6 h-6 accent-rose-600"></div><div class="flex items-center gap-4"><span class="font-bold text-rose-700">Return Date:</span><input type="date" id="empVacationEnd" class="p-2 border rounded-xl outline-none"></div></div><div class="md:col-span-2 flex gap-4 mt-4"><button type="button" onclick="closeModal()" class="flex-1 py-4 bg-gray-100 text-gray-600 rounded-xl font-bold uppercase">Cancel</button><button type="submit" class="flex-1 py-4 bg-blue-600 text-white rounded-xl font-bold uppercase shadow-lg">Save Data</button></div></form></div>
     </div>
@@ -241,8 +233,15 @@
     </div>
 
     <script>
-        // --- Core Variables ---
-        let githubConfig = { repoPath: '', filePath: '', token: '', branch: '', sha: null };
+        // --- Core GitHub Config (دمج البيانات الثابتة) ---
+        let githubConfig = { 
+            repoPath: 'elmoatasemsaeed.github.io/NT_Team_HUB', // ضع هنا مسار المستودع
+            filePath: 'data.json',               // اسم الملف على جيت هب
+            branch: 'main',                      // اسم الفرع
+            token: '',                           // سيتم جلبه من الـ URL
+            sha: null 
+        };
+
         const STORAGE_KEY = 'team_resource_db_v10';
         const SETUP_KEY = 'fields_setup_config';
         const USERS_KEY = 'team_hub_users';
@@ -271,11 +270,22 @@
         let currentEditingFieldIndex = null;
         let currentSort = { column: null, direction: 'asc' };
 
+        // --- وظيفة استخراج التوكن من الرابط ---
+        function getAuthTokenFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('gh_token');
+        }
+
         // --- Logic: Authentication & Synchronization ---
         async function loadFromGitHub(manual = false) {
-            const savedCreds = JSON.parse(localStorage.getItem(GITHUB_LOCAL_KEY));
-            if (savedCreds) Object.assign(githubConfig, savedCreds);
-            if (!githubConfig.token || !githubConfig.repoPath) { if (manual) alert("GitHub Settings not configured!"); return; }
+            // التحقق أولاً إذا كان التوكن ممرراً في الرابط
+            const urlToken = getAuthTokenFromURL();
+            if (urlToken) githubConfig.token = urlToken;
+
+            if (!githubConfig.token || !githubConfig.repoPath) { 
+                if (manual) alert("GitHub Token is missing! Please provide ?gh_token=... in the URL."); 
+                return; 
+            }
             
             document.getElementById('loadingStatus').classList.remove('hidden');
             try {
@@ -368,7 +378,7 @@
             renderAll();
         });
 
-        // --- UI Rendering ---
+        // --- UI Rendering Functions (Same as Original) ---
         function renderAll() { updateCapacity(); renderTable(); renderDynamicForm(); lucide.createIcons(); }
 
         function renderDynamicForm() {
@@ -387,11 +397,8 @@
             }).join('');
         }
 
-        // --- Table & Sorting Logic ---
         function renderTable() {
             const visibleFields = fieldsConfig.filter(f => f.showInTable !== false);
-            
-            // Build Headers
             let headerHtml = visibleFields.map(f => `
                 <th class="py-4 px-6 min-w-[150px] sortable-header" onclick="sortTable('${f.id}')">
                     <div class="sort-btn">
@@ -412,7 +419,6 @@
             
             document.getElementById('tableHeaderRow').innerHTML = headerHtml;
 
-            // Build Body
             document.getElementById('employeeTableBody').innerHTML = employees.map((emp, idx) => `
                 <tr class="${emp.isVacation ? 'vacation-row' : ''} hover:bg-gray-50">
                     ${visibleFields.map(f => `<td class="py-4 px-6">${Array.isArray(emp[f.id]) ? emp[f.id].join(', ') : (emp[f.id] || '')}</td>`).join('')}
@@ -439,22 +445,16 @@
                 currentSort.column = columnId;
                 currentSort.direction = 'asc';
             }
-
             employees.sort((a, b) => {
-                let valA = a[columnId] ?? '';
-                let valB = b[columnId] ?? '';
-
+                let valA = a[columnId] ?? ''; let valB = b[columnId] ?? '';
                 if (Array.isArray(valA)) valA = valA.join(', ');
                 if (Array.isArray(valB)) valB = valB.join(', ');
-
                 if (typeof valA === 'string') valA = valA.toLowerCase();
                 if (typeof valB === 'string') valB = valB.toLowerCase();
-
                 if (valA < valB) return currentSort.direction === 'asc' ? -1 : 1;
                 if (valA > valB) return currentSort.direction === 'asc' ? 1 : -1;
                 return 0;
             });
-
             renderTable();
         }
 
@@ -470,7 +470,6 @@
             });
         }
 
-        // --- Rest of functions (Fields Setup, Capacity, etc.) ---
         function openSetupModal() {
             document.getElementById('fieldsList').innerHTML = fieldsConfig.map((f, i) => `
                 <div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-6 gap-3 items-end shadow-sm">
@@ -507,7 +506,6 @@
         function saveSetup() { localStorage.setItem(SETUP_KEY, JSON.stringify(fieldsConfig)); syncToGitHub().then(()=>location.reload()); }
         function closeSetupModal() { document.getElementById('setupModal').classList.add('hidden'); }
 
-        // --- Capacity Logic ---
         function updateCapacity() {
             const areaField = fieldsConfig.find(f => f.id === 'area');
             const AREAS = (areaField && areaField.options) ? areaField.options.filter(a => a !== "Team Leader") : [];
@@ -537,9 +535,7 @@
             document.getElementById('testerTotalLabel').innerText = "Total: " + employees.filter(e => ['Tester','Senior tester'].includes(e.role) && !e.isVacation).length;
 
             const chartsGrid = document.getElementById('dynamicChartsGrid');
-            chartsGrid.innerHTML = '';
-            activeCharts.forEach(c => c.destroy());
-            activeCharts = [];
+            chartsGrid.innerHTML = ''; activeCharts.forEach(c => c.destroy()); activeCharts = [];
 
             chartsConfig.forEach(config => {
                 const wrapper = document.createElement('div');
@@ -551,34 +547,15 @@
                     const val = emp[config.targetField] || 'N/A';
                     (Array.isArray(val) ? val : [val]).forEach(v => stats[v] = (stats[v]||0)+1);
                 });
-const chart = new Chart(document.getElementById(`canvas_${config.id}`).getContext('2d'), {
-    type: config.type,
-    data: { 
-        labels: Object.keys(stats), 
-        datasets: [{ 
-            data: Object.values(stats), 
-            // مصفوفة الألوان الموسعة (20 لون)
-            backgroundColor: [
-                '#4285F4', '#34A853', '#FBBC05', '#EA4335', '#673AB7', 
-                '#3F51B5', '#00BCD4', '#009688', '#FF9800', '#FF5722', 
-                '#795548', '#607D8B', '#E91E63', '#9C27B0', '#00E676', 
-                '#FFD600', '#1DE9B6', '#D4E157', '#FFAB40', '#90A4AE'
-            ] 
-        }] 
-    },
-    options: { 
-        responsive: true, 
-        maintainAspectRatio: false, 
-        plugins: { 
-            legend: { position: 'bottom' } 
-        } 
-    }
-});
-activeCharts.push(chart);
+                const chart = new Chart(document.getElementById(`canvas_${config.id}`).getContext('2d'), {
+                    type: config.type,
+                    data: { labels: Object.keys(stats), datasets: [{ data: Object.values(stats), backgroundColor: ['#4285F4', '#34A853', '#FBBC05', '#EA4335', '#673AB7', '#3F51B5', '#00BCD4', '#009688', '#FF9800', '#FF5722', '#795548', '#607D8B', '#E91E63', '#9C27B0', '#00E676', '#FFD600', '#1DE9B6', '#D4E157', '#FFAB40', '#90A4AE'] }] },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+                });
+                activeCharts.push(chart);
             });
         }
 
-        // --- Other Helpers ---
         function save(render = true) { localStorage.setItem(STORAGE_KEY, JSON.stringify(employees)); syncToGitHub(); if(render) renderAll(); }
         function toggleVac(idx, val) { employees[idx].isVacation = val; save(); }
         function deleteEmp(idx) { if(confirm('Delete?')) { employees.splice(idx,1); save(); } }
@@ -654,14 +631,6 @@ activeCharts.push(chart);
         function addNewChartConfig() { chartsConfig.push({ id: 'c'+Date.now(), title: 'Analysis', targetField: 'area', type: 'doughnut' }); openChartsSetupModal(); }
         function saveChartsConfig() { localStorage.setItem(CHARTS_KEY, JSON.stringify(chartsConfig)); syncToGitHub(); updateCapacity(); closeChartsSetupModal(); }
         function closeChartsSetupModal() { document.getElementById('chartsSetupModal').classList.add('hidden'); }
-
-        function openGithubSettingsModal() { document.getElementById('githubSettingsModal').classList.remove('hidden'); }
-        function closeGithubSettingsModal() { document.getElementById('githubSettingsModal').classList.add('hidden'); }
-        function saveGithubSettings() {
-            const cfg = { repoPath: document.getElementById('gh_repoPath').value, branch: document.getElementById('gh_branch').value, filePath: document.getElementById('gh_filePath').value, token: document.getElementById('gh_token').value };
-            localStorage.setItem(GITHUB_LOCAL_KEY, JSON.stringify(cfg));
-            alert('Saved'); loadFromGitHub(true); closeGithubSettingsModal();
-        }
 
         function showDetailsExtended(area, roles, isVac) {
             const roleList = roles.split(',');
