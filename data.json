@@ -874,11 +874,11 @@
   "ui": {
     "cardPadding": "3",
     "titleSize": "10",
-    "bodySize": "36",
+    "bodySize": "14",
     "chartHeight": 284,
     "clickCombined": true,
     "clickRole": true,
     "clickVacation": true
   },
-  "timestamp": "2025-12-26T09:22:40.794Z"
+  "timestamp": "2025-12-26T09:23:15.771Z"
 }
