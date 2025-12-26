@@ -802,7 +802,7 @@
   "visibility": {
     "Registration": {
       "dev": true,
-      "tester": true
+      "tester": false
     },
     "Internal lab": {
       "dev": true,
@@ -871,14 +871,5 @@
       "type": "doughnut"
     }
   ],
-  "ui": {
-    "cardPadding": "3",
-    "titleSize": "10",
-    "bodySize": "14",
-    "chartHeight": 284,
-    "clickCombined": true,
-    "clickRole": true,
-    "clickVacation": true
-  },
-  "timestamp": "2025-12-26T09:23:15.771Z"
+  "timestamp": "2025-12-26T09:33:11.165Z"
 }
