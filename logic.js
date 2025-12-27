@@ -60,290 +60,177 @@ function updateCapacity() {
     renderCards(testers, testGrid, 'tester');
 }
 
-// 2. Dynamic Form & Fields Setup
-function renderDynamicForm() {
-    const container = document.getElementById('dynamicFieldsContainer');
-    if(!container) return;
-    
-    container.innerHTML = fieldsConfig.filter(f => f.active !== false).map(f => {
-        let inputHtml = '';
-        if (f.type === 'select' || f.type === 'multiselect') {
-            const options = (f.options || []).map(opt => `<option value="${opt}">${opt}</option>`).join('');
-            inputHtml = `<select id="field_${f.id}" ${f.type === 'multiselect' ? 'multiple' : ''} class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500 bg-white">
-                            ${options}
-                         </select>`;
-        } else {
-            inputHtml = `<input type="${f.type}" id="field_${f.id}" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500">`;
-        }
-
-        return `
-            <div>
-                <label class="block text-[10px] font-bold text-gray-400 mb-1 uppercase">${f.label || f.name}</label>
-                ${inputHtml}
-            </div>
-        `;
-    }).join('');
-}
-
-function openSetupModal() {
-    const list = document.getElementById('fieldsList');
-    list.innerHTML = fieldsConfig.map((f, i) => `
-        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 mb-4">
-            <div class="flex gap-2 items-center mb-2">
-                <input type="text" value="${f.label || f.name}" placeholder="Field Label" 
-                       onchange="fieldsConfig[${i}].label=this.value; fieldsConfig[${i}].name=this.value" 
-                       class="flex-1 p-2 border rounded font-bold">
-                
-                <select onchange="fieldsConfig[${i}].type=this.value; openSetupModal()" class="p-2 border rounded bg-white">
-                    <option value="text" ${f.type==='text'?'selected':''}>Text</option>
-                    <option value="number" ${f.type==='number'?'selected':''}>Number</option>
-                    <option value="date" ${f.type==='date'?'selected':''}>Date</option>
-                    <option value="select" ${f.type==='select'?'selected':''}>Dropdown</option>
-                    <option value="multiselect" ${f.type==='multiselect'?'selected':''}>Multi-Select</option>
-                </select>
-                
-                <button onclick="fieldsConfig.splice(${i},1); openSetupModal()" class="text-red-500 hover:bg-red-50 p-2 rounded">
-                    <i data-lucide="trash-2" class="w-4 h-4"></i>
-                </button>
-            </div>
-
-            ${(f.type === 'select' || f.type === 'multiselect') ? `
-                <div class="mt-2 pl-4 border-l-2 border-blue-200">
-                    <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Options (Comma Separated)</label>
-                    <textarea class="w-full p-2 text-sm border rounded mt-1" 
-                              placeholder="Option 1, Option 2, Option 3"
-                              onchange="fieldsConfig[${i}].options = this.value.split(',').map(s => s.trim())">${(f.options || []).join(', ')}</textarea>
-                </div>
-            ` : ''}
-            
-            <div class="flex items-center gap-2 mt-2">
-                <input type="checkbox" ${f.active !== false ? 'checked' : ''} 
-                       onchange="fieldsConfig[${i}].active = this.checked" id="active_${i}">
-                <label for="active_${i}" class="text-xs text-gray-500 font-bold">Show in System</label>
-            </div>
-        </div>
-    `).join('');
-    
-    document.getElementById('setupModal').classList.remove('hidden');
-    if (typeof lucide !== 'undefined') lucide.createIcons();
-}
-
-function addNewFieldSetup() {
-    fieldsConfig.push({ id: 'custom_'+Date.now(), name: 'New Field', label: 'New Field', type: 'text', active: true, options: [] });
-    openSetupModal();
-}
-
-async function saveSetup() {
-    if (confirm('Save these settings and backup to GitHub?')) {
-        const success = await saveToGitHub();
-        if (success) {
-            closeSetupModal();
-            renderAll();
-            alert("Settings backed up successfully!");
-        }
-    }
-}
-
-function closeSetupModal() { document.getElementById('setupModal').classList.add('hidden'); }
-
-// 3. Employee Management (Table, Add, Edit, Delete)
+// 2. Table Rendering with Sorting & Filtering
 function renderTable() {
-    const tbody = document.getElementById('employeeTableBody');
-    const thead = document.getElementById('tableHeader');
-    if(!tbody || !thead) return;
+    const headerRow = document.getElementById('tableHeaderRow');
+    const body = document.getElementById('employeeTableBody');
+    if (!headerRow || !body) return;
 
-    const activeFields = fieldsConfig.filter(f => f.active !== false);
+    // Header logic
+    const baseHeaders = [{id:'name',label:'Name'}, {id:'role',label:'Role'}, {id:'area',label:'Primary Area'}, {id:'workingIn',label:'Working In'}, {id:'isVacation',label:'Status'}];
+    const customHeaders = fieldsConfig.filter(f => f.active !== false && !['name','role','area','workingIn','isVacation'].includes(f.id));
+    const allHeaders = [...baseHeaders, ...customHeaders];
 
-    // Render Header
-    thead.innerHTML = `
-        <th onclick="sortTable('name')" class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors">
-            Name ${sortConfig.key === 'name' ? (sortConfig.direction === 'asc' ? '↑' : '↓') : ''}
+    headerRow.innerHTML = allHeaders.map(h => `
+        <th class="p-4 font-bold text-gray-600 sortable-header" onclick="setSort('${h.id}')">
+            <div class="flex items-center gap-2">
+                ${h.label || h.name}
+                <i data-lucide="arrow-up-down" class="w-3 h-3 text-gray-400"></i>
+            </div>
+            <input type="text" placeholder="Filter..." class="filter-input no-print mt-2 w-full p-1 text-[10px] font-normal border rounded outline-none focus:ring-1 focus:ring-blue-400" 
+                   onclick="event.stopPropagation()" onkeyup="filterTable()">
         </th>
-        ${activeFields.map(f => `
-            <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">${f.label || f.name}</th>
-        `).join('')}
-        <th class="px-6 py-4 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Actions</th>
-    `;
+    `).join('') + '<th class="p-4 admin-cell">Actions</th>';
 
-    // Sort Employees
-    const sortedEmployees = [...employees].sort((a, b) => {
-        let valA = (a[sortConfig.key] || '').toString().toLowerCase();
-        let valB = (b[sortConfig.key] || '').toString().toLowerCase();
-        if (valA < valB) return sortConfig.direction === 'asc' ? -1 : 1;
-        if (valA > valB) return sortConfig.direction === 'asc' ? 1 : -1;
-        return 0;
+    // Data Sorting
+    const sortedData = [...employees].sort((a,b) => {
+        let valA = a[sortConfig.key] || '';
+        let valB = b[sortConfig.key] || '';
+        return sortConfig.direction === 'asc' ? String(valA).localeCompare(String(valB)) : String(valB).localeCompare(String(valA));
     });
 
-    // Render Rows
-    tbody.innerHTML = sortedEmployees.map((e, idx) => `
-        <tr class="hover:bg-gray-50 border-b border-gray-100 transition-colors ${e.isVacation ? 'vacation-row' : ''}">
-            <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm font-bold text-gray-900">${e.name}</div>
-                ${e.isVacation ? `<div class="text-[10px] text-red-500">On Vacation until: ${e.vacationEnd || 'N/A'}</div>` : ''}
-            </td>
-            ${activeFields.map(f => {
-                const val = e[f.id] || e[f.name] || '';
-                return `<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${Array.isArray(val) ? val.join(', ') : val}</td>`;
+    // Body logic
+    body.innerHTML = sortedData.map((e, idx) => `
+        <tr class="${e.isVacation ? 'vacation-row' : 'hover:bg-gray-50'} transition-colors">
+            ${allHeaders.map(h => {
+                if(h.id === 'isVacation') return `<td class="p-4 font-medium ${e.isVacation ? 'text-red-600' : 'text-emerald-600'}">${e.isVacation ? 'On Vacation' : 'Active'}</td>`;
+                let val = e[h.id];
+                if(Array.isArray(val)) val = val.join(', ');
+                return `<td class="p-4 text-gray-600">${val || '-'}</td>`;
             }).join('')}
-            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <button onclick="editEmployee(${employees.indexOf(e)})" class="text-blue-600 hover:text-blue-900 mx-2 p-1 hover:bg-blue-50 rounded"><i data-lucide="edit-3" class="w-4 h-4"></i></button>
-                <button onclick="deleteEmployee(${employees.indexOf(e)})" class="text-red-600 hover:text-red-900 p-1 hover:bg-red-50 rounded"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+            <td class="p-4 admin-cell">
+                <div class="flex gap-2">
+                    <button onclick="editEmployee(${employees.indexOf(e)})" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg"><i data-lucide="edit-3" class="w-4 h-4"></i></button>
+                    <button onclick="deleteEmployee(${employees.indexOf(e)})" class="p-2 text-red-600 hover:bg-red-50 rounded-lg"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                </div>
             </td>
         </tr>
     `).join('');
     if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 
-function sortTable(key) {
-    if (sortConfig.key === key) {
-        sortConfig.direction = sortConfig.direction === 'asc' ? 'desc' : 'asc';
-    } else {
-        sortConfig.key = key;
-        sortConfig.direction = 'asc';
-    }
+function setSort(key) {
+    if(sortConfig.key === key) sortConfig.direction = sortConfig.direction === 'asc' ? 'desc' : 'asc';
+    else { sortConfig.key = key; sortConfig.direction = 'asc'; }
     renderTable();
 }
 
-async function addEmployee() {
-    const name = document.getElementById('empName').value;
-    if (!name) return alert("Name is required!");
-
-    const newEmp = { 
-        name, 
-        isVacation: document.getElementById('empVacation').checked,
-        vacationEnd: document.getElementById('vacationEndDate').value
-    };
-    
-    fieldsConfig.forEach(f => {
-        const el = document.getElementById(`field_${f.id}`);
-        if(el) {
-            if(f.type === 'multiselect') {
-                newEmp[f.id] = Array.from(el.selectedOptions).map(opt => opt.value);
-            } else {
-                newEmp[f.id] = el.value;
-            }
-        }
-    });
-
-    if (currentEditingIndex > -1) {
-        employees[currentEditingIndex] = newEmp;
-        currentEditingIndex = -1;
-    } else {
-        employees.push(newEmp);
-    }
-
-    const success = await saveToGitHub();
-    if (success) {
-        closeModal();
-        renderAll();
-    }
-}
-
-function editEmployee(index) {
-    currentEditingIndex = index;
-    const e = employees[index];
-    document.getElementById('modalTitle').innerText = "Edit Member";
-    document.getElementById('empName').value = e.name;
-    document.getElementById('empVacation').checked = e.isVacation || false;
-    document.getElementById('vacationEndDate').value = e.vacationEnd || '';
-    
-    fieldsConfig.forEach(f => {
-        const el = document.getElementById(`field_${f.id}`);
-        if(el) {
-            const val = e[f.id] || e[f.name] || '';
-            if(f.type === 'multiselect' && Array.isArray(val)) {
-                Array.from(el.options).forEach(opt => opt.selected = val.includes(opt.value));
-            } else {
-                el.value = val;
-            }
-        }
-    });
-    
-    document.getElementById('employeeModal').classList.remove('hidden');
-}
-
-async function deleteEmployee(index) {
-    if (confirm("Are you sure you want to delete this member?")) {
-        employees.splice(index, 1);
-        const success = await saveToGitHub();
-        if (success) renderAll();
-    }
-}
-
-function openModal() {
-    currentEditingIndex = -1;
-    document.getElementById('modalTitle').innerText = "Add New Member";
-    document.getElementById('employeeForm').reset();
-    document.getElementById('employeeModal').classList.remove('hidden');
-}
-
-function closeModal() { document.getElementById('employeeModal').classList.add('hidden'); }
-
-// 4. Charts Management
-function renderCharts() {
-    const container = document.getElementById('chartsContainer');
-    if(!container) return;
-    container.innerHTML = '';
-    
-    Object.values(chartsInstances).forEach(chart => chart.destroy());
-    chartsInstances = {};
-
-    chartsConfig.forEach(config => {
-        const wrapper = document.createElement('div');
-        wrapper.className = 'google-card p-6 flex flex-col items-center';
-        wrapper.innerHTML = `<h3 class="font-bold text-gray-700 mb-4 uppercase tracking-wide text-sm">${config.title}</h3>
-                            <div class="relative w-full h-64"><canvas id="chart_${config.id}"></canvas></div>`;
-        container.appendChild(wrapper);
-
-        const filtered = employees.filter(e => {
-            const roles = config.filterRoles || [];
-            return roles.length === 0 || roles.includes(e.role);
+function filterTable() {
+    const inputs = document.querySelectorAll('.filter-input');
+    const table = document.getElementById('employeeTable');
+    const rows = table.getElementsByTagName('tr');
+    for (let i = 1; i < rows.length; i++) {
+        let show = true;
+        inputs.forEach((input, idx) => {
+            const cellText = rows[i].getElementsByTagName('td')[idx]?.textContent.toLowerCase() || '';
+            if (!cellText.includes(input.value.toLowerCase())) show = false;
         });
+        rows[i].classList.toggle('hidden-by-filter', !show);
+        rows[i].style.display = show ? '' : 'none';
+    }
+}
+
+// 3. Dynamic Form & Fields Setup
+function renderDynamicForm() {
+    const container = document.getElementById('dynamicFieldsContainer');
+    if(!container) return;
+    
+    container.innerHTML = fieldsConfig.filter(f => f.active !== false).map(f => {
+        let val = currentEditingIndex > -1 ? (employees[currentEditingIndex][f.id] || '') : '';
+        let inputHtml = '';
+        if (f.type === 'select' || f.type === 'multiselect') {
+            const options = (f.options || []).map(opt => `<option value="${opt}" ${Array.isArray(val) ? (val.includes(opt)?'selected':'') : (val===opt?'selected':'')}>${opt}</option>`).join('');
+            inputHtml = `<select id="field_${f.id}" ${f.type === 'multiselect' ? 'multiple' : ''} class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+                            ${options}
+                         </select>`;
+        } else if (f.type === 'checkbox') {
+            inputHtml = `<div class="p-3 border rounded-xl flex items-center gap-4">
+                            <label class="switch"><input type="checkbox" id="field_${f.id}" ${val ? 'checked' : ''}><span class="slider"></span></label>
+                            <span class="text-sm font-bold text-gray-500 uppercase">Enable</span>
+                         </div>`;
+        } else {
+            inputHtml = `<input type="${f.type}" id="field_${f.id}" value="${val}" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500">`;
+        }
+
+        return `<div><label class="block text-[10px] font-bold text-gray-400 mb-1 uppercase">${f.label || f.name}</label>${inputHtml}</div>`;
+    }).join('');
+}
+
+// 4. Employee Management
+function openModal() { currentEditingIndex = -1; document.getElementById('modalTitle').innerText = "Add New Member"; renderDynamicForm(); document.getElementById('memberModal').classList.remove('hidden'); }
+function closeModal() { document.getElementById('memberModal').classList.add('hidden'); }
+
+function saveEmployee() {
+    const newEmp = {};
+    fieldsConfig.forEach(f => {
+        const el = document.getElementById(`field_${f.id}`);
+        if(f.type === 'multiselect') newEmp[f.id] = Array.from(el.selectedOptions).map(o => o.value);
+        else if(f.type === 'checkbox') newEmp[f.id] = el.checked;
+        else newEmp[f.id] = el.value;
+    });
+
+    if(currentEditingIndex > -1) employees[currentEditingIndex] = newEmp;
+    else employees.push(newEmp);
+
+    saveToGitHub().then(() => { closeModal(); renderAll(); });
+}
+
+function editEmployee(idx) { currentEditingIndex = idx; document.getElementById('modalTitle').innerText = "Edit Member Info"; renderDynamicForm(); document.getElementById('memberModal').classList.remove('hidden'); }
+function deleteEmployee(idx) { if(confirm("Are you sure?")) { employees.splice(idx,1); saveToGitHub().then(renderAll); } }
+
+// 5. Excel & Backup
+function exportToExcel() {
+    const ws = XLSX.utils.json_to_sheet(employees);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Team");
+    XLSX.writeFile(wb, "Team_Hub_Export.xlsx");
+}
+
+function performFullBackup() {
+    const blob = new Blob([JSON.stringify({employees, fields:fieldsConfig, users, visibility:visibilityConfig, charts:chartsConfig}, null, 2)], {type:'application/json'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'backup.json'; a.click();
+}
+
+// 6. Charts Rendering
+function renderCharts() {
+    const container = document.getElementById('dynamicChartsGrid');
+    container.innerHTML = (chartsConfig || []).map(c => `<div class="p-4 border rounded-2xl bg-white shadow-sm"><h3 class="font-bold mb-4 text-gray-700 border-b pb-2 uppercase text-[10px] tracking-widest">${c.title}</h3><div class="chart-container"><canvas id="chart_${c.id}"></canvas></div></div>`).join('');
+    
+    (chartsConfig || []).forEach(c => {
+        const ctx = document.getElementById(`chart_${c.id}`).getContext('2d');
+        if(chartsInstances[c.id]) chartsInstances[c.id].destroy();
+
+        let filtered = employees;
+        if(c.filterRoles && c.filterRoles.length > 0) filtered = employees.filter(e => c.filterRoles.includes(e.role));
 
         const counts = {};
         filtered.forEach(e => {
-            const val = e[config.field] || 'Unknown';
+            const val = e[c.field] || 'N/A';
             const values = Array.isArray(val) ? val : [val];
-            values.forEach(v => { counts[v] = (counts[v] || 0) + 1; });
+            values.forEach(v => counts[v] = (counts[v] || 0) + 1);
         });
 
-        const ctx = document.getElementById(`chart_${config.id}`).getContext('2d');
-        chartsInstances[config.id] = new Chart(ctx, {
-            type: config.type || 'doughnut',
-            data: {
-                labels: Object.keys(counts),
-                datasets: [{
-                    data: Object.values(counts),
-                    backgroundColor: ['#4285F4', '#EA4335', '#FBBC05', '#34A853', '#8E24AA', '#00ACC1', '#F4511E']
-                }]
-            },
-            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } } } }
+        chartsInstances[c.id] = new Chart(ctx, {
+            type: c.type || 'doughnut',
+            data: { labels: Object.keys(counts), datasets: [{ data: Object.values(counts), backgroundColor: ['#4285f4','#34a853','#fbbc05','#ea4335','#a142f4','#24c1e0'] }] },
+            options: { responsive: true, maintainAspectRatio: false, onClick: (evt, elements) => { if(elements.length > 0) { const idx = elements[0].index; showGlobalDetails(c.filterRoles.join(','), true, Object.keys(counts)[idx], c.field); } } }
         });
     });
 }
 
-function openChartsSetupModal() {
-    const list = document.getElementById('chartsList');
-    list.innerHTML = chartsConfig.map((c, i) => `
-        <div class="bg-gray-50 p-3 rounded-lg border mb-3">
-            <div class="flex gap-2 mb-2">
-                <input type="text" value="${c.title}" onchange="chartsConfig[${i}].title=this.value" class="flex-1 p-2 border rounded text-sm font-bold">
-                <select onchange="chartsConfig[${i}].field=this.value" class="p-2 border rounded text-sm">
-                    <option value="area" ${c.field==='area'?'selected':''}>Primary Area</option>
-                    <option value="workingIn" ${c.field==='workingIn'?'selected':''}>Working In</option>
-                    <option value="role" ${c.field==='role'?'selected':''}>Role</option>
-                </select>
-            </div>
-            <div class="flex justify-between items-center">
-                <span class="text-[10px] font-bold text-gray-400 uppercase">Roles:</span>
-                <input type="text" value="${(c.filterRoles||[]).join(',')}" onchange="chartsConfig[${i}].filterRoles=this.value.split(',').map(s=>s.trim())" class="p-1 border rounded text-[10px] w-1/2">
-                <button onclick="chartsConfig.splice(${i},1); openChartsSetupModal()" class="text-red-500"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-            </div>
-        </div>
-    `).join('');
-    document.getElementById('chartsSetupModal').classList.remove('hidden');
-    if (typeof lucide !== 'undefined') lucide.createIcons();
-}
+function showGlobalDetails(rolesStr, isFilterByValue = false, filterValue = '', filterKey = '') {
+    const roles = rolesStr.split(',').map(s => s.trim());
+    let list = employees.filter(e => roles.some(r => e.role && e.role.toLowerCase().includes(r.toLowerCase())));
+    if(isFilterByValue) list = list.filter(e => { let val = e[filterKey]; return Array.isArray(val) ? val.includes(filterValue) : val === filterValue; });
 
-function addNewChartConfig() { chartsConfig.push({id: 'c'+Date.now(), title: 'New Chart', field: 'area', filterRoles: [], type: 'doughnut'}); openChartsSetupModal(); }
-async function saveChartsConfig() { const success = await saveToGitHub(); if(success) { document.getElementById('chartsSetupModal').classList.add('hidden'); renderAll(); } }
+    document.getElementById('popupTitleContainer').innerHTML = `<h3 class="text-2xl font-black text-gray-800 uppercase tracking-tighter">${filterValue || rolesStr} Members</h3><p class="text-sm text-gray-500 font-bold uppercase">${list.length} Members total</p>`;
+    document.getElementById('popupList').innerHTML = list.map(e => `
+        <div class="p-4 border rounded-xl ${e.isVacation ? 'bg-red-50 border-red-200' : 'bg-gray-50'}">
+            <b class="${e.isVacation ? 'line-through text-red-600' : ''}">${e.name}</b><br>
+            <small class="text-gray-500">${e.role} ${e.isVacation ? '(Returns: ' + (e.vacationEnd || 'N/A') + ')' : ''}</small>
+        </div>
+    `).join('') || '<div class="col-span-full text-center text-gray-400 py-10 font-bold uppercase italic">No members found</div>';
+    document.getElementById('detailsPopup').classList.remove('hidden');
+}
+function closePopup() { document.getElementById('detailsPopup').classList.add('hidden'); }
+function clearFilters() { document.querySelectorAll('.filter-input').forEach(i=>i.value=""); filterTable(); }
