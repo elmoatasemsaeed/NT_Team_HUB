@@ -785,6 +785,13 @@
       "type": "text",
       "options": [],
       "showInTable": true
+    },
+    {
+      "id": "f1766864203478",
+      "label": "available after",
+      "type": "date",
+      "showInTable": true,
+      "options": []
     }
   ],
   "users": [
@@ -797,30 +804,6 @@
       "username": "user",
       "password": "123",
       "role": "viewer"
-    }
-  ],
-  "charts": [
-    {
-      "id": "c1",
-      "title": "Developers Distribution",
-      "targetField": "area",
-      "filterRoles": [
-        "Dev",
-        "Senior"
-      ],
-      "type": "doughnut",
-      "field": "area"
-    },
-    {
-      "id": "c2",
-      "title": "Testers Distribution",
-      "targetField": "area",
-      "filterRoles": [
-        "Tester",
-        "Senior tester"
-      ],
-      "type": "doughnut",
-      "field": "area"
     }
   ],
   "visibility": {
@@ -872,5 +855,30 @@
       "dev": true,
       "tester": true
     }
-  }
+  },
+  "charts": [
+    {
+      "id": "c1",
+      "title": "Developers Distribution",
+      "targetField": "area",
+      "filterRoles": [
+        "Dev",
+        "Senior"
+      ],
+      "type": "doughnut",
+      "field": "area"
+    },
+    {
+      "id": "c2",
+      "title": "Testers Distribution",
+      "targetField": "area",
+      "filterRoles": [
+        "Tester",
+        "Senior tester"
+      ],
+      "type": "doughnut",
+      "field": "area"
+    }
+  ],
+  "timestamp": "2025-12-27T19:37:03.493Z"
 }
