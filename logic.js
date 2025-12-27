@@ -1,17 +1,30 @@
-// --- Business Logic & UI Rendering ---
 let currentEditingIndex = -1;
 let chartsInstances = {};
-let sortConfig = { key: 'name', direction: 'asc' };
 
-function renderAll() { 
-    updateCapacity(); 
-    renderTable(); 
-    renderDynamicForm(); 
+function renderAll() {
+    updateCapacity();
+    renderTable();
+    renderDynamicForm();
     renderCharts();
-    if (typeof lucide !== 'undefined') lucide.createIcons(); 
+    populateSelects();
+    if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 
-// 1. Capacity Visualization
+// استخراج القيم الفريدة من الموظفين لتغذية القوائم المنسدلة
+function populateSelects() {
+    const roles = [...new Set(employees.map(e => e.role))].filter(Boolean);
+    const filterRole = document.getElementById('filterRole');
+    const empRole = document.getElementById('empRole');
+    
+    if (filterRole) {
+        filterRole.innerHTML = '<option value="">All Roles</option>' + 
+            roles.map(r => `<option value="${r}">${r}</option>`).join('');
+    }
+    if (empRole) {
+        empRole.innerHTML = roles.map(r => `<option value="${r}">${r}</option>`).join('');
+    }
+}
+
 function updateCapacity() {
     const devGrid = document.getElementById('devCapacityGrid');
     const testGrid = document.getElementById('testerCapacityGrid');
@@ -30,169 +43,108 @@ function updateCapacity() {
             });
         });
 
-        const visibleGroups = Object.keys(groups).filter(area => {
-            return visibilityConfig[area] ? visibilityConfig[area][type] : true;
-        });
-
-        container.innerHTML = visibleGroups.map(area => {
+        container.innerHTML = Object.keys(groups).map(area => {
             const members = groups[area];
-            const workingCount = members.filter(m => !m.isVacation).length;
-            const total = members.length;
-            const percentage = (workingCount / total) * 100;
-            const colorClass = percentage < 50 ? 'text-red-600' : (percentage < 80 ? 'text-orange-500' : 'text-emerald-600');
-
+            const activeCount = members.filter(m => !m.isVacation).length;
             return `
-            <div class="google-card p-3 border-l-4 border-l-blue-500">
-                <div class="text-[10px] uppercase font-black text-gray-400 mb-1 truncate">${area}</div>
-                <div class="flex items-end justify-between">
-                    <span class="text-2xl font-bold ${colorClass}">${workingCount}<span class="text-gray-300 text-sm font-normal">/${total}</span></span>
+                <div class="google-card p-5">
+                    <div class="flex justify-between items-start mb-4">
+                        <h4 class="font-black text-gray-800 uppercase text-sm">${area}</h4>
+                        <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold">${activeCount}/${members.length}</span>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        ${members.map(m => `<span class="w-3 h-3 rounded-full ${m.isVacation ? 'bg-red-200' : 'bg-green-500'}" title="${m.name}"></span>`).join('')}
+                    </div>
                 </div>
-            </div>`;
+            `;
         }).join('');
-
-        const totalLabelDev = document.getElementById('devTotalLabel');
-        const totalLabelTester = document.getElementById('testerTotalLabel');
-        if(type === 'dev' && totalLabelDev) totalLabelDev.innerText = `Total: ${list.length}`;
-        if(type === 'tester' && totalLabelTester) totalLabelTester.innerText = `Total: ${list.length}`;
     };
 
     renderCards(devs, devGrid, 'dev');
     renderCards(testers, testGrid, 'tester');
 }
 
-// 2. Table & Custom Fields Logic
 function renderTable() {
-    const tbody = document.getElementById('employeeTableBody');
-    const header = document.getElementById('tableHeaderRow');
-    if (!tbody || !header) return;
-
-    const baseHeaders = [
-        { name: 'Name', id: 'name' },
-        { name: 'Role', id: 'role' },
-        { name: 'Area', id: 'area' },
-        { name: 'Working In', id: 'workingIn' },
-        { name: 'Status', id: 'isVacation' }
-    ];
-
-    header.innerHTML = baseHeaders.map(h => `<th class="p-4 uppercase text-[11px] font-bold">${h.name}</th>`).join('') +
-        fieldsConfig.filter(f => f.active).map(f => `<th class="p-4 font-bold uppercase text-[11px] tracking-wider">${f.name}</th>`).join('') +
-        `<th class="p-4 admin-cell">Actions</th>`;
-
-    tbody.innerHTML = employees.map((e, idx) => `
-        <tr class="${e.isVacation ? 'vacation-row' : 'hover:bg-gray-50'} transition-colors">
-            <td class="p-4 font-bold text-gray-800">${e.name}</td>
-            <td class="p-4 text-xs font-medium">${e.role}</td>
-            <td class="p-4 text-xs">${Array.isArray(e.area) ? e.area.join(', ') : e.area}</td>
-            <td class="p-4 text-xs">${Array.isArray(e.workingIn) ? e.workingIn.join(', ') : e.workingIn}</td>
-            <td class="p-4"><span class="text-[10px] font-black uppercase">${e.isVacation ? '🏖️ Vacation' : '🟢 Active'}</span></td>
-            ${fieldsConfig.filter(f => f.active).map(f => {
-                const val = e[f.id] || '';
-                // إذا كان الحقل "Popup" يظهر كزر
-                if(f.type === 'popup') {
-                    return `<td class="p-4 text-xs"><button onclick="alert('${val}')" class="text-blue-600 underline">View</button></td>`;
-                }
-                return `<td class="p-4 text-xs">${Array.isArray(val) ? val.join(', ') : val}</td>`;
-            }).join('')}
-            <td class="p-4 admin-cell">
-                <div class="flex gap-2">
-                    <button onclick="editEmployee(${idx})" class="p-2 text-blue-600 hover:bg-blue-50 rounded"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
-                    <button onclick="deleteEmployee(${idx})" class="p-2 text-red-600 hover:bg-red-50 rounded"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-                </div>
-            </td>
-        </tr>`).join('');
-    lucide.createIcons();
-}
-
-// 3. Setup & Visibility Modals (إصلاح الدوال المفقودة)
-function openSetupModal() {
-    const list = document.getElementById('fieldsList');
-    list.innerHTML = fieldsConfig.map((f, i) => `
-        <div class="flex gap-2 items-center bg-gray-50 p-3 rounded-xl border">
-            <input type="text" value="${f.name}" onchange="fieldsConfig[${i}].name=this.value" class="flex-1 p-2 border rounded">
-            <select onchange="fieldsConfig[${i}].type=this.value" class="p-2 border rounded">
-                <option value="text" ${f.type==='text'?'selected':''}>Text</option>
-                <option value="popup" ${f.type==='popup'?'selected':''}>Popup (Long Text)</option>
-            </select>
-            <button onclick="removeField(${i})" class="text-red-500 p-2"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-        </div>`).join('');
-    document.getElementById('setupModal').classList.remove('hidden');
-    lucide.createIcons();
-}
-function closeSetupModal() { document.getElementById('setupModal').classList.add('hidden'); }
-
-function openVisibilityModal() {
-    const areas = [...new Set(employees.flatMap(e => Array.isArray(e.area) ? e.area : [e.area]))];
-    const list = document.getElementById('visibilityList');
-    list.innerHTML = areas.map(area => {
-        const config = visibilityConfig[area] || { dev: true, tester: true };
-        return `
-        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl border">
-            <span class="font-bold text-gray-700">${area}</span>
-            <div class="flex gap-6">
-                <label class="flex items-center gap-2 text-xs font-black uppercase">Dev <label class="switch"><input type="checkbox" ${config.dev?'checked':''} onchange="updateVis('${area}','dev',this.checked)"><span class="slider"></span></label></label>
-                <label class="flex items-center gap-2 text-xs font-black uppercase">Test <label class="switch"><input type="checkbox" ${config.tester?'checked':''} onchange="updateVis('${area}','tester',this.checked)"><span class="slider"></span></label></label>
-            </div>
-        </div>`;
-    }).join('');
-    document.getElementById('visibilityModal').classList.remove('hidden');
-}
-function closeVisibilityModal() { document.getElementById('visibilityModal').classList.add('hidden'); }
-
-function updateVis(area, type, val) {
-    if(!visibilityConfig[area]) visibilityConfig[area] = { dev: true, tester: true };
-    visibilityConfig[area][type] = val;
-}
-
-async function saveVisibilityConfig() { if (await saveToGitHub()) { closeVisibilityModal(); renderAll(); } }
-
-// 4. باقي الدوال (Add, Edit, Delete)
-function openModal(idx = -1) {
-    currentEditingIndex = idx;
-    const data = idx === -1 ? null : employees[idx];
-    document.getElementById('modalTitle').innerText = idx === -1 ? 'ADD NEW MEMBER' : 'EDIT MEMBER';
-    renderDynamicForm(data);
-    document.getElementById('modalOverlay').classList.remove('hidden');
-}
-function closeModal() { document.getElementById('modalOverlay').classList.add('hidden'); }
-
-function renderDynamicForm(data = null) {
-    const container = document.getElementById('dynamicForm');
-    let html = `
-        <div class="space-y-1"><label class="text-[10px] font-bold text-gray-400 uppercase">Name</label><input type="text" id="empName" value="${data ? data.name : ''}" class="w-full p-4 border rounded-xl"></div>
-        <div class="space-y-1"><label class="text-[10px] font-bold text-gray-400 uppercase">Role</label><input type="text" id="empRole" value="${data ? data.role : ''}" class="w-full p-4 border rounded-xl"></div>
-        <div class="space-y-1"><label class="text-[10px] font-bold text-gray-400 uppercase">Area (Comma separated)</label><input type="text" id="empArea" value="${data ? (Array.isArray(data.area)?data.area.join(','):data.area) : ''}" class="w-full p-4 border rounded-xl"></div>
-        <div class="space-y-1"><label class="text-[10px] font-bold text-gray-400 uppercase">Vacation Mode</label><select id="empVacation" class="w-full p-4 border rounded-xl"><option value="false" ${data?.isVacation===false?'selected':''}>Active</option><option value="true" ${data?.isVacation===true?'selected':''}>On Vacation</option></select></div>
-    `;
-    fieldsConfig.forEach(f => {
-        html += `<div class="space-y-1"><label class="text-[10px] font-bold text-gray-400 uppercase">${f.name}</label>
-                 <textarea id="field_${f.id}" class="w-full p-4 border rounded-xl">${data ? (data[f.id] || '') : ''}</textarea></div>`;
-    });
-    container.innerHTML = html;
-}
-
-async function saveEmployee() {
-    const newEmp = {
-        name: document.getElementById('empName').value,
-        role: document.getElementById('empRole').value,
-        area: document.getElementById('empArea').value.split(',').map(s => s.trim()),
-        isVacation: document.getElementById('empVacation').value === 'true'
-    };
-    fieldsConfig.forEach(f => { newEmp[f.id] = document.getElementById(`field_${f.id}`).value; });
+    const tbody = document.getElementById('rosterTable');
+    if (!tbody) return;
     
-    if(currentEditingIndex === -1) employees.push(newEmp);
-    else employees[currentEditingIndex] = newEmp;
-
-    if (await saveToGitHub()) { closeModal(); renderAll(); }
+    tbody.innerHTML = employees.map((emp, idx) => `
+        <tr class="${emp.isVacation ? 'vacation-row' : ''} hover:bg-gray-50 transition-colors">
+            <td class="px-6 py-4 font-bold text-gray-900">${emp.name}</td>
+            <td class="px-6 py-4 text-sm font-medium text-gray-600">${emp.role}</td>
+            <td class="px-6 py-4 text-xs font-bold text-blue-600 uppercase">${Array.isArray(emp.area) ? emp.area.join(', ') : emp.area}</td>
+            <td class="px-6 py-4 text-right space-x-2 admin-only">
+                <button onclick="editEmployee(${idx})" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg"><i data-lucide="edit-3" class="w-4 h-4"></i></button>
+                <button onclick="deleteEmployee(${idx})" class="p-2 text-red-600 hover:bg-red-50 rounded-lg"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+            </td>
+        </tr>
+    `).join('');
+    lucide.createIcons();
 }
-
-async function deleteEmployee(idx) { if(confirm('Delete this member?')) { employees.splice(idx, 1); await saveToGitHub(); renderAll(); } }
-function addNewField() { fieldsConfig.push({id: 'custom_'+Date.now(), name: 'New Field', type: 'text', active: true}); openSetupModal(); }
-function removeField(i) { fieldsConfig.splice(i,1); openSetupModal(); }
-async function saveFieldsConfig() { if (await saveToGitHub()) { closeSetupModal(); renderAll(); } }
 
 function renderCharts() {
     const grid = document.getElementById('dynamicChartsGrid');
     if(!grid) return;
-    grid.innerHTML = chartsConfig.map(c => `<div class="p-4 google-card shadow-sm"><h3 class="font-bold mb-4 text-gray-700">${c.title}</h3><canvas id="chart_${c.id}"></canvas></div>`).join('');
-    // Chart.js logic remains same as before...
+    grid.innerHTML = chartsConfig.map((c, i) => `
+        <div class="google-card p-6">
+            <h4 class="font-black text-gray-800 uppercase mb-4 text-center">${c.title}</h4>
+            <canvas id="chart_${i}"></canvas>
+        </div>
+    `).join('');
+
+    chartsConfig.forEach((c, i) => {
+        const ctx = document.getElementById(`chart_${i}`).getContext('2d');
+        const dataMap = {};
+        employees.forEach(e => {
+            const val = e[c.field] || 'Unknown';
+            dataMap[val] = (dataMap[val] || 0) + 1;
+        });
+
+        new Chart(ctx, {
+            type: c.type || 'pie',
+            data: {
+                labels: Object.keys(dataMap),
+                datasets: [{ data: Object.values(dataMap), backgroundColor: ['#4285F4', '#34A853', '#FBBC05', '#EA4335', '#8E24AA'] }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+        });
+    });
 }
+
+// شاشة المستخدمين
+function openUsersModal() {
+    const list = document.getElementById('usersList');
+    list.innerHTML = users.map((u, i) => `
+        <div class="flex gap-2 items-center bg-gray-50 p-3 rounded-xl">
+            <input type="text" value="${u.username}" onchange="users[${i}].username=this.value" class="flex-1 p-2 border rounded-lg text-sm">
+            <input type="text" value="${u.password}" onchange="users[${i}].password=this.value" class="flex-1 p-2 border rounded-lg text-sm">
+            <select onchange="users[${i}].role=this.value" class="p-2 border rounded-lg text-sm">
+                <option value="admin" ${u.role==='admin'?'selected':''}>Admin</option>
+                <option value="viewer" ${u.role==='viewer'?'selected':''}>Viewer</option>
+            </select>
+            <button onclick="users.splice(${i},1); openUsersModal()" class="text-red-500"><i data-lucide="x-circle"></i></button>
+        </div>
+    `).join('');
+    document.getElementById('usersModal').classList.remove('hidden');
+    lucide.createIcons();
+}
+
+function addNewUser() {
+    users.push({username: 'new_user', password: '123', role: 'viewer'});
+    openUsersModal();
+}
+
+async function saveUsersConfig() {
+    if (await saveToGitHub()) document.getElementById('usersModal').classList.add('hidden');
+}
+
+// وظائف الـ Modals المساعدة
+function openModal() { currentEditingIndex = -1; document.getElementById('memberModal').classList.remove('hidden'); }
+function closeModal() { document.getElementById('memberModal').classList.add('hidden'); }
+function openSetupModal() { /* ... مماثل للمستخدمين لعرض الحقول ... */ document.getElementById('setupModal').classList.remove('hidden'); }
+function closeSetupModal() { document.getElementById('setupModal').classList.add('hidden'); }
+function openChartsSetupModal() { document.getElementById('chartsSetupModal').classList.remove('hidden'); }
+function closeChartsSetupModal() { document.getElementById('chartsSetupModal').classList.add('hidden'); }
+
+// توفير الوظائف للـ API
+window.renderAll = renderAll;
