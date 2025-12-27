@@ -5,7 +5,9 @@ async function loadFromGitHub(manual = false) {
         if (manual) alert("No Token provided!"); 
         return false; 
     }
-    document.getElementById('loadingStatus').classList.remove('hidden');
+    const loadingEl = document.getElementById('loadingStatus');
+    if(loadingEl) loadingEl.classList.remove('hidden');
+
     try {
         const url = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}?ref=${githubConfig.branch}`;
         const response = await fetch(url, { 
@@ -15,6 +17,7 @@ async function loadFromGitHub(manual = false) {
         if (response.ok) {
             const data = await response.json();
             githubConfig.sha = data.sha;
+            
             // فك التشفير مع دعم كامل للغة العربية (Base64 Safe)
             const content = JSON.parse(decodeURIComponent(escape(atob(data.content))));
             
@@ -24,50 +27,50 @@ async function loadFromGitHub(manual = false) {
             chartsConfig = content.charts || [];
             visibilityConfig = content.visibility || {};
             
-            localStorage.setItem(USERS_KEY, JSON.stringify(users));
             renderAll(); 
             if(manual) alert("Sync Success!");
+            if(loadingEl) loadingEl.classList.add('hidden');
             return true;
         } else {
-            if(manual) alert("Error syncing from GitHub");
+            if(manual) alert("Error syncing from GitHub. Check your settings.");
+            if(loadingEl) loadingEl.classList.add('hidden');
             return false;
         }
     } catch (err) { 
         console.error("Sync Error:", err);
+        if(loadingEl) loadingEl.classList.add('hidden');
         return false;
-    } finally { 
-        document.getElementById('loadingStatus').classList.add('hidden'); 
     }
 }
 
 async function saveToGitHub() {
-    if (!githubConfig.token || !githubConfig.sha) {
-        alert("Sync error: Missing Token or SHA. Please login again.");
-        return;
-    }
-    
-    document.getElementById('loadingStatus').classList.remove('hidden');
-    const fullData = { 
-        employees, 
-        fields: fieldsConfig, 
-        users, 
-        visibility: visibilityConfig, 
+    if (!githubConfig.token) { alert("Token missing!"); return false; }
+
+    const loadingEl = document.getElementById('loadingStatus');
+    if(loadingEl) loadingEl.classList.remove('hidden');
+
+    const contentObj = {
+        employees,
+        fields: fieldsConfig,
+        users,
         charts: chartsConfig,
-        timestamp: new Date().toISOString() 
+        visibility: visibilityConfig
     };
 
+    // التشفير مع دعم اللغة العربية
+    const contentRaw = unescape(encodeURIComponent(JSON.stringify(contentObj, null, 2)));
+    const contentBase64 = btoa(contentRaw);
+
     try {
-        // تشفير يدعم العربية قبل التحويل لـ Base64
-        const contentBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(fullData, null, 2))));
-        
-        const response = await fetch(`https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}`, {
+        const url = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}`;
+        const response = await fetch(url, {
             method: 'PUT',
             headers: {
                 'Authorization': `token ${githubConfig.token}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                message: `Update Team Hub data: ${new Date().toLocaleString()}`,
+                message: `Update: ${new Date().toLocaleString()}`,
                 content: contentBase64,
                 sha: githubConfig.sha,
                 branch: githubConfig.branch
@@ -75,17 +78,20 @@ async function saveToGitHub() {
         });
 
         if (response.ok) {
-            const data = await response.json();
-            githubConfig.sha = data.content.sha;
-            console.log("Saved Successfully");
+            const resData = await response.json();
+            githubConfig.sha = resData.content.sha;
+            if(loadingEl) loadingEl.classList.add('hidden');
+            return true;
         } else {
-            alert("Failed to save to Cloud. Checking for updates...");
-            await loadFromGitHub(); // محاولة جلب الـ SHA الجديد في حال حدوث تضارب
+            const errData = await response.json();
+            alert("Save Failed: " + (errData.message || "Unknown Error"));
+            if(loadingEl) loadingEl.classList.add('hidden');
+            return false;
         }
     } catch (err) {
         console.error("Save Error:", err);
-    } finally {
-        document.getElementById('loadingStatus').classList.add('hidden');
+        if(loadingEl) loadingEl.classList.add('hidden');
+        return false;
     }
 }
 
@@ -122,7 +128,7 @@ async function checkLogin() {
             document.getElementById('loginError').classList.remove('hidden');
         }
     } else {
-        document.getElementById('loginError').innerText = "GitHub Sync Failed! Check Token.";
+        document.getElementById('loginError').innerText = "GitHub Sync Failed! Check Token & Repo Path.";
         document.getElementById('loginError').classList.remove('hidden');
     }
 }
