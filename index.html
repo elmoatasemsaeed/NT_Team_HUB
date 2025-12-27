@@ -130,7 +130,7 @@
         <div id="capacityTab" class="tab-content">
             <div id="capacityMainGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 no-print">
                 <div class="p-4 border rounded-2xl bg-white shadow-sm">
-                    <h3 onclick="showGlobalDetails('Dev,Senior,Lead', false, 'dev')" class="text-blue-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest cursor-pointer hover:text-blue-500">
+                    <h3 onclick="showGlobalDetails('Dev,Senior', false, 'dev')" class="text-blue-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest cursor-pointer hover:text-blue-500">
                         <span class="flex items-center gap-2"><i data-lucide="code" class="w-4 h-4"></i> Developers Capacity</span>
                         <span id="devTotalLabel" class="bg-blue-100 px-2 py-0.5 rounded text-blue-800">Total: 0</span>
                     </h3>
@@ -148,10 +148,8 @@
         </div>
 
         <div id="tableTab" class="tab-content hidden">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4 no-print">
-                <div class="flex flex-wrap gap-2 items-center" id="filterContainer">
-                    <input type="text" id="memberSearch" placeholder="Search name or role..." oninput="renderTable()" class="px-4 py-2 border rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 w-64">
-                </div>
+            <div class="flex justify-between items-center mb-4 no-print">
+                <h3 class="text-lg font-bold text-gray-700">Team Members List</h3>
                 <div class="flex gap-2">
                     <button onclick="clearFilters()" class="px-4 py-2 border rounded hover:bg-red-50 flex items-center gap-2 text-red-600 font-medium">
                         <i data-lucide="filter-x" class="w-4 h-4"></i> Clear Filters
@@ -172,43 +170,43 @@
         </div>
     </div>
 
-    <div id="modalOverlay" class="fixed inset-0 z-[1000] bg-black/50 hidden flex items-center justify-center p-4">
-        <div class="bg-white large-modal p-8 shadow-2xl relative">
-            <h3 id="modalTitle" class="text-2xl font-bold mb-6 text-gray-800 border-b pb-4">ADD NEW MEMBER</h3>
-            <div id="dynamicForm" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8"></div>
-            <div class="flex justify-end gap-3 pt-6 border-t">
-                <button onclick="closeModal()" class="px-8 py-3 bg-gray-100 text-gray-600 rounded-xl font-bold hover:bg-gray-200 uppercase">Cancel</button>
-                <button onclick="saveEmployee()" class="px-8 py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 shadow-lg uppercase">Save Member</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="detailsPopup" class="fixed inset-0 z-[1200] bg-black/60 hidden flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden">
+    <div id="modalOverlay" class="fixed inset-0 bg-black/50 z-[1000] hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden">
             <div class="p-6 border-b flex justify-between items-center bg-gray-50">
-                <h3 id="popupTitle" class="text-xl font-black text-gray-800 uppercase tracking-tight"></h3>
-                <button onclick="closePopup()" class="p-2 hover:bg-red-50 rounded-full text-red-500 transition-colors"><i data-lucide="x" class="w-6 h-6"></i></button>
+                <h3 id="modalTitle" class="text-xl font-bold text-gray-800 uppercase tracking-tight">Add Member</h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-red-500 transition-colors"><i data-lucide="x" class="w-6 h-6"></i></button>
             </div>
-            <div id="popupList" class="p-6 grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[60vh] overflow-y-auto bg-white"></div>
+            <div id="dynamicForm" class="p-8 space-y-6 max-h-[70vh] overflow-y-auto"></div>
+            <div class="p-6 border-t bg-gray-50 flex gap-3">
+                <button onclick="closeModal()" class="flex-1 py-3 border-2 border-gray-200 rounded-xl font-bold text-gray-500 hover:bg-white transition-all">CANCEL</button>
+                <button onclick="saveEmployee()" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold shadow-lg hover:bg-blue-700 transition-all uppercase">Save Member</button>
+            </div>
         </div>
     </div>
 
     <div id="setupModal" class="fixed inset-0 z-[1100] bg-black/50 hidden flex items-center justify-center p-4">
-        <div class="bg-white large-modal p-8 shadow-2xl max-w-4xl">
-            <div class="flex justify-between items-center mb-6"><h3 class="text-2xl font-bold text-gray-800 uppercase">Fields Configuration</h3><button onclick="closeSetupModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button></div>
-            <div id="fieldsList" class="space-y-4 mb-8 max-h-[50vh] overflow-y-auto pr-2"></div>
-            <div class="flex flex-col md:flex-row gap-4">
-                <button onclick="addNewField()" class="flex-1 py-4 bg-emerald-600 text-white rounded-xl font-bold shadow-lg hover:bg-emerald-700 uppercase">+ Add New Field</button>
-                <button onclick="saveSetup()" class="flex-1 py-4 bg-blue-600 text-white rounded-xl font-bold shadow-lg hover:bg-blue-700 uppercase italic">Apply System Changes</button>
+        <div class="bg-white large-modal p-8 shadow-2xl">
+            <div class="flex justify-between items-center mb-6"><h3 class="text-2xl font-bold text-gray-800 uppercase">Field Configuration</h3><button onclick="closeSetupModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button></div>
+            <div id="fieldsList" class="space-y-4 mb-8"></div>
+            <div class="flex gap-4">
+                <button onclick="addNewField()" class="flex-1 py-4 bg-emerald-600 text-white rounded-xl font-bold uppercase shadow-lg">+ Add Custom Field</button>
+                <button onclick="saveFieldsConfig()" class="flex-1 py-4 bg-blue-600 text-white rounded-xl font-bold uppercase shadow-lg italic">Save Setup</button>
             </div>
         </div>
     </div>
 
     <div id="visibilityModal" class="fixed inset-0 z-[1100] bg-black/50 hidden flex items-center justify-center p-4">
         <div class="bg-white large-modal p-8 shadow-2xl max-w-4xl">
-            <div class="flex justify-between items-center mb-6"><h3 class="text-2xl font-bold text-gray-800 uppercase">Visibility Dashboard Setup</h3><button onclick="closeVisibilityModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button></div>
-            <div id="visibilityList" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 max-h-[60vh] overflow-y-auto pr-2"></div>
-            <button onclick="saveVisibility()" class="w-full py-4 bg-orange-600 text-white rounded-xl font-bold uppercase shadow-lg">Save Visibility Rules</button>
+            <div class="flex justify-between items-center mb-6"><h3 class="text-2xl font-bold text-gray-800 uppercase italic">Visibility Control</h3><button onclick="closeVisibilityModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button></div>
+            <div class="overflow-x-auto"><table class="w-full border-collapse"><thead class="bg-gray-100"><tr><th class="p-4 text-left border">Area / Project</th><th class="p-4 text-center border">Show for DEVs</th><th class="p-4 text-center border">Show for TESTERs</th></tr></thead><tbody id="visibilityTableBody"></tbody></table></div>
+            <button onclick="saveVisibility()" class="w-full mt-8 py-4 bg-orange-600 text-white rounded-xl font-bold uppercase shadow-lg">Apply Visibility Settings</button>
+        </div>
+    </div>
+
+    <div id="detailsPopup" class="fixed inset-0 z-[2000] bg-black/60 hidden flex items-center justify-center p-4" onclick="if(event.target===this)closePopup()">
+        <div class="bg-white rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+            <div class="p-6 bg-blue-600 text-white flex justify-between items-center"><h3 id="popupTitle" class="text-xl font-bold uppercase">Details</h3><button onclick="closePopup()" class="hover:rotate-90 transition-transform"><i data-lucide="x" class="w-6 h-6"></i></button></div>
+            <div id="popupList" class="p-6 space-y-3 max-h-[60vh] overflow-y-auto"></div>
         </div>
     </div>
 
@@ -217,17 +215,17 @@
             <div class="flex justify-between items-center mb-6"><h3 class="text-2xl font-bold text-gray-800 uppercase">User Management</h3><button onclick="closeUsersModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button></div>
             <div id="usersList" class="space-y-3 mb-6 max-h-[50vh] overflow-y-auto pr-2"></div>
             <div class="flex flex-col md:flex-row gap-4">
-                <button onclick="addNewUser()" class="flex-1 py-3 bg-emerald-600 text-white rounded-xl font-bold uppercase">+ Add New User</button>
-                <button onclick="saveUsers()" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold uppercase">Save Users</button>
+                <button onclick="addNewUser()" class="flex-1 py-3 bg-emerald-600 text-white rounded-xl font-bold uppercase">+ ADD NEW USER</button>
+                <button onclick="saveUsers()" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold uppercase">Save Users to Cloud</button>
             </div>
         </div>
     </div>
 
     <div id="chartsSetupModal" class="fixed inset-0 z-[1100] bg-black/50 hidden flex items-center justify-center p-4">
-        <div class="bg-white large-modal p-8 shadow-2xl max-w-4xl">
+        <div class="bg-white large-modal p-8 shadow-2xl">
             <div class="flex justify-between items-center mb-6"><h3 class="text-2xl font-bold text-gray-800 uppercase">Charts Configuration</h3><button onclick="closeChartsSetupModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button></div>
-            <div id="chartsConfigList" class="space-y-4 mb-8 max-h-[50vh] overflow-y-auto pr-2"></div>
-            <div class="flex flex-col md:flex-row gap-4">
+            <div id="chartsConfigList" class="space-y-6 mb-8 max-h-[60vh] overflow-y-auto pr-2"></div>
+            <div class="flex gap-4">
                 <button onclick="addNewChart()" class="flex-1 py-4 bg-emerald-600 text-white rounded-xl font-bold uppercase shadow-lg">+ Add New Chart</button>
                 <button onclick="saveChartsConfig()" class="flex-1 py-4 bg-blue-600 text-white rounded-xl font-bold uppercase shadow-lg italic">Save Charts Config</button>
             </div>
