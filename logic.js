@@ -1,14 +1,18 @@
 // --- Business Logic & UI Rendering ---
 
+let currentEditingIndex = -1;
+let chartsInstances = {};
+
 function renderAll() { 
     updateCapacity(); 
     renderTable(); 
     renderDynamicForm(); 
     renderCharts();
+    renderFilters();
     if (typeof lucide !== 'undefined') lucide.createIcons(); 
 }
 
-// 1. حساب السعة (Capacity) وتوزيع البطاقات
+// 1. Capacity Visualization
 function updateCapacity() {
     const devGrid = document.getElementById('devCapacityGrid');
     const testGrid = document.getElementById('testerCapacityGrid');
@@ -25,7 +29,7 @@ function updateCapacity() {
             <div class="google-card p-4 ${e.isVacation ? 'bg-red-50 border-red-200' : 'bg-white shadow-sm'}">
                 <div class="font-bold text-sm text-gray-800">${e.name}</div>
                 <div class="text-[11px] text-blue-600 font-semibold mb-1">${e.role}</div>
-                <div class="text-xs text-gray-500">${Array.isArray(e.area) ? e.area.join(', ') : (e.area || '-')}</div>
+                <div class="text-xs text-gray-500 truncate">${Array.isArray(e.area) ? e.area.join(', ') : (e.area || '-')}</div>
                 ${e.isVacation ? `<div class="text-[10px] text-red-600 mt-2 font-bold italic">Back: ${e.vacationEnd}</div>` : ''}
             </div>
         `).join('');
@@ -35,17 +39,41 @@ function updateCapacity() {
     renderCards(testers, testGrid);
 }
 
-// 2. بناء الجدول الرئيسي
+// 2. Table with Filters & Search
 function renderTable() {
     const headerRow = document.getElementById('tableHeaderRow');
     const body = document.getElementById('employeeTableBody');
+    const searchTerm = document.getElementById('memberSearch')?.value.toLowerCase() || '';
+    
     if (!headerRow || !body) return;
 
     headerRow.innerHTML = fieldsConfig.map(f => `<th class="p-4 font-semibold text-left border-b">${f.label}</th>`).join('') + 
                          '<th class="p-4 admin-only border-b text-center">Actions</th>';
 
-    body.innerHTML = employees.map((emp, idx) => `
-        <tr class="hover:bg-gray-50 border-b transition-colors">
+    // Filter Logic
+    const filteredEmployees = employees.filter(emp => {
+        const matchesSearch = Object.values(emp).some(val => String(val).toLowerCase().includes(searchTerm));
+        
+        let matchesFilters = true;
+        fieldsConfig.filter(f => f.type === 'select' || f.type === 'multiselect').forEach(f => {
+            const filterEl = document.getElementById(`filter_${f.id}`);
+            if (filterEl && filterEl.value) {
+                const val = emp[f.id];
+                if (Array.isArray(val)) {
+                    if (!val.includes(filterEl.value)) matchesFilters = false;
+                } else if (val !== filterEl.value) {
+                    matchesFilters = false;
+                }
+            }
+        });
+        
+        return matchesSearch && matchesFilters;
+    });
+
+    body.innerHTML = filteredEmployees.map((emp, idx) => {
+        const actualIdx = employees.indexOf(emp);
+        return `
+        <tr class="hover:bg-gray-50 border-b transition-colors ${emp.isVacation ? 'bg-orange-50/30' : ''}">
             ${fieldsConfig.map(f => {
                 let val = emp[f.id] || '-';
                 if (Array.isArray(val)) val = val.join(', ');
@@ -53,16 +81,37 @@ function renderTable() {
             }).join('')}
             <td class="p-4 admin-only text-center">
                 <div class="flex justify-center gap-2">
-                    <button onclick="editEmployee(${idx})" class="text-blue-600 hover:text-blue-800"><i data-lucide="edit-3" class="w-4 h-4"></i></button>
-                    <button onclick="deleteEmployee(${idx})" class="text-red-500 hover:text-red-700"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                    <button onclick="editEmployee(${actualIdx})" class="text-blue-600 hover:text-blue-800"><i data-lucide="edit-3" class="w-4 h-4"></i></button>
+                    <button onclick="deleteEmployee(${actualIdx})" class="text-red-500 hover:text-red-700"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                 </div>
             </td>
         </tr>
-    `).join('');
+    `}).join('');
+    
     if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 
-// 3. إدارة الموظفين (CRUD)
+function renderFilters() {
+    const container = document.getElementById('filterContainer');
+    if (!container) return;
+    
+    // Clear existing dynamic filters (keep the search input)
+    const searchInput = container.querySelector('.relative');
+    container.innerHTML = '';
+    container.appendChild(searchInput);
+
+    fieldsConfig.filter(f => f.type === 'select' || f.type === 'multiselect').forEach(f => {
+        const select = document.createElement('select');
+        select.id = `filter_${f.id}`;
+        select.onchange = renderTable;
+        select.className = "p-2 bg-gray-50 border rounded-lg text-xs outline-none focus:ring-2 focus:ring-blue-500";
+        select.innerHTML = `<option value="">All ${f.label}</option>` + 
+                          (f.options || []).map(o => `<option value="${o}">${o}</option>`).join('');
+        container.appendChild(select);
+    });
+}
+
+// 3. Employee Management (CRUD)
 function openModal() {
     currentEditingIndex = -1;
     document.getElementById('employeeForm').reset();
@@ -124,8 +173,7 @@ function handleEmployeeSubmit(e) {
     saveToGitHub();
 }
 
-// 4. الرسوم البيانية
-let chartsInstances = {};
+// 4. Charts Rendering
 function renderCharts() {
     const grid = document.getElementById('dynamicChartsGrid');
     if(!grid) return;
@@ -137,7 +185,9 @@ function renderCharts() {
     `).join('');
 
     chartsConfig.forEach(config => {
-        const ctx = document.getElementById(`canvas_${config.id}`).getContext('2d');
+        const canvas = document.getElementById(`canvas_${config.id}`);
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
         const dataMap = {};
         
         employees.filter(e => !config.filterRoles || config.filterRoles.length === 0 || config.filterRoles.includes(e.role))
@@ -159,7 +209,7 @@ function renderCharts() {
     });
 }
 
-// 5. إدارة الحقول والاعدادات (Schema)
+// 5. System Configuration (Setup)
 function openSetupModal() {
     document.getElementById('setupModal').classList.remove('hidden');
     renderFieldsList();
@@ -169,18 +219,51 @@ function renderFieldsList() {
     const list = document.getElementById('fieldsList');
     list.innerHTML = fieldsConfig.map((f, i) => `
         <div class="flex gap-2 items-center bg-gray-50 p-3 rounded-lg border">
-            <input type="text" value="${f.label}" onchange="updateFieldProp(${i}, 'label', this.value)" class="flex-1 p-2 border rounded">
-            <select onchange="updateFieldProp(${i}, 'type', this.value)" class="p-2 border rounded">
+            <input type="text" value="${f.label}" onchange="updateFieldProp(${i}, 'label', this.value)" class="flex-1 p-2 border rounded text-sm">
+            <select onchange="updateFieldProp(${i}, 'type', this.value)" class="p-2 border rounded text-sm">
                 <option value="text" ${f.type==='text'?'selected':''}>Text</option>
                 <option value="select" ${f.type==='select'?'selected':''}>Dropdown</option>
                 <option value="multiselect" ${f.type==='multiselect'?'selected':''}>Multi-Select</option>
                 <option value="date" ${f.type==='date'?'selected':''}>Date</option>
             </select>
-            ${(f.type==='select'||f.type==='multiselect') ? `<button onclick="openOptionsManager(${i})" class="text-blue-600"><i data-lucide="list"></i></button>` : ''}
-            <button onclick="fieldsConfig.splice(${i},1); renderFieldsList()" class="text-red-500"><i data-lucide="trash"></i></button>
+            <button onclick="openOptionsManager(${i})" class="p-2 text-blue-600 hover:bg-blue-50 rounded">
+                <i data-lucide="list" class="w-4 h-4"></i>
+            </button>
+            <button onclick="fieldsConfig.splice(${i},1); renderFieldsList()" class="p-2 text-red-500 hover:bg-red-50 rounded">
+                <i data-lucide="trash" class="w-4 h-4"></i>
+            </button>
         </div>
     `).join('');
     lucide.createIcons();
+}
+
+function updateFieldProp(index, prop, value) {
+    fieldsConfig[index][prop] = value;
+    if (prop === 'label' && !fieldsConfig[index].id) {
+        fieldsConfig[index].id = 'custom_' + Date.now();
+    }
+}
+
+function addNewField() {
+    fieldsConfig.push({ id: 'custom_' + Date.now(), label: 'New Field', type: 'text', options: [] });
+    renderFieldsList();
+}
+
+function openOptionsManager(index) {
+    const field = fieldsConfig[index];
+    const modal = document.getElementById('optionsModal');
+    const area = document.getElementById('optionsTextArea');
+    const title = document.getElementById('optionsModalTitle');
+    
+    title.innerText = `Manage Options: ${field.label}`;
+    area.value = (field.options || []).join('\n');
+    modal.classList.remove('hidden');
+    
+    document.getElementById('saveOptionsBtn').onclick = () => {
+        fieldsConfig[index].options = area.value.split('\n').map(s => s.trim()).filter(s => s !== "");
+        modal.classList.add('hidden');
+        renderFieldsList();
+    };
 }
 
 function saveSetup() {
@@ -188,12 +271,12 @@ function saveSetup() {
     document.getElementById('setupModal').classList.add('hidden');
 }
 
-// 6. التنقل بين التبويبات
+// 6. Navigation
 function switchTab(tabId, btn) {
     document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
     document.getElementById(tabId).classList.remove('hidden');
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active', 'border-blue-600', 'text-blue-600'));
-    btn.classList.add('active', 'border-blue-600', 'text-blue-600');
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
     if(tabId === 'dashboard') renderCharts();
 }
 
@@ -202,7 +285,7 @@ function renderDynamicForm() {
     if (!container) return; 
     container.innerHTML = fieldsConfig.map(f => {
         let input = '';
-        const baseClass = "w-full p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none";
+        const baseClass = "w-full p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all bg-white";
         if(f.type==='select') {
             input = `<select id="field_${f.id}" class="${baseClass}">${(f.options||[]).map(o=>`<option value="${o}">${o}</option>`).join('')}</select>`;
         } else if(f.type==='multiselect') {
@@ -214,4 +297,21 @@ function renderDynamicForm() {
         }
         return `<div class="space-y-1"><label class="text-xs font-bold uppercase text-gray-400">${f.label}</label>${input}</div>`;
     }).join('');
+}
+
+// 7. Export Tool
+function exportToExcel() {
+    const ws = XLSX.utils.json_to_sheet(employees.map(emp => {
+        const flat = {};
+        fieldsConfig.forEach(f => {
+            let val = emp[f.id];
+            flat[f.label] = Array.isArray(val) ? val.join(', ') : val;
+        });
+        flat['On Vacation'] = emp.isVacation ? 'Yes' : 'No';
+        flat['Return Date'] = emp.vacationEnd || '-';
+        return flat;
+    }));
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Team Members");
+    XLSX.writeFile(wb, "Team_Hub_Data.xlsx");
 }
