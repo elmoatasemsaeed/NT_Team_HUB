@@ -16,26 +16,31 @@
         .google-card { background: white; border: 1px solid #dadce0; border-radius: 8px; transition: all 0.2s; }
         .google-card:hover { box-shadow: 0 4px 12px rgba(60,64,67,.15); transform: translateY(-1px); }
         .vacation-row { background-color: #fce8e6 !important; border-left: 4px solid #d93025; }
+        
         .sort-btn { cursor: pointer; display: inline-flex; items-center; gap: 4px; color: #5f6368; font-weight: bold; padding: 8px 0; }
         .sort-btn:hover { color: #1a73e8; }
         .sortable-header { cursor: pointer; transition: background 0.2s; }
         .sortable-header:hover { background-color: #f1f3f4; }
+        .capacity-card { min-height: 80px; }
+        .role-badge { display: flex; justify-content: space-between; padding: 1px 4px; border-radius: 4px; margin-bottom: 2px; background: rgba(0,0,0,0.03); }
+        .chart-container { height: 300px; width: 100%; }
+
         .large-modal { width: 95%; max-width: 1000px; max-height: 90vh; overflow-y: auto; border-radius: 16px; }
         .admin-only { display: none !important; }
         body[data-user-role="admin"] .admin-only { display: inline-flex !important; }
         body[data-user-role="admin"] .admin-cell { display: table-cell !important; }
         .admin-cell { display: none; }
+        
         .dropdown:hover .dropdown-menu { display: block; }
         .tab-btn.active { color: #1a73e8; border-bottom: 3px solid #1a73e8; background-color: rgba(26, 115, 232, 0.05); }
+        
         .switch { position: relative; display: inline-block; width: 40px; height: 20px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 20px; }
         .slider:before { position: absolute; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: #10b981; }
         input:checked + .slider:before { transform: translateX(20px); }
-        .capacity-card { min-height: 80px; }
-        .role-badge { display: flex; justify-content: space-between; padding: 1px 4px; border-radius: 4px; margin-bottom: 2px; background: rgba(0,0,0,0.03); }
-        .chart-container { height: 300px; width: 100%; }
+
         @media print {
             .tab-content { display: block !important; }
             .tab-navigation, .no-print, .filter-input, .admin-only { display: none !important; }
@@ -55,20 +60,16 @@
             </div>
             <h2 class="text-2xl mb-8 font-bold text-gray-800">Team Hub Access</h2>
             <div id="loadingStatus" class="hidden mb-4 text-sm text-blue-600 font-bold italic animate-pulse">Syncing with GitHub...</div>
-            
             <input type="text" id="userInput" placeholder="Username" class="w-full p-4 border rounded-xl mb-3 outline-none focus:ring-2 focus:ring-blue-500">
             <input type="password" id="passInput" placeholder="Password" class="w-full p-4 border rounded-xl mb-3 outline-none focus:ring-2 focus:ring-blue-500">
-            
             <div class="mb-4 text-left">
                 <label class="block text-[10px] font-bold text-gray-400 mb-1 uppercase px-1">GitHub Access Token</label>
                 <input type="password" id="ghTokenInput" onkeypress="if(event.key === 'Enter') checkLogin()" class="w-full p-4 border rounded-xl outline-none focus:ring-2 focus:ring-emerald-500 bg-emerald-50/30">
             </div>
-
             <div class="flex items-center gap-2 mb-6 px-1">
                 <input type="checkbox" id="rememberMe" class="w-4 h-4 cursor-pointer accent-blue-600">
                 <label for="rememberMe" class="text-sm text-gray-600 font-medium cursor-pointer">Remember me</label>
             </div>
-
             <button onclick="checkLogin()" class="w-full bg-[#1a73e8] text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition-all">Unlock System</button>
             <p id="loginError" class="text-red-600 mt-4 text-sm hidden font-medium">Authentication Failed!</p>
         </div>
@@ -115,6 +116,7 @@
                 </div>
                 <button onclick="window.print()" class="px-4 py-2 border rounded hover:bg-gray-50 flex items-center gap-2"><i data-lucide="printer" class="w-4 h-4 text-gray-600"></i> Print</button>
                 <button onclick="openModal()" class="admin-only bg-[#1a73e8] text-white px-6 py-2 rounded shadow hover:bg-blue-700 transition-all font-medium">+ Add Member</button>
+                <button onclick="logout()" class="px-4 py-2 text-red-600 hover:bg-red-50 rounded flex items-center gap-2 font-bold"><i data-lucide="log-out" class="w-4 h-4"></i></button>
             </div>
         </header>
 
@@ -130,122 +132,120 @@
         <div id="capacityTab" class="tab-content">
             <div id="capacityMainGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 no-print">
                 <div class="p-4 border rounded-2xl bg-white shadow-sm">
-                    <h3 onclick="showGlobalDetails('Dev,Senior', false)" class="text-blue-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest cursor-pointer hover:text-blue-500">
+                    <h3 class="text-blue-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest">
                         <span class="flex items-center gap-2"><i data-lucide="code" class="w-4 h-4"></i> Developers Capacity</span>
                         <span id="devTotalLabel" class="bg-blue-100 px-2 py-0.5 rounded text-blue-800">Total: 0</span>
                     </h3>
                     <div id="devCapacityGrid" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2 mb-4"></div>
                 </div>
                 <div class="p-4 border rounded-2xl bg-white shadow-sm">
-                    <h3 onclick="showGlobalDetails('Tester,Senior tester', false)" class="text-green-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest cursor-pointer hover:text-green-500">
+                    <h3 class="text-green-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest">
                         <span class="flex items-center gap-2"><i data-lucide="check-square" class="w-4 h-4"></i> Testers Capacity</span>
                         <span id="testerTotalLabel" class="bg-green-100 px-2 py-0.5 rounded text-green-800">Total: 0</span>
                     </h3>
                     <div id="testerCapacityGrid" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2 mb-4"></div>
                 </div>
             </div>
-            <div id="dynamicChartsGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8 no-print"></div>
+            <div id="dynamicChartsGrid" class="grid grid-cols-1 lg:grid-cols-3 gap-6"></div>
         </div>
 
         <div id="tableTab" class="tab-content hidden">
-            <div class="flex justify-between items-center mb-4 no-print">
-                <h3 class="text-lg font-bold text-gray-700">Team Members List</h3>
-                <div class="flex gap-2">
-                    <button onclick="clearFilters()" class="px-4 py-2 border rounded hover:bg-red-50 flex items-center gap-2 text-red-600 font-medium">
-                        <i data-lucide="filter-x" class="w-4 h-4"></i> Clear Filters
-                    </button>
-                    <button onclick="exportToExcel()" class="px-4 py-2 border rounded hover:bg-green-50 flex items-center gap-2 text-green-700 font-medium">
-                        <i data-lucide="file-spreadsheet" class="w-4 h-4"></i> Export Excel
-                    </button>
+            <div class="flex flex-wrap gap-4 mb-6 no-print items-end">
+                <div class="flex-1 min-w-[200px]">
+                    <label class="block text-[10px] font-bold text-gray-400 mb-1 uppercase">Quick Filter</label>
+                    <div class="relative">
+                        <i data-lucide="search" class="absolute left-3 top-3 w-4 h-4 text-gray-400"></i>
+                        <input type="text" id="tableFilter" oninput="filterTable()" placeholder="Search names, roles, areas..." class="w-full pl-10 p-3 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
                 </div>
+                <button onclick="exportToExcel()" class="bg-emerald-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 shadow-sm hover:bg-emerald-700 transition-all uppercase text-sm"><i data-lucide="file-spreadsheet" class="w-4 h-4"></i> Export Excel</button>
             </div>
-            <div class="google-card overflow-hidden">
+            <div class="bg-white border rounded-2xl overflow-hidden shadow-sm">
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left text-sm" id="employeeTable">
-                        <thead class="bg-gray-50"><tr id="tableHeaderRow" class="text-gray-600 border-b"></tr></thead>
-                        <tbody id="employeeTableBody" class="divide-y"></tbody>
+                    <table class="w-full text-left border-collapse" id="memberTable">
+                        <thead class="bg-gray-50 border-b">
+                            <tr id="tableHeaderRow"></tr>
+                        </thead>
+                        <tbody id="memberList"></tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="memberModal" class="fixed inset-0 z-[1100] bg-black/50 hidden flex items-center justify-center p-4">
-        <div class="bg-white large-modal p-8 shadow-2xl relative">
-            <div class="flex justify-between items-center mb-6">
-                <h3 id="modalTitle" class="text-2xl font-bold text-gray-800 uppercase tracking-tight">Add New Member</h3>
-                <button onclick="closeModal()" class="text-gray-400 hover:text-red-500 transition-colors"><i data-lucide="x" class="w-8 h-8"></i></button>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div>
-                    <label class="block text-[10px] font-bold text-gray-400 mb-1 uppercase px-1">Full Name</label>
-                    <input type="text" id="nameInput" class="w-full p-4 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50/50">
-                </div>
-                <div>
-                    <label class="block text-[10px] font-bold text-gray-400 mb-1 uppercase px-1">Role</label>
-                    <select id="roleInput" class="w-full p-4 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500 bg-white">
-                        <option value="Dev">Developer</option>
-                        <option value="Senior">Senior Developer</option>
-                        <option value="Tester">Tester</option>
-                        <option value="Senior tester">Senior Tester</option>
-                        <option value="Team Lead">Team Lead</option>
-                    </select>
-                </div>
-                <div id="dynamicFieldsContainer" class="col-span-full grid grid-cols-1 md:grid-cols-2 gap-6"></div>
-                <div class="col-span-full p-4 bg-red-50 rounded-2xl border border-red-100">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <h4 class="font-bold text-red-800 uppercase text-xs">Vacation Status</h4>
-                            <p class="text-[10px] text-red-600 font-medium">Mark member as currently on vacation</p>
-                        </div>
-                        <label class="switch"><input type="checkbox" id="vacationCheck"><span class="slider"></span></label>
-                    </div>
-                    <div class="mt-4"><input type="date" id="vacationEndInput" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-red-500"></div>
-                </div>
-            </div>
-            <button onclick="saveMember()" class="w-full py-4 bg-blue-600 text-white rounded-2xl font-bold text-lg hover:bg-blue-700 shadow-lg transition-all uppercase tracking-widest">Submit Member Data</button>
-        </div>
-    </div>
-
-    <div id="usersModal" class="fixed inset-0 z-[1100] bg-black/50 hidden flex items-center justify-center p-4">
-        <div class="bg-white large-modal p-8 shadow-2xl max-w-4xl">
-            <div class="flex justify-between items-center mb-6"><h3 class="text-2xl font-bold text-gray-800 uppercase">User Management</h3><button onclick="closeUsersModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button></div>
-            <div id="usersList" class="space-y-3 mb-6 max-h-[50vh] overflow-y-auto pr-2"></div>
-            <div class="flex flex-col md:flex-row gap-4"><button onclick="addNewUser()" class="flex-1 py-3 bg-emerald-600 text-white rounded-xl font-bold uppercase">+ ADD NEW USER</button><button onclick="saveUsers()" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold uppercase">SAVE USERS</button></div>
-        </div>
-    </div>
-
-    <div id="detailsPopup" class="fixed inset-0 z-[2000] bg-black/60 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl w-full max-w-2xl max-h-[85vh] overflow-hidden flex flex-col shadow-2xl">
+    <div id="memberModal" class="fixed inset-0 bg-black/60 hidden flex items-center justify-center z-[5000] p-4 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl">
             <div class="p-6 border-b flex justify-between items-center bg-gray-50">
-                <h3 id="popupTitle" class="text-xl font-bold text-gray-800 uppercase tracking-tight">Group Details</h3>
-                <button onclick="closePopup()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button>
+                <h3 id="modalTitle" class="text-xl font-bold text-gray-800 uppercase tracking-tight">Add Team Member</h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-red-500 transition-colors"><i data-lucide="x-circle" class="w-8 h-8"></i></button>
             </div>
-            <div id="popupList" class="p-6 overflow-y-auto grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+            <div class="p-8 max-h-[70vh] overflow-y-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="dynamicFieldsContainer"></div>
+                <div class="mt-8 pt-6 border-t flex flex-col md:flex-row gap-4">
+                    <button onclick="saveMember()" class="flex-1 bg-blue-600 text-white py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-blue-700 transition-all shadow-lg">Save Member Data</button>
+                    <button onclick="closeModal()" class="flex-1 bg-gray-100 text-gray-600 py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-gray-200 transition-all">Cancel</button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div id="setupModal" class="fixed inset-0 z-[1100] bg-black/50 hidden flex items-center justify-center p-4">
-        <div class="bg-white large-modal p-8 shadow-2xl">
-            <div class="flex justify-between items-center mb-6"><h3 class="text-2xl font-bold text-gray-800 uppercase">Fields Configuration</h3><button onclick="closeSetupModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button></div>
-            <div id="fieldsList" class="max-h-[50vh] overflow-y-auto mb-6 pr-2"></div>
-            <div class="flex flex-col md:flex-row gap-4"><button onclick="addNewField()" class="flex-1 py-3 bg-emerald-600 text-white rounded-xl font-bold uppercase">+ Add New Field</button><button onclick="saveToGitHub()" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold uppercase">Save Configuration</button></div>
+    <div id="setupModal" class="fixed inset-0 bg-black/60 hidden flex items-center justify-center z-[6000] p-4 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl">
+            <div class="p-6 border-b flex justify-between items-center bg-blue-600 text-white">
+                <h3 class="text-xl font-bold uppercase tracking-widest">Fields System Setup</h3>
+                <button onclick="document.getElementById('setupModal').classList.add('hidden')" class="hover:text-red-200"><i data-lucide="x-circle" class="w-8 h-8"></i></button>
+            </div>
+            <div class="p-6 max-h-[70vh] overflow-y-auto" id="fieldsList"></div>
+            <div class="p-6 border-t bg-gray-50 flex gap-4">
+                <button onclick="addNewField()" class="flex-1 py-3 bg-emerald-600 text-white rounded-xl font-bold uppercase">+ Add New Field</button>
+                <button onclick="saveFieldsConfig()" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold uppercase">Save & Sync</button>
+            </div>
         </div>
     </div>
 
-    <div id="visibilityModal" class="fixed inset-0 z-[1100] bg-black/50 hidden flex items-center justify-center p-4">
-        <div class="bg-white large-modal p-8 shadow-2xl max-w-4xl">
-            <div class="flex justify-between items-center mb-6"><h3 class="text-2xl font-bold text-gray-800 uppercase">Capacity Visibility</h3><button onclick="closeVisibilityModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button></div>
-            <div id="visibilityList" class="space-y-4 mb-6 max-h-[50vh] overflow-y-auto pr-2"></div>
-            <button onclick="saveVisibility()" class="w-full py-3 bg-blue-600 text-white rounded-xl font-bold uppercase">Apply Visibility Settings</button>
+    <div id="visibilityModal" class="fixed inset-0 bg-black/60 hidden flex items-center justify-center z-[6000] p-4 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl">
+            <div class="p-6 border-b flex justify-between items-center bg-orange-600 text-white">
+                <h3 class="text-xl font-bold uppercase tracking-widest">Visibility Controls</h3>
+                <button onclick="document.getElementById('visibilityModal').classList.add('hidden')" class="hover:text-red-200"><i data-lucide="x-circle" class="w-8 h-8"></i></button>
+            </div>
+            <div class="p-6 max-h-[70vh] overflow-y-auto">
+                <table class="w-full text-left">
+                    <thead><tr class="border-b"> <th class="py-2">Area Name</th> <th class="py-2 text-center">Dev</th> <th class="py-2 text-center">Tester</th> </tr></thead>
+                    <tbody id="visibilityList"></tbody>
+                </table>
+            </div>
+            <div class="p-6 border-t bg-gray-50">
+                <button onclick="saveVisibility()" class="w-full py-3 bg-blue-600 text-white rounded-xl font-bold uppercase">Update Visibility</button>
+            </div>
         </div>
     </div>
 
-    <div id="chartsSetupModal" class="fixed inset-0 z-[1100] bg-black/50 hidden flex items-center justify-center p-4">
-        <div class="bg-white large-modal p-8 shadow-2xl max-w-4xl">
-            <div class="flex justify-between items-center mb-6"><h3 class="text-2xl font-bold text-gray-800 uppercase">Charts Configuration</h3><button onclick="closeChartsSetupModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-6 h-6"></i></button></div>
-            <div id="chartsList" class="space-y-4 mb-6 max-h-[50vh] overflow-y-auto pr-2"></div>
-            <div class="flex flex-col md:flex-row gap-4"><button onclick="addNewChartConfig()" class="flex-1 py-3 bg-emerald-600 text-white rounded-xl font-bold uppercase">+ Add Chart</button><button onclick="saveChartsConfig()" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold uppercase">Save & Refresh</button></div>
+    <div id="chartsSetupModal" class="fixed inset-0 bg-black/60 hidden flex items-center justify-center z-[6000] p-4 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl">
+            <div class="p-6 border-b flex justify-between items-center bg-emerald-600 text-white">
+                <h3 class="text-xl font-bold uppercase tracking-widest">Charts Configuration</h3>
+                <button onclick="document.getElementById('chartsSetupModal').classList.add('hidden')" class="hover:text-red-200"><i data-lucide="x-circle" class="w-8 h-8"></i></button>
+            </div>
+            <div class="p-6 max-h-[70vh] overflow-y-auto grid grid-cols-1 md:grid-cols-2 gap-4" id="chartsSetupList"></div>
+            <div class="p-6 border-t bg-gray-50 flex gap-4">
+                <button onclick="addNewChartConfig()" class="flex-1 py-3 bg-emerald-600 text-white rounded-xl font-bold uppercase">+ Add Chart</button>
+                <button onclick="saveChartsConfig()" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold uppercase">Save & Refresh</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="usersModal" class="fixed inset-0 bg-black/60 hidden flex items-center justify-center z-[6000] p-4 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl">
+            <div class="p-6 border-b flex justify-between items-center bg-purple-600 text-white">
+                <h3 class="text-xl font-bold uppercase tracking-widest">User Access Management</h3>
+                <button onclick="document.getElementById('usersModal').classList.add('hidden')" class="hover:text-red-200"><i data-lucide="x-circle" class="w-8 h-8"></i></button>
+            </div>
+            <div class="p-6 max-h-[70vh] overflow-y-auto" id="usersList"></div>
+            <div class="p-6 border-t bg-gray-50 flex gap-4">
+                <button onclick="addNewUser()" class="flex-1 py-3 bg-emerald-600 text-white rounded-xl font-bold uppercase">+ Add User</button>
+                <button onclick="saveUsers()" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold uppercase">Save Users</button>
+            </div>
         </div>
     </div>
 
