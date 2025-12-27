@@ -788,7 +788,7 @@
     },
     {
       "id": "f1766864203478",
-      "label": "available after",
+      "label": "Available after",
       "type": "date",
       "showInTable": true,
       "options": []
@@ -880,5 +880,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-27T19:37:03.493Z"
+  "timestamp": "2025-12-27T19:37:17.837Z"
 }
