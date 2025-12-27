@@ -1,10 +1,22 @@
-const part1 = "ghp_eZJHtjKu64saMnyJ"; // الجزء الأول من التوكن
-const part2 = "IknGazE9sPmHos1mdTif"; // الجزء الثاني
-
-const GLOBAL_GITHUB_CONFIG = {
-    repoPath: "elmoatasemsaeed.github.io/NT_Team_HUB/",
-    filePath: "data.json",
-    branch: "main",
-    // نقوم بجمع الجزئين هنا لكي لا يكتشفه نظام الفحص التلقائي
-    token: part1 + part2 
+// --- Core Configuration & Constants ---
+const githubConfig = { 
+    repoPath: 'elmoatasemsaeed/NT_Team_HUB', 
+    filePath: 'data.json',
+    branch: 'main', 
+    token: '', 
+    sha: null 
 };
+
+const USERS_KEY = 'team_hub_users';
+const STORAGE_KEY = 'rememberedUser';
+
+// متغيرات عامة سيتم تعبئتها من الـ API
+let fieldsConfig = [];
+let chartsConfig = [];
+let employees = [];
+let users = []; 
+let visibilityConfig = {};
+let currentUserRole = null;
+let activeCharts = [];
+let currentEditingFieldIndex = null;
+let currentSort = { column: null, direction: 'asc' };
