@@ -809,7 +809,7 @@
         "Senior"
       ],
       "type": "doughnut",
-      "field": "workingIn"
+      "field": "area"
     },
     {
       "id": "c2",
@@ -820,7 +820,7 @@
         "Senior tester"
       ],
       "type": "doughnut",
-      "field": "workingIn"
+      "field": "area"
     }
   ],
   "visibility": {
