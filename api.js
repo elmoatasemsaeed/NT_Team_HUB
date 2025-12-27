@@ -29,119 +29,98 @@ async function loadFromGitHub(manual = false) {
             
             // تحديث المتغيرات العامة في التطبيق
             employees = content.employees || [];
-            fieldsConfig = content.fields || [];
+            fieldsConfig = content.fields || []; // تحميل إعدادات الحقول والخيارات
             users = content.users || [];
             chartsConfig = content.charts || [];
             visibilityConfig = content.visibility || {};
-            
-            // تحديث الواجهة بالبيانات الجديدة
-            renderAll();
 
-            if (manual) alert("Data synchronized successfully from Cloud!");
-            if (loadingEl) loadingEl.classList.add('hidden');
+            if (manual) alert("Data Refreshed Successfully!");
             return true;
         } else {
-            const errData = await response.json();
-            console.error("GitHub API Error:", errData);
-            if (manual) alert("Error fetching data: " + (errData.message || "Unknown error"));
+            if (manual) alert("Failed to load data. Please check Repo Path and Token.");
         }
-    } catch (err) {
-        console.error("Connection Error:", err);
-        if (manual) alert("Network error while syncing with GitHub.");
+    } catch (e) { 
+        console.error("Load error:", e);
+        if (manual) alert("Error connecting to GitHub.");
+    } finally { 
+        if (loadingEl) loadingEl.classList.add('hidden'); 
     }
-
-    if (loadingEl) loadingEl.classList.add('hidden');
     return false;
 }
 
 /**
- * حفظ البيانات الحالية إلى GitHub
+ * حفظ البيانات والنسخ الاحتياطي إلى GitHub
  */
 async function saveToGitHub() {
-    if (!githubConfig.token) { 
-        alert("GitHub Token is missing! Please login again."); 
-        return false; 
-    }
-
     const loadingEl = document.getElementById('loadingStatus');
-    if (loadingEl) {
-        loadingEl.innerText = "Saving to Cloud...";
-        loadingEl.classList.remove('hidden');
-    }
+    if (loadingEl) loadingEl.classList.remove('hidden');
+
+    // تجميع الكائن الذي سيتم رفعه (يشمل الحقول والموظفين والإعدادات)
+    const contentObj = {
+        employees: employees,
+        fields: fieldsConfig, // النسخة الاحتياطية للسيتاب (Backup)
+        users: users,
+        charts: chartsConfig,
+        visibility: visibilityConfig
+    };
+
+    // تحويل الكائن إلى Base64 مع دعم العربية
+    const contentBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(contentObj, null, 2))));
 
     try {
         const url = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}`;
-        
-        // تجهيز الكائن الذي سيتم حفظه
-        const fullData = {
-            employees,
-            fields: fieldsConfig,
-            users,
-            charts: chartsConfig,
-            visibility: visibilityConfig
-        };
-
-        // تحويل البيانات لنظام Base64 مع دعم النصوص العربية
-        const jsonStr = JSON.stringify(fullData, null, 2);
-        const encodedContent = btoa(unescape(encodeURIComponent(jsonStr)));
-
         const response = await fetch(url, {
             method: 'PUT',
-            headers: {
-                'Authorization': `token ${githubConfig.token}`,
-                'Content-Type': 'application/json'
+            headers: { 
+                'Authorization': `token ${githubConfig.token}`, 
+                'Content-Type': 'application/json' 
             },
             body: JSON.stringify({
-                message: `Update via Team Hub [${new Date().toLocaleString()}]`,
-                content: encodedContent,
-                sha: githubConfig.sha, // ضروري لتحديث ملف موجود
+                message: `Update Fields & Data: ${new Date().toLocaleString()}`,
+                content: contentBase64,
+                sha: githubConfig.sha,
                 branch: githubConfig.branch
             })
         });
 
         if (response.ok) {
-            const resData = await response.json();
-            githubConfig.sha = resData.content.sha; // تحديث الـ SHA الجديد
-            if (loadingEl) loadingEl.classList.add('hidden');
+            const data = await response.json();
+            githubConfig.sha = data.content.sha; // تحديث الـ SHA الجديد بعد الحفظ
             return true;
         } else {
-            const errData = await response.json();
-            alert("Save Failed: " + (errData.message || "Conflict or invalid token"));
+            const err = await response.json();
+            alert("Save failed: " + (err.message || "Unknown error"));
         }
-    } catch (err) {
-        console.error("Save Error:", err);
-        alert("Network error while saving.");
-    }
-
-    if (loadingEl) {
-        loadingEl.innerText = "Syncing with GitHub...";
-        loadingEl.classList.add('hidden');
+    } catch (e) { 
+        console.error("Save error:", e);
+        alert("Network error while saving to GitHub."); 
+    } finally { 
+        if (loadingEl) loadingEl.classList.add('hidden'); 
     }
     return false;
 }
 
 /**
- * التحقق من تسجيل الدخول وصلاحيات المستخدم
+ * التحقق من تسجيل الدخول
  */
 async function checkLogin() {
-    const userVal = document.getElementById('userInput').value.trim();
-    const passVal = document.getElementById('passInput').value.trim();
-    const tokenVal = document.getElementById('ghTokenInput').value.trim();
+    const userVal = document.getElementById('userInput').value;
+    const passVal = document.getElementById('passInput').value;
+    const tokenVal = document.getElementById('ghTokenInput').value;
     const remember = document.getElementById('rememberMe').checked;
 
     if (!userVal || !passVal || !tokenVal) {
-        alert("Please enter Username, Password and GitHub Token");
+        alert("Please fill all login fields!");
         return;
     }
 
-    // تعيين التوكن للاتصال بـ GitHub
+    // إعداد التوكن لبدء التحميل
     githubConfig.token = tokenVal;
+
+    const loaded = await loadFromGitHub();
     
-    // محاولة جلب البيانات كاختبار للتوكن وصحة الاتصال
-    const syncOk = await loadFromGitHub(false);
-    
-    if (syncOk) {
-        // البحث عن المستخدم في القائمة المحملة من السحاب
+    if (loaded) {
+        // البحث عن المستخدم في البيانات التي تم تحميلها
         const foundUser = users.find(u => u.username === userVal && u.password === passVal);
         
         if (foundUser) {
@@ -176,4 +155,12 @@ async function checkLogin() {
     } else {
         alert("Login failed! Could not connect to GitHub. Please check your Token and Repo Path.");
     }
+}
+
+/**
+ * تسجيل الخروج
+ */
+function logout() {
+    localStorage.removeItem(STORAGE_KEY);
+    location.reload();
 }
