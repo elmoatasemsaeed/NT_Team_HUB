@@ -1,13 +1,19 @@
 // --- Data Management & API Logic ---
 
 async function loadFromGitHub(manual = false) {
-    if (!githubConfig.token) { if (manual) alert("No GitHub Token provided!"); return false; }
+    if (!githubConfig.token) { 
+        if (manual) alert("No GitHub Token provided!"); 
+        return false; 
+    }
     const loadingEl = document.getElementById('loadingStatus');
     if (loadingEl) loadingEl.classList.remove('hidden');
 
     try {
         const url = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}?ref=${githubConfig.branch}`;
-        const response = await fetch(url, { headers: { 'Authorization': `token ${githubConfig.token}` }, cache: 'no-store' });
+        const response = await fetch(url, { 
+            headers: { 'Authorization': `token ${githubConfig.token}` },
+            cache: 'no-store'
+        });
 
         if (response.ok) {
             const data = await response.json();
@@ -21,13 +27,13 @@ async function loadFromGitHub(manual = false) {
             visibilityConfig = content.visibility || {};
 
             if (manual) alert("Data Refreshed Successfully!");
-            renderAll();
             return true;
         }
-    } catch (e) { console.error("Load error:", e); }
+    } catch (e) { console.error(e); }
     finally { if (loadingEl) loadingEl.classList.add('hidden'); }
     return false;
 }
+// ... باقي دوال الحفظ ...
 
 async function saveToGitHub() {
     const loadingEl = document.getElementById('loadingStatus');
@@ -91,3 +97,4 @@ async function checkLogin() {
         alert("Login failed! Could not connect to GitHub. Check Token/Path.");
     }
 }
+
