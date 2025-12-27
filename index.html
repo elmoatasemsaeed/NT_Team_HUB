@@ -267,8 +267,15 @@
         }
 
         async function syncToGitHub() {
-            if (!githubConfig.token) return;
-            const fullData = { employees, fields: fieldsConfig, users, visibility: visibilityConfig, charts: chartsConfig, timestamp: new Date().toISOString() };
+            if (!githubConfig.token) return false;
+            const fullData = { 
+                employees, 
+                fields: fieldsConfig, 
+                users, 
+                visibility: visibilityConfig, 
+                charts: chartsConfig, 
+                timestamp: new Date().toISOString() 
+            };
             try {
                 const url = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}`;
                 const body = { 
@@ -277,9 +284,21 @@
                     branch: githubConfig.branch, 
                     sha: githubConfig.sha 
                 };
-                const response = await fetch(url, { method: 'PUT', headers: { 'Authorization': `token ${githubConfig.token}` }, body: JSON.stringify(body) });
-                if (response.ok) { const resData = await response.json(); githubConfig.sha = resData.content.sha; }
-            } catch (err) { console.error(err); }
+                const response = await fetch(url, { 
+                    method: 'PUT', 
+                    headers: { 'Authorization': `token ${githubConfig.token}` }, 
+                    body: JSON.stringify(body) 
+                });
+                if (response.ok) { 
+                    const resData = await response.json(); 
+                    githubConfig.sha = resData.content.sha;
+                    return true;
+                }
+                return false;
+            } catch (err) { 
+                console.error("Sync Error:", err); 
+                return false;
+            }
         }
 
         async function checkLogin() {
@@ -373,7 +392,6 @@
             });
         }
 
-        // --- UPDATED CAPACITY LOGIC ---
         function updateCapacity() {
             const areaField = fieldsConfig.find(f => f.id === 'area');
             const AREAS = (areaField && areaField.options) ? areaField.options.filter(a => a !== "Team Leader") : [];
@@ -438,9 +456,14 @@
         }
 
         // --- Helper Functions & Modals ---
-        function save(render = true) { syncToGitHub(); if(render) renderAll(); }
+        async function save(render = true) { 
+            const ok = await syncToGitHub(); 
+            if(render && ok) renderAll(); 
+        }
+
         function toggleVac(idx, val) { employees[idx].isVacation = val; save(); }
         function deleteEmp(idx) { if(confirm('Delete?')) { employees.splice(idx,1); save(); } }
+        
         function editEmp(idx) {
             const emp = employees[idx]; document.getElementById('editIndex').value = idx;
             fieldsConfig.forEach(f => {
@@ -473,12 +496,25 @@
             document.getElementById('fieldsList').innerHTML = fieldsConfig.map((f, i) => `<div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-6 gap-3 items-end shadow-sm"><div><label class="text-[10px] font-bold uppercase">Label</label><input type="text" value="${f.label}" onchange="fieldsConfig[${i}].label=this.value" class="w-full p-2 border rounded text-sm"></div><div><label class="text-[10px] font-bold uppercase">Type</label><select onchange="fieldsConfig[${i}].type=this.value; openSetupModal()" class="w-full p-2 border rounded text-sm"><option value="text" ${f.type==='text'?'selected':''}>Text</option><option value="select" ${f.type==='select'?'selected':''}>Select</option><option value="multiselect" ${f.type==='multiselect'?'selected':''}>Multi</option><option value="date" ${f.type==='date'?'selected':''}>Date</option></select></div><div class="md:col-span-2">${['select','multiselect'].includes(f.type) ? `<button onclick="openOptionsManager(${i})" class="w-full p-2 bg-white border border-dashed border-blue-400 text-blue-600 rounded text-xs font-bold">Options (${(f.options || []).length})</button>` : ''}</div><div class="flex flex-col items-center justify-center pb-2"><input type="checkbox" ${f.showInTable !== false ? 'checked' : ''} onchange="fieldsConfig[${i}].showInTable = this.checked" class="w-5 h-5 accent-blue-600"></div><button onclick="fieldsConfig.splice(${i},1); openSetupModal()" class="text-red-500 p-2"><i data-lucide="trash-2"></i></button></div>`).join('');
             document.getElementById('setupModal').classList.remove('hidden'); lucide.createIcons();
         }
+
         function openOptionsManager(idx) { currentEditingFieldIndex = idx; renderOptionsList(); document.getElementById('optionsModal').classList.remove('hidden'); }
-        function renderOptionsList() { const list = fieldsConfig[currentEditingFieldIndex].options; document.getElementById('optionsItemsContainer').innerHTML = list.map((opt, i) => `<div class="flex gap-2 bg-gray-50 p-1 rounded border"><input type="text" value="${opt}" onchange="fieldsConfig[${currentEditingFieldIndex}].options[${i}]=this.value" class="flex-1 p-2 bg-transparent text-sm outline-none rounded"><button onclick="fieldsConfig[currentEditingFieldIndex}].options.splice(${i},1); renderOptionsList()" class="text-red-400 p-2"><i data-lucide="x-circle" class="w-4 h-4"></i></button></div>`).join(''); lucide.createIcons(); }
+        function renderOptionsList() { const list = fieldsConfig[currentEditingFieldIndex].options; document.getElementById('optionsItemsContainer').innerHTML = list.map((opt, i) => `<div class="flex gap-2 bg-gray-50 p-1 rounded border"><input type="text" value="${opt}" onchange="fieldsConfig[currentEditingFieldIndex}].options[${i}]=this.value" class="flex-1 p-2 bg-transparent text-sm outline-none rounded"><button onclick="fieldsConfig[currentEditingFieldIndex}].options.splice(${i},1); renderOptionsList()" class="text-red-400 p-2"><i data-lucide="x-circle" class="w-4 h-4"></i></button></div>`).join(''); lucide.createIcons(); }
         function addOptionField() { fieldsConfig[currentEditingFieldIndex].options.push(""); renderOptionsList(); }
         function closeOptionsManager() { document.getElementById('optionsModal').classList.add('hidden'); openSetupModal(); }
         function addNewFieldSetup() { fieldsConfig.push({id:'f'+Date.now(), label:'New Field', type:'text', showInTable:true, options: []}); openSetupModal(); }
-        function saveSetup() { save(false); location.reload(); }
+        
+        async function saveSetup() { 
+            document.getElementById('loadingStatus').classList.remove('hidden');
+            const ok = await syncToGitHub(); 
+            if(ok) {
+                alert("تم الحفظ بنجاح!");
+                location.reload(); 
+            } else {
+                alert("حدث خطأ أثناء الحفظ في GitHub.");
+            }
+            document.getElementById('loadingStatus').classList.add('hidden');
+        }
+        
         function closeSetupModal() { document.getElementById('setupModal').classList.add('hidden'); }
 
         function openVisibilityModal() {
@@ -490,14 +526,17 @@
             }).join('');
             document.getElementById('visibilityModal').classList.remove('hidden');
         }
-        function saveVisibility() {
+
+        async function saveVisibility() {
             document.querySelectorAll('#visibilityList tr').forEach(tr => {
                 const devBox = tr.querySelector('.v-dev'); if(!devBox) return;
                 const area = devBox.dataset.area;
                 visibilityConfig[area] = { dev: tr.querySelector('.v-dev').checked, tester: tr.querySelector('.v-tester').checked };
             });
-            save(); document.getElementById('visibilityModal').classList.add('hidden');
+            await save(); 
+            document.getElementById('visibilityModal').classList.add('hidden');
         }
+
         function closeVisibilityModal() { document.getElementById('visibilityModal').classList.add('hidden'); }
 
         function openUsersModal() {
@@ -505,7 +544,7 @@
             document.getElementById('usersModal').classList.remove('hidden'); lucide.createIcons();
         }
         function addNewUser() { users.push({username:'user', password:'123', role:'viewer'}); openUsersModal(); }
-        function saveUsers() { save(false); alert('Users Saved'); }
+        async function saveUsers() { await save(false); alert('Users Saved'); }
         function closeUsersModal() { document.getElementById('usersModal').classList.add('hidden'); }
 
         function openChartsSetupModal() {
@@ -513,7 +552,7 @@
             document.getElementById('chartsSetupModal').classList.remove('hidden'); lucide.createIcons();
         }
         function addNewChartConfig() { chartsConfig.push({ id: 'c'+Date.now(), title: 'Analysis', targetField: 'area', type: 'doughnut' }); openChartsSetupModal(); }
-        function saveChartsConfig() { save(); document.getElementById('chartsSetupModal').classList.add('hidden'); }
+        async function saveChartsConfig() { await save(); document.getElementById('chartsSetupModal').classList.add('hidden'); }
         function closeChartsSetupModal() { document.getElementById('chartsSetupModal').classList.add('hidden'); }
 
         function showDetailsExtended(area, roles, isVac) {
