@@ -7,7 +7,6 @@ const githubConfig = {
     sha: null 
 };
 
-const USERS_KEY = 'team_hub_users';
 const STORAGE_KEY = 'rememberedUser';
 
 let fieldsConfig = [];
