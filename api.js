@@ -11,52 +11,20 @@ async function loadFromGitHub(manual = false) {
             githubConfig.sha = data.sha;
             const content = JSON.parse(decodeURIComponent(escape(atob(data.content))));
             
-            // تحديث المتغيرات العالمية من الملف المستلم
             if (content.employees) employees = content.employees;
             if (content.fields) fieldsConfig = content.fields;
             if (content.users) { users = content.users; localStorage.setItem(USERS_KEY, JSON.stringify(users)); }
             if (content.visibility) visibilityConfig = content.visibility;
             if (content.charts) chartsConfig = content.charts;
             
-            renderAll(); // استدعاء دالة الرسم من ملف logic.js
+            renderAll(); 
             if(manual) alert("Sync Success!");
             return true;
         } else { throw new Error("Failed to fetch data"); }
     } catch (err) { 
         console.error(err); 
-        if(manual) alert("Cloud Sync Failed. Check Token and Connection.");
         return false;
     } finally { document.getElementById('loadingStatus').classList.add('hidden'); }
-}
-
-async function syncToGitHub() {
-    if (!githubConfig.token) return;
-    const fullData = { 
-        employees, 
-        fields: fieldsConfig, 
-        users, 
-        visibility: visibilityConfig, 
-        charts: chartsConfig, 
-        timestamp: new Date().toISOString() 
-    };
-    try {
-        const url = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}`;
-        const body = { 
-            message: "Update Data Hub", 
-            content: btoa(unescape(encodeURIComponent(JSON.stringify(fullData, null, 2)))), 
-            branch: githubConfig.branch, 
-            sha: githubConfig.sha 
-        };
-        const response = await fetch(url, { 
-            method: 'PUT', 
-            headers: { 'Authorization': `token ${githubConfig.token}` }, 
-            body: JSON.stringify(body) 
-        });
-        if (response.ok) { 
-            const resData = await response.json(); 
-            githubConfig.sha = resData.content.sha; 
-        }
-    } catch (err) { console.error(err); }
 }
 
 async function checkLogin() {
@@ -74,8 +42,6 @@ async function checkLogin() {
         const foundUser = users.find(u => u.username.toLowerCase() === userVal && u.password === passVal);
         if (foundUser) {
             if (rememberMe) localStorage.setItem(STORAGE_KEY, JSON.stringify({ user: userVal, pass: passVal, token: tokenVal }));
-            else localStorage.removeItem(STORAGE_KEY);
-            
             currentUserRole = foundUser.role;
             document.body.setAttribute('data-user-role', currentUserRole);
             document.getElementById('loginOverlay').style.display = 'none';
@@ -83,11 +49,11 @@ async function checkLogin() {
             document.getElementById('displayRole').innerText = `${foundUser.username} (${foundUser.role})`;
             renderAll();
         } else {
-            document.getElementById('loginError').innerText = "Access Denied: User not found in Cloud Database!";
+            document.getElementById('loginError').innerText = "Access Denied: User not found!";
             document.getElementById('loginError').classList.remove('hidden');
         }
     } else {
-        document.getElementById('loginError').innerText = "GitHub Sync Failed! Invalid Token or Repo unreachable.";
+        document.getElementById('loginError').innerText = "GitHub Sync Failed! Check Token or Repo Path.";
         document.getElementById('loginError').classList.remove('hidden');
     }
 }
