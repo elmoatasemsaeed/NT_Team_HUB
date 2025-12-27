@@ -1,5 +1,4 @@
-let currentEditingIndex = -1;
-let chartsInstances = {};
+// --- Business Logic & UI Rendering ---
 
 function renderAll() { 
     updateCapacity(); 
@@ -9,96 +8,114 @@ function renderAll() {
     if (typeof lucide !== 'undefined') lucide.createIcons(); 
 }
 
+function renderTable() {
+    const tbody = document.getElementById('employeeTableBody');
+    const thead = document.getElementById('tableHeader');
+    if (!tbody || !thead) return;
+
+    // Build Header
+    let headHtml = `<th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase cursor-pointer" onclick="handleSort('name')">Name</th>`;
+    headHtml += `<th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase cursor-pointer" onclick="handleSort('role')">Role</th>`;
+    fieldsConfig.forEach(f => {
+        headHtml += `<th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase cursor-pointer" onclick="handleSort('${f.id}')">${f.label}</th>`;
+    });
+    headHtml += `<th class="px-4 py-3 text-right text-xs font-bold text-gray-500 uppercase">Actions</th>`;
+    thead.innerHTML = `<tr>${headHtml}</tr>`;
+
+    // Filter and Sort
+    let filtered = [...employees];
+    const nameFilter = document.getElementById('filterName')?.value.toLowerCase();
+    if (nameFilter) filtered = filtered.filter(e => e.name.toLowerCase().includes(nameFilter));
+
+    filtered.sort((a, b) => {
+        let valA = a[sortConfig.key] || '';
+        let valB = b[sortConfig.key] || '';
+        return sortConfig.direction === 'asc' ? valA.toString().localeCompare(valB) : valB.toString().localeCompare(valA);
+    });
+
+    // Build Body
+    tbody.innerHTML = filtered.map((e, idx) => `
+        <tr class="border-t hover:bg-gray-50 transition ${e.isVacation ? 'vacation-row' : ''}">
+            <td class="px-4 py-3 font-medium ${e.isVacation ? 'line-through text-red-500' : ''}">${e.name}</td>
+            <td class="px-4 py-3"><span class="px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-700 font-bold">${e.role}</span></td>
+            ${fieldsConfig.map(f => `<td class="px-4 py-3 text-sm">${Array.isArray(e[f.id]) ? e[f.id].join(', ') : (e[f.id] || '-')}</td>`).join('')}
+            <td class="px-4 py-3 text-right space-x-2">
+                <button onclick="editEmployee(${employees.indexOf(e)})" class="text-blue-600 hover:text-blue-900"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
+                <button onclick="deleteEmployee(${employees.indexOf(e)})" class="text-red-600 hover:text-red-900 admin-only"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+            </td>
+        </tr>
+    `).join('');
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+}
+
 function updateCapacity() {
     const devGrid = document.getElementById('devCapacityGrid');
     const testGrid = document.getElementById('testerCapacityGrid');
     if (!devGrid || !testGrid) return;
 
-    devGrid.innerHTML = '';
-    testGrid.innerHTML = '';
+    const devs = employees.filter(e => e.role?.toLowerCase().includes('dev') || e.role?.toLowerCase().includes('senior'));
+    const testers = employees.filter(e => e.role?.toLowerCase().includes('tester'));
 
-    const devs = employees.filter(e => e.role && (e.role.toLowerCase().includes('dev') || e.role.toLowerCase().includes('lead')));
-    const testers = employees.filter(e => e.role && e.role.toLowerCase().includes('tester'));
-
-    const renderCards = (list, container) => {
+    const buildGrid = (list) => {
         const groups = {};
         list.forEach(e => {
-            // ضمان أن area دائماً مصفوفة
             const areas = Array.isArray(e.area) ? e.area : [e.area || 'Other'];
-            areas.forEach(a => {
-                if(!groups[a]) groups[a] = [];
-                groups[a].push(e);
-            });
+            areas.forEach(a => { groups[a] = groups[a] || []; groups[a].push(e); });
         });
 
-        Object.keys(groups).forEach(groupName => {
-            const section = document.createElement('div');
-            section.className = 'mb-6';
-            section.innerHTML = `<h4 class="text-sm font-bold text-gray-500 mb-2 border-b pb-1 uppercase">${groupName}</h4>
-                                 <div class="grid grid-cols-2 gap-2"></div>`;
-            const grid = section.querySelector('div');
-            
-            groups[groupName].forEach(emp => {
-                const card = document.createElement('div');
-                // توحيد كلاس الإجازة مع الـ CSS
-                const statusClass = emp.isVacation ? 'vacation-row border-red-200' : 'bg-white border-gray-200';
-                card.className = `p-3 border rounded-lg shadow-sm ${statusClass} transition-all`;
-                card.innerHTML = `
-                    <div class="font-bold text-gray-800">${emp.name}</div>
-                    <div class="text-xs text-gray-500">${emp.role}</div>
-                    ${emp.isVacation ? `<div class="text-[10px] text-red-600 font-bold mt-1">ON VACATION UNTIL: ${emp.vacationEnd}</div>` : ''}
-                `;
-                grid.appendChild(card);
-            });
-            container.appendChild(section);
-        });
+        return Object.entries(groups).map(([name, members]) => {
+            const vacationCount = members.filter(m => m.isVacation).length;
+            const activeCount = members.length - vacationCount;
+            return `
+                <div class="google-card p-4 cursor-pointer" onclick="showDetails('${name}', ${JSON.stringify(members).replace(/"/g, '&quot;')})">
+                    <h4 class="font-bold text-gray-700 border-b pb-2 mb-2">${name}</h4>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-green-600">Active: ${activeCount}</span>
+                        <span class="text-red-500">Vacation: ${vacationCount}</span>
+                    </div>
+                </div>
+            `;
+        }).join('');
     };
 
-    renderCards(devs, devGrid);
-    renderCards(testers, testGrid);
+    devGrid.innerHTML = buildGrid(devs);
+    testGrid.innerHTML = buildGrid(testers);
 }
 
-function renderTable() {
-    const tbody = document.querySelector('#employeeTable tbody');
-    if (!tbody) return;
-    tbody.innerHTML = '';
-
-    employees.forEach((emp, index) => {
-        const row = document.createElement('tr');
-        row.className = emp.isVacation ? 'vacation-row' : 'hover:bg-gray-50';
-        row.innerHTML = `
-            <td class="p-4 border-b text-sm">${emp.name}</td>
-            <td class="p-4 border-b text-sm">${emp.role}</td>
-            <td class="p-4 border-b text-sm">${Array.isArray(emp.area) ? emp.area.join(', ') : emp.area}</td>
-            <td class="p-4 border-b text-center admin-only">
-                <button onclick="editEmployee(${index})" class="text-blue-600 hover:text-blue-800 mr-2"><i data-lucide="edit-2"></i></button>
-                <button onclick="deleteEmployee(${index})" class="text-red-600 hover:text-red-800"><i data-lucide="trash-2"></i></button>
-            </td>
-        `;
-        tbody.appendChild(row);
-    });
-    if (typeof lucide !== 'undefined') lucide.createIcons();
+function showDetails(title, list) {
+    document.getElementById('popupTitle').innerText = title;
+    document.getElementById('popupList').innerHTML = list.map(e => `
+        <div class="p-3 border rounded-lg ${e.isVacation ? 'bg-red-50' : 'bg-gray-50'}">
+            <b class="${e.isVacation ? 'line-through text-red-600' : ''}">${e.name}</b>
+            <div class="text-xs text-gray-500">${e.role} ${e.isVacation ? '(Ends: '+e.vacationEnd+')' : ''}</div>
+        </div>
+    `).join('');
+    document.getElementById('detailsPopup').classList.remove('hidden');
 }
 
-// دالة حفظ الموظف الجديدة تضمن تحويل النص لمصفوفة
-function saveEmployee() {
-    const formData = {};
-    fieldsConfig.forEach(f => {
-        const val = document.getElementById(`field_${f.id}`).value;
-        // تحويل الـ area و workingIn لمصفوفة عند الحفظ
-        if(f.id === 'area' || f.id === 'workingIn') {
-            formData[f.id] = val.split(',').map(item => item.trim());
-        } else {
-            formData[f.id] = val;
-        }
+function closePopup() { document.getElementById('detailsPopup').classList.add('hidden'); }
+
+function renderCharts() {
+    chartsConfig.forEach(c => {
+        const canvas = document.getElementById(`chart_${c.id}`);
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const filtered = employees.filter(e => c.filterRoles.length === 0 || c.filterRoles.some(r => e.role.toLowerCase().includes(r.toLowerCase())));
+        const counts = {};
+        filtered.forEach(e => {
+            const val = e[c.field] || 'N/A';
+            const keys = Array.isArray(val) ? val : [val];
+            keys.forEach(k => counts[k] = (counts[k] || 0) + 1);
+        });
+
+        if (chartsInstances[c.id]) chartsInstances[c.id].destroy();
+        chartsInstances[c.id] = new Chart(ctx, {
+            type: c.type,
+            data: {
+                labels: Object.keys(counts),
+                datasets: [{ data: Object.values(counts), backgroundColor: ['#4285F4', '#34A853', '#FBBC05', '#EA4335', '#A142F4'] }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
     });
-    
-    formData.isVacation = document.getElementById('field_isVacation').checked;
-    formData.vacationEnd = document.getElementById('field_vacationEnd').value;
-
-    if (currentEditingIndex > -1) employees[currentEditingIndex] = formData;
-    else employees.push(formData);
-
-    closeModal();
-    renderAll();
 }
