@@ -27,8 +27,10 @@ async function loadFromGitHub(manual = false) {
             chartsConfig = content.charts || [];
             visibilityConfig = content.visibility || {};
             
-            renderAll(); 
-            if(manual) alert("Sync Success!");
+            if(manual) {
+                renderAll();
+                alert("Sync Success!");
+            }
             if(loadingEl) loadingEl.classList.add('hidden');
             return true;
         } else {
@@ -56,7 +58,6 @@ async function saveToGitHub() {
         visibility: visibilityConfig 
     };
     
-    // Safe Base64 Encoding for Arabic
     const b64Content = btoa(unescape(encodeURIComponent(JSON.stringify(contentObj, null, 2))));
 
     try {
@@ -105,6 +106,8 @@ async function checkLogin() {
         if (foundUser) {
             currentUserRole = foundUser.role;
             document.body.setAttribute('data-user-role', currentUserRole);
+            
+            // إظهار الواجهة أولاً لضمان وجود العناصر في DOM
             document.getElementById('loginOverlay').style.display = 'none';
             document.getElementById('mainContent').classList.remove('hidden');
             document.getElementById('displayRole').innerText = `${foundUser.username} (${foundUser.role})`;
@@ -116,6 +119,8 @@ async function checkLogin() {
                     token: tokenVal
                 }));
             }
+            
+            // الآن نقوم بالرندرة بعد أن أصبحت العناصر مرئية
             renderAll();
         } else {
             document.getElementById('loginError').innerText = "Invalid Username or Password!";
