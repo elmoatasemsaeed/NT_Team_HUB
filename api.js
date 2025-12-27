@@ -15,10 +15,9 @@ async function loadFromGitHub(manual = false) {
         if (response.ok) {
             const data = await response.json();
             githubConfig.sha = data.sha;
-            // فك التشفير مع دعم اللغة العربية
+            // فك التشفير مع دعم كامل للغة العربية (Base64 Safe)
             const content = JSON.parse(decodeURIComponent(escape(atob(data.content))));
             
-            // تحديث المتغيرات العامة من الملف
             employees = content.employees || [];
             fieldsConfig = content.fields || [];
             users = content.users || [];
@@ -30,6 +29,7 @@ async function loadFromGitHub(manual = false) {
             if(manual) alert("Sync Success!");
             return true;
         } else {
+            if(manual) alert("Error syncing from GitHub");
             return false;
         }
     } catch (err) { 
@@ -42,22 +42,24 @@ async function loadFromGitHub(manual = false) {
 
 async function saveToGitHub() {
     if (!githubConfig.token || !githubConfig.sha) {
-        alert("Sync error: Token or SHA missing. Please login again.");
+        alert("Sync error: Missing Token or SHA. Please login again.");
         return;
     }
     
     document.getElementById('loadingStatus').classList.remove('hidden');
-    const fullData = {
-        employees,
-        fields: fieldsConfig,
-        users,
-        visibility: visibilityConfig,
+    const fullData = { 
+        employees, 
+        fields: fieldsConfig, 
+        users, 
+        visibility: visibilityConfig, 
         charts: chartsConfig,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString() 
     };
 
     try {
+        // تشفير يدعم العربية قبل التحويل لـ Base64
         const contentBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(fullData, null, 2))));
+        
         const response = await fetch(`https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}`, {
             method: 'PUT',
             headers: {
@@ -65,7 +67,7 @@ async function saveToGitHub() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                message: "Update Team Hub Data",
+                message: `Update Team Hub data: ${new Date().toLocaleString()}`,
                 content: contentBase64,
                 sha: githubConfig.sha,
                 branch: githubConfig.branch
@@ -73,23 +75,23 @@ async function saveToGitHub() {
         });
 
         if (response.ok) {
-            const resData = await response.json();
-            githubConfig.sha = resData.content.sha;
-            alert("Changes saved successfully to Cloud!");
-            renderAll();
+            const data = await response.json();
+            githubConfig.sha = data.content.sha;
+            console.log("Saved Successfully");
         } else {
-            alert("Failed to save. Check console for details.");
+            alert("Failed to save to Cloud. Checking for updates...");
+            await loadFromGitHub(); // محاولة جلب الـ SHA الجديد في حال حدوث تضارب
         }
     } catch (err) {
-        console.error("Save error:", err);
+        console.error("Save Error:", err);
     } finally {
         document.getElementById('loadingStatus').classList.add('hidden');
     }
 }
 
 async function checkLogin() {
-    const userVal = document.getElementById('userInput').value.trim().toLowerCase();
-    const passVal = document.getElementById('passInput').value;
+    const userVal = document.getElementById('userInput').value.trim();
+    const passVal = document.getElementById('passInput').value.trim();
     const tokenVal = document.getElementById('ghTokenInput').value.trim();
     const remember = document.getElementById('rememberMe').checked;
     
