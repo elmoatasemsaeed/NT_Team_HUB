@@ -2,7 +2,7 @@
 
 async function loadFromGitHub(manual = false) {
     if (!githubConfig.token) { 
-        if (manual) alert("No GitHub Token provided!"); 
+        if (manual) alert("Please enter GitHub Token!"); 
         return false; 
     }
 
@@ -19,6 +19,7 @@ async function loadFromGitHub(manual = false) {
         if (response.ok) {
             const data = await response.json();
             githubConfig.sha = data.sha;
+            // Decode content from Base64
             const content = JSON.parse(decodeURIComponent(escape(atob(data.content))));
             
             employees = content.employees || [];
@@ -27,7 +28,7 @@ async function loadFromGitHub(manual = false) {
             chartsConfig = content.charts || [];
             visibilityConfig = content.visibility || {};
 
-            if (manual) alert("Data Refreshed Successfully!");
+            if (manual) alert("Data Sync Successful!");
             return true;
         }
     } catch (e) {
@@ -39,9 +40,10 @@ async function loadFromGitHub(manual = false) {
 }
 
 async function saveToGitHub() {
-    if (!githubConfig.token) return alert("Sync failed: No Token!");
+    if (currentUserRole !== 'admin') return alert("Access Denied: Admins Only");
+    if (!githubConfig.token || !githubConfig.sha) return alert("Connection Error");
 
-    const content = {
+    const newContent = {
         employees,
         fields: fieldsConfig,
         users,
@@ -49,68 +51,28 @@ async function saveToGitHub() {
         visibility: visibilityConfig
     };
 
-    const b64Content = btoa(unescape(encodeURIComponent(JSON.stringify(content, null, 2))));
-    
+    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(newContent, null, 2))));
+
     try {
-        const url = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}`;
-        const response = await fetch(url, {
+        const response = await fetch(`https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}`, {
             method: 'PUT',
             headers: { 'Authorization': `token ${githubConfig.token}`, 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                message: `Update Team Hub: ${new Date().toLocaleString()}`,
-                content: b64Content,
+                message: `Update by ${document.getElementById('displayRole').innerText}`,
+                content: encoded,
                 sha: githubConfig.sha,
                 branch: githubConfig.branch
             })
         });
 
         if (response.ok) {
-            const data = await response.json();
-            githubConfig.sha = data.content.sha;
-            console.log("Saved successfully!");
-            return true;
+            const resData = await response.json();
+            githubConfig.sha = resData.content.sha;
+            alert("Saved Successfully to Cloud!");
         } else {
-            const err = await response.json();
-            alert("Error saving: " + err.message);
+            alert("Save Failed! Check permissions.");
         }
     } catch (e) {
-        alert("Connection Error!");
+        alert("Error saving data.");
     }
-    return false;
-}
-
-async function checkLogin() {
-    const userVal = document.getElementById('userInput').value;
-    const passVal = document.getElementById('passInput').value;
-    const tokenVal = document.getElementById('ghTokenInput').value;
-    const remember = document.getElementById('rememberMe').checked;
-
-    githubConfig.token = tokenVal;
-    const success = await loadFromGitHub();
-
-    if (success) {
-        const foundUser = users.find(u => u.username === userVal && u.password === passVal);
-        if (foundUser) {
-            currentUserRole = foundUser.role;
-            document.body.setAttribute('data-user-role', currentUserRole);
-            document.getElementById('displayRole').innerText = `${foundUser.username} (${foundUser.role.toUpperCase()})`;
-            document.getElementById('loginOverlay').style.display = 'none';
-            document.getElementById('mainContent').classList.remove('hidden');
-
-            if (remember) {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify({ user: userVal, pass: passVal, token: tokenVal }));
-            }
-            renderAll();
-        } else {
-            document.getElementById('loginError').classList.remove('hidden');
-            document.getElementById('loginError').innerText = "Invalid Username or Password!";
-        }
-    } else {
-        alert("Failed to connect to GitHub. Please check Token and Repo.");
-    }
-}
-
-function logout() {
-    localStorage.removeItem(STORAGE_KEY);
-    location.reload();
 }
