@@ -799,6 +799,30 @@
       "role": "viewer"
     }
   ],
+  "charts": [
+    {
+      "id": "c1",
+      "title": "Developers Distribution",
+      "targetField": "area",
+      "filterRoles": [
+        "Dev",
+        "Senior"
+      ],
+      "type": "doughnut",
+      "field": "workingIn"
+    },
+    {
+      "id": "c2",
+      "title": "Testers Distribution",
+      "targetField": "area",
+      "filterRoles": [
+        "Tester",
+        "Senior tester"
+      ],
+      "type": "doughnut",
+      "field": "workingIn"
+    }
+  ],
   "visibility": {
     "Registration": {
       "dev": true,
@@ -848,28 +872,5 @@
       "dev": true,
       "tester": true
     }
-  },
-  "charts": [
-    {
-      "id": "c1",
-      "title": "Developers Distribution",
-      "targetField": "area",
-      "filterRoles": [
-        "Dev",
-        "Senior"
-      ],
-      "type": "doughnut"
-    },
-    {
-      "id": "c2",
-      "title": "Testers Distribution",
-      "targetField": "area",
-      "filterRoles": [
-        "Tester",
-        "Senior tester"
-      ],
-      "type": "doughnut"
-    }
-  ],
-  "timestamp": "2025-12-26T09:34:08.899Z"
+  }
 }
