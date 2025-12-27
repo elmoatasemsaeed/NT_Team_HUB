@@ -46,7 +46,10 @@ async function loadFromGitHub(manual = false) {
 }
 
 async function saveToGitHub() {
-    if (!githubConfig.token) { alert("Token missing!"); return false; }
+    if (!githubConfig.token) {
+        alert("Token missing!");
+        return false;
+    }
     const loadingEl = document.getElementById('loadingStatus');
     if(loadingEl) loadingEl.classList.remove('hidden');
 
@@ -58,28 +61,33 @@ async function saveToGitHub() {
         visibility: visibilityConfig 
     };
     
-    const b64Content = btoa(unescape(encodeURIComponent(JSON.stringify(contentObj, null, 2))));
+    // Safe Base64 Encoding for Arabic
+    const contentRaw = unescape(encodeURIComponent(JSON.stringify(contentObj, null, 2)));
+    const contentBase64 = btoa(contentRaw);
 
     try {
         const url = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}`;
         const response = await fetch(url, {
             method: 'PUT',
-            headers: { 'Authorization': `token ${githubConfig.token}`, 'Content-Type': 'application/json' },
+            headers: {
+                'Authorization': `token ${githubConfig.token}`,
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify({
-                message: "Update Team Data",
-                content: b64Content,
+                message: `Update data: ${new Date().toISOString()}`,
+                content: contentBase64,
                 sha: githubConfig.sha,
                 branch: githubConfig.branch
             })
         });
 
         if (response.ok) {
-            const data = await response.json();
-            githubConfig.sha = data.content.sha;
+            const result = await response.json();
+            githubConfig.sha = result.content.sha;
             if(loadingEl) loadingEl.classList.add('hidden');
             return true;
         } else {
-            alert("Failed to save. Check your Token permissions.");
+            alert("Failed to save to GitHub. Check token permissions.");
             if(loadingEl) loadingEl.classList.add('hidden');
             return false;
         }
@@ -91,23 +99,22 @@ async function saveToGitHub() {
 }
 
 async function checkLogin() {
-    const userVal = document.getElementById('userInput').value.trim().toLowerCase();
+    const userVal = document.getElementById('userInput').value.trim();
     const passVal = document.getElementById('passInput').value.trim();
     const tokenVal = document.getElementById('ghTokenInput').value.trim();
     const remember = document.getElementById('rememberMe').checked;
-    
-    if (!userVal || !passVal) { alert("Please enter credentials"); return; }
+
+    if (!userVal || !passVal || !tokenVal) { alert("Please fill all fields"); return; }
     
     githubConfig.token = tokenVal;
     const syncOk = await loadFromGitHub(false);
     
     if (syncOk) {
-        const foundUser = users.find(u => u.username.toLowerCase() === userVal && u.password === passVal);
+        const foundUser = users.find(u => u.username.toLowerCase() === userVal.toLowerCase() && u.password === passVal);
         if (foundUser) {
             currentUserRole = foundUser.role;
             document.body.setAttribute('data-user-role', currentUserRole);
             
-            // إظهار الواجهة أولاً لضمان وجود العناصر في DOM
             document.getElementById('loginOverlay').style.display = 'none';
             document.getElementById('mainContent').classList.remove('hidden');
             document.getElementById('displayRole').innerText = `${foundUser.username} (${foundUser.role})`;
@@ -120,7 +127,6 @@ async function checkLogin() {
                 }));
             }
             
-            // الآن نقوم بالرندرة بعد أن أصبحت العناصر مرئية
             renderAll();
         } else {
             document.getElementById('loginError').innerText = "Invalid Username or Password!";
