@@ -53,8 +53,10 @@ function updateCapacity() {
             </div>`;
         }).join('');
 
-        if(type === 'dev') document.getElementById('devTotalLabel').innerText = `Total: ${list.length}`;
-        if(type === 'tester') document.getElementById('testerTotalLabel').innerText = `Total: ${list.length}`;
+        const totalLabelDev = document.getElementById('devTotalLabel');
+        const totalLabelTester = document.getElementById('testerTotalLabel');
+        if(type === 'dev' && totalLabelDev) totalLabelDev.innerText = `Total: ${list.length}`;
+        if(type === 'tester' && totalLabelTester) totalLabelTester.innerText = `Total: ${list.length}`;
     };
 
     renderCards(devs, devGrid, 'dev');
@@ -75,9 +77,10 @@ function sortTable(key) {
 function renderTable() {
     const tbody = document.getElementById('employeeTableBody');
     const header = document.getElementById('tableHeaderRow');
-    const searchTerm = document.getElementById('memberSearch').value.toLowerCase();
+    if (!tbody || !header) return;
+    
+    const searchTerm = document.getElementById('memberSearch')?.value.toLowerCase() || "";
 
-    // Headers
     const baseHeaders = [
         { name: 'Name', id: 'name' },
         { name: 'Role', id: 'role' },
@@ -96,9 +99,10 @@ function renderTable() {
         fieldsConfig.filter(f => f.active).map(f => `<th class="p-4 font-bold uppercase text-[11px] tracking-wider">${f.name}</th>`).join('') +
         `<th class="p-4 admin-cell">Actions</th>`;
 
-    // Filtering
     let filtered = employees.filter(e => {
-        const matchesSearch = e.name.toLowerCase().includes(searchTerm) || e.role.toLowerCase().includes(searchTerm);
+        const nameStr = String(e.name || "").toLowerCase();
+        const roleStr = String(e.role || "").toLowerCase();
+        const matchesSearch = nameStr.includes(searchTerm) || roleStr.includes(searchTerm);
         const matchesFilters = Array.from(document.querySelectorAll('.filter-input-dynamic')).every(input => {
             if (!input.value) return true;
             const val = String(e[input.dataset.field] || '').toLowerCase();
@@ -107,13 +111,11 @@ function renderTable() {
         return matchesSearch && matchesFilters;
     });
 
-    // Sorting
     filtered.sort((a, b) => {
         let valA = a[sortConfig.key] || '';
         let valB = b[sortConfig.key] || '';
         if (typeof valA === 'string') valA = valA.toLowerCase();
         if (typeof valB === 'string') valB = valB.toLowerCase();
-        
         if (valA < valB) return sortConfig.direction === 'asc' ? -1 : 1;
         if (valA > valB) return sortConfig.direction === 'asc' ? 1 : -1;
         return 0;
@@ -146,7 +148,7 @@ function renderTable() {
 function openModal(index = -1) {
     currentEditingIndex = index;
     const title = document.getElementById('modalTitle');
-    title.innerText = index === -1 ? 'ADD NEW MEMBER' : 'EDIT MEMBER';
+    if(title) title.innerText = index === -1 ? 'ADD NEW MEMBER' : 'EDIT MEMBER';
     
     renderDynamicForm(index === -1 ? null : employees[index]);
     document.getElementById('modalOverlay').classList.remove('hidden');
@@ -156,6 +158,8 @@ function closeModal() { document.getElementById('modalOverlay').classList.add('h
 
 function renderDynamicForm(data = null) {
     const container = document.getElementById('dynamicForm');
+    if (!container) return; // منع الخطأ في حال لم يتم تحميل الصفحة بعد
+
     let html = `
         <div class="space-y-1"><label class="text-[10px] font-bold text-gray-400 uppercase">Full Name</label><input type="text" id="empName" value="${data ? data.name : ''}" class="w-full p-4 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 font-bold"></div>
         <div class="space-y-1"><label class="text-[10px] font-bold text-gray-400 uppercase">Role</label><input type="text" id="empRole" value="${data ? data.role : ''}" class="w-full p-4 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"></div>
@@ -177,6 +181,7 @@ function renderDynamicForm(data = null) {
 // 4. Filters & Search
 function renderFilters() {
     const container = document.getElementById('filterContainer');
+    if(!container) return;
     const existing = container.querySelectorAll('.filter-input-dynamic');
     existing.forEach(e => e.remove());
 
@@ -192,7 +197,8 @@ function renderFilters() {
 }
 
 function clearFilters() {
-    document.getElementById('memberSearch').value = '';
+    const search = document.getElementById('memberSearch');
+    if(search) search.value = '';
     document.querySelectorAll('.filter-input-dynamic').forEach(i => i.value = '');
     renderTable();
 }
@@ -200,6 +206,7 @@ function clearFilters() {
 // 5. Setup & Config
 function openSetupModal() {
     const list = document.getElementById('fieldsList');
+    if(!list) return;
     list.innerHTML = fieldsConfig.map((f, i) => `
         <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-xl border">
             <input type="text" value="${f.name}" onchange="fieldsConfig[${i}].name=this.value" class="flex-1 p-2 border rounded">
@@ -222,6 +229,7 @@ async function saveSetup() {
 // 6. User Management
 function openUsersModal() {
     const list = document.getElementById('usersList');
+    if(!list) return;
     list.innerHTML = users.map((u, i) => `
         <div class="flex flex-wrap gap-2 items-center bg-gray-50 p-3 rounded-xl border">
             <input type="text" placeholder="User" value="${u.username}" onchange="users[${i}].username=this.value" class="p-2 border rounded text-xs w-32">
@@ -248,6 +256,7 @@ async function saveUsers() {
 // 7. Visibility Setup
 function openVisibilityModal() {
     const list = document.getElementById('visibilityList');
+    if(!list) return;
     const allAreas = [...new Set(employees.flatMap(e => Array.isArray(e.area) ? e.area : [e.area]))];
     
     list.innerHTML = allAreas.map(area => {
@@ -278,6 +287,7 @@ async function saveVisibility() {
 // 8. Charts Rendering
 function renderCharts() {
     const container = document.getElementById('dynamicChartsGrid');
+    if(!container) return;
     container.innerHTML = chartsConfig.filter(c => c.active).map(c => `
         <div class="google-card p-4">
             <h4 class="text-[10px] font-black text-gray-400 uppercase mb-4 border-b pb-2">${c.title}</h4>
@@ -285,7 +295,9 @@ function renderCharts() {
         </div>`).join('');
 
     chartsConfig.filter(c => c.active).forEach(c => {
-        const ctx = document.getElementById(`chart_${c.id}`).getContext('2d');
+        const canvas = document.getElementById(`chart_${c.id}`);
+        if(!canvas) return;
+        const ctx = canvas.getContext('2d');
         const counts = {};
         employees.forEach(e => {
             const val = e[c.field] || 'N/A';
@@ -310,6 +322,7 @@ function renderCharts() {
 
 function openChartsSetupModal() {
     const list = document.getElementById('chartsConfigList');
+    if(!list) return;
     const fields = [{id: 'role', name: 'Role'}, {id: 'area', name: 'Area'}, {id: 'workingIn', name: 'Working In'}, ...fieldsConfig.filter(f=>f.active)];
     
     list.innerHTML = chartsConfig.map((c, i) => `
@@ -388,3 +401,28 @@ function performFullBackup() {
     a.download = `backup_${new Date().toISOString().slice(0,10)}.json`;
     a.click();
 }
+
+// New function for details popup
+function showGlobalDetails(area, isVacation, type) {
+    const list = employees.filter(e => {
+        const inArea = Array.isArray(e.area) ? e.area.includes(area) : e.area === area;
+        const matchesType = type === 'dev' ? (e.role && (e.role.includes('Dev') || e.role.includes('Senior') || e.role.includes('Lead'))) : (e.role && e.role.includes('Tester'));
+        return inArea && matchesType && (isVacation ? e.isVacation : !e.isVacation);
+    });
+
+    const titleEl = document.getElementById('popupTitle');
+    const listEl = document.getElementById('popupList');
+    
+    if(titleEl) titleEl.innerText = `${area} - ${isVacation ? 'On Vacation' : 'Active Members'}`;
+    if(listEl) {
+        listEl.innerHTML = list.length > 0 ? list.map(e => `
+            <div class="p-4 border rounded-xl ${e.isVacation ? 'bg-red-50 border-red-200' : 'bg-gray-50'}">
+                <b class="${e.isVacation ? 'line-through text-red-600' : ''}">${e.name}</b><br>
+                <small class="text-gray-500">${e.role} ${e.isVacation ? '(Returns: ' + (e.vacationEnd || 'N/A') + ')' : ''}</small>
+            </div>`).join('') : '<div class="col-span-full text-center text-gray-400 py-10 font-bold uppercase italic">No members found</div>';
+    }
+    document.getElementById('detailsPopup').classList.remove('hidden');
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+}
+
+function closePopup() { document.getElementById('detailsPopup').classList.add('hidden'); }
