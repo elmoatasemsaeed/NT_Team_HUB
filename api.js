@@ -18,7 +18,7 @@ async function loadFromGitHub(manual = false) {
             const data = await response.json();
             githubConfig.sha = data.sha;
             
-            // فك التشفير مع دعم كامل للغة العربية (Base64 Safe)
+            // Safe Base64 Decoding for Arabic
             const content = JSON.parse(decodeURIComponent(escape(atob(data.content))));
             
             employees = content.employees || [];
@@ -36,7 +36,7 @@ async function loadFromGitHub(manual = false) {
             if(loadingEl) loadingEl.classList.add('hidden');
             return false;
         }
-    } catch (err) { 
+    } catch (err) {
         console.error("Sync Error:", err);
         if(loadingEl) loadingEl.classList.add('hidden');
         return false;
@@ -45,46 +45,40 @@ async function loadFromGitHub(manual = false) {
 
 async function saveToGitHub() {
     if (!githubConfig.token) { alert("Token missing!"); return false; }
-
     const loadingEl = document.getElementById('loadingStatus');
     if(loadingEl) loadingEl.classList.remove('hidden');
 
-    const contentObj = {
-        employees,
-        fields: fieldsConfig,
-        users,
-        charts: chartsConfig,
-        visibility: visibilityConfig
+    const contentObj = { 
+        employees, 
+        fields: fieldsConfig, 
+        users, 
+        charts: chartsConfig, 
+        visibility: visibilityConfig 
     };
-
-    // التشفير مع دعم اللغة العربية
-    const contentRaw = unescape(encodeURIComponent(JSON.stringify(contentObj, null, 2)));
-    const contentBase64 = btoa(contentRaw);
+    
+    // Safe Base64 Encoding for Arabic
+    const b64Content = btoa(unescape(encodeURIComponent(JSON.stringify(contentObj, null, 2))));
 
     try {
         const url = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}`;
         const response = await fetch(url, {
             method: 'PUT',
-            headers: {
-                'Authorization': `token ${githubConfig.token}`,
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Authorization': `token ${githubConfig.token}`, 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                message: `Update: ${new Date().toLocaleString()}`,
-                content: contentBase64,
+                message: "Update Team Data",
+                content: b64Content,
                 sha: githubConfig.sha,
                 branch: githubConfig.branch
             })
         });
 
         if (response.ok) {
-            const resData = await response.json();
-            githubConfig.sha = resData.content.sha;
+            const data = await response.json();
+            githubConfig.sha = data.content.sha;
             if(loadingEl) loadingEl.classList.add('hidden');
             return true;
         } else {
-            const errData = await response.json();
-            alert("Save Failed: " + (errData.message || "Unknown Error"));
+            alert("Failed to save. Check your Token permissions.");
             if(loadingEl) loadingEl.classList.add('hidden');
             return false;
         }
@@ -96,7 +90,7 @@ async function saveToGitHub() {
 }
 
 async function checkLogin() {
-    const userVal = document.getElementById('userInput').value.trim();
+    const userVal = document.getElementById('userInput').value.trim().toLowerCase();
     const passVal = document.getElementById('passInput').value.trim();
     const tokenVal = document.getElementById('ghTokenInput').value.trim();
     const remember = document.getElementById('rememberMe').checked;
