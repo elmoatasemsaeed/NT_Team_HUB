@@ -792,6 +792,13 @@
       "type": "date",
       "showInTable": true,
       "options": []
+    },
+    {
+      "id": "f1766864338124",
+      "label": "Par. Available After",
+      "type": "date",
+      "showInTable": true,
+      "options": []
     }
   ],
   "users": [
@@ -880,5 +887,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-27T19:37:17.837Z"
+  "timestamp": "2025-12-27T19:39:12.375Z"
 }
