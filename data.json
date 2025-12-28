@@ -177,12 +177,20 @@
       "f1766917553886": "AlBorg TAT CR"
     },
     {
+      "isVacation": false,
+      "vacationEnd": "",
       "name": "Esraa Abdelsalam",
       "role": "Dev",
-      "area": "Internal lab",
-      "workingIn": "Iteration",
-      "isVacation": false,
-      "vacationEnd": ""
+      "area": [
+        "Internal lab"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "ALBORG report CR"
     },
     {
       "name": "Mahmoud Mohamed Mahmoud Salama",
@@ -955,5 +963,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-28T10:53:09.997Z"
+  "timestamp": "2025-12-28T10:53:33.117Z"
 }
