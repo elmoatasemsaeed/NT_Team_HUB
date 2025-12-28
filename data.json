@@ -75,12 +75,20 @@
       "workingIn": "Senior"
     },
     {
+      "isVacation": false,
+      "vacationEnd": "",
       "name": "Karim El-Saeed Gabr",
       "role": "Dev",
-      "area": "Front and Financial",
-      "workingIn": "Iteration",
-      "isVacation": false,
-      "vacationEnd": ""
+      "area": [
+        "Front and Financial"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "(bugs of) > Batch payment CR , Claim CR "
     },
     {
       "name": "Mahmoud Ahmed Mahmoud",
@@ -894,5 +902,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-28T10:33:08.301Z"
+  "timestamp": "2025-12-28T10:34:05.196Z"
 }
