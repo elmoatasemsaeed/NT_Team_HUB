@@ -682,12 +682,20 @@
       "workingIn": "Senior"
     },
     {
+      "isVacation": false,
+      "vacationEnd": "",
       "name": "Samir Mohamed Dagher",
       "role": "Dev",
-      "area": "Registration",
-      "workingIn": "Iteration",
-      "isVacation": false,
-      "vacationEnd": ""
+      "area": [
+        "Registration"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "CR 146435 -  MRC "
     },
     {
       "name": "Mostafa Osama Abdelatif",
@@ -910,5 +918,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-28T10:36:14.633Z"
+  "timestamp": "2025-12-28T10:40:18.108Z"
 }
