@@ -707,9 +707,17 @@
             const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Team");
             XLSX.writeFile(wb, "Team_Report.xlsx");
         }
+        function closeVisibilityModal() {
+    document.getElementById('visibilityModal').classList.add('hidden');
+}
+
+function closeChartsSetupModal() {
+    document.getElementById('chartsSetupModal').classList.add('hidden');
+}
     </script>
 </body>
 </html>
+
 
 
 
