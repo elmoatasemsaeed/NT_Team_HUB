@@ -34,6 +34,12 @@
         .capacity-card { min-height: 80px; }
         .role-badge { display: flex; justify-content: space-between; padding: 1px 4px; border-radius: 4px; margin-bottom: 2px; background: rgba(0,0,0,0.03); }
         .chart-container { height: 300px; width: 100%; }
+        /* Status Colors */
+        .status-vacation { background-color: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+        .status-available { background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+        .status-partial { background-color: #fef9c3; color: #854d0e; border: 1px solid #fef08a; }
+        .status-busy { background-color: #f3f4f6; color: #374151; border: 1px solid #e5e7eb; }
+
         @media print {
             .tab-content { display: block !important; }
             .tab-navigation, .no-print, .filter-input, .admin-only { display: none !important; }
@@ -116,11 +122,14 @@
             </div>
         </header>
 
-        <div class="flex border-b border-gray-200 mb-6 no-print tab-navigation">
-            <button onclick="switchTab('capacityTab', this)" id="defaultTab" class="tab-btn px-6 py-3 font-bold text-gray-500 border-b-2 border-transparent hover:text-blue-600 transition-all active">
+        <div class="flex border-b border-gray-200 mb-6 no-print tab-navigation overflow-x-auto">
+            <button onclick="switchTab('capacityTab', this)" id="defaultTab" class="tab-btn px-6 py-3 font-bold text-gray-500 border-b-2 border-transparent hover:text-blue-600 transition-all active whitespace-nowrap">
                 <div class="flex items-center gap-2"><i data-lucide="layout-dashboard" class="w-4 h-4"></i> Capacity Overview</div>
             </button>
-            <button onclick="switchTab('tableTab', this)" class="tab-btn px-6 py-3 font-bold text-gray-500 border-b-2 border-transparent hover:text-blue-600 transition-all">
+            <button onclick="switchTab('availabilityTab', this)" class="tab-btn px-6 py-3 font-bold text-gray-500 border-b-2 border-transparent hover:text-blue-600 transition-all whitespace-nowrap">
+                <div class="flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4"></i> Availability View</div>
+            </button>
+            <button onclick="switchTab('tableTab', this)" class="tab-btn px-6 py-3 font-bold text-gray-500 border-b-2 border-transparent hover:text-blue-600 transition-all whitespace-nowrap">
                 <div class="flex items-center gap-2"><i data-lucide="list" class="w-4 h-4"></i> Team Table</div>
             </button>
         </div>
@@ -128,14 +137,14 @@
         <div id="capacityTab" class="tab-content">
             <div id="capacityMainGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 no-print">
                 <div class="p-4 border rounded-2xl bg-white shadow-sm">
-                    <h3 onclick="showGlobalDetails('Dev,Senior', false)" class="text-blue-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest cursor-pointer hover:text-blue-500">
+                    <h3 class="text-blue-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest">
                         <span class="flex items-center gap-2"><i data-lucide="code" class="w-4 h-4"></i> Developers Capacity</span>
                         <span id="devTotalLabel" class="bg-blue-100 px-2 py-0.5 rounded text-blue-800">Total: 0</span>
                     </h3>
                     <div id="devCapacityGrid" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2 mb-4"></div>
                 </div>
                 <div class="p-4 border rounded-2xl bg-white shadow-sm">
-                    <h3 onclick="showGlobalDetails('Tester,Senior tester', false)" class="text-green-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest cursor-pointer hover:text-green-500">
+                    <h3 class="text-green-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest">
                         <span class="flex items-center gap-2"><i data-lucide="check-square" class="w-4 h-4"></i> Testers Capacity</span>
                         <span id="testerTotalLabel" class="bg-green-100 px-2 py-0.5 rounded text-green-800">Total: 0</span>
                     </h3>
@@ -143,6 +152,25 @@
                 </div>
             </div>
             <div id="dynamicChartsGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8 no-print"></div>
+        </div>
+
+        <div id="availabilityTab" class="tab-content hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div class="flex items-center gap-3 border-b-2 border-blue-500 pb-2">
+                        <i data-lucide="code" class="text-blue-500 w-6 h-6"></i>
+                        <h2 class="text-xl font-black text-gray-800 uppercase tracking-tighter">Developers & Seniors</h2>
+                    </div>
+                    <div id="availabilityDevGrid" class="space-y-8"></div>
+                </div>
+                <div class="space-y-6">
+                    <div class="flex items-center gap-3 border-b-2 border-emerald-500 pb-2">
+                        <i data-lucide="shield-check" class="text-emerald-500 w-6 h-6"></i>
+                        <h2 class="text-xl font-black text-gray-800 uppercase tracking-tighter">Testers & Seniors</h2>
+                    </div>
+                    <div id="availabilityTesterGrid" class="space-y-8"></div>
+                </div>
+            </div>
         </div>
 
         <div id="tableTab" class="tab-content hidden">
@@ -228,6 +256,7 @@
 
         const USERS_KEY = 'team_hub_users';
         const STORAGE_KEY = 'rememberedUser';
+        const FINISH_TIME_FIELD_ID = 'f1766929340598';
         
         let fieldsConfig = [];
         let chartsConfig = [];
@@ -342,27 +371,97 @@
             }
         });
 
-        // --- Rendering Logic ---
-        function renderAll() { updateCapacity(); renderTable(); renderDynamicForm(); lucide.createIcons(); }
-
-       function renderDynamicForm() {
-    document.getElementById('dynamicFieldsContainer').innerHTML = fieldsConfig.map(f => {
-        let input = '';
-        if(f.type==='select') {
-            input = `<select id="field_${f.id}" class="w-full p-3 border rounded-xl">${(f.options||[]).map(o=>`<option value="${o}">${o}</option>`).join('')}</select>`;
-        } else if(f.type==='multiselect') {
-            input = `<div class="grid grid-cols-2 gap-2 border p-3 rounded-xl h-32 overflow-y-auto">${(f.options||[]).map(o=>`<label class="flex items-center gap-2"><input type="checkbox" value="${o}" class="multi-${f.id}"> ${o}</label>`).join('')}</div>`;
-        } else if(f.type==='date') {
-            input = `<input type="date" id="field_${f.id}" class="w-full p-3 border rounded-xl">`;
-        } else if(f.type==='datetime-local') {
-            input = `<input type="datetime-local" id="field_${f.id}" class="w-full p-3 border rounded-xl">`;
-        } else {
-            input = `<input type="${f.type}" id="field_${f.id}" class="w-full p-3 border rounded-xl">`;
+        // --- Core Rendering ---
+        function renderAll() { 
+            updateCapacity(); 
+            renderAvailabilityView();
+            renderTable(); 
+            renderDynamicForm(); 
+            lucide.createIcons(); 
         }
-        return `<div class="space-y-1"><label class="text-xs font-bold uppercase text-gray-500">${f.label}</label>${input}</div>`;
-    }).join('');
-}
 
+        function renderDynamicForm() {
+            document.getElementById('dynamicFieldsContainer').innerHTML = fieldsConfig.map(f => {
+                let input = '';
+                if(f.type==='select') {
+                    input = `<select id="field_${f.id}" class="w-full p-3 border rounded-xl">${(f.options||[]).map(o=>`<option value="${o}">${o}</option>`).join('')}</select>`;
+                } else if(f.type==='multiselect') {
+                    input = `<div class="grid grid-cols-2 gap-2 border p-3 rounded-xl h-32 overflow-y-auto">${(f.options||[]).map(o=>`<label class="flex items-center gap-2"><input type="checkbox" value="${o}" class="multi-${f.id}"> ${o}</label>`).join('')}</div>`;
+                } else if(f.type==='date') {
+                    input = `<input type="date" id="field_${f.id}" class="w-full p-3 border rounded-xl">`;
+                } else if(f.type==='datetime-local') {
+                    input = `<input type="datetime-local" id="field_${f.id}" class="w-full p-3 border rounded-xl">`;
+                } else {
+                    input = `<input type="${f.type}" id="field_${f.id}" class="w-full p-3 border rounded-xl">`;
+                }
+                return `<div class="space-y-1"><label class="text-xs font-bold uppercase text-gray-500">${f.label}</label>${input}</div>`;
+            }).join('');
+        }
+
+        // --- Logic for Availability View ---
+        function getAvailabilityStatus(emp) {
+            if (emp.isVacation) {
+                return { label: 'On Vacation', class: 'status-vacation', sub: `Back: ${emp.vacationEnd || 'N/A'}` };
+            }
+
+            const finishTimeStr = emp[FINISH_TIME_FIELD_ID];
+            if (!finishTimeStr) return { label: 'Available', class: 'status-available', sub: 'No task' };
+
+            const finishTime = new Date(finishTimeStr);
+            const now = new Date();
+            const diffMs = finishTime - now;
+            const diffHours = diffMs / (1000 * 60 * 60);
+
+            if (diffMs <= 0) {
+                return { label: 'Available', class: 'status-available', sub: 'Finished' };
+            } else if (diffHours <= 5) {
+                return { label: 'Partial', class: 'status-partial', sub: `Ends in ${Math.round(diffHours * 60)}m` };
+            } else {
+                return { label: 'Busy', class: 'status-busy', sub: `Ends: ${finishTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}` };
+            }
+        }
+
+        function renderAvailabilityView() {
+            const devGrid = document.getElementById('availabilityDevGrid');
+            const testerGrid = document.getElementById('availabilityTesterGrid');
+
+            const devs = employees.filter(e => ['Dev', 'Senior'].includes(e.role));
+            const testers = employees.filter(e => ['Tester', 'Senior tester'].includes(e.role));
+
+            const renderSection = (emps) => {
+                const projects = [...new Set(emps.map(e => e.workingIn || 'Unassigned'))];
+                return projects.map(proj => {
+                    const projEmps = emps.filter(e => (e.workingIn || 'Unassigned') === proj);
+                    return `
+                        <div class="space-y-3">
+                            <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest border-l-4 border-gray-200 pl-2">${proj}</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                ${projEmps.map(e => {
+                                    const status = getAvailabilityStatus(e);
+                                    return `
+                                        <div class="p-3 border rounded-xl bg-white flex justify-between items-center shadow-sm">
+                                            <div>
+                                                <div class="font-bold text-gray-800 text-sm">${e.name || 'Unknown'}</div>
+                                                <div class="text-[10px] text-gray-500 uppercase">${e.role}</div>
+                                            </div>
+                                            <div class="text-right">
+                                                <div class="px-2 py-0.5 rounded text-[10px] font-bold uppercase ${status.class}">${status.label}</div>
+                                                <div class="text-[9px] text-gray-400 mt-1">${status.sub}</div>
+                                            </div>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            };
+
+            devGrid.innerHTML = renderSection(devs);
+            testerGrid.innerHTML = renderSection(testers);
+        }
+
+        // --- Original Logic Restored ---
         function renderTable() {
             const visibleFields = fieldsConfig.filter(f => f.showInTable !== false);
             let headerHtml = visibleFields.map(f => `<th class="py-4 px-6 min-w-[150px] sortable-header" onclick="sortTable('${f.id}')"><div class="sort-btn">${f.label} <i data-lucide="${currentSort.column === f.id ? (currentSort.direction === 'asc' ? 'arrow-up' : 'arrow-down') : 'arrow-up-down'}" class="w-3 h-3 ml-1 ${currentSort.column === f.id ? 'text-blue-600' : 'opacity-40'}"></i></div><input type="text" placeholder="Filter..." class="filter-input no-print" onclick="event.stopPropagation()" onkeyup="filterTable()"></th>`).join('');
@@ -403,27 +502,15 @@
                 const areaEmps = employees.filter(e => (Array.isArray(e.area) ? e.area.includes(area) : e.area === area) && roleFilter.includes(e.role));
                 const active = areaEmps.filter(e => !e.isVacation);
                 const vac = areaEmps.filter(e => e.isVacation);
-
                 const detailsHtml = roleFilter.map(role => {
                     const count = active.filter(e => e.role === role).length;
                     return count > 0 ? `<div class="role-badge"><span class="opacity-70">${role}:</span><span class="font-bold">${count}</span></div>` : '';
                 }).join('');
 
-                return `
-                    <div class="google-card capacity-card border-l-4 border-l-${color}-500 p-3 cursor-pointer hover:bg-${color}-50 transition-all" 
-                         onclick="showDetailsExtended('${area}', '${roleFilter.join(',')}', false)">
-                        <div class="flex justify-between items-center border-b pb-2 mb-2">
-                            <span class="text-[10px] uppercase font-black text-gray-600">${area}</span>
-                            <span class="bg-${color}-100 text-${color}-700 px-2 py-0.5 rounded-full text-xs font-bold">${active.length}</span>
-                        </div>
+                return `<div class="google-card capacity-card border-l-4 border-l-${color}-500 p-3 cursor-pointer hover:bg-${color}-50" onclick="showDetailsExtended('${area}', '${roleFilter.join(',')}', false)">
+                        <div class="flex justify-between items-center border-b pb-2 mb-2"><span class="text-[10px] uppercase font-black text-gray-600">${area}</span><span class="bg-${color}-100 text-${color}-700 px-2 py-0.5 rounded-full text-xs font-bold">${active.length}</span></div>
                         <div class="text-[10px] text-gray-700">${detailsHtml || '<div class="text-gray-400 italic">No active members</div>'}</div>
-                        <div class="mt-2 pt-2 border-t border-dashed">
-                            <div class="text-[10px] p-1 rounded text-red-500 font-bold hover:bg-red-100 flex justify-between" 
-                                 onclick="event.stopPropagation(); showDetailsExtended('${area}', '${roleFilter.join(',')}', true)">
-                                <span>VACATION:</span><span>${vac.length}</span>
-                            </div>
-                        </div>
-                    </div>`;
+                        <div class="mt-2 pt-2 border-t border-dashed"><div class="text-[10px] p-1 rounded text-red-500 font-bold hover:bg-red-100 flex justify-between" onclick="event.stopPropagation(); showDetailsExtended('${area}', '${roleFilter.join(',')}', true)"><span>VACATION:</span><span>${vac.length}</span></div></div></div>`;
             };
 
             document.getElementById('devCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'dev')).map(a => renderCard(a, ['Dev','Senior'], 'blue')).join('');
@@ -450,14 +537,13 @@
                 });
                 const chart = new Chart(document.getElementById(`canvas_${config.id}`).getContext('2d'), {
                     type: config.type,
-                    data: { labels: Object.keys(stats), datasets: [{ data: Object.values(stats), backgroundColor: ['#4285F4', '#34A853', '#FBBC05', '#EA4335', '#673AB7', '#3F51B5', '#00BCD4', '#009688', '#FF9800', '#FF5722'] }] },
-                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+                    data: { labels: Object.keys(stats), datasets: [{ data: Object.values(stats), backgroundColor: ['#4285F4', '#34A853', '#FBBC05', '#EA4335', '#673AB7'] }] },
+                    options: { responsive: true, maintainAspectRatio: false }
                 });
                 activeCharts.push(chart);
             });
         }
 
-        // --- Helper Functions & Modals ---
         async function save(render = true) { 
             const ok = await syncToGitHub(); 
             if(render && ok) renderAll(); 
@@ -490,58 +576,34 @@
             save(); closeModal();
         };
 
-        function switchTab(t, btn) { document.querySelectorAll('.tab-content').forEach(c=>c.classList.add('hidden')); document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); document.getElementById(t).classList.remove('hidden'); btn.classList.add('active'); }
+        function switchTab(t, btn) { 
+            document.querySelectorAll('.tab-content').forEach(c=>c.classList.add('hidden')); 
+            document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); 
+            document.getElementById(t).classList.remove('hidden'); 
+            btn.classList.add('active'); 
+        }
         function openModal() { document.getElementById('modal').classList.remove('hidden'); }
         function closeModal() { document.getElementById('modal').classList.add('hidden'); document.getElementById('employeeForm').reset(); document.getElementById('editIndex').value=""; }
         
         function openSetupModal() {
-    document.getElementById('fieldsList').innerHTML = fieldsConfig.map((f, i) => `
-        <div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-6 gap-3 items-end shadow-sm">
-            <div>
-                <label class="text-[10px] font-bold uppercase">Label</label>
-                <input type="text" value="${f.label}" onchange="fieldsConfig[${i}].label=this.value" class="w-full p-2 border rounded text-sm">
-            </div>
-            <div>
-                <label class="text-[10px] font-bold uppercase">Type</label>
-                <select onchange="fieldsConfig[${i}].type=this.value; openSetupModal()" class="w-full p-2 border rounded text-sm">
-                    <option value="text" ${f.type==='text'?'selected':''}>Text</option>
-                    <option value="select" ${f.type==='select'?'selected':''}>Select</option>
-                    <option value="multiselect" ${f.type==='multiselect'?'selected':''}>Multi</option>
-                    <option value="date" ${f.type==='date'?'selected':''}>Date</option>
-                    <option value="datetime-local" ${f.type==='datetime-local'?'selected':''}>Date & Time</option>
-                </select>
-            </div>
-            <div class="md:col-span-2">
-                ${['select','multiselect'].includes(f.type) ? `<button onclick="openOptionsManager(${i})" class="w-full p-2 bg-white border border-dashed border-blue-400 text-blue-600 rounded text-xs font-bold">Options (${(f.options || []).length})</button>` : ''}
-            </div>
-            <div class="flex flex-col items-center justify-center pb-2">
-                <label class="text-[10px] font-bold uppercase mb-1">Table</label>
-                <input type="checkbox" ${f.showInTable !== false ? 'checked' : ''} onchange="fieldsConfig[${i}].showInTable = this.checked" class="w-5 h-5 accent-blue-600">
-            </div>
-            <button onclick="fieldsConfig.splice(${i},1); openSetupModal()" class="text-red-500 p-2"><i data-lucide="trash-2"></i></button>
-        </div>`).join('');
-    document.getElementById('setupModal').classList.remove('hidden'); 
-    lucide.createIcons();
-}
+            document.getElementById('fieldsList').innerHTML = fieldsConfig.map((f, i) => `
+                <div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-6 gap-3 items-end shadow-sm">
+                    <div><label class="text-[10px] font-bold uppercase">Label</label><input type="text" value="${f.label}" onchange="fieldsConfig[${i}].label=this.value" class="w-full p-2 border rounded text-sm"></div>
+                    <div><label class="text-[10px] font-bold uppercase">Type</label><select onchange="fieldsConfig[${i}].type=this.value; openSetupModal()" class="w-full p-2 border rounded text-sm"><option value="text" ${f.type==='text'?'selected':''}>Text</option><option value="select" ${f.type==='select'?'selected':''}>Select</option><option value="multiselect" ${f.type==='multiselect'?'selected':''}>Multi</option><option value="date" ${f.type==='date'?'selected':''}>Date</option><option value="datetime-local" ${f.type==='datetime-local'?'selected':''}>Date & Time</option></select></div>
+                    <div class="md:col-span-2">${['select','multiselect'].includes(f.type) ? `<button onclick="openOptionsManager(${i})" class="w-full p-2 bg-white border border-dashed border-blue-400 text-blue-600 rounded text-xs font-bold">Options (${(f.options || []).length})</button>` : ''}</div>
+                    <div class="flex flex-col items-center justify-center pb-2"><label class="text-[10px] font-bold uppercase mb-1">Table</label><input type="checkbox" ${f.showInTable !== false ? 'checked' : ''} onchange="fieldsConfig[${i}].showInTable = this.checked" class="w-5 h-5 accent-blue-600"></div>
+                    <button onclick="fieldsConfig.splice(${i},1); openSetupModal()" class="text-red-500 p-2"><i data-lucide="trash-2"></i></button>
+                </div>`).join('');
+            document.getElementById('setupModal').classList.remove('hidden'); lucide.createIcons();
+        }
 
         function openOptionsManager(idx) { currentEditingFieldIndex = idx; renderOptionsList(); document.getElementById('optionsModal').classList.remove('hidden'); }
-        function renderOptionsList() { const list = fieldsConfig[currentEditingFieldIndex].options; document.getElementById('optionsItemsContainer').innerHTML = list.map((opt, i) => `<div class="flex gap-2 bg-gray-50 p-1 rounded border"><input type="text" value="${opt}" onchange="fieldsConfig[currentEditingFieldIndex}].options[${i}]=this.value" class="flex-1 p-2 bg-transparent text-sm outline-none rounded"><button onclick="fieldsConfig[currentEditingFieldIndex}].options.splice(${i},1); renderOptionsList()" class="text-red-400 p-2"><i data-lucide="x-circle" class="w-4 h-4"></i></button></div>`).join(''); lucide.createIcons(); }
+        function renderOptionsList() { const list = fieldsConfig[currentEditingFieldIndex].options; document.getElementById('optionsItemsContainer').innerHTML = list.map((opt, i) => `<div class="flex gap-2 bg-gray-50 p-1 rounded border"><input type="text" value="${opt}" onchange="fieldsConfig[currentEditingFieldIndex].options[${i}]=this.value" class="flex-1 p-2 bg-transparent text-sm outline-none rounded"><button onclick="fieldsConfig[currentEditingFieldIndex].options.splice(${i},1); renderOptionsList()" class="text-red-400 p-2"><i data-lucide="x-circle" class="w-4 h-4"></i></button></div>`).join(''); lucide.createIcons(); }
         function addOptionField() { fieldsConfig[currentEditingFieldIndex].options.push(""); renderOptionsList(); }
         function closeOptionsManager() { document.getElementById('optionsModal').classList.add('hidden'); openSetupModal(); }
         function addNewFieldSetup() { fieldsConfig.push({id:'f'+Date.now(), label:'New Field', type:'text', showInTable:true, options: []}); openSetupModal(); }
         
-        async function saveSetup() { 
-            document.getElementById('loadingStatus').classList.remove('hidden');
-            const ok = await syncToGitHub(); 
-            if(ok) {
-                alert("تم الحفظ بنجاح!");
-                location.reload(); 
-            } else {
-                alert("حدث خطأ أثناء الحفظ في GitHub.");
-            }
-            document.getElementById('loadingStatus').classList.add('hidden');
-        }
-        
+        async function saveSetup() { await save(); location.reload(); }
         function closeSetupModal() { document.getElementById('setupModal').classList.add('hidden'); }
 
         function openVisibilityModal() {
@@ -560,11 +622,8 @@
                 const area = devBox.dataset.area;
                 visibilityConfig[area] = { dev: tr.querySelector('.v-dev').checked, tester: tr.querySelector('.v-tester').checked };
             });
-            await save(); 
-            document.getElementById('visibilityModal').classList.add('hidden');
+            await save(); document.getElementById('visibilityModal').classList.add('hidden');
         }
-
-        function closeVisibilityModal() { document.getElementById('visibilityModal').classList.add('hidden'); }
 
         function openUsersModal() {
             document.getElementById('usersList').innerHTML = users.map((u, idx) => `<div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-4 gap-3 items-end shadow-sm"><div><label class="text-[10px]">Username</label><input type="text" value="${u.username}" onchange="users[${idx}].username=this.value" class="w-full p-2 border rounded text-sm"></div><div><label class="text-[10px]">Password</label><input type="text" value="${u.password}" onchange="users[${idx}].password=this.value" class="w-full p-2 border rounded text-sm"></div><div><label class="text-[10px]">Role</label><select onchange="users[${idx}].role=this.value" class="w-full p-2 border rounded text-sm"><option value="admin" ${u.role==='admin'?'selected':''}>Admin</option><option value="viewer" ${u.role==='viewer'?'selected':''}>Viewer</option></select></div><button onclick="users.splice(${idx},1); openUsersModal()" class="p-2 text-red-500"><i data-lucide="trash-2"></i></button></div>`).join('');
@@ -580,61 +639,25 @@
         }
         function addNewChartConfig() { chartsConfig.push({ id: 'c'+Date.now(), title: 'Analysis', targetField: 'area', type: 'doughnut' }); openChartsSetupModal(); }
         async function saveChartsConfig() { await save(); document.getElementById('chartsSetupModal').classList.add('hidden'); }
-        function closeChartsSetupModal() { document.getElementById('chartsSetupModal').classList.add('hidden'); }
 
         function showDetailsExtended(area, roles, isVac) {
-    const roleList = roles.split(',');
-    
-    // البحث عن معرف الحقل الذي اسمه "Current Task"
-    const taskField = fieldsConfig.find(f => f.label === 'Current Task');
-    const taskId = taskField ? taskField.id : null;
+            const roleList = roles.split(',');
+            const taskField = fieldsConfig.find(f => f.label === 'Current Task');
+            const taskId = taskField ? taskField.id : null;
+            const finishTimeField = fieldsConfig.find(f => f.label === 'T. Finish Time');
+            const finishTimeId = finishTimeField ? finishTimeField.id : null;
 
-    // البحث عن معرف الحقل الذي اسمه "T. Finish Time"
-    const finishTimeField = fieldsConfig.find(f => f.label === 'T. Finish Time');
-    const finishTimeId = finishTimeField ? finishTimeField.id : null;
+            const list = employees.filter(e => (Array.isArray(e.area) ? e.area.includes(area) : e.area === area) && roleList.includes(e.role) && e.isVacation === isVac);
+            document.getElementById('popupTitle').innerText = `${area} - ${isVac ? 'On Vacation' : 'Active Members'}`;
+            document.getElementById('popupList').innerHTML = list.length > 0 ? list.map(e => `
+                <div class="p-4 border rounded-xl ${e.isVacation ? 'bg-red-50' : 'bg-gray-50'} shadow-sm">
+                    <b class="${e.isVacation ? 'text-red-600' : 'text-blue-700'}">${e.name || 'Unknown'}</b>
+                    <div class="text-[10px] font-bold text-gray-400 uppercase">${e.role}</div>
+                    ${!e.isVacation ? `<div class="mt-2 text-xs"><b>Task:</b> ${e[taskId] || 'None'} <br> <b>Finish:</b> ${e[finishTimeId] || 'N/A'}</div>` : `<div class="mt-2 text-red-500 text-xs italic">Returns: ${e.vacationEnd || 'N/A'}</div>`}
+                </div>`).join('') : '<div class="col-span-full text-center py-10">No members found</div>';
+            document.getElementById('detailsPopup').classList.remove('hidden');
+        }
 
-    const list = employees.filter(e => 
-        (Array.isArray(e.area) ? e.area.includes(area) : e.area === area) && 
-        roleList.includes(e.role) && 
-        e.isVacation === isVac
-    );
-
-    document.getElementById('popupTitle').innerText = `${area} - ${isVac ? 'On Vacation' : 'Active Members'}`;
-    
-    document.getElementById('popupList').innerHTML = list.length > 0 ? list.map(e => {
-        // استخراج القيم من بيانات الموظف
-        const currentTask = taskId && e[taskId] ? e[taskId] : 'No task assigned';
-        const finishTime = finishTimeId && e[finishTimeId] ? e[finishTimeId] : 'N/A';
-        
-        return `
-            <div class="p-4 border rounded-xl ${e.isVacation ? 'bg-red-50 border-red-200' : 'bg-gray-50'} shadow-sm">
-                <div class="flex justify-between items-start mb-2">
-                    <b class="${e.isVacation ? 'line-through text-red-600' : 'text-blue-700'} text-lg">${e.name || 'Unknown'}</b>
-                </div>
-                <div class="text-xs font-bold text-gray-500 uppercase mb-2">${e.role}</div>
-                
-                ${!e.isVacation ? `
-                    <div class="mt-3 pt-3 border-t border-gray-200 space-y-2">
-                        <div>
-                            <span class="text-[10px] font-black text-gray-400 uppercase block mb-1">Current Task:</span>
-                            <p class="text-sm text-gray-700 italic">"${currentTask}"</p>
-                        </div>
-                        <div class="flex justify-between items-center bg-white p-2 rounded-lg border border-gray-100">
-                            <span class="text-[10px] font-black text-emerald-600 uppercase">Finish Time:</span>
-                            <span class="text-xs font-bold text-gray-600">${finishTime}</span>
-                        </div>
-                    </div>
-                ` : `
-                    <div class="mt-2 text-red-500 text-xs font-bold italic">
-                        Returns: ${e.vacationEnd || 'N/A'}
-                    </div>
-                `}
-            </div>
-        `;
-    }).join('') : '<div class="col-span-full text-center text-gray-400 py-10 font-bold uppercase italic">No members found</div>';
-    
-    document.getElementById('detailsPopup').classList.remove('hidden');
-}
         function closePopup() { document.getElementById('detailsPopup').classList.add('hidden'); }
         function clearFilters() { document.querySelectorAll('.filter-input').forEach(i=>i.value=""); filterTable(); }
         function performFullBackup() {
@@ -649,5 +672,3 @@
     </script>
 </body>
 </html>
-
-
