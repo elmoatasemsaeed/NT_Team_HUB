@@ -345,22 +345,21 @@
         // --- Rendering Logic ---
         function renderAll() { updateCapacity(); renderTable(); renderDynamicForm(); lucide.createIcons(); }
 
- // 2. تعديل بناء الفورم الديناميكي
-function renderDynamicForm() {
-    document.getElementById('dynamicFieldsContainer').innerHTML = fieldsConfig.map(f => {
-        let input = '';
-        if(f.type==='select') {
-            input = `<select id="field_${f.id}" class="w-full p-3 border rounded-xl">${(f.options||[]).map(o=>`<option value="${o}">${o}</option>`).join('')}</select>`;
-        } else if(f.type==='multiselect') {
-            input = `<div class="grid grid-cols-2 gap-2 border p-3 rounded-xl h-32 overflow-y-auto">${(f.options||[]).map(o=>`<label class="flex items-center gap-2"><input type="checkbox" value="${o}" class="multi-${f.id}"> ${o}</label>`).join('')}</div>`;
-        } else if(f.type==='date' || f.type==='datetime-local') { // تمت إضافة datetime-local هنا
-            input = `<input type="${f.type}" id="field_${f.id}" class="w-full p-3 border rounded-xl">`;
-        } else {
-            input = `<input type="${f.type}" id="field_${f.id}" class="w-full p-3 border rounded-xl">`;
+        function renderDynamicForm() {
+            document.getElementById('dynamicFieldsContainer').innerHTML = fieldsConfig.map(f => {
+                let input = '';
+                if(f.type==='select') {
+                    input = `<select id="field_${f.id}" class="w-full p-3 border rounded-xl">${(f.options||[]).map(o=>`<option value="${o}">${o}</option>`).join('')}</select>`;
+                } else if(f.type==='multiselect') {
+                    input = `<div class="grid grid-cols-2 gap-2 border p-3 rounded-xl h-32 overflow-y-auto">${(f.options||[]).map(o=>`<label class="flex items-center gap-2"><input type="checkbox" value="${o}" class="multi-${f.id}"> ${o}</label>`).join('')}</div>`;
+                } else if(f.type==='date') {
+                    input = `<input type="date" id="field_${f.id}" class="w-full p-3 border rounded-xl">`;
+                } else {
+                    input = `<input type="${f.type}" id="field_${f.id}" class="w-full p-3 border rounded-xl">`;
+                }
+                return `<div class="space-y-1"><label class="text-xs font-bold uppercase text-gray-500">${f.label}</label>${input}</div>`;
+            }).join('');
         }
-        return `<div class="space-y-1"><label class="text-xs font-bold uppercase text-gray-500">${f.label}</label>${input}</div>`;
-    }).join('');
-}
 
         function renderTable() {
             const visibleFields = fieldsConfig.filter(f => f.showInTable !== false);
@@ -493,28 +492,10 @@ function renderDynamicForm() {
         function openModal() { document.getElementById('modal').classList.remove('hidden'); }
         function closeModal() { document.getElementById('modal').classList.add('hidden'); document.getElementById('employeeForm').reset(); document.getElementById('editIndex').value=""; }
         
-     // 1. تعديل عرض الإعدادات
-function openSetupModal() {
-    document.getElementById('fieldsList').innerHTML = fieldsConfig.map((f, i) => `
-        <div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-6 gap-3 items-end shadow-sm">
-            <div>
-                <label class="text-[10px] font-bold uppercase">Label</label>
-                <input type="text" value="${f.label}" onchange="fieldsConfig[${i}].label=this.value" class="w-full p-2 border rounded text-sm">
-            </div>
-            <div>
-                <label class="text-[10px] font-bold uppercase">Type</label>
-                <select onchange="fieldsConfig[${i}].type=this.value; openSetupModal()" class="w-full p-2 border rounded text-sm">
-                    <option value="text" ${f.type==='text'?'selected':''}>Text</option>
-                    <option value="select" ${f.type==='select'?'selected':''}>Select</option>
-                    <option value="multiselect" ${f.type==='multiselect'?'selected':''}>Multi</option>
-                    <option value="date" ${f.type==='date'?'selected':''}>Date</option>
-                    <option value="datetime-local" ${f.type==='datetime-local'?'selected':''}>Date & Time</option>
-                </select>
-            </div>
-            ...
-        </div>`).join('');
-    document.getElementById('setupModal').classList.remove('hidden'); lucide.createIcons();
-}
+        function openSetupModal() {
+            document.getElementById('fieldsList').innerHTML = fieldsConfig.map((f, i) => `<div class="p-4 border rounded-xl bg-gray-50 grid grid-cols-1 md:grid-cols-6 gap-3 items-end shadow-sm"><div><label class="text-[10px] font-bold uppercase">Label</label><input type="text" value="${f.label}" onchange="fieldsConfig[${i}].label=this.value" class="w-full p-2 border rounded text-sm"></div><div><label class="text-[10px] font-bold uppercase">Type</label><select onchange="fieldsConfig[${i}].type=this.value; openSetupModal()" class="w-full p-2 border rounded text-sm"><option value="text" ${f.type==='text'?'selected':''}>Text</option><option value="select" ${f.type==='select'?'selected':''}>Select</option><option value="multiselect" ${f.type==='multiselect'?'selected':''}>Multi</option><option value="date" ${f.type==='date'?'selected':''}>Date</option></select></div><div class="md:col-span-2">${['select','multiselect'].includes(f.type) ? `<button onclick="openOptionsManager(${i})" class="w-full p-2 bg-white border border-dashed border-blue-400 text-blue-600 rounded text-xs font-bold">Options (${(f.options || []).length})</button>` : ''}</div><div class="flex flex-col items-center justify-center pb-2"><input type="checkbox" ${f.showInTable !== false ? 'checked' : ''} onchange="fieldsConfig[${i}].showInTable = this.checked" class="w-5 h-5 accent-blue-600"></div><button onclick="fieldsConfig.splice(${i},1); openSetupModal()" class="text-red-500 p-2"><i data-lucide="trash-2"></i></button></div>`).join('');
+            document.getElementById('setupModal').classList.remove('hidden'); lucide.createIcons();
+        }
 
         function openOptionsManager(idx) { currentEditingFieldIndex = idx; renderOptionsList(); document.getElementById('optionsModal').classList.remove('hidden'); }
         function renderOptionsList() { const list = fieldsConfig[currentEditingFieldIndex].options; document.getElementById('optionsItemsContainer').innerHTML = list.map((opt, i) => `<div class="flex gap-2 bg-gray-50 p-1 rounded border"><input type="text" value="${opt}" onchange="fieldsConfig[currentEditingFieldIndex}].options[${i}]=this.value" class="flex-1 p-2 bg-transparent text-sm outline-none rounded"><button onclick="fieldsConfig[currentEditingFieldIndex}].options.splice(${i},1); renderOptionsList()" class="text-red-400 p-2"><i data-lucide="x-circle" class="w-4 h-4"></i></button></div>`).join(''); lucide.createIcons(); }
@@ -630,5 +611,3 @@ function openSetupModal() {
     </script>
 </body>
 </html>
-
-
