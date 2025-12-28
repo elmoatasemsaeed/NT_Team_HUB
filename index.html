@@ -434,13 +434,21 @@
     const WORKING_IN_FIELD_ID = 'workingIn'; // معرف حقل Working In
 
     const renderSection = (emps) => {
-        const uniqueAreas = [...new Set(emps.flatMap(e => {
+        // ترتيب الموظفين أبجدياً بناءً على حقل Working In
+        const sortedEmps = [...emps].sort((a, b) => {
+            const valA = (a[WORKING_IN_FIELD_ID] || '').toString().toLowerCase();
+            const valB = (b[WORKING_IN_FIELD_ID] || '').toString().toLowerCase();
+            return valA.localeCompare(valB);
+        });
+
+        const uniqueAreas = [...new Set(sortedEmps.flatMap(e => {
             if (!e.area) return ['Unassigned'];
             return Array.isArray(e.area) ? e.area : [e.area];
         }))];
 
         return uniqueAreas.map(areaName => {
-            const areaEmps = emps.filter(e => {
+            // استخدام المصفوفة المرتبة (sortedEmps) بدلاً من الأصلية
+            const areaEmps = sortedEmps.filter(e => {
                 const empArea = e.area || 'Unassigned';
                 return Array.isArray(empArea) ? empArea.includes(areaName) : empArea === areaName;
             });
@@ -453,7 +461,6 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         ${areaEmps.map(e => {
                             const status = getAvailabilityStatus(e);
-                            // جلب القيم المطلوبة
                             const currentTask = e[TASK_FIELD_ID] || 'No Task';
                             const workingInValue = e[WORKING_IN_FIELD_ID] || 'N/A';
                             
@@ -703,5 +710,6 @@
     </script>
 </body>
 </html>
+
 
 
