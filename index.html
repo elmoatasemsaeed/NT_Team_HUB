@@ -589,6 +589,10 @@
     const taskField = fieldsConfig.find(f => f.label === 'Current Task');
     const taskId = taskField ? taskField.id : null;
 
+    // البحث عن معرف الحقل الذي اسمه "T. Finish Time"
+    const finishTimeField = fieldsConfig.find(f => f.label === 'T. Finish Time');
+    const finishTimeId = finishTimeField ? finishTimeField.id : null;
+
     const list = employees.filter(e => 
         (Array.isArray(e.area) ? e.area.includes(area) : e.area === area) && 
         roleList.includes(e.role) && 
@@ -598,8 +602,9 @@
     document.getElementById('popupTitle').innerText = `${area} - ${isVac ? 'On Vacation' : 'Active Members'}`;
     
     document.getElementById('popupList').innerHTML = list.length > 0 ? list.map(e => {
-        // استخراج قيمة المهمة الحالية إذا وجدت
+        // استخراج القيم من بيانات الموظف
         const currentTask = taskId && e[taskId] ? e[taskId] : 'No task assigned';
+        const finishTime = finishTimeId && e[finishTimeId] ? e[finishTimeId] : 'N/A';
         
         return `
             <div class="p-4 border rounded-xl ${e.isVacation ? 'bg-red-50 border-red-200' : 'bg-gray-50'} shadow-sm">
@@ -609,9 +614,15 @@
                 <div class="text-xs font-bold text-gray-500 uppercase mb-2">${e.role}</div>
                 
                 ${!e.isVacation ? `
-                    <div class="mt-3 pt-3 border-t border-gray-200">
-                        <span class="text-[10px] font-black text-gray-400 uppercase block mb-1">Current Task:</span>
-                        <p class="text-sm text-gray-700 italic">"${currentTask}"</p>
+                    <div class="mt-3 pt-3 border-t border-gray-200 space-y-2">
+                        <div>
+                            <span class="text-[10px] font-black text-gray-400 uppercase block mb-1">Current Task:</span>
+                            <p class="text-sm text-gray-700 italic">"${currentTask}"</p>
+                        </div>
+                        <div class="flex justify-between items-center bg-white p-2 rounded-lg border border-gray-100">
+                            <span class="text-[10px] font-black text-emerald-600 uppercase">Finish Time:</span>
+                            <span class="text-xs font-bold text-gray-600">${finishTime}</span>
+                        </div>
                     </div>
                 ` : `
                     <div class="mt-2 text-red-500 text-xs font-bold italic">
@@ -638,4 +649,5 @@
     </script>
 </body>
 </html>
+
 
