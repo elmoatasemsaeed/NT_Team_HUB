@@ -75,22 +75,6 @@
       "workingIn": "Senior"
     },
     {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Karim El-Saeed Gabr",
-      "role": "Dev",
-      "area": [
-        "Front and Financial"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "(bugs of) > Batch payment CR , Claim CR "
-    },
-    {
       "name": "Mahmoud Ahmed Mahmoud",
       "role": "Dev",
       "area": "Front and Financial",
@@ -128,22 +112,6 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mostafa Osama Abdelatif",
-      "role": "Dev",
-      "area": [
-        "front end"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "CR > 151969 - Impact of Regex pattern ..."
     },
     {
       "isVacation": false,
@@ -682,38 +650,6 @@
       "workingIn": "Senior"
     },
     {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Samir Mohamed Dagher",
-      "role": "Dev",
-      "area": [
-        "Registration"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "CR 146435 -  MRC "
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mostafa Osama Abdelatif",
-      "role": "Dev",
-      "area": [
-        "Registration"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "CR > 151969 - Impact of Regex pattern ..."
-    },
-    {
       "name": "Ibrahim Ahmed Abo El-Fadl",
       "role": "Dev",
       "area": "Registration",
@@ -757,6 +693,54 @@
       "workingIn": "Team Leader",
       "isVacation": false,
       "vacationEnd": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Karim El-Saeed Gabr",
+      "role": "Dev",
+      "area": [
+        "Front and Financial"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "(bugs of) > Batch payment CR , Claim CR "
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Mostafa Osama Abdelatif",
+      "role": "Dev",
+      "area": [
+        "Registration"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "CR > 151969 - Impact of Regex pattern ..."
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Samir Mohamed Dagher",
+      "role": "Dev",
+      "area": [
+        "Registration"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "CR 146435 -  MRC "
     }
   ],
   "fields": [
@@ -926,5 +910,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-28T10:40:54.868Z"
+  "timestamp": "2025-12-28T10:41:31.099Z"
 }
