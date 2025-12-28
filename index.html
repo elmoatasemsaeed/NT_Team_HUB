@@ -399,27 +399,40 @@
         }
 
         // --- Logic for Availability View ---
-        function getAvailabilityStatus(emp) {
-            if (emp.isVacation) {
-                return { label: 'On Vacation', class: 'status-vacation', sub: `Back: ${emp.vacationEnd || 'N/A'}` };
-            }
+       function getAvailabilityStatus(emp) {
+    if (emp.isVacation) {
+        return { label: 'On Vacation', class: 'status-vacation', sub: `Back: ${emp.vacationEnd || 'N/A'}` };
+    }
 
-            const finishTimeStr = emp[FINISH_TIME_FIELD_ID];
-            if (!finishTimeStr) return { label: 'Available', class: 'status-available', sub: 'No task' };
+    const finishTimeStr = emp[FINISH_TIME_FIELD_ID];
+    if (!finishTimeStr) return { label: 'Available', class: 'status-available', sub: 'No task' };
 
-            const finishTime = new Date(finishTimeStr);
-            const now = new Date();
-            const diffMs = finishTime - now;
-            const diffHours = diffMs / (1000 * 60 * 60);
+    const finishTime = new Date(finishTimeStr);
+    const now = new Date();
+    const diffMs = finishTime - now;
+    const diffHours = diffMs / (1000 * 60 * 60);
 
-            if (diffMs <= 0) {
-                return { label: 'Available', class: 'status-available', sub: 'Finished' };
-            } else if (diffHours <= 5) {
-                return { label: 'Partial', class: 'status-partial', sub: `Ends in ${Math.round(diffHours * 60)}m` };
-            } else {
-                return { label: 'Busy', class: 'status-busy', sub: `Ends: ${finishTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}` };
-            }
-        }
+    if (diffMs <= 0) {
+        return { label: 'Available', class: 'status-available', sub: 'Finished' };
+    } else if (diffHours <= 5) {
+        return { label: 'Partial', class: 'status-partial', sub: `Ends in ${Math.round(diffHours * 60)}m` };
+    } else {
+        // التحقق مما إذا كان التاريخ في يوم مختلف عن اليوم الحالي
+        const isToday = finishTime.toDateString() === now.toDateString();
+        
+        // إذا كان اليوم، يظهر الوقت فقط. إذا كان يوم آخر، يظهر التاريخ والوقت.
+        const timeFormat = finishTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        const dateFormat = finishTime.toLocaleDateString([], {month: 'short', day: 'numeric'});
+        
+        const displayStatus = isToday ? `Ends: ${timeFormat}` : `Ends: ${dateFormat} ${timeFormat}`;
+
+        return { 
+            label: 'Busy', 
+            class: 'status-busy', 
+            sub: displayStatus 
+        };
+    }
+}
 
        function renderAvailabilityView() {
     const devGrid = document.getElementById('availabilityDevGrid');
@@ -742,6 +755,7 @@ function closeChartsSetupModal() {
     </script>
 </body>
 </html>
+
 
 
 
