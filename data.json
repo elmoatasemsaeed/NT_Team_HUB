@@ -351,12 +351,20 @@
       "f1766917553886": "SL 153778"
     },
     {
+      "isVacation": false,
+      "vacationEnd": "",
       "name": "Ahmed Abdelhakeem",
       "role": "Dev",
-      "area": "Registration",
-      "workingIn": "support",
-      "isVacation": false,
-      "vacationEnd": ""
+      "area": [
+        "Registration"
+      ],
+      "workingIn": [
+        "support"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "لسه مبداش عشان هو شفت"
     },
     {
       "isVacation": false,
@@ -1007,5 +1015,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-28T11:31:03.161Z"
+  "timestamp": "2025-12-28T11:32:24.433Z"
 }
