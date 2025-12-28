@@ -1,12 +1,20 @@
 {
   "employees": [
     {
+      "isVacation": false,
+      "vacationEnd": "",
       "name": "Mahmoud Ahmed Mahmoud",
       "role": "Dev",
-      "area": "Front and Financial",
-      "workingIn": "support",
-      "isVacation": false,
-      "vacationEnd": ""
+      "area": [
+        "Front and Financial"
+      ],
+      "workingIn": [
+        "support"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "SL 154453"
     },
     {
       "isVacation": false,
@@ -922,5 +930,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-28T10:49:18.304Z"
+  "timestamp": "2025-12-28T10:50:54.222Z"
 }
