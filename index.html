@@ -766,7 +766,7 @@ function closeChartsSetupModal() {
         // الشرط: الحالة Available (Finished) والـ Working In هو Dev
         return !e.isVacation && 
                status.label === 'Available' && 
-               workingIn === 'dev';
+               role === 'dev';
     });
 
     if (availableDevs.length > 0) {
@@ -777,6 +777,7 @@ function closeChartsSetupModal() {
     </script>
 </body>
 </html>
+
 
 
 
