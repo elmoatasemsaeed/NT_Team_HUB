@@ -429,82 +429,80 @@
     const devs = employees.filter(e => ['Dev', 'Senior'].includes(e.role));
     const testers = employees.filter(e => ['Tester', 'Senior tester'].includes(e.role));
 
-    // معرفات الحقول
-    const TASK_FIELD_ID = 'f1766917553886'; 
-    const WORKING_IN_FIELD_ID = 'workingIn'; 
+    // معرفات الحقول المطلوبة
+    const TASK_FIELD_ID = 'f1766917553886'; // معرف حقل التاسك
+    const WORKING_IN_FIELD_ID = 'workingIn'; // معرف حقل Working In
 
     const renderSection = (emps) => {
-        // ترتيب الموظفين أبجدياً بناءً على حقل Working In
-        const sortedEmps = [...emps].sort((a, b) => {
-            const valA = (a[WORKING_IN_FIELD_ID] || '').toString().toLowerCase();
-            const valB = (b[WORKING_IN_FIELD_ID] || '').toString().toLowerCase();
-            return valA.localeCompare(valB);
+    // ترتيب الموظفين أبجدياً بناءً على حقل Working In
+    const sortedEmps = [...emps].sort((a, b) => {
+        const valA = (a[WORKING_IN_FIELD_ID] || '').toString().toLowerCase();
+        const valB = (b[WORKING_IN_FIELD_ID] || '').toString().toLowerCase();
+        return valA.localeCompare(valB);
+    });
+
+    const uniqueAreas = [...new Set(sortedEmps.flatMap(e => {
+        if (!e.area) return ['Unassigned'];
+        return Array.isArray(e.area) ? e.area : [e.area];
+    }))];
+
+    return uniqueAreas.map(areaName => {
+        const areaEmps = sortedEmps.filter(e => {
+            const empArea = e.area || 'Unassigned';
+            return Array.isArray(empArea) ? empArea.includes(areaName) : empArea === areaName;
         });
 
-        // الحصول على المناطق الفريدة
-        const uniqueAreas = [...new Set(sortedEmps.flatMap(e => {
-            if (!e.area) return ['Unassigned'];
-            return Array.isArray(e.area) ? e.area : [e.area];
-        }))];
+        if (areaEmps.length === 0) return '';
 
-        return uniqueAreas.map(areaName => {
-            const areaEmps = sortedEmps.filter(e => {
-                const empArea = e.area || 'Unassigned';
-                return Array.isArray(empArea) ? empArea.includes(areaName) : empArea === areaName;
-            });
-
-            if (areaEmps.length === 0) return '';
-
-            return `
-                <div class="space-y-3 mb-6">
-                    <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest border-l-4 border-blue-400 pl-2">${areaName}</h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        ${areaEmps.map(e => {
-                            const status = getAvailabilityStatus(e);
-                            const currentTask = e[TASK_FIELD_ID] || '';
-                            const workingInValue = e[WORKING_IN_FIELD_ID] || 'N/A';
-                            const globalIdx = employees.indexOf(e);
-                            
-                            return `
-                                <div class="p-3 border rounded-xl bg-white shadow-sm flex flex-col gap-2">
-                                    <div class="flex justify-between items-start">
-                                        <div>
-                                            <div class="font-bold text-gray-800 text-sm">${e.name || 'Unknown'}</div>
-                                            <div class="text-[9px] text-gray-500 uppercase font-medium">${e.role}</div>
-                                        </div>
-                                        <div class="text-right">
-                                            <div class="px-2 py-0.5 rounded text-[10px] font-bold uppercase ${status.class}">${status.label}</div>
-                                            <div class="text-[9px] text-gray-400 mt-1">${status.sub}</div>
-                                        </div>
+        return `
+            <div class="space-y-3 mb-6">
+                <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest border-l-4 border-blue-400 pl-2">${areaName}</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    ${areaEmps.map(e => {
+                        const status = getAvailabilityStatus(e);
+                        const currentTask = e[TASK_FIELD_ID] || '';
+                        const workingInValue = e[WORKING_IN_FIELD_ID] || 'N/A';
+                        
+                        // الحصول على index الموظف الحقيقي في مصفوفة employees الأصلية
+                        const globalIdx = employees.indexOf(e);
+                        
+                        return `
+                            <div class="p-3 border rounded-xl bg-white shadow-sm flex flex-col gap-2">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <div class="font-bold text-gray-800 text-sm">${e.name || 'Unknown'}</div>
+                                        <div class="text-[9px] text-gray-500 uppercase font-medium">${e.role}</div>
                                     </div>
-                                    
-                                    <div class="mt-1 pt-2 border-t border-gray-50 grid grid-cols-2 gap-2">
-                                        <div class="flex flex-col">
-                                            <span class="text-[8px] font-bold text-gray-400 uppercase">Current Task</span>
-                                            <input type="text" 
-                                                   value="${currentTask}" 
-                                                   onchange="updateTaskInline(${globalIdx}, this.value)"
-                                                   placeholder="Enter task..."
-                                                   class="text-[10px] text-blue-600 font-medium bg-blue-50/50 border border-transparent focus:border-blue-300 focus:bg-white outline-none rounded px-1 py-0.5 transition-all"
-                                                   ${currentUserRole !== 'admin' ? 'disabled' : ''}>
-                                        </div>
-                                        <div class="flex flex-col">
-                                            <span class="text-[8px] font-bold text-gray-400 uppercase">Working In</span>
-                                            <span class="text-[10px] text-gray-700 truncate font-medium mt-1" title="${workingInValue}">${workingInValue}</span>
-                                        </div>
+                                    <div class="text-right">
+                                        <div class="px-2 py-0.5 rounded text-[10px] font-bold uppercase ${status.class}">${status.label}</div>
+                                        <div class="text-[9px] text-gray-400 mt-1">${status.sub}</div>
                                     </div>
                                 </div>
-                            `;
-                        }).join('')}
-                    </div>
+                                
+                                <div class="mt-1 pt-2 border-t border-gray-50 grid grid-cols-2 gap-2">
+                                    <div class="flex flex-col">
+                                        <span class="text-[8px] font-bold text-gray-400 uppercase">Current Task</span>
+                                        <input type="text" 
+                                               value="${currentTask}" 
+                                               onchange="updateTaskInline(${globalIdx}, this.value)"
+                                               placeholder="Enter task..."
+                                               class="text-[10px] text-blue-600 font-medium bg-blue-50/50 border border-transparent focus:border-blue-300 focus:bg-white outline-none rounded px-1 py-0.5 transition-all"
+                                               ${currentUserRole !== 'admin' ? 'disabled' : ''}>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="text-[8px] font-bold text-gray-400 uppercase">Working In</span>
+                                        <span class="text-[10px] text-gray-700 truncate font-medium mt-1" title="${workingInValue}">${workingInValue}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
                 </div>
-            `;
-        }).join('');
-    };
+            </div>
+        `;
+    }).join('');
+};
 
-    devGrid.innerHTML = renderSection(devs);
-    testerGrid.innerHTML = renderSection(testers);
-}
     devGrid.innerHTML = renderSection(devs);
     testerGrid.innerHTML = renderSection(testers);
 }
@@ -744,7 +742,6 @@ function closeChartsSetupModal() {
     </script>
 </body>
 </html>
-
 
 
 
