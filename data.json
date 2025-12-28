@@ -962,14 +962,14 @@
     {
       "id": "f1766864203478",
       "label": "Available after",
-      "type": "date",
+      "type": "datetime-local",
       "showInTable": false,
       "options": []
     },
     {
       "id": "f1766864338124",
       "label": "Par. Available After",
-      "type": "date",
+      "type": "datetime-local",
       "showInTable": false,
       "options": []
     },
@@ -1079,5 +1079,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-28T13:48:41.285Z"
+  "timestamp": "2025-12-28T13:55:30.267Z"
 }
