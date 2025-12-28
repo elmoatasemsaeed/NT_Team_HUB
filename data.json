@@ -978,6 +978,13 @@
       "type": "text",
       "showInTable": true,
       "options": []
+    },
+    {
+      "id": "f1766929340598",
+      "label": "T. Finish Time",
+      "type": "datetime-local",
+      "showInTable": true,
+      "options": []
     }
   ],
   "users": [
@@ -1071,5 +1078,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-28T12:03:56.580Z"
+  "timestamp": "2025-12-28T13:43:39.406Z"
 }
