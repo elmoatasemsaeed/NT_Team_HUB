@@ -556,12 +556,47 @@
         function closeChartsSetupModal() { document.getElementById('chartsSetupModal').classList.add('hidden'); }
 
         function showDetailsExtended(area, roles, isVac) {
-            const roleList = roles.split(',');
-            const list = employees.filter(e => (Array.isArray(e.area)?e.area.includes(area):e.area===area) && roleList.includes(e.role) && e.isVacation === isVac);
-            document.getElementById('popupTitle').innerText = `${area} - ${isVac ? 'On Vacation' : 'Active Members'}`;
-            document.getElementById('popupList').innerHTML = list.length > 0 ? list.map(e => `<div class="p-4 border rounded-xl ${e.isVacation ? 'bg-red-50 border-red-200' : 'bg-gray-50'}"><b class="${e.isVacation ? 'line-through text-red-600' : ''}">${e.name}</b><br><small class="text-gray-500">${e.role} ${e.isVacation ? '(Returns: ' + (e.vacationEnd || 'N/A') + ')' : ''}</small></div>`).join('') : '<div class="col-span-full text-center text-gray-400 py-10 font-bold uppercase italic">No members found</div>';
-            document.getElementById('detailsPopup').classList.remove('hidden');
-        }
+    const roleList = roles.split(',');
+    
+    // البحث عن معرف الحقل الذي اسمه "Current Task"
+    const taskField = fieldsConfig.find(f => f.label === 'Current Task');
+    const taskId = taskField ? taskField.id : null;
+
+    const list = employees.filter(e => 
+        (Array.isArray(e.area) ? e.area.includes(area) : e.area === area) && 
+        roleList.includes(e.role) && 
+        e.isVacation === isVac
+    );
+
+    document.getElementById('popupTitle').innerText = `${area} - ${isVac ? 'On Vacation' : 'Active Members'}`;
+    
+    document.getElementById('popupList').innerHTML = list.length > 0 ? list.map(e => {
+        // استخراج قيمة المهمة الحالية إذا وجدت
+        const currentTask = taskId && e[taskId] ? e[taskId] : 'No task assigned';
+        
+        return `
+            <div class="p-4 border rounded-xl ${e.isVacation ? 'bg-red-50 border-red-200' : 'bg-gray-50'} shadow-sm">
+                <div class="flex justify-between items-start mb-2">
+                    <b class="${e.isVacation ? 'line-through text-red-600' : 'text-blue-700'} text-lg">${e.name || 'Unknown'}</b>
+                </div>
+                <div class="text-xs font-bold text-gray-500 uppercase mb-2">${e.role}</div>
+                
+                ${!e.isVacation ? `
+                    <div class="mt-3 pt-3 border-t border-gray-200">
+                        <span class="text-[10px] font-black text-gray-400 uppercase block mb-1">Current Task:</span>
+                        <p class="text-sm text-gray-700 italic">"${currentTask}"</p>
+                    </div>
+                ` : `
+                    <div class="mt-2 text-red-500 text-xs font-bold italic">
+                        Returns: ${e.vacationEnd || 'N/A'}
+                    </div>
+                `}
+            </div>
+        `;
+    }).join('') : '<div class="col-span-full text-center text-gray-400 py-10 font-bold uppercase italic">No members found</div>';
+    
+    document.getElementById('detailsPopup').classList.remove('hidden');
+}
         function closePopup() { document.getElementById('detailsPopup').classList.add('hidden'); }
         function clearFilters() { document.querySelectorAll('.filter-input').forEach(i=>i.value=""); filterTable(); }
         function performFullBackup() {
@@ -576,3 +611,4 @@
     </script>
 </body>
 </html>
+
