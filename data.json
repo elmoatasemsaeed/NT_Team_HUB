@@ -33,12 +33,20 @@
       "f1766917553886": "SL 154086"
     },
     {
+      "isVacation": false,
+      "vacationEnd": "",
       "name": "Adel Salah El-Din Mahmoud",
       "role": "Dev",
-      "area": "front end",
-      "workingIn": "Iteration",
-      "isVacation": false,
-      "vacationEnd": ""
+      "area": [
+        "front end"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "فاضي"
     },
     {
       "isVacation": false,
@@ -936,5 +944,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-28T10:51:21.278Z"
+  "timestamp": "2025-12-28T10:51:42.335Z"
 }
