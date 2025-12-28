@@ -1,209 +1,6 @@
 {
   "employees": [
     {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Abdelmoniem Mohamed Abdelmoniem",
-      "role": "Senior",
-      "area": [
-        "Integration",
-        "ADFACA"
-      ],
-      "workingIn": [
-        "Senior"
-      ],
-      "custom_1766584922755": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Abdelrahman Elbetar",
-      "role": "Tester",
-      "area": [
-        "Integration",
-        "Mobile App",
-        "Automation"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Abdullah Nasser",
-      "role": "Senior tester",
-      "area": [
-        "Integration",
-        "LDM_Integration"
-      ],
-      "workingIn": [
-        "support"
-      ]
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Ahmed Alshennawi",
-      "role": "Tester",
-      "area": [
-        "LDM_Integration"
-      ],
-      "workingIn": [
-        "support"
-      ]
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Ahmed Khaled Mubark",
-      "role": "Tester",
-      "area": [
-        "LDM_Integration"
-      ],
-      "workingIn": [
-        "support"
-      ]
-    },
-    {
-      "name": "Ahmed Mohamed Farag",
-      "role": "Tester",
-      "area": "elBORG",
-      "workingIn": "elBORG",
-      "isVacation": false,
-      "vacationEnd": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Ahmed Saed",
-      "role": "Tester",
-      "area": [
-        "LDM_Integration"
-      ],
-      "workingIn": [
-        "support"
-      ]
-    },
-    {
-      "name": "Alaa Ezzat",
-      "role": "Tester",
-      "area": "elBORG",
-      "workingIn": "elBORG",
-      "isVacation": false,
-      "vacationEnd": ""
-    },
-    {
-      "name": "Ammar Yasser Ahmed",
-      "role": "Tester",
-      "area": "Internal lab",
-      "workingIn": "Iteration",
-      "isVacation": false,
-      "vacationEnd": ""
-    },
-    {
-      "name": "Amr Sameh",
-      "role": "Tester",
-      "area": "elBORG",
-      "workingIn": "elBORG",
-      "isVacation": false,
-      "vacationEnd": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Bardis Khamees",
-      "role": "Senior",
-      "area": [
-        "Front and Financial"
-      ],
-      "workingIn": "Senior"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Bassant Abdelhamid",
-      "role": "Tester",
-      "area": [
-        "Integration",
-        "Home Visit"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Bassem Ayman Morsy",
-      "role": "Tester",
-      "area": [
-        "Front and Financial"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Bothyna Abdelmoniem",
-      "role": "Tester",
-      "area": [
-        "Internal lab",
-        "Integration"
-      ],
-      "workingIn": [
-        "Iteration"
-      ]
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Dina Ahmed",
-      "role": "Tester",
-      "area": "Registration",
-      "workingIn": "Iteration",
-      "custom_1766503160857": []
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Elhussein Ahmed",
-      "role": "Tester",
-      "area": [
-        "Integration",
-        "MMS",
-        "ADFACA"
-      ],
-      "workingIn": [
-        "support"
-      ],
-      "custom_1766584922755": ""
-    },
-    {
-      "isVacation": true,
-      "vacationEnd": "2025-12-30",
-      "name": "Eslam Saleh",
-      "role": "Senior",
-      "area": [
-        "Mobile App"
-      ],
-      "workingIn": [
-        "Senior"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": ""
-    },
-    {
       "isVacation": true,
       "vacationEnd": "2025-12-30",
       "name": "Esraa Abdelsalam",
@@ -218,40 +15,6 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Fatma Fayed",
-      "role": "Senior",
-      "area": [
-        "Registration"
-      ],
-      "workingIn": "Senior"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Hassan Dwidar",
-      "role": "Tester",
-      "area": [
-        "LDM_Integration"
-      ],
-      "workingIn": [
-        "support"
-      ]
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Heba Mohamed El Sayed",
-      "role": "Tester",
-      "area": [
-        "LDM_Integration"
-      ],
-      "workingIn": [
-        "support"
-      ]
     },
     {
       "isVacation": true,
@@ -270,120 +33,6 @@
       "f1766917553886": ""
     },
     {
-      "name": "Mahmoud Ab Omar",
-      "role": "Tester",
-      "area": "Internal lab",
-      "workingIn": "Iteration",
-      "isVacation": false,
-      "vacationEnd": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mariam Okab",
-      "role": "Tester",
-      "area": [
-        "Integration",
-        "Mobile App",
-        "Automation"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mohamed Abomosallam",
-      "role": "Tester",
-      "area": [
-        "Internal lab"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "رجب"
-    },
-    {
-      "name": "Mohamed Elgmmal",
-      "role": "Tester",
-      "area": "Front and Financial",
-      "workingIn": "Iteration",
-      "isVacation": false,
-      "vacationEnd": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mohamed Fawzy",
-      "role": "Team Lead",
-      "area": [
-        "Team Leader"
-      ],
-      "workingIn": [
-        "Team Leader"
-      ],
-      "custom_1766584922755": ""
-    },
-    {
-      "name": "Mohamed Ibrahim",
-      "role": "Tester",
-      "area": "Front and Financial",
-      "workingIn": "Iteration",
-      "isVacation": false,
-      "vacationEnd": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mohamed Ismail",
-      "role": "Senior",
-      "area": [
-        "Internal lab"
-      ],
-      "workingIn": "Senior"
-    },
-    {
-      "name": "Mohamed Sayed Masry Rezk",
-      "role": "Tester",
-      "area": "elBORG",
-      "workingIn": "elBORG",
-      "isVacation": false,
-      "vacationEnd": ""
-    },
-    {
-      "name": "Mostafa Mohamed",
-      "role": "Senior tester",
-      "area": "Registration",
-      "workingIn": "Iteration",
-      "isVacation": false,
-      "vacationEnd": ""
-    },
-    {
-      "name": "Mustafa Mamdoh",
-      "role": "Tester",
-      "area": "Registration",
-      "workingIn": "Iteration",
-      "isVacation": false,
-      "vacationEnd": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Nehal Elbana ",
-      "role": "Tester",
-      "area": [
-        "Integration",
-        "Mobile App",
-        "Automation"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": ""
-    },
-    {
       "isVacation": true,
       "vacationEnd": "2025-12-31",
       "name": "Ola Gamal",
@@ -391,47 +40,6 @@
       "area": "Internal lab",
       "workingIn": "Iteration",
       "custom_1766503160857": []
-    },
-    {
-      "name": "Saddam Raees",
-      "role": "Tester",
-      "area": "Front and Financial",
-      "workingIn": "Iteration",
-      "isVacation": false,
-      "vacationEnd": ""
-    },
-    {
-      "isVacation": true,
-      "vacationEnd": "2025-12-29",
-      "name": "Salah Abdelhakeem",
-      "role": "Senior tester",
-      "area": [
-        "Front and Financial",
-        "Automation"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": ""
-    },
-    {
-      "name": "Sameh Abdellatef",
-      "role": "Team Lead",
-      "area": "Team Leader",
-      "workingIn": "Team Leader",
-      "isVacation": false,
-      "vacationEnd": ""
-    },
-    {
-      "name": "Sara Mustafa",
-      "role": "Tester",
-      "area": "Registration",
-      "workingIn": "Iteration",
-      "isVacation": false,
-      "vacationEnd": ""
     },
     {
       "isVacation": true,
@@ -449,14 +57,6 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": ""
-    },
-    {
-      "name": "Yasmine Abdelwahed",
-      "role": "Tester",
-      "area": "Internal lab",
-      "workingIn": "Iteration",
-      "isVacation": false,
-      "vacationEnd": ""
     },
     {
       "isVacation": false,
@@ -572,22 +172,6 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "ANGA AI Validation "
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Gamal Kasem",
-      "role": "Senior",
-      "area": [
-        "LDM_Integration"
-      ],
-      "workingIn": [
-        "Senior"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "Borg Intersystem CR"
     },
     {
       "isVacation": false,
@@ -855,22 +439,6 @@
     {
       "isVacation": false,
       "vacationEnd": "",
-      "name": "Islam kamal",
-      "role": "Senior",
-      "area": [
-        "Mobile App"
-      ],
-      "workingIn": [
-        "Senior"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "Wareed M.App + Shalaby edit acc"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
       "name": "Adel Salah El-Din Mahmoud",
       "role": "Dev",
       "area": [
@@ -899,6 +467,438 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "SL 154125"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Abdelmoniem Mohamed Abdelmoniem",
+      "role": "Senior",
+      "area": [
+        "Integration",
+        "ADFACA"
+      ],
+      "workingIn": [
+        "Senior"
+      ],
+      "custom_1766584922755": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Bardis Khamees",
+      "role": "Senior",
+      "area": [
+        "Front and Financial"
+      ],
+      "workingIn": "Senior"
+    },
+    {
+      "isVacation": true,
+      "vacationEnd": "2025-12-30",
+      "name": "Eslam Saleh",
+      "role": "Senior",
+      "area": [
+        "Mobile App"
+      ],
+      "workingIn": [
+        "Senior"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Fatma Fayed",
+      "role": "Senior",
+      "area": [
+        "Registration"
+      ],
+      "workingIn": "Senior"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Mohamed Ismail",
+      "role": "Senior",
+      "area": [
+        "Internal lab"
+      ],
+      "workingIn": "Senior"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Gamal Kasem",
+      "role": "Senior",
+      "area": [
+        "LDM_Integration"
+      ],
+      "workingIn": [
+        "Senior"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "Borg Intersystem CR"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Islam kamal",
+      "role": "Senior",
+      "area": [
+        "Mobile App"
+      ],
+      "workingIn": [
+        "Senior"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "Wareed M.App + Shalaby edit acc"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Abdullah Nasser",
+      "role": "Senior tester",
+      "area": [
+        "Integration",
+        "LDM_Integration"
+      ],
+      "workingIn": [
+        "support"
+      ]
+    },
+    {
+      "name": "Mostafa Mohamed",
+      "role": "Senior tester",
+      "area": "Registration",
+      "workingIn": "Iteration",
+      "isVacation": false,
+      "vacationEnd": ""
+    },
+    {
+      "isVacation": true,
+      "vacationEnd": "2025-12-29",
+      "name": "Salah Abdelhakeem",
+      "role": "Senior tester",
+      "area": [
+        "Front and Financial",
+        "Automation"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Mohamed Fawzy",
+      "role": "Team Lead",
+      "area": [
+        "Team Leader"
+      ],
+      "workingIn": [
+        "Team Leader"
+      ],
+      "custom_1766584922755": ""
+    },
+    {
+      "name": "Sameh Abdellatef",
+      "role": "Team Lead",
+      "area": "Team Leader",
+      "workingIn": "Team Leader",
+      "isVacation": false,
+      "vacationEnd": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Abdelrahman Elbetar",
+      "role": "Tester",
+      "area": [
+        "Integration",
+        "Mobile App",
+        "Automation"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Ahmed Alshennawi",
+      "role": "Tester",
+      "area": [
+        "LDM_Integration"
+      ],
+      "workingIn": [
+        "support"
+      ]
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Ahmed Khaled Mubark",
+      "role": "Tester",
+      "area": [
+        "LDM_Integration"
+      ],
+      "workingIn": [
+        "support"
+      ]
+    },
+    {
+      "name": "Ahmed Mohamed Farag",
+      "role": "Tester",
+      "area": "elBORG",
+      "workingIn": "elBORG",
+      "isVacation": false,
+      "vacationEnd": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Ahmed Saed",
+      "role": "Tester",
+      "area": [
+        "LDM_Integration"
+      ],
+      "workingIn": [
+        "support"
+      ]
+    },
+    {
+      "name": "Alaa Ezzat",
+      "role": "Tester",
+      "area": "elBORG",
+      "workingIn": "elBORG",
+      "isVacation": false,
+      "vacationEnd": ""
+    },
+    {
+      "name": "Ammar Yasser Ahmed",
+      "role": "Tester",
+      "area": "Internal lab",
+      "workingIn": "Iteration",
+      "isVacation": false,
+      "vacationEnd": ""
+    },
+    {
+      "name": "Amr Sameh",
+      "role": "Tester",
+      "area": "elBORG",
+      "workingIn": "elBORG",
+      "isVacation": false,
+      "vacationEnd": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Bassant Abdelhamid",
+      "role": "Tester",
+      "area": [
+        "Integration",
+        "Home Visit"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Bassem Ayman Morsy",
+      "role": "Tester",
+      "area": [
+        "Front and Financial"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Bothyna Abdelmoniem",
+      "role": "Tester",
+      "area": [
+        "Internal lab",
+        "Integration"
+      ],
+      "workingIn": [
+        "Iteration"
+      ]
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Dina Ahmed",
+      "role": "Tester",
+      "area": "Registration",
+      "workingIn": "Iteration",
+      "custom_1766503160857": []
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Elhussein Ahmed",
+      "role": "Tester",
+      "area": [
+        "Integration",
+        "MMS",
+        "ADFACA"
+      ],
+      "workingIn": [
+        "support"
+      ],
+      "custom_1766584922755": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Hassan Dwidar",
+      "role": "Tester",
+      "area": [
+        "LDM_Integration"
+      ],
+      "workingIn": [
+        "support"
+      ]
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Heba Mohamed El Sayed",
+      "role": "Tester",
+      "area": [
+        "LDM_Integration"
+      ],
+      "workingIn": [
+        "support"
+      ]
+    },
+    {
+      "name": "Mahmoud Ab Omar",
+      "role": "Tester",
+      "area": "Internal lab",
+      "workingIn": "Iteration",
+      "isVacation": false,
+      "vacationEnd": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Mariam Okab",
+      "role": "Tester",
+      "area": [
+        "Integration",
+        "Mobile App",
+        "Automation"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Mohamed Abomosallam",
+      "role": "Tester",
+      "area": [
+        "Internal lab"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "رجب"
+    },
+    {
+      "name": "Mohamed Elgmmal",
+      "role": "Tester",
+      "area": "Front and Financial",
+      "workingIn": "Iteration",
+      "isVacation": false,
+      "vacationEnd": ""
+    },
+    {
+      "name": "Mohamed Ibrahim",
+      "role": "Tester",
+      "area": "Front and Financial",
+      "workingIn": "Iteration",
+      "isVacation": false,
+      "vacationEnd": ""
+    },
+    {
+      "name": "Mohamed Sayed Masry Rezk",
+      "role": "Tester",
+      "area": "elBORG",
+      "workingIn": "elBORG",
+      "isVacation": false,
+      "vacationEnd": ""
+    },
+    {
+      "name": "Mustafa Mamdoh",
+      "role": "Tester",
+      "area": "Registration",
+      "workingIn": "Iteration",
+      "isVacation": false,
+      "vacationEnd": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Nehal Elbana ",
+      "role": "Tester",
+      "area": [
+        "Integration",
+        "Mobile App",
+        "Automation"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": ""
+    },
+    {
+      "name": "Saddam Raees",
+      "role": "Tester",
+      "area": "Front and Financial",
+      "workingIn": "Iteration",
+      "isVacation": false,
+      "vacationEnd": ""
+    },
+    {
+      "name": "Sara Mustafa",
+      "role": "Tester",
+      "area": "Registration",
+      "workingIn": "Iteration",
+      "isVacation": false,
+      "vacationEnd": ""
+    },
+    {
+      "name": "Yasmine Abdelwahed",
+      "role": "Tester",
+      "area": "Internal lab",
+      "workingIn": "Iteration",
+      "isVacation": false,
+      "vacationEnd": ""
     }
   ],
   "fields": [
@@ -951,14 +951,15 @@
         "elBORG",
         "Senior",
         "Team Leader"
-      ]
+      ],
+      "showInTable": false
     },
     {
       "id": "custom_1766584922755",
       "label": "Comment",
       "type": "text",
       "options": [],
-      "showInTable": true
+      "showInTable": false
     },
     {
       "id": "f1766864203478",
@@ -1080,5 +1081,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-28T14:16:41.300Z"
+  "timestamp": "2025-12-28T14:33:44.272Z"
 }
