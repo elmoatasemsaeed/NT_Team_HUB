@@ -591,7 +591,8 @@
 
         async function save(render = true) { 
             const ok = await syncToGitHub(); 
-            if(render && ok) renderAll(); 
+            if(render && ok) renderAll();
+            return ok;
         }
 
         function toggleVac(idx, val) { employees[idx].isVacation = val; save(); }
@@ -741,6 +742,7 @@ function closeChartsSetupModal() {
     </script>
 </body>
 </html>
+
 
 
 
