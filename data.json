@@ -499,7 +499,7 @@
       "workingIn": "Senior"
     },
     {
-      "isVacation": false,
+      "isVacation": true,
       "vacationEnd": "",
       "name": "Salah Abdelhakeem",
       "role": "Senior tester",
@@ -1019,5 +1019,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-28T11:33:00.945Z"
+  "timestamp": "2025-12-28T11:33:15.952Z"
 }
