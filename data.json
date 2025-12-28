@@ -130,12 +130,20 @@
       "vacationEnd": ""
     },
     {
+      "isVacation": false,
+      "vacationEnd": "",
       "name": "Mostafa Osama Abdelatif",
       "role": "Dev",
-      "area": "front end",
-      "workingIn": "Iteration",
-      "isVacation": false,
-      "vacationEnd": ""
+      "area": [
+        "front end"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "CR > 151969 - Impact of Regex pattern ..."
     },
     {
       "isVacation": false,
@@ -902,5 +910,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-28T10:34:05.196Z"
+  "timestamp": "2025-12-28T10:36:14.633Z"
 }
