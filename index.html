@@ -636,11 +636,16 @@
         };
 
         function switchTab(t, btn) { 
-            document.querySelectorAll('.tab-content').forEach(c=>c.classList.add('hidden')); 
-            document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); 
-            document.getElementById(t).classList.remove('hidden'); 
-            btn.classList.add('active'); 
-        }
+    document.querySelectorAll('.tab-content').forEach(c=>c.classList.add('hidden')); 
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); 
+    document.getElementById(t).classList.remove('hidden'); 
+    btn.classList.add('active'); 
+
+    // المنطق الجديد: إذا تم فتح تبويب الـ Availability، قم بفحص المطورين المتاحين
+    if (t === 'availabilityTab') {
+        checkAvailableDevs();
+    }
+}
         function openModal() { document.getElementById('modal').classList.remove('hidden'); }
         function closeModal() { document.getElementById('modal').classList.add('hidden'); document.getElementById('employeeForm').reset(); document.getElementById('editIndex').value=""; }
         
@@ -752,9 +757,27 @@ async function updateTaskInline(empIndex, newValue) {
 function closeChartsSetupModal() {
     document.getElementById('chartsSetupModal').classList.add('hidden');
 }
+        function checkAvailableDevs() {
+    // تصفية الموظفين الذين انتهت مهامهم ولا يزال لديهم قيمة Dev في Working In
+    const availableDevs = employees.filter(e => {
+        const status = getAvailabilityStatus(e);
+        const workingIn = (e['workingIn'] || '').toString().toLowerCase();
+        
+        // الشرط: الحالة Available (Finished) والـ Working In هو Dev
+        return !e.isVacation && 
+               status.label === 'Available' && 
+               workingIn === 'dev';
+    });
+
+    if (availableDevs.length > 0) {
+        const names = availableDevs.map(e => e.name).join(', ');
+        alert(`تنبيه: الموظفون التاليون انتهت مهامهم ولا يزالون في وضع (Dev):\n\n${names}\n\nيرجى تحديث حالاتهم.`);
+    }
+}
     </script>
 </body>
 </html>
+
 
 
 
