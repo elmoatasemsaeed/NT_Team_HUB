@@ -790,14 +790,14 @@
       "id": "f1766864203478",
       "label": "Available after",
       "type": "date",
-      "showInTable": true,
+      "showInTable": false,
       "options": []
     },
     {
       "id": "f1766864338124",
       "label": "Par. Available After",
       "type": "date",
-      "showInTable": true,
+      "showInTable": false,
       "options": []
     },
     {
@@ -894,5 +894,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-28T10:26:11.013Z"
+  "timestamp": "2025-12-28T10:33:08.301Z"
 }
