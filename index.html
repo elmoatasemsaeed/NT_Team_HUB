@@ -242,6 +242,7 @@
 
     <div id="detailsPopup" class="fixed inset-0 z-[2000] bg-black/50 hidden flex items-center justify-center p-4" onclick="closePopup()">
         <div class="bg-white large-modal shadow-2xl p-8" onclick="event.stopPropagation()"><div class="flex justify-between items-center border-b pb-4 mb-6"><h2 id="popupTitle" class="text-2xl font-black text-blue-700 uppercase"></h2><button onclick="closePopup()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-8 h-8"></i></button></div><div id="popupList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div><button onclick="closePopup()" class="w-full mt-8 py-3 bg-gray-100 rounded-xl font-bold text-gray-600 uppercase">CLOSE</button></div>
+    <div id="toastContainer" class="fixed bottom-5 right-5 z-[3000] space-y-3 pointer-events-none"></div>
     </div>
 
     <script>
@@ -757,13 +758,53 @@ async function updateTaskInline(empIndex, newValue) {
 function closeChartsSetupModal() {
     document.getElementById('chartsSetupModal').classList.add('hidden');
 }
-   function checkAvailableDevs() {
-    // تصفية الموظفين المتاحين (انتهى وقتهم) ومن أدوار المطورين
+  function showToast(message) {
+    const container = document.getElementById('toastContainer');
+    const toast = document.createElement('div');
+    
+    // تصميم الإشعار باستخدام Tailwind
+    toast.className = `
+        pointer-events-auto w-80 bg-white border-l-4 border-blue-600 shadow-2xl rounded-xl p-4 
+        flex items-start gap-3 transform transition-all duration-300 translate-x-full opacity-0
+    `;
+    
+    toast.innerHTML = `
+        <div class="bg-blue-100 p-2 rounded-lg">
+            <i data-lucide="bell" class="w-5 h-5 text-blue-600"></i>
+        </div>
+        <div class="flex-1">
+            <h4 class="text-sm font-black text-gray-800 uppercase tracking-tight">Available Developers</h4>
+            <p class="text-xs text-gray-600 mt-1 leading-relaxed">${message}</p>
+        </div>
+        <button onclick="this.parentElement.remove()" class="text-gray-400 hover:text-red-500 transition-colors">
+            <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+    `;
+
+    container.appendChild(toast);
+    
+    // تفعيل الأيقونات الجديدة داخل التوست
+    lucide.createIcons();
+
+    // أنيميشن الدخول
+    setTimeout(() => {
+        toast.classList.remove('translate-x-full', 'opacity-0');
+    }, 100);
+
+    // إغلاق تلقائي بعد 10 ثواني (اختياري)
+    setTimeout(() => {
+        if(toast.parentElement) {
+            toast.classList.add('translate-x-full', 'opacity-0');
+            setTimeout(() => toast.remove(), 300);
+        }
+    }, 10000);
+}
+
+function checkAvailableDevs() {
     const availableDevs = employees.filter(e => {
         const status = getAvailabilityStatus(e);
         const userRole = (e.role || '').toLowerCase();
         
-        // الشرط: ليس في إجازة + حالته Available + هو مطور (Dev)
         return !e.isVacation && 
                status.label === 'Available' && 
                userRole === 'dev';
@@ -771,16 +812,16 @@ function closeChartsSetupModal() {
 
     if (availableDevs.length > 0) {
         const names = availableDevs.map(e => e.name).join(', ');
+        const message = `The following devs have finished their tasks: <span class="font-bold text-blue-700">${names}</span>`;
         
-        // استخدام setTimeout لضمان ظهور التنبيه بعد تحميل الواجهة
-        setTimeout(() => {
-            alert(`تنبيه: الموظفون التاليون متاحون حالياً (Finished):\n\n${names}`);
-        }, 100);
+        // إظهار التنبيه بشكل UI
+        showToast(message);
     }
 }
     </script>
 </body>
 </html>
+
 
 
 
