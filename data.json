@@ -193,12 +193,20 @@
       "f1766917553886": "ALBORG report CR"
     },
     {
+      "isVacation": false,
+      "vacationEnd": "",
       "name": "Mahmoud Mohamed Mahmoud Salama",
       "role": "Dev",
-      "area": "Internal lab",
-      "workingIn": "support",
-      "isVacation": false,
-      "vacationEnd": ""
+      "area": [
+        "Internal lab"
+      ],
+      "workingIn": [
+        "support"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "SL 154507"
     },
     {
       "isVacation": false,
@@ -979,5 +987,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-28T10:57:04.844Z"
+  "timestamp": "2025-12-28T10:58:01.621Z"
 }
