@@ -480,7 +480,8 @@
       "name": "Saleh Abdulrahim Attia",
       "role": "Dev",
       "area": [
-        "Integration"
+        "Integration",
+        "ADFACA"
       ],
       "workingIn": [
         "Iteration"
@@ -1070,5 +1071,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-28T12:03:46.260Z"
+  "timestamp": "2025-12-28T12:03:56.580Z"
 }
