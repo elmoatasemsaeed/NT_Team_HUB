@@ -757,26 +757,31 @@ async function updateTaskInline(empIndex, newValue) {
 function closeChartsSetupModal() {
     document.getElementById('chartsSetupModal').classList.add('hidden');
 }
-        function checkAvailableDevs() {
-    // تصفية الموظفين الذين انتهت مهامهم ولا يزال لديهم قيمة Dev في Working In
+   function checkAvailableDevs() {
+    // تصفية الموظفين المتاحين (انتهى وقتهم) ومن أدوار المطورين
     const availableDevs = employees.filter(e => {
         const status = getAvailabilityStatus(e);
-        const workingIn = (e['workingIn'] || '').toString().toLowerCase();
+        const userRole = (e.role || '').toLowerCase();
         
-        // الشرط: الحالة Available (Finished) والـ Working In هو Dev
+        // الشرط: ليس في إجازة + حالته Available + هو مطور (Dev)
         return !e.isVacation && 
                status.label === 'Available' && 
-               role === 'dev';
+               userRole === 'dev';
     });
 
     if (availableDevs.length > 0) {
         const names = availableDevs.map(e => e.name).join(', ');
-        alert(`تنبيه: الموظفون التاليون انتهت مهامهم ولا يزالون في وضع (Dev):\n\n${names}\n\nيرجى تحديث حالاتهم.`);
+        
+        // استخدام setTimeout لضمان ظهور التنبيه بعد تحميل الواجهة
+        setTimeout(() => {
+            alert(`تنبيه: الموظفون التاليون متاحون حالياً (Finished):\n\n${names}`);
+        }, 100);
     }
 }
     </script>
 </body>
 </html>
+
 
 
 
