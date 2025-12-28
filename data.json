@@ -184,15 +184,6 @@
       "vacationEnd": ""
     },
     {
-      "isVacation": true,
-      "vacationEnd": "2025-12-31",
-      "name": "Ola Gamal",
-      "role": "Dev",
-      "area": "Internal lab",
-      "workingIn": "Iteration",
-      "custom_1766503160857": []
-    },
-    {
       "isVacation": false,
       "vacationEnd": "",
       "name": "Hamza Ashry Hamza",
@@ -265,14 +256,6 @@
         "support",
         "Iteration"
       ]
-    },
-    {
-      "name": "Ibrahim Ahmed Abo El-Fadl",
-      "role": "Dev",
-      "area": "Registration",
-      "workingIn": "Regression",
-      "isVacation": true,
-      "vacationEnd": ""
     },
     {
       "name": "Aya Saed Mustafa Mohamad",
@@ -745,6 +728,31 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": ""
+    },
+    {
+      "isVacation": true,
+      "vacationEnd": "2025-12-31",
+      "name": "Ola Gamal",
+      "role": "Dev",
+      "area": "Internal lab",
+      "workingIn": "Iteration",
+      "custom_1766503160857": []
+    },
+    {
+      "isVacation": true,
+      "vacationEnd": "2025-12-29",
+      "name": "Ibrahim Ahmed Abo El-Fadl",
+      "role": "Dev",
+      "area": [
+        "Registration"
+      ],
+      "workingIn": [
+        "Regression"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": ""
     }
   ],
   "fields": [
@@ -914,5 +922,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-28T10:48:52.911Z"
+  "timestamp": "2025-12-28T10:49:18.304Z"
 }
