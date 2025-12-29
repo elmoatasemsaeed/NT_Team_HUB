@@ -447,25 +447,46 @@
     const finishTimeStr = emp[FINISH_TIME_FIELD_ID];
     if (!finishTimeStr) return { label: 'Available', class: 'status-available', sub: 'No task' };
 
-    const finishTime = new Date(finishTimeStr);
+    let finishTime = new Date(finishTimeStr);
     const now = new Date();
+    
+    // حساب الفرق الزمني الفعلي
     const diffMs = finishTime - now;
-    const diffHours = diffMs / (1000 * 60 * 60);
 
     if (diffMs <= 0) {
         return { label: 'Available', class: 'status-available', sub: 'Finished' };
-    } else if (diffHours <= 5) {
-        return { label: 'Partial', class: 'status-partial', sub: `Ends in ${Math.round(diffHours * 60)}m` };
-    } else {
-        // التحقق مما إذا كان التاريخ في يوم مختلف عن اليوم الحالي
+    }
+
+    // --- منطق تعديل العرض ليتناسب مع ساعات العمل (9 ص - 8 م) ---
+    let displayStatus = "";
+    const hour = finishTime.getHours();
+    const day = finishTime.getDay(); // 5 هو الجمعة، 6 هو السبت
+
+    // 1. إذا كان الوقت بعد الساعة 8 مساءً (20)
+    if (hour >= 20) {
+        displayStatus = "Ends: Next Morning";
+    } 
+    // 2. إذا كان الوقت قبل الساعة 9 صباحاً (في يوم عمل)
+    else if (hour < 9) {
+        displayStatus = "Ends: Today 09:00 AM";
+    }
+    // 3. إذا صادف يوم جمعة أو سبت
+    else if (day === 5 || day === 6) {
+        displayStatus = "Ends: Sunday Morning";
+    }
+    // 4. وقت طبيعي داخل ساعات العمل
+    else {
         const isToday = finishTime.toDateString() === now.toDateString();
-        
-        // إذا كان اليوم، يظهر الوقت فقط. إذا كان يوم آخر، يظهر التاريخ والوقت.
         const timeFormat = finishTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
         const dateFormat = finishTime.toLocaleDateString([], {month: 'short', day: 'numeric'});
-        
-        const displayStatus = isToday ? `Ends: ${timeFormat}` : `Ends: ${dateFormat} ${timeFormat}`;
+        displayStatus = isToday ? `Ends: ${timeFormat}` : `Ends: ${dateFormat} ${timeFormat}`;
+    }
 
+    // تحديد اللون (Partial إذا كان أقل من 5 ساعات)
+    const diffHours = diffMs / (1000 * 60 * 60);
+    if (diffHours <= 5 && hour < 20 && hour >= 9 && day !== 5 && day !== 6) {
+        return { label: 'Partial', class: 'status-partial', sub: `Ends in ${Math.round(diffHours * 60)}m` };
+    } else {
         return { 
             label: 'Busy', 
             class: 'status-busy', 
@@ -963,6 +984,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
