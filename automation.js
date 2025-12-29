@@ -125,7 +125,7 @@ async function startAutomationProcess() {
 
         const top3 = empTasks.slice(0, 3);
         const taskStrings = top3.map(t => {
-            const shortTitle = t.title ? t.title.split(' ').slice(0, 4).join(' ') : "Task";
+            const shortTitle = t.title ? t.title.split(' ').slice(0, 6).join(' ') : "Task";
             return `${t.id} ${shortTitle}`;
         });
 
