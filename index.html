@@ -116,6 +116,21 @@
                             <i data-lucide="download-cloud" class="w-4 h-4 text-emerald-600"></i> Download JSON Backup
                         </button>
                     </div>
+                    <div class="dropdown-menu absolute left-0 mt-0 w-64 bg-white border rounded-xl shadow-xl hidden z-[2000] p-2">
+    <div class="border-t my-2"></div>
+    <div class="px-2 py-1 text-[10px] font-bold text-gray-400 uppercase">Automation Engine</div>
+    
+    <label class="w-full text-left px-4 py-3 hover:bg-blue-50 flex items-center gap-2 text-sm border-b cursor-pointer">
+        <i data-lucide="upload-cloud" class="w-4 h-4 text-blue-600"></i>
+        Upload CSV
+        <input type="file" id="csvFileInput" accept=".csv" class="hidden" onchange="handleCSVUpload(event)">
+    </label>
+
+    <button onclick="startAutomationProcess()" id="btnStartProcess" disabled class="w-full text-left px-4 py-3 hover:bg-emerald-50 flex items-center gap-2 text-sm text-gray-400 cursor-not-allowed">
+        <i data-lucide="play-circle" class="w-4 h-4 text-emerald-600"></i>
+        Start Processing
+    </button>
+</div>
                 </div>
                 <button onclick="window.print()" class="px-4 py-2 border rounded hover:bg-gray-50 flex items-center gap-2"><i data-lucide="printer" class="w-4 h-4 text-gray-600"></i> Print</button>
                 <button onclick="openModal()" class="admin-only bg-[#1a73e8] text-white px-6 py-2 rounded shadow hover:bg-blue-700 transition-all font-medium">+ Add Member</button>
@@ -828,8 +843,11 @@ function checkAvailableDevs() {
     }
 }
     </script>
+    <script src="automation.js"></script>
+</body>
 </body>
 </html>
+
 
 
 
