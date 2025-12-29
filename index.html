@@ -148,7 +148,9 @@
                 <div class="flex items-center gap-2"><i data-lucide="list" class="w-4 h-4"></i> Team Table</div>
             </button>
         </div>
-              <div id="workStreamGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 no-print">
+             
+        <div id="capacityTab" class="tab-content">
+             <div id="workStreamGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 no-print">
     <div class="p-4 border rounded-2xl bg-white shadow-sm">
         <h3 class="text-purple-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest">
             <span class="flex items-center gap-2"><i data-lucide="briefcase" class="w-4 h-4"></i> Developers by Work Stream</span>
@@ -162,7 +164,6 @@
         <div id="testerWorkStreamGrid" class="grid grid-cols-2 lg:grid-cols-3 gap-2"></div>
     </div>
 </div>
-        <div id="capacityTab" class="tab-content">
             <div id="capacityMainGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 no-print">
                 <div class="p-4 border rounded-2xl bg-white shadow-sm">
                     <h3 class="text-blue-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest">
@@ -590,23 +591,18 @@
             });
         }
 
-function updateCapacity() {
+       function updateCapacity() {
     const areaField = fieldsConfig.find(f => f.id === 'area');
-    // القائمة التي طلبتها للـ Areas
-    const CUSTOM_AREAS = [
-        "Registration", "Internal lab", "Front and Financial", 
-        "front end", "Integration", "LDM_Integration", 
-        "elBORG", "Mobile App", "Automation", 
-        "MMS", "ADFACA", "Home Visit"
-    ];
-    
-    // Areas الأصلية للقسم العلوي (مع استثناء Team Leader)
     const AREAS = (areaField && areaField.options) ? areaField.options.filter(a => a !== "Team Leader") : [];
+    
+    // جلب خيارات الـ Working In ديناميكياً
+    const workInField = fieldsConfig.find(f => f.id === 'workingIn');
+    const WORK_STREAMS = (workInField && workInField.options) ? workInField.options : ["Regression", "support", "Iteration", "elBORG", "Senior", "Team Leader"];
 
     const isVisible = (area, type) => (!visibilityConfig[area] || visibilityConfig[area][type]);
 
     // وظيفة عامة لإنشاء الكروت البرمجية
-    const renderCard = (label, roleFilter, color, filterField = 'area') => {
+    const renderCard = (label, roleFilter, color, filterField = 'area', isVacationView = false) => {
         const matches = employees.filter(e => {
             const val = e[filterField];
             const areaMatch = Array.isArray(val) ? val.includes(label) : val === label;
@@ -621,6 +617,7 @@ function updateCapacity() {
             return count > 0 ? `<div class="role-badge"><span class="opacity-70">${role}:</span><span class="font-bold">${count}</span></div>` : '';
         }).join('');
 
+        // عند النقر نستخدم الفانكشن الأصلية مع تمرير اسم الحقل للفلترة
         return `<div class="google-card capacity-card border-l-4 border-l-${color}-500 p-3 cursor-pointer hover:bg-${color}-50" 
                      onclick="showDetailsExtended('${label}', '${roleFilter.join(',')}', false, '${filterField}')">
                 <div class="flex justify-between items-center border-b pb-2 mb-2">
@@ -637,17 +634,13 @@ function updateCapacity() {
             </div>`;
     };
 
-    // 1. رندرة الكروت العلوية (Capacity Overview)
+    // 1. رندرة الكروت الأصلية (حسب الـ Area)
     document.getElementById('devCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'dev')).map(a => renderCard(a, ['Dev','Senior'], 'blue', 'area')).join('');
     document.getElementById('testerCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'tester')).map(a => renderCard(a, ['Tester','Senior tester'], 'green', 'area')).join('');
 
-    // 2. رندرة الكروت السفلية (Work Stream) بناءً على طلبك:
-    // نستخدم CUSTOM_AREAS بدلاً من الـ WorkStreams ونفلتر بناءً على حقل 'area'
-    document.getElementById('devWorkStreamGrid').innerHTML = CUSTOM_AREAS
-        .map(area => renderCard(area, ['Dev','Senior'], 'purple', 'area')).join('');
-
-    document.getElementById('testerWorkStreamGrid').innerHTML = CUSTOM_AREAS
-        .map(area => renderCard(area, ['Tester','Senior tester'], 'orange', 'area')).join('');
+    // 2. رندرة الكروت الجديدة (حسب الـ Working In)
+    document.getElementById('devWorkStreamGrid').innerHTML = WORK_STREAMS.map(ws => renderCard(ws, ['Dev','Senior'], 'purple', 'workingIn')).join('');
+    document.getElementById('testerWorkStreamGrid').innerHTML = WORK_STREAMS.map(ws => renderCard(ws, ['Tester','Senior tester'], 'orange', 'workingIn')).join('');
 
     // تحديث التوتال
     document.getElementById('devTotalLabel').innerText = "Total: " + employees.filter(e => ['Dev','Senior'].includes(e.role) && !e.isVacation).length;
@@ -913,8 +906,6 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
-
-
 
 
 
