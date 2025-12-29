@@ -40,14 +40,25 @@
         .status-partial { background-color: #fef9c3; color: #854d0e; border: 1px solid #fef08a; }
         .status-busy { background-color: #f3f4f6; color: #374151; border: 1px solid #e5e7eb; }
 
-        @media print {
-            .tab-content { display: block !important; }
-            .tab-navigation, .no-print, .filter-input, .admin-only { display: none !important; }
-            .vacation-row { background-color: #fce8e6 !important; -webkit-print-color-adjust: exact; }
-            tr.hidden-by-filter { display: none !important; }
-            body { padding: 0; background: white; }
-            .google-card { border: none; box-shadow: none; }
-        }
+       @media print {
+    /* إخفاء كل شيء بشكل افتراضي عند الطباعة */
+    body * { visibility: hidden; }
+    
+    /* إظهار نافذة التفاصيل ومحتوياتها فقط */
+    #detailsPopup, #detailsPopup * { visibility: visible; }
+    
+    /* ضبط وضع النافذة لتملأ الصفحة المطبوعة */
+    #detailsPopup {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: white;
+    }
+
+    /* إخفاء الأزرار داخل النافذة أثناء الطباعة */
+    .no-print { display: none !important; }
+}
     </style>
 </head>
 <body class="p-4 md:p-6">
@@ -272,13 +283,15 @@
 
    <div id="detailsPopup" class="fixed inset-0 z-[2000] bg-black/50 hidden flex items-center justify-center p-4" onclick="closePopup()">
     <div class="bg-white large-modal shadow-2xl p-8" onclick="event.stopPropagation()">
-        <div class="flex justify-between items-center border-b pb-4 mb-6">
-            <h2 id="popupTitle" class="text-2xl font-black text-blue-700 uppercase"></h2>
-            <button onclick="closePopup()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-8 h-8"></i></button>
-        </div>
-        <div id="popupList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-        <button onclick="closePopup()" class="w-full mt-8 py-3 bg-gray-100 rounded-xl font-bold text-gray-600 uppercase">CLOSE</button>
+<div class="flex justify-between items-center border-b pb-4 mb-6">
+    <div class="flex items-center gap-4">
+        <h2 id="popupTitle" class="text-2xl font-black text-blue-700 uppercase"></h2>
+        <button onclick="printPopupContent()" class="no-print bg-gray-100 hover:bg-gray-200 p-2 rounded-lg transition-colors flex items-center gap-2 text-xs font-bold text-gray-700">
+            <i data-lucide="printer" class="w-4 h-4"></i> PRINT
+        </button>
     </div>
+    <button onclick="closePopup()" class="text-gray-400 hover:text-red-500 no-print"><i data-lucide="x" class="w-8 h-8"></i></button>
+</div>
 </div>
 
 <div id="toastContainer" class="fixed bottom-5 right-5 z-[5000] space-y-3 pointer-events-none"></div>
@@ -944,11 +957,19 @@ function checkAvailableDevs() {
         showToast(message);
     }
 }
+        function printPopupContent() {
+    // تحديث أيقونات لوسيد قبل الطباعة للتأكد من ظهورها (اختياري)
+    lucide.createIcons();
+    
+    // تشغيل أمر الطباعة المتصفح
+    window.print();
+}
     </script>
     <script src="automation.js"></script>
 </body>
 </body>
 </html>
+
 
 
 
