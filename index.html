@@ -306,64 +306,39 @@
         }
 
         async function syncToGitHub() {
-    if (!githubConfig.token) return false;
-
-    try {
-        // الخطوة 1: جلب الـ SHA الأحدث من GitHub لتجنب خطأ 409 Conflict
-        const getUrl = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}?ref=${githubConfig.branch}`;
-        const getRes = await fetch(getUrl, { 
-            headers: { 'Authorization': `token ${githubConfig.token}` },
-            cache: 'no-store' // لضمان عدم جلب نسخة قديمة من الكاش
-        });
-
-        if (getRes.ok) {
-            const getData = await getRes.json();
-            githubConfig.sha = getData.sha; // تحديث الـ SHA محلياً قبل الحفظ
-        } else {
-            console.error("Could not fetch latest SHA from GitHub");
-            return false;
+            if (!githubConfig.token) return false;
+            const fullData = { 
+                employees, 
+                fields: fieldsConfig, 
+                users, 
+                visibility: visibilityConfig, 
+                charts: chartsConfig, 
+                timestamp: new Date().toISOString() 
+            };
+            try {
+                const url = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}`;
+                const body = { 
+                    message: "Update Data Hub", 
+                    content: btoa(unescape(encodeURIComponent(JSON.stringify(fullData, null, 2)))), 
+                    branch: githubConfig.branch, 
+                    sha: githubConfig.sha 
+                };
+                const response = await fetch(url, { 
+                    method: 'PUT', 
+                    headers: { 'Authorization': `token ${githubConfig.token}` }, 
+                    body: JSON.stringify(body) 
+                });
+                if (response.ok) { 
+                    const resData = await response.json(); 
+                    githubConfig.sha = resData.content.sha;
+                    return true;
+                }
+                return false;
+            } catch (err) { 
+                console.error("Sync Error:", err); 
+                return false;
+            }
         }
-
-        // الخطوة 2: تجهيز البيانات للإرسال
-        const fullData = { 
-            employees, 
-            fields: fieldsConfig, 
-            users, 
-            visibility: visibilityConfig, 
-            charts: chartsConfig, 
-            timestamp: new Date().toISOString() 
-        };
-
-        const url = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}`;
-        const body = { 
-            message: "Update Data Hub (Auto-sync SHA)", 
-            content: btoa(unescape(encodeURIComponent(JSON.stringify(fullData, null, 2)))), 
-            branch: githubConfig.branch, 
-            sha: githubConfig.sha // استخدام الـ SHA الجديد
-        };
-
-        // الخطوة 3: تنفيذ عملية التحديث (PUT)
-        const response = await fetch(url, { 
-            method: 'PUT', 
-            headers: { 'Authorization': `token ${githubConfig.token}` }, 
-            body: JSON.stringify(body) 
-        });
-
-        if (response.ok) { 
-            const resData = await response.json(); 
-            githubConfig.sha = resData.content.sha; // تحديث الـ SHA بعد النجاح للاستعداد للحفظ القادم
-            return true;
-        } else {
-            const errorData = await response.json();
-            console.error("GitHub Sync Error:", errorData.message);
-            return false;
-        }
-
-    } catch (err) { 
-        console.error("Network or Logic Error during sync:", err); 
-        return false;
-    }
-}
 
         async function checkLogin() {
             const userVal = document.getElementById('userInput').value.trim().toLowerCase();
@@ -637,17 +612,11 @@
             });
         }
 
-        aasync function save(render = true) { 
-    const ok = await syncToGitHub(); 
-    if (ok) {
-        if (render) renderAll();
-        return true;
-    } else {
-        alert("Conflict detected or sync failed. The page will refresh to get latest data.");
-        loadFromGitHub(true); // Force a reload from cloud
-        return false;
-    }
-}
+        async function save(render = true) { 
+            const ok = await syncToGitHub(); 
+            if(render && ok) renderAll();
+            return ok;
+        }
 
         function toggleVac(idx, val) { employees[idx].isVacation = val; save(); }
         function deleteEmp(idx) { if(confirm('Delete?')) { employees.splice(idx,1); save(); } }
@@ -861,7 +830,6 @@ function checkAvailableDevs() {
     </script>
 </body>
 </html>
-
 
 
 
