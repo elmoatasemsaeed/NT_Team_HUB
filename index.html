@@ -148,17 +148,7 @@
                 <div class="flex items-center gap-2"><i data-lucide="list" class="w-4 h-4"></i> Team Table</div>
             </button>
         </div>
-
-        <div id="capacityTab" class="tab-content">
-            <div id="capacityMainGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 no-print">
-                <div class="p-4 border rounded-2xl bg-white shadow-sm">
-                    <h3 class="text-blue-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest">
-                        <span class="flex items-center gap-2"><i data-lucide="code" class="w-4 h-4"></i> Developers Capacity</span>
-                        <span id="devTotalLabel" class="bg-blue-100 px-2 py-0.5 rounded text-blue-800">Total: 0</span>
-                    </h3>
-                    <div id="devCapacityGrid" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2 mb-4"></div>
-                </div>
-                <div id="workStreamGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 no-print">
+              <div id="workStreamGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 no-print">
     <div class="p-4 border rounded-2xl bg-white shadow-sm">
         <h3 class="text-purple-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest">
             <span class="flex items-center gap-2"><i data-lucide="briefcase" class="w-4 h-4"></i> Developers by Work Stream</span>
@@ -172,6 +162,16 @@
         <div id="testerWorkStreamGrid" class="grid grid-cols-2 lg:grid-cols-3 gap-2"></div>
     </div>
 </div>
+        <div id="capacityTab" class="tab-content">
+            <div id="capacityMainGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 no-print">
+                <div class="p-4 border rounded-2xl bg-white shadow-sm">
+                    <h3 class="text-blue-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest">
+                        <span class="flex items-center gap-2"><i data-lucide="code" class="w-4 h-4"></i> Developers Capacity</span>
+                        <span id="devTotalLabel" class="bg-blue-100 px-2 py-0.5 rounded text-blue-800">Total: 0</span>
+                    </h3>
+                    <div id="devCapacityGrid" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2 mb-4"></div>
+                </div>
+  
                 <div class="p-4 border rounded-2xl bg-white shadow-sm">
                     <h3 class="text-green-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest">
                         <span class="flex items-center gap-2"><i data-lucide="check-square" class="w-4 h-4"></i> Testers Capacity</span>
@@ -905,6 +905,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
