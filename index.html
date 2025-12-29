@@ -593,31 +593,35 @@
 
        function updateCapacity() {
     const areaField = fieldsConfig.find(f => f.id === 'area');
+    // استبعاد Team Leader من القائمة الأساسية
     const AREAS = (areaField && areaField.options) ? areaField.options.filter(a => a !== "Team Leader") : [];
     
-    // جلب خيارات الـ Working In ديناميكياً
     const workInField = fieldsConfig.find(f => f.id === 'workingIn');
-    const WORK_STREAMS = (workInField && workInField.options) ? workInField.options : ["Regression", "support", "Iteration", "elBORG", "Senior", "Team Leader"];
+    const WORK_STREAMS = (workInField && workInField.options) ? workInField.options : [];
 
     const isVisible = (area, type) => (!visibilityConfig[area] || visibilityConfig[area][type]);
 
-    // وظيفة عامة لإنشاء الكروت البرمجية
-    const renderCard = (label, roleFilter, color, filterField = 'area', isVacationView = false) => {
+    const renderCard = (label, roleFilter, color, filterField = 'area') => {
         const matches = employees.filter(e => {
             const val = e[filterField];
-            const areaMatch = Array.isArray(val) ? val.includes(label) : val === label;
-            return areaMatch && roleFilter.includes(e.role);
+            const fieldMatch = Array.isArray(val) ? val.includes(label) : val === label;
+            // استبعاد أي موظف دوره Team Leader من الحسابات تماماً
+            return fieldMatch && roleFilter.includes(e.role) && e.role !== "Team Leader";
         });
 
         const active = matches.filter(e => !e.isVacation);
         const vac = matches.filter(e => e.isVacation);
 
-        const detailsHtml = roleFilter.map(role => {
-            const count = active.filter(e => e.role === role).length;
-            return count > 0 ? `<div class="role-badge"><span class="opacity-70">${role}:</span><span class="font-bold">${count}</span></div>` : '';
+        // التعديل المطلوب: التصنيف بناءً على الـ Area بدلاً من الدور الوظيفي
+        const detailsHtml = AREAS.map(areaName => {
+            const count = active.filter(e => {
+                const empArea = e.area;
+                return Array.isArray(empArea) ? empArea.includes(areaName) : empArea === areaName;
+            }).length;
+            
+            return count > 0 ? `<div class="role-badge"><span class="opacity-70">${areaName}:</span><span class="font-bold">${count}</span></div>` : '';
         }).join('');
 
-        // عند النقر نستخدم الفانكشن الأصلية مع تمرير اسم الحقل للفلترة
         return `<div class="google-card capacity-card border-l-4 border-l-${color}-500 p-3 cursor-pointer hover:bg-${color}-50" 
                      onclick="showDetailsExtended('${label}', '${roleFilter.join(',')}', false, '${filterField}')">
                 <div class="flex justify-between items-center border-b pb-2 mb-2">
@@ -634,21 +638,20 @@
             </div>`;
     };
 
-    // 1. رندرة الكروت الأصلية (حسب الـ Area)
+    // رندرة كروت الـ Capacity الأساسية
     document.getElementById('devCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'dev')).map(a => renderCard(a, ['Dev','Senior'], 'blue', 'area')).join('');
     document.getElementById('testerCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'tester')).map(a => renderCard(a, ['Tester','Senior tester'], 'green', 'area')).join('');
 
-    // 2. رندرة الكروت الجديدة (حسب الـ Working In)
+    // رندرة كروت الـ Work Streams مع التصنيف الجديد حسب الـ Area
     document.getElementById('devWorkStreamGrid').innerHTML = WORK_STREAMS.map(ws => renderCard(ws, ['Dev','Senior'], 'purple', 'workingIn')).join('');
     document.getElementById('testerWorkStreamGrid').innerHTML = WORK_STREAMS.map(ws => renderCard(ws, ['Tester','Senior tester'], 'orange', 'workingIn')).join('');
 
-    // تحديث التوتال
+    // تحديث التوتال (مع استبعاد الـ Team Leader تلقائياً من الفلتر)
     document.getElementById('devTotalLabel').innerText = "Total: " + employees.filter(e => ['Dev','Senior'].includes(e.role) && !e.isVacation).length;
     document.getElementById('testerTotalLabel').innerText = "Total: " + employees.filter(e => ['Tester','Senior tester'].includes(e.role) && !e.isVacation).length;
     
     renderCharts();
 }
-
         function renderCharts() {
             const chartsGrid = document.getElementById('dynamicChartsGrid');
             chartsGrid.innerHTML = '';
@@ -906,6 +909,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
