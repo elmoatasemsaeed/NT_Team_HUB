@@ -785,42 +785,63 @@
     const finishTimeField = fieldsConfig.find(f => f.label === 'T. Finish Time');
     const finishTimeId = finishTimeField ? finishTimeField.id : 'f1766929340598';
 
-    // 1. الفلترة الأساسية
+    // 1. الفلترة الأساسية للموظفين
     let list = employees.filter(e => {
         const val = e[filterField];
         const fieldMatch = Array.isArray(val) ? val.includes(label) : val === label;
         return fieldMatch && roleList.includes(e.role) && e.isVacation === isVac;
     });
 
-    // 2. الترتيب بناءً على الـ Area (أبجدياً)
-    list.sort((a, b) => {
-        const areaA = (Array.isArray(a.area) ? a.area[0] : a.area || '').toString().toLowerCase();
-        const areaB = (Array.isArray(b.area) ? b.area[0] : b.area || '').toString().toLowerCase();
-        return areaA.localeCompare(areaB);
-    });
+    // 2. تجميع الموظفين حسب الـ Area
+    const groupedByArea = list.reduce((acc, emp) => {
+        const areaName = Array.isArray(emp.area) ? emp.area[0] : (emp.area || 'Unassigned');
+        if (!acc[areaName]) acc[areaName] = [];
+        acc[areaName].push(emp);
+        return acc;
+    }, {});
 
     document.getElementById('popupTitle').innerText = `${label} - ${isVac ? 'On Vacation' : 'Active Members'}`;
     
-    // 3. الرندرة
-    document.getElementById('popupList').innerHTML = list.length > 0 ? list.map(e => `
-        <div class="p-4 border rounded-xl ${e.isVacation ? 'bg-red-50' : 'bg-gray-50'} shadow-sm">
-            <b class="${e.isVacation ? 'text-red-600' : 'text-blue-700'}">${e.name || 'Unknown'}</b>
-            <div class="text-[10px] font-bold text-gray-400 uppercase">${e.role}</div>
-            
-            <div class="mt-2 text-xs">
-                <div class="mb-1 pb-1 border-b border-gray-200">
-                    <span class="font-bold text-gray-600">Area:</span> 
-                    <span class="text-blue-600">${Array.isArray(e.area) ? e.area.join(', ') : (e.area || 'N/A')}</span>
+    // 3. بناء واجهة العرض المقسمة لمجموعات
+    const popupListContainer = document.getElementById('popupList');
+    popupListContainer.className = "flex flex-col gap-6 w-full"; // تغيير توزيع الـ Grid ليكون طولي للمجموعات
+    
+    if (Object.keys(groupedByArea).length > 0) {
+        popupListContainer.innerHTML = Object.keys(groupedByArea).sort().map(areaName => `
+            <div class="w-full">
+                <div class="flex items-center gap-2 mb-3">
+                    <div class="h-2 w-2 bg-blue-600 rounded-full"></div>
+                    <h4 class="text-sm font-black text-gray-500 uppercase tracking-widest">${areaName}</h4>
+                    <div class="flex-1 h-[1px] bg-gray-200"></div>
+                    <span class="text-[10px] font-bold bg-gray-100 px-2 py-0.5 rounded-full text-gray-500">
+                        ${groupedByArea[areaName].length} Members
+                    </span>
                 </div>
-
-                ${!e.isVacation ? `
-                    <b>Task:</b> ${e[taskId] || 'None'} <br> 
-                    <b>Stream:</b> ${e.workingIn || 'N/A'} <br>
-                    <b>Finish:</b> ${e[finishTimeId] || 'N/A'}` 
-                : `
-                    <div class="text-red-500 italic">Returns: ${e.vacationEnd || 'N/A'}</div>`}
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    ${groupedByArea[areaName].map(e => `
+                        <div class="p-4 border rounded-xl ${e.isVacation ? 'bg-red-50' : 'bg-white'} shadow-sm border-gray-100">
+                            <b class="${e.isVacation ? 'text-red-600' : 'text-blue-700'}">${e.name || 'Unknown'}</b>
+                            <div class="text-[10px] font-bold text-gray-400 uppercase">${e.role}</div>
+                            
+                            <div class="mt-2 text-xs">
+                                ${!e.isVacation ? `
+                                    <div class="space-y-1">
+                                        <div><span class="font-bold text-gray-500">Task:</span> <span class="text-gray-800">${e[taskId] || 'None'}</span></div>
+                                        <div><span class="font-bold text-gray-500">Stream:</span> <span class="text-gray-800">${e.workingIn || 'N/A'}</span></div>
+                                        <div><span class="font-bold text-gray-500">Finish:</span> <span class="text-emerald-600 font-medium">${e[finishTimeId] || 'N/A'}</span></div>
+                                    </div>` 
+                                : `
+                                    <div class="text-red-500 font-bold italic mt-2">Returns: ${e.vacationEnd || 'N/A'}</div>`}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
             </div>
-        </div>`).join('') : '<div class="col-span-full text-center py-10">No members found</div>';
+        `).join('');
+    } else {
+        popupListContainer.innerHTML = '<div class="text-center py-10 w-full text-gray-400">No members found</div>';
+    }
     
     document.getElementById('detailsPopup').classList.remove('hidden');
 }
@@ -925,6 +946,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
