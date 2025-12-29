@@ -30,7 +30,7 @@
         "Iteration"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "154497 Writing Test Cases for, 153949 Gender change allows saving, 153447 Order gets cancelled when",
+      "f1766917553886": "154497 Writing Test Cases for User Branch, 153949 Gender change allows saving with incompatible, 153447 Order gets cancelled when re-adding a",
       "f1766929340598": "2025-12-28T08:22"
     },
     {
@@ -63,7 +63,7 @@
       "workingIn": [
         "support"
       ],
-      "f1766917553886": "154079 #Integ >>Integration Monitor >>, 154076 #Integ >> Medicus >>",
+      "f1766917553886": "154079 #Integ >>Integration Monitor >>, 154076 #Integ >> Medicus >> save pdf",
       "f1766929340598": "2025-12-22T12:00"
     },
     {
@@ -111,8 +111,8 @@
       "workingIn": [
         "support"
       ],
-      "f1766917553886": "148893 Wareed Lab - Update, 150239 Smou Lab - Activate",
-      "f1766929340598": "2025-12-29T18:00"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "isVacation": false,
@@ -146,8 +146,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "151988 Internal CR - Sample, 136373 Internal CR - Search",
-      "f1766929340598": "2025-12-07T09:44"
+      "f1766917553886": "151792 Al Borg KSA - TAT: Create",
+      "f1766929340598": "2025-12-29T18:00"
     },
     {
       "isVacation": false,
@@ -160,7 +160,7 @@
       "workingIn": [
         "support"
       ],
-      "f1766917553886": "154611 Get Result (Raw Data)",
+      "f1766917553886": "154611 Get Result (Raw Data) >> Unable",
       "f1766929340598": "2025-12-30T07:41"
     },
     {
@@ -170,7 +170,7 @@
       "workingIn": "elBORG",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154552 Returned Reason NOT displayed, 154559 Abnormal Disposed Items Don't, 154466 Critical issue at Slow",
+      "f1766917553886": "154552 Returned Reason NOT displayed @ Returned, 154466 Critical issue at Slow movement items, 154556 Fast Movement items Display Locations which",
       "f1766929340598": "2025-12-29T10:53"
     },
     {
@@ -204,7 +204,7 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "153919 Execution, 153918 Preparation, 154481 Screen take time to",
+      "f1766917553886": "153919 Execution, 153918 Preparation, 154481 Screen take time to display search",
       "f1766929340598": "2025-12-31T11:58"
     },
     {
@@ -214,7 +214,7 @@
       "workingIn": "elBORG",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154519 #151209_Registration_Create Duplicated ACCs For, 153917 Result Log >> Pending",
+      "f1766917553886": "154519 #151209_Registration_Create Duplicated ACCs For One Registration, 153917 Result Log >> Pending Status is",
       "f1766929340598": "2025-12-28T12:45"
     },
     {
@@ -231,8 +231,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "150204 Alameda - Update HL7, 153725 the report body design, 151555 AL-Farabi Labs - Contract",
-      "f1766929340598": "2025-12-29T18:00"
+      "f1766917553886": "153725 the report body design do not",
+      "f1766929340598": "2025-12-21T16:15"
     },
     {
       "isVacation": false,
@@ -259,8 +259,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "154059 Edit Mode Allows Saving, 154543 Mobile App - Client, 154428 Inconsistent collector filtering logic",
-      "f1766929340598": "2025-12-28T15:44"
+      "f1766917553886": "154648 CR 151083 - Preparation, 154059 Edit Mode Allows Saving Without Any, 154543 Mobile App - Client URL field",
+      "f1766929340598": "2025-12-30T07:57"
     },
     {
       "isVacation": false,
@@ -276,7 +276,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154138 Preparation Task for CR154012, 154018 Preparation task for CR, 153139 Action button is not",
+      "f1766917553886": "154138 Preparation Task for CR154012, 154018 Preparation task for CR 154013, 153139 Action button is not appearing in",
       "f1766929340598": "2025-12-23T17:23"
     },
     {
@@ -302,7 +302,7 @@
       "area": "Registration",
       "workingIn": "Iteration",
       "custom_1766503160857": [],
-      "f1766917553886": "154049 BUG_001: registration parameter page, 152651 preparation",
+      "f1766917553886": "154049 BUG_001: registration parameter page load and, 152651 preparation",
       "f1766929340598": "2025-12-18T15:33"
     },
     {
@@ -319,7 +319,7 @@
         "support"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "154094 review on User Story",
+      "f1766917553886": "154094 review on User Story 140089",
       "f1766929340598": "2025-12-24T16:46"
     },
     {
@@ -353,7 +353,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "138714 Al Borg UAE -, 150171 Al-Ahli Qatar Hospital -",
+      "f1766917553886": "138714 Al Borg UAE - Patient Reports",
       "f1766929340598": "2025-12-28T08:51"
     },
     {
@@ -382,7 +382,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "151620 LDM - Medicus Integration, 151621 LDM - Medicus Call, 152995 Al Borg ERP -",
+      "f1766917553886": "154098 Alameda Mobile App Integration, 154502 Alameda LDM - BBM Integration, 154621 Alameda_BBM_SchemaHandler service",
       "f1766929340598": "2025-12-29T18:00"
     },
     {
@@ -399,7 +399,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "144045 Al Hasa -CareWare >, 151191 Update Odoo Integration to, 151729 Afla KSA - Al",
+      "f1766917553886": "153090 Alameda GAMCA Integration, 153522 Integ>> Add Discount API Issues, 153038 result didn't save in LDM",
       "f1766929340598": "2025-12-29T18:00"
     },
     {
@@ -427,8 +427,8 @@
       "workingIn": [
         "support"
       ],
-      "f1766917553886": "154292 display error when insert, 154295 display error when register, 154294 display error when cancel",
-      "f1766929340598": "2025-12-28T07:10"
+      "f1766917553886": "154274 Activate SAP on New Alameda Enviroment, 154292 display error when insert Result message, 154295 display error when register with order",
+      "f1766929340598": "2025-12-29T18:00"
     },
     {
       "isVacation": true,
@@ -461,8 +461,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "146890 Update Batch Details and Order Details",
+      "f1766929340598": "2025-12-29T18:00"
     },
     {
       "isVacation": false,
@@ -488,7 +488,7 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154605 #Patient report: the reference",
+      "f1766917553886": "154605 #Patient report: the reference range overlap",
       "f1766929340598": "2025-12-29T14:14"
     },
     {
@@ -505,8 +505,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "149215 Nile labs : Receipt, 150547 Al-Farabi Labs - VAT Report:, 151829 Al-Borg KSA - Claims:",
-      "f1766929340598": "2025-12-29T18:00"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "isVacation": false,
@@ -540,8 +540,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "147800 Add an image to, 152486 EBGH - Hemoglobin Electrophoresis, 154618 #Alameda: The cumulative report",
-      "f1766929340598": "2025-12-29T18:00"
+      "f1766917553886": "154618 #Alameda: The cumulative report is not, 154612 Alameda: Antimicrobial Column Does Not Start, 154599 #Alameda: CBC is printed at two",
+      "f1766929340598": "2025-12-29T16:20"
     },
     {
       "isVacation": false,
@@ -574,7 +574,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153890 Sample Log >> Sample, 152972 Reload & Unload Screen, 146839 AL Ahli Qatar Hospital",
+      "f1766917553886": "153890 Sample Log >> Sample Type &, 152972 Reload & Unload Screen Display more",
       "f1766929340598": "2025-12-16T12:57"
     },
     {
@@ -589,7 +589,7 @@
         "Iteration"
       ],
       "custom_1766584922755": "رجب",
-      "f1766917553886": "154359 CR-(148807) - Issue detected, 154036 CR_(148807) - Print Customized, 153720 Branch Arabic name is",
+      "f1766917553886": "154359 CR-(148807) - Issue detected in report, 154036 CR_(148807) - Print Customized Reports Header, 153720 Branch Arabic name is not retrieved",
       "f1766929340598": "2025-12-25T10:00"
     },
     {
@@ -599,7 +599,7 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154222 CR_150719 >> Execution, 152115 Missing Descriptive Error Message",
+      "f1766917553886": "154222 CR_150719 >> Execution, 152115 Missing Descriptive Error Message when Action",
       "f1766929340598": "2025-12-30T12:00"
     },
     {
@@ -616,7 +616,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "141960 Al Borg KSA -, 150186 Abha - Update the",
+      "f1766917553886": "71136 Internal CR - Dynamic Registration: Registration, 141960 Al Borg KSA - TAT: Create",
       "f1766929340598": "2025-12-29T18:00"
     },
     {
@@ -641,7 +641,7 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "148455 Al Farabi > Update, 154603 Administration >> Financial >>",
+      "f1766917553886": "148455 Al Farabi > Update Nphies Integration, 154603 Administration >> Financial >> Contract price",
       "f1766929340598": "2025-12-29T18:00"
     },
     {
@@ -670,7 +670,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "150326 [Integ] #Local 2019 :",
+      "f1766917553886": "150326 [Integ] #Local 2019 : Duplicated results",
       "f1766929340598": "2025-11-03T13:25"
     },
     {
@@ -687,7 +687,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154613 Outbound Message issuse, 154081 Al Ahly Hospital -",
+      "f1766917553886": "154613 Outbound Message issuse",
       "f1766929340598": "2025-12-30T07:21"
     },
     {
@@ -707,7 +707,7 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154358 Service_Saving action on screen, 152750 CR#150759_Bug001_I Can't Add new",
+      "f1766917553886": "154358 Service_Saving action on screen of Assign, 152750 CR#150759_Bug001_I Can't Add new record for",
       "f1766929340598": "2025-12-24T16:22"
     },
     {
@@ -724,7 +724,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "151969 Impact of Regex pattern, 151968 Define a regular expression, 153071 Incorrect service-level amounts in",
+      "f1766917553886": "151969 Impact of Regex pattern for the, 151968 Define a regular expression pattern for, 153071 Incorrect service-level amounts in ElectronicInvoice_Invoice for",
       "f1766929340598": "2025-12-29T10:00"
     },
     {
@@ -759,8 +759,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "150662 Internal CR - Analyzer Setup: Add",
+      "f1766929340598": "2025-12-29T18:00"
     },
     {
       "name": "Mustafa Mamdoh",
@@ -769,7 +769,7 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154445 Save on Dynamic Reg, 135108 Search Registration: When Reserve",
+      "f1766917553886": "154445 Save on Dynamic Reg is dimed, 135108 Search Registration: When Reserve a compatible",
       "f1766929340598": "2025-12-25T12:44"
     },
     {
@@ -815,7 +815,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "151082 Home Visits - Web, 150025 Home Visit - Users:, 154361 Bulk action collector is",
+      "f1766917553886": "151082 Home Visits - Web Application: Apply, 154361 Bulk action collector is matched only",
       "f1766929340598": "2025-12-30T09:09"
     },
     {
@@ -861,7 +861,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153198 Add New SMS Provider, 153282 ADAFSA : Human API",
+      "f1766917553886": "153198 Add New SMS Provider [mshastra], 153282 ADAFSA : Human API - Add",
       "f1766929340598": "2025-12-29T18:00"
     },
     {
@@ -878,8 +878,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "149208 Alameda - Add additional, 138788 Al Borg UAE -, 141897 Create a new claim",
-      "f1766929340598": "2025-11-26T11:30"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "name": "Sameh Abdellatef",
@@ -905,7 +905,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "146435 MRC - Initiating registration, 153604 execution, 142205 Internal CR - Registration",
+      "f1766917553886": "146435 MRC - Initiating registration directly from, 153604 execution, 153603 preparation",
       "f1766929340598": "2025-12-30T07:35"
     },
     {
@@ -915,7 +915,7 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154124 Execution, 153135 Barch Registration _ Inserting, 153040 Registration @ edit mode",
+      "f1766917553886": "154124 Execution, 153135 Barch Registration _ Inserting Patient No., 153040 Registration @ edit mode _ All",
       "f1766929340598": "2025-12-28T12:00"
     },
     {
@@ -933,7 +933,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "65217 Material Management - Client, 128791 Material Management: Enhance Unmatched, 154460 Reports >> Dashboard: invalid",
+      "f1766917553886": "140089 Create new dashboard screen for Material, 154460 Reports >> Dashboard: invalid values at, 154363 Issue at Executive Summary Charts, Specifically",
       "f1766929340598": "2025-12-29T18:00"
     },
     {
@@ -950,8 +950,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154627 Get Result (Raw Data), 153515 Al Farabi Lab -, 153517 Al Farabi Lab -",
-      "f1766929340598": "2025-12-30T07:15"
+      "f1766917553886": "154637 Get Raw data >> display call, 154627 Get Result (Raw Data) >> The, 153179 Swiss LDM - Athir Ibtegration >",
+      "f1766929340598": "2025-12-30T07:53"
     },
     {
       "isVacation": true,
@@ -985,7 +985,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "151083 Home Visits - Web",
+      "f1766917553886": "151083 Home Visits - Web Application: Display",
       "f1766929340598": "2025-12-29T13:45"
     },
     {
@@ -995,7 +995,7 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154447 Outsource >> Error while, 154314 Execution, 153724 the panic value display",
+      "f1766917553886": "154447 Outsource >> Error while getting Details, 154314 Execution, 153724 the panic value display in a",
       "f1766929340598": "2025-12-25T13:23"
     }
   ],
@@ -1179,5 +1179,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-29T17:59:45.662Z"
+  "timestamp": "2025-12-29T18:02:13.052Z"
 }
