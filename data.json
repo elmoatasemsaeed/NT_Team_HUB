@@ -112,8 +112,8 @@
       "workingIn": [
         "support"
       ],
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "148893 Wareed Lab - Update, 150239 Smou Lab - Activate",
+      "f1766929340598": "2025-12-29T18:00"
     },
     {
       "isVacation": false,
@@ -147,8 +147,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "151988 Internal CR - Sample, 136373 Internal CR - Search",
+      "f1766929340598": "2025-12-07T09:44"
     },
     {
       "isVacation": false,
@@ -161,8 +161,8 @@
       "workingIn": [
         "support"
       ],
-      "f1766917553886": "154465 Add New Registration >>, 154338 Add New Registration>> orderID",
-      "f1766929340598": "2025-12-28T09:32"
+      "f1766917553886": "154611 Get Result (Raw Data)",
+      "f1766929340598": "2025-12-30T07:41"
     },
     {
       "name": "Ahmed Mohamed Farag",
@@ -205,8 +205,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154481 Screen take time to, 154120 Generated report doesn't respect, 154073 Report From Print Button",
-      "f1766929340598": "2025-12-30T08:28"
+      "f1766917553886": "153919 Execution, 153918 Preparation, 154481 Screen take time to",
+      "f1766929340598": "2025-12-31T11:58"
     },
     {
       "name": "Amr Sameh",
@@ -232,8 +232,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153725 the report body design",
-      "f1766929340598": "2025-12-21T16:15"
+      "f1766917553886": "150204 Alameda - Update HL7, 153725 the report body design, 151555 AL-Farabi Labs - Contract",
+      "f1766929340598": "2025-12-29T18:00"
     },
     {
       "isVacation": false,
@@ -354,7 +354,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "138714 Al Borg UAE -",
+      "f1766917553886": "138714 Al Borg UAE -, 150171 Al-Ahli Qatar Hospital -",
       "f1766929340598": "2025-12-28T08:51"
     },
     {
@@ -383,7 +383,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154098 Alameda Mobile App Integration, 154502 Alameda LDM - BBM, 154621 Alameda_BBM_SchemaHandler service",
+      "f1766917553886": "151620 LDM - Medicus Integration, 151621 LDM - Medicus Call, 152995 Al Borg ERP -",
       "f1766929340598": "2025-12-29T18:00"
     },
     {
@@ -506,8 +506,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "149215 Nile labs : Receipt, 150547 Al-Farabi Labs - VAT Report:, 151829 Al-Borg KSA - Claims:",
+      "f1766929340598": "2025-12-29T18:00"
     },
     {
       "isVacation": false,
@@ -541,8 +541,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154618 #Alameda: The cumulative report, 154612 Alameda: Antimicrobial Column Does, 154599 #Alameda: CBC is printed",
-      "f1766929340598": "2025-12-29T16:20"
+      "f1766917553886": "147800 Add an image to, 152486 EBGH - Hemoglobin Electrophoresis, 154618 #Alameda: The cumulative report",
+      "f1766929340598": "2025-12-29T18:00"
     },
     {
       "isVacation": false,
@@ -575,7 +575,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153890 Sample Log >> Sample, 152972 Reload & Unload Screen",
+      "f1766917553886": "153890 Sample Log >> Sample, 152972 Reload & Unload Screen, 146839 AL Ahli Qatar Hospital",
       "f1766929340598": "2025-12-16T12:57"
     },
     {
@@ -617,7 +617,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "141960 Al Borg KSA -",
+      "f1766917553886": "141960 Al Borg KSA -, 150186 Abha - Update the",
       "f1766929340598": "2025-12-29T18:00"
     },
     {
@@ -688,7 +688,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154613 Outbound Message issuse",
+      "f1766917553886": "154613 Outbound Message issuse, 154081 Al Ahly Hospital -",
       "f1766929340598": "2025-12-30T07:21"
     },
     {
@@ -816,7 +816,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "151082 Home Visits - Web, 154361 Bulk action collector is",
+      "f1766917553886": "151082 Home Visits - Web, 150025 Home Visit - Users:, 154361 Bulk action collector is",
       "f1766929340598": "2025-12-30T09:09"
     },
     {
@@ -879,8 +879,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "149208 Alameda - Add additional, 138788 Al Borg UAE -, 141897 Create a new claim",
+      "f1766929340598": "2025-11-26T11:30"
     },
     {
       "name": "Sameh Abdellatef",
@@ -906,8 +906,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "146435 MRC - Initiating registration, 153604 execution, 153603 preparation",
-      "f1766929340598": "2025-12-29T18:00"
+      "f1766917553886": "146435 MRC - Initiating registration, 153604 execution, 142205 Internal CR - Registration",
+      "f1766929340598": "2025-12-30T07:35"
     },
     {
       "name": "Sara Mustafa",
@@ -934,8 +934,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154460 Reports >> Dashboard: invalid, 154363 Issue at Executive Summary",
-      "f1766929340598": "2025-12-29T12:54"
+      "f1766917553886": "65217 Material Management - Client, 128791 Material Management: Enhance Unmatched, 154460 Reports >> Dashboard: invalid",
+      "f1766929340598": "2025-12-29T18:00"
     },
     {
       "isVacation": false,
@@ -951,8 +951,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154611 Get Result (Raw Data), 153179 Swiss LDM - Athir, 153515 Al Farabi Lab -",
-      "f1766929340598": "2025-12-30T07:41"
+      "f1766917553886": "154627 Get Result (Raw Data), 153515 Al Farabi Lab -, 153517 Al Farabi Lab -",
+      "f1766929340598": "2025-12-30T07:15"
     },
     {
       "isVacation": true,
@@ -1180,5 +1180,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-29T16:21:39.475Z"
+  "timestamp": "2025-12-29T16:34:32.971Z"
 }
