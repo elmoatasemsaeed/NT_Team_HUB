@@ -785,7 +785,7 @@
     const finishTimeField = fieldsConfig.find(f => f.label === 'T. Finish Time');
     const finishTimeId = finishTimeField ? finishTimeField.id : 'f1766929340598';
 
-    // الفلترة بناءً على الحقل الممرر (area أو workingIn)
+    // الفلترة بناءً على الحقل الممرر
     const list = employees.filter(e => {
         const val = e[filterField];
         const fieldMatch = Array.isArray(val) ? val.includes(label) : val === label;
@@ -797,13 +797,20 @@
         <div class="p-4 border rounded-xl ${e.isVacation ? 'bg-red-50' : 'bg-gray-50'} shadow-sm">
             <b class="${e.isVacation ? 'text-red-600' : 'text-blue-700'}">${e.name || 'Unknown'}</b>
             <div class="text-[10px] font-bold text-gray-400 uppercase">${e.role}</div>
-            ${!e.isVacation ? `
-                <div class="mt-2 text-xs">
+            
+            <div class="mt-2 text-xs">
+                <div class="mb-1 pb-1 border-b border-gray-200">
+                    <span class="font-bold text-gray-600">Area:</span> 
+                    <span class="text-blue-600">${Array.isArray(e.area) ? e.area.join(', ') : (e.area || 'N/A')}</span>
+                </div>
+
+                ${!e.isVacation ? `
                     <b>Task:</b> ${e[taskId] || 'None'} <br> 
                     <b>Stream:</b> ${e.workingIn || 'N/A'} <br>
-                    <b>Finish:</b> ${e[finishTimeId] || 'N/A'}
-                </div>` : `
-                <div class="mt-2 text-red-500 text-xs italic">Returns: ${e.vacationEnd || 'N/A'}</div>`}
+                    <b>Finish:</b> ${e[finishTimeId] || 'N/A'}` 
+                : `
+                    <div class="text-red-500 italic">Returns: ${e.vacationEnd || 'N/A'}</div>`}
+            </div>
         </div>`).join('') : '<div class="col-span-full text-center py-10">No members found</div>';
     
     document.getElementById('detailsPopup').classList.remove('hidden');
@@ -909,6 +916,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
