@@ -91,13 +91,16 @@ function processCSVRow(row) {
     return { assignee, finishDate, id: row["ID"], title: row["Title"] };
 }
 
-// 4. دالة بدء المعالجة الرئيسية
+// ... (اترك الجزء العلوي من الملف كما هو حتى نهاية دالة startAutomationProcess)
+
+// 4. دالة بدء المعالجة الرئيسية (المعدلة)
 async function startAutomationProcess() {
     if (!uploadedCSVData) return;
     
-    showToast("Starting Smart Process...", "info");
+    // إشعار البدء
+    if (typeof showToast === 'function') showToast("Starting Smart Process...");
 
-    // تصفير بيانات الموظفين الحالية (Clear All)
+    // تصفير بيانات الموظفين الحالية للمهام المحددة
     employees.forEach(emp => {
         emp.f1766917553886 = ""; // حقل المهام
         emp.f1766929340598 = ""; // حقل التاريخ
@@ -105,7 +108,7 @@ async function startAutomationProcess() {
 
     const tasksPerEmployee = {};
 
-    // معالجة كل الأسطر
+    // معالجة كل الأسطر من ملف CSV
     uploadedCSVData.forEach(row => {
         const result = processCSVRow(row);
         if (result.assignee && result.finishDate) {
@@ -114,65 +117,47 @@ async function startAutomationProcess() {
         }
     });
 
-    // قاعدة التجميع والاختيار (أبعد 3 مهام)
+    // قاعدة التجميع (أبعد 3 مهام)
     for (let name in tasksPerEmployee) {
         let empTasks = tasksPerEmployee[name];
-        // فرز من الأبعد (التاريخ الأكبر) للأقرب
         empTasks.sort((a, b) => b.finishDate - a.finishDate);
 
-        // اختيار أبعد 3 مهام
         const top3 = empTasks.slice(0, 3);
         const taskStrings = top3.map(t => {
-            const shortTitle = t.title.split(' ').slice(0, 4).join(' ');
+            const shortTitle = t.title ? t.title.split(' ').slice(0, 4).join(' ') : "Task";
             return `${t.id} ${shortTitle}`;
         });
 
-        // تحديث كائن الموظف في الجيسون
         const employee = employees.find(e => e.name === name);
         if (employee) {
             employee.f1766917553886 = taskStrings.join(", ");
-            // تاريخ انتهاء أبعد مهمة (رقم 1 في الترتيب)
             employee.f1766929340598 = top3[0].finishDate.toISOString().slice(0, 16); 
         }
     }
 
-    // 5. التزامن مع GitHub
+    // 5. التزامن مع GitHub باستخدام الدالة الأساسية في index.html
     await syncProcessedDataToGitHub();
 }
 
 async function syncProcessedDataToGitHub() {
+    // التأكد من وجود التوكن في الحقل المخصص له
     const token = document.getElementById('ghTokenInput').value;
     if(!token) {
-        showToast("Please provide GitHub Token first!", "error");
+        alert("Please provide GitHub Token first!");
         return;
     }
+    
+    // تحديث التوكن في الإعدادات العامة
+    githubConfig.token = token; 
 
-    try {
-        const response = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.path}`, {
-            headers: { 'Authorization': `token ${token}` }
-        });
-        const fileData = await response.json();
-        
-        const updatedContent = btoa(unescape(encodeURIComponent(JSON.stringify({ 
-            ...fullConfig, 
-            employees: employees 
-        }, null, 2))));
+    // استدعاء دالة الرفع الأساسية الموجودة في index.html
+    const success = await syncToGitHub(); 
 
-        await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.path}`, {
-            method: 'PUT',
-            headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                message: "Smart Automation Sync",
-                content: updatedContent,
-                sha: fileData.sha
-            })
-        });
-
-        showToast("Process Completed & GitHub Updated!", "success");
+    if (success) {
+        if (typeof showToast === 'function') showToast("Process Completed & Cloud Updated!");
         setTimeout(() => location.reload(), 2000);
-    } catch (err) {
-        console.error(err);
-        showToast("Sync Failed!", "error");
+    } else {
+        alert("Sync Failed! Please check your Token or Internet connection.");
     }
 }
 
@@ -182,18 +167,22 @@ function handleCSVUpload(event) {
     if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            const data = e.target.result;
-            const workbook = XLSX.read(data, { type: 'binary' });
-            const sheetName = workbook.SheetNames[0];
-            uploadedCSVData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
-            
-            // تفعيل زر المعالجة
-            const btn = document.getElementById('btnStartProcess');
-            btn.disabled = false;
-            btn.classList.remove('text-gray-400', 'cursor-not-allowed');
-            btn.classList.add('text-emerald-700', 'hover:bg-emerald-50');
-            
-            showToast("CSV Loaded Successfully", "success");
+            try {
+                const data = e.target.result;
+                const workbook = XLSX.read(data, { type: 'binary' });
+                const sheetName = workbook.SheetNames[0];
+                uploadedCSVData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+                
+                const btn = document.getElementById('btnStartProcess');
+                btn.disabled = false;
+                btn.classList.remove('text-gray-400', 'cursor-not-allowed');
+                btn.classList.add('text-emerald-700', 'hover:bg-emerald-50');
+                
+                if (typeof showToast === 'function') showToast("CSV Loaded Successfully");
+            } catch (err) {
+                console.error("Error reading CSV:", err);
+                alert("Error reading CSV file.");
+            }
         };
         reader.readAsBinaryString(file);
     }
