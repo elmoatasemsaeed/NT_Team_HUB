@@ -79,11 +79,11 @@ function processCSVRow(row) {
             break;
         case "Task":
         case "Bug":
-            assignee = cleanName(row["Assigned To Tester"]);
+            assignee = cleanName(row["Assigned To"]);
             finishDate = calculateFinishDate(row["Activated Date"], row["Original Estimation"]);
             break;
         case "Support Log":
-            assignee = cleanName(row["Assigned To Tester"]);
+            assignee = cleanName(row["Assigned To"]);
             finishDate = new Date(row["Est Dev Finish"]);
             break;
     }
