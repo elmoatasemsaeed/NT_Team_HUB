@@ -158,6 +158,20 @@
                     </h3>
                     <div id="devCapacityGrid" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2 mb-4"></div>
                 </div>
+                <div id="workStreamGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 no-print">
+    <div class="p-4 border rounded-2xl bg-white shadow-sm">
+        <h3 class="text-purple-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest">
+            <span class="flex items-center gap-2"><i data-lucide="briefcase" class="w-4 h-4"></i> Developers by Work Stream</span>
+        </h3>
+        <div id="devWorkStreamGrid" class="grid grid-cols-2 lg:grid-cols-3 gap-2"></div>
+    </div>
+    <div class="p-4 border rounded-2xl bg-white shadow-sm">
+        <h3 class="text-orange-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest">
+            <span class="flex items-center gap-2"><i data-lucide="layers" class="w-4 h-4"></i> Testers by Work Stream</span>
+        </h3>
+        <div id="testerWorkStreamGrid" class="grid grid-cols-2 lg:grid-cols-3 gap-2"></div>
+    </div>
+</div>
                 <div class="p-4 border rounded-2xl bg-white shadow-sm">
                     <h3 class="text-green-700 font-bold mb-3 flex justify-between items-center border-b pb-2 uppercase text-[10px] tracking-widest">
                         <span class="flex items-center gap-2"><i data-lucide="check-square" class="w-4 h-4"></i> Testers Capacity</span>
@@ -576,32 +590,63 @@
             });
         }
 
-        function updateCapacity() {
-            const areaField = fieldsConfig.find(f => f.id === 'area');
-            const AREAS = (areaField && areaField.options) ? areaField.options.filter(a => a !== "Team Leader") : [];
-            const isVisible = (area, type) => (!visibilityConfig[area] || visibilityConfig[area][type]);
+       function updateCapacity() {
+    const areaField = fieldsConfig.find(f => f.id === 'area');
+    const AREAS = (areaField && areaField.options) ? areaField.options.filter(a => a !== "Team Leader") : [];
+    
+    // جلب خيارات الـ Working In ديناميكياً
+    const workInField = fieldsConfig.find(f => f.id === 'workingIn');
+    const WORK_STREAMS = (workInField && workInField.options) ? workInField.options : ["Regression", "support", "Iteration", "elBORG", "Senior", "Team Leader"];
 
-            const renderCard = (area, roleFilter, color) => {
-                const areaEmps = employees.filter(e => (Array.isArray(e.area) ? e.area.includes(area) : e.area === area) && roleFilter.includes(e.role));
-                const active = areaEmps.filter(e => !e.isVacation);
-                const vac = areaEmps.filter(e => e.isVacation);
-                const detailsHtml = roleFilter.map(role => {
-                    const count = active.filter(e => e.role === role).length;
-                    return count > 0 ? `<div class="role-badge"><span class="opacity-70">${role}:</span><span class="font-bold">${count}</span></div>` : '';
-                }).join('');
+    const isVisible = (area, type) => (!visibilityConfig[area] || visibilityConfig[area][type]);
 
-                return `<div class="google-card capacity-card border-l-4 border-l-${color}-500 p-3 cursor-pointer hover:bg-${color}-50" onclick="showDetailsExtended('${area}', '${roleFilter.join(',')}', false)">
-                        <div class="flex justify-between items-center border-b pb-2 mb-2"><span class="text-[10px] uppercase font-black text-gray-600">${area}</span><span class="bg-${color}-100 text-${color}-700 px-2 py-0.5 rounded-full text-xs font-bold">${active.length}</span></div>
-                        <div class="text-[10px] text-gray-700">${detailsHtml || '<div class="text-gray-400 italic">No active members</div>'}</div>
-                        <div class="mt-2 pt-2 border-t border-dashed"><div class="text-[10px] p-1 rounded text-red-500 font-bold hover:bg-red-100 flex justify-between" onclick="event.stopPropagation(); showDetailsExtended('${area}', '${roleFilter.join(',')}', true)"><span>VACATION:</span><span>${vac.length}</span></div></div></div>`;
-            };
+    // وظيفة عامة لإنشاء الكروت البرمجية
+    const renderCard = (label, roleFilter, color, filterField = 'area', isVacationView = false) => {
+        const matches = employees.filter(e => {
+            const val = e[filterField];
+            const areaMatch = Array.isArray(val) ? val.includes(label) : val === label;
+            return areaMatch && roleFilter.includes(e.role);
+        });
 
-            document.getElementById('devCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'dev')).map(a => renderCard(a, ['Dev','Senior'], 'blue')).join('');
-            document.getElementById('testerCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'tester')).map(a => renderCard(a, ['Tester','Senior tester'], 'green')).join('');
-            document.getElementById('devTotalLabel').innerText = "Total: " + employees.filter(e => ['Dev','Senior'].includes(e.role) && !e.isVacation).length;
-            document.getElementById('testerTotalLabel').innerText = "Total: " + employees.filter(e => ['Tester','Senior tester'].includes(e.role) && !e.isVacation).length;
-            renderCharts();
-        }
+        const active = matches.filter(e => !e.isVacation);
+        const vac = matches.filter(e => e.isVacation);
+
+        const detailsHtml = roleFilter.map(role => {
+            const count = active.filter(e => e.role === role).length;
+            return count > 0 ? `<div class="role-badge"><span class="opacity-70">${role}:</span><span class="font-bold">${count}</span></div>` : '';
+        }).join('');
+
+        // عند النقر نستخدم الفانكشن الأصلية مع تمرير اسم الحقل للفلترة
+        return `<div class="google-card capacity-card border-l-4 border-l-${color}-500 p-3 cursor-pointer hover:bg-${color}-50" 
+                     onclick="showDetailsExtended('${label}', '${roleFilter.join(',')}', false, '${filterField}')">
+                <div class="flex justify-between items-center border-b pb-2 mb-2">
+                    <span class="text-[10px] uppercase font-black text-gray-600">${label}</span>
+                    <span class="bg-${color}-100 text-${color}-700 px-2 py-0.5 rounded-full text-xs font-bold">${active.length}</span>
+                </div>
+                <div class="text-[10px] text-gray-700">${detailsHtml || '<div class="text-gray-400 italic">No active</div>'}</div>
+                <div class="mt-2 pt-2 border-t border-dashed">
+                    <div class="text-[10px] p-1 rounded text-red-500 font-bold hover:bg-red-100 flex justify-between" 
+                         onclick="event.stopPropagation(); showDetailsExtended('${label}', '${roleFilter.join(',')}', true, '${filterField}')">
+                        <span>VACATION:</span><span>${vac.length}</span>
+                    </div>
+                </div>
+            </div>`;
+    };
+
+    // 1. رندرة الكروت الأصلية (حسب الـ Area)
+    document.getElementById('devCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'dev')).map(a => renderCard(a, ['Dev','Senior'], 'blue', 'area')).join('');
+    document.getElementById('testerCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'tester')).map(a => renderCard(a, ['Tester','Senior tester'], 'green', 'area')).join('');
+
+    // 2. رندرة الكروت الجديدة (حسب الـ Working In)
+    document.getElementById('devWorkStreamGrid').innerHTML = WORK_STREAMS.map(ws => renderCard(ws, ['Dev','Senior'], 'purple', 'workingIn')).join('');
+    document.getElementById('testerWorkStreamGrid').innerHTML = WORK_STREAMS.map(ws => renderCard(ws, ['Tester','Senior tester'], 'orange', 'workingIn')).join('');
+
+    // تحديث التوتال
+    document.getElementById('devTotalLabel').innerText = "Total: " + employees.filter(e => ['Dev','Senior'].includes(e.role) && !e.isVacation).length;
+    document.getElementById('testerTotalLabel').innerText = "Total: " + employees.filter(e => ['Tester','Senior tester'].includes(e.role) && !e.isVacation).length;
+    
+    renderCharts();
+}
 
         function renderCharts() {
             const chartsGrid = document.getElementById('dynamicChartsGrid');
@@ -729,23 +774,36 @@
         function addNewChartConfig() { chartsConfig.push({ id: 'c'+Date.now(), title: 'Analysis', targetField: 'area', type: 'doughnut' }); openChartsSetupModal(); }
         async function saveChartsConfig() { await save(); document.getElementById('chartsSetupModal').classList.add('hidden'); }
 
-        function showDetailsExtended(area, roles, isVac) {
-            const roleList = roles.split(',');
-            const taskField = fieldsConfig.find(f => f.label === 'Current Task');
-            const taskId = taskField ? taskField.id : null;
-            const finishTimeField = fieldsConfig.find(f => f.label === 'T. Finish Time');
-            const finishTimeId = finishTimeField ? finishTimeField.id : null;
+  function showDetailsExtended(label, roles, isVac, filterField = 'area') {
+    const roleList = roles.split(',');
+    const taskField = fieldsConfig.find(f => f.label === 'Current Task');
+    const taskId = taskField ? taskField.id : 'f1766917553886';
+    const finishTimeField = fieldsConfig.find(f => f.label === 'T. Finish Time');
+    const finishTimeId = finishTimeField ? finishTimeField.id : 'f1766929340598';
 
-            const list = employees.filter(e => (Array.isArray(e.area) ? e.area.includes(area) : e.area === area) && roleList.includes(e.role) && e.isVacation === isVac);
-            document.getElementById('popupTitle').innerText = `${area} - ${isVac ? 'On Vacation' : 'Active Members'}`;
-            document.getElementById('popupList').innerHTML = list.length > 0 ? list.map(e => `
-                <div class="p-4 border rounded-xl ${e.isVacation ? 'bg-red-50' : 'bg-gray-50'} shadow-sm">
-                    <b class="${e.isVacation ? 'text-red-600' : 'text-blue-700'}">${e.name || 'Unknown'}</b>
-                    <div class="text-[10px] font-bold text-gray-400 uppercase">${e.role}</div>
-                    ${!e.isVacation ? `<div class="mt-2 text-xs"><b>Task:</b> ${e[taskId] || 'None'} <br> <b>Finish:</b> ${e[finishTimeId] || 'N/A'}</div>` : `<div class="mt-2 text-red-500 text-xs italic">Returns: ${e.vacationEnd || 'N/A'}</div>`}
-                </div>`).join('') : '<div class="col-span-full text-center py-10">No members found</div>';
-            document.getElementById('detailsPopup').classList.remove('hidden');
-        }
+    // الفلترة بناءً على الحقل الممرر (area أو workingIn)
+    const list = employees.filter(e => {
+        const val = e[filterField];
+        const fieldMatch = Array.isArray(val) ? val.includes(label) : val === label;
+        return fieldMatch && roleList.includes(e.role) && e.isVacation === isVac;
+    });
+
+    document.getElementById('popupTitle').innerText = `${label} - ${isVac ? 'On Vacation' : 'Active Members'}`;
+    document.getElementById('popupList').innerHTML = list.length > 0 ? list.map(e => `
+        <div class="p-4 border rounded-xl ${e.isVacation ? 'bg-red-50' : 'bg-gray-50'} shadow-sm">
+            <b class="${e.isVacation ? 'text-red-600' : 'text-blue-700'}">${e.name || 'Unknown'}</b>
+            <div class="text-[10px] font-bold text-gray-400 uppercase">${e.role}</div>
+            ${!e.isVacation ? `
+                <div class="mt-2 text-xs">
+                    <b>Task:</b> ${e[taskId] || 'None'} <br> 
+                    <b>Stream:</b> ${e.workingIn || 'N/A'} <br>
+                    <b>Finish:</b> ${e[finishTimeId] || 'N/A'}
+                </div>` : `
+                <div class="mt-2 text-red-500 text-xs italic">Returns: ${e.vacationEnd || 'N/A'}</div>`}
+        </div>`).join('') : '<div class="col-span-full text-center py-10">No members found</div>';
+    
+    document.getElementById('detailsPopup').classList.remove('hidden');
+}
 async function updateTaskInline(empIndex, newValue) {
     const TASK_FIELD_ID = 'f1766917553886';
     // تحديث القيمة في المصفوفة المحلية
@@ -847,6 +905,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
