@@ -785,14 +785,23 @@
     const finishTimeField = fieldsConfig.find(f => f.label === 'T. Finish Time');
     const finishTimeId = finishTimeField ? finishTimeField.id : 'f1766929340598';
 
-    // الفلترة بناءً على الحقل الممرر
-    const list = employees.filter(e => {
+    // 1. الفلترة الأساسية
+    let list = employees.filter(e => {
         const val = e[filterField];
         const fieldMatch = Array.isArray(val) ? val.includes(label) : val === label;
         return fieldMatch && roleList.includes(e.role) && e.isVacation === isVac;
     });
 
+    // 2. الترتيب بناءً على الـ Area (أبجدياً)
+    list.sort((a, b) => {
+        const areaA = (Array.isArray(a.area) ? a.area[0] : a.area || '').toString().toLowerCase();
+        const areaB = (Array.isArray(b.area) ? b.area[0] : b.area || '').toString().toLowerCase();
+        return areaA.localeCompare(areaB);
+    });
+
     document.getElementById('popupTitle').innerText = `${label} - ${isVac ? 'On Vacation' : 'Active Members'}`;
+    
+    // 3. الرندرة
     document.getElementById('popupList').innerHTML = list.length > 0 ? list.map(e => `
         <div class="p-4 border rounded-xl ${e.isVacation ? 'bg-red-50' : 'bg-gray-50'} shadow-sm">
             <b class="${e.isVacation ? 'text-red-600' : 'text-blue-700'}">${e.name || 'Unknown'}</b>
@@ -916,6 +925,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
