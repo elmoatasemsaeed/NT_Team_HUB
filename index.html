@@ -593,8 +593,9 @@
 
        function updateCapacity() {
     const areaField = fieldsConfig.find(f => f.id === 'area');
-    // استبعاد Team Leader من القائمة الأساسية
+    // 1. استبعاد "Team Leader" و "البرج" من القائمة الأساسية للمناطق (Areas)
     const AREAS = (areaField && areaField.options) ? areaField.options.filter(a => a !== "Team Leader") : [];
+    const AREAS_NO_BORG = AREAS.filter(a => a !== "البرج"); // قائمة بدون "البرج" خاصة للمطورين
     
     const workInField = fieldsConfig.find(f => f.id === 'workingIn');
     const WORK_STREAMS = (workInField && workInField.options) ? workInField.options : [];
@@ -605,14 +606,13 @@
         const matches = employees.filter(e => {
             const val = e[filterField];
             const fieldMatch = Array.isArray(val) ? val.includes(label) : val === label;
-            // استبعاد أي موظف دوره Team Leader من الحسابات تماماً
+            // استبعاد "Team Leader" من أي حسابات داخل الكروت
             return fieldMatch && roleFilter.includes(e.role) && e.role !== "Team Leader";
         });
 
         const active = matches.filter(e => !e.isVacation);
         const vac = matches.filter(e => e.isVacation);
 
-        // التعديل المطلوب: التصنيف بناءً على الـ Area بدلاً من الدور الوظيفي
         const detailsHtml = AREAS.map(areaName => {
             const count = active.filter(e => {
                 const empArea = e.area;
@@ -638,17 +638,20 @@
             </div>`;
     };
 
-    // رندرة كروت الـ Capacity الأساسية
-    document.getElementById('devCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'dev')).map(a => renderCard(a, ['Dev','Senior'], 'blue', 'area')).join('');
+    // رندرة كروت الـ Capacity (تم استخدام AREAS_NO_BORG للمطورين)
+    document.getElementById('devCapacityGrid').innerHTML = AREAS_NO_BORG.filter(a => isVisible(a, 'dev')).map(a => renderCard(a, ['Dev','Senior'], 'blue', 'area')).join('');
     document.getElementById('testerCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'tester')).map(a => renderCard(a, ['Tester','Senior tester'], 'green', 'area')).join('');
 
-    // رندرة كروت الـ Work Streams مع التصنيف الجديد حسب الـ Area
-    document.getElementById('devWorkStreamGrid').innerHTML = WORK_STREAMS.map(ws => renderCard(ws, ['Dev','Senior'], 'purple', 'workingIn')).join('');
+    // رندرة كروت الـ Work Streams
+    // Developers: تم استبعاد "البرج" من الظهور هنا أيضاً بناءً على طلبك
+    document.getElementById('devWorkStreamGrid').innerHTML = WORK_STREAMS.filter(ws => ws !== "البرج").map(ws => renderCard(ws, ['Dev','Senior'], 'purple', 'workingIn')).join('');
+    
+    // Testers: تم استبدال Senior بـ Senior tester في الفلتر
     document.getElementById('testerWorkStreamGrid').innerHTML = WORK_STREAMS.map(ws => renderCard(ws, ['Tester','Senior tester'], 'orange', 'workingIn')).join('');
 
-    // تحديث التوتال (مع استبعاد الـ Team Leader تلقائياً من الفلتر)
-    document.getElementById('devTotalLabel').innerText = "Total: " + employees.filter(e => ['Dev','Senior'].includes(e.role) && !e.isVacation).length;
-    document.getElementById('testerTotalLabel').innerText = "Total: " + employees.filter(e => ['Tester','Senior tester'].includes(e.role) && !e.isVacation).length;
+    // تحديث التوتال (يستبعد Team Leader تلقائياً)
+    document.getElementById('devTotalLabel').innerText = "Total: " + employees.filter(e => ['Dev','Senior'].includes(e.role) && !e.isVacation && e.role !== "Team Leader").length;
+    document.getElementById('testerTotalLabel').innerText = "Total: " + employees.filter(e => ['Tester','Senior tester'].includes(e.role) && !e.isVacation && e.role !== "Team Leader").length;
     
     renderCharts();
 }
@@ -946,6 +949,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
