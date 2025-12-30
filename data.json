@@ -48,7 +48,7 @@
       "custom_1766584922755": "هنسحبه من الهوم فيزيت تدريجيا",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "123",
+      "f1766917553886": "",
       "f1766929340598": ""
     },
     {
@@ -170,7 +170,7 @@
       "workingIn": "elBORG",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154552 Returned Reason NOT displayed @ Returned, 154466 Critical issue at Slow movement items, 154556 Fast Movement items Display Locations which",
+      "f1766917553886": "154552 Returned Reason NOT displayed @ Returned, 154466 Critical issue at Slow movement items, 151738 Execution",
       "f1766929340598": "2025-12-29T10:53"
     },
     {
@@ -670,8 +670,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "150326 [Integ] #Local 2019 : Duplicated results",
-      "f1766929340598": "2025-11-03T13:25"
+      "f1766917553886": "154709 SAP Inbound >> when Recieve lonic, 150326 [Integ] #Local 2019 : Duplicated results",
+      "f1766929340598": "2025-12-30T14:55"
     },
     {
       "isVacation": false,
@@ -905,8 +905,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "146435 MRC - Initiating registration directly from, 153604 execution, 153603 preparation",
-      "f1766929340598": "2025-12-30T07:35"
+      "f1766917553886": "153138 New Barch Registration _ Register incomplete, 146435 MRC - Initiating registration directly from, 153604 execution",
+      "f1766929340598": "2025-12-30T13:28"
     },
     {
       "name": "Sara Mustafa",
@@ -1198,5 +1198,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-30T12:07:14.972Z"
+  "timestamp": "2025-12-30T12:07:29.987Z"
 }
