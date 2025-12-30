@@ -30,8 +30,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "154497 Writing Test Cases for User Branch, 153949 Gender change allows saving with incompatible, 153447 Order gets cancelled when re-adding a",
-      "f1766929340598": "2025-12-28T08:22"
+      "f1766917553886": "154699 Writing TestCases For Samples Under Custody, 154698 Writing TestCases For Sample Re-Imaging ANGA, 154697 Writing TestCases For User Branch ANGA",
+      "f1766929340598": "2025-12-30T10:34"
     },
     {
       "isVacation": false,
@@ -147,7 +147,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "151792 Al Borg KSA - TAT: Create",
-      "f1766929340598": "2025-12-29T18:00"
+      "f1766929340598": "2025-12-30T18:00"
     },
     {
       "isVacation": false,
@@ -259,8 +259,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "154648 CR 151083 - Preparation, 154059 Edit Mode Allows Saving Without Any, 154543 Mobile App - Client URL field",
-      "f1766929340598": "2025-12-30T07:57"
+      "f1766917553886": "154665 CR 151082 - Preparation, 154648 CR 151083 - Preparation, 154059 Edit Mode Allows Saving Without Any",
+      "f1766929340598": "2025-12-30T10:00"
     },
     {
       "isVacation": false,
@@ -319,8 +319,8 @@
         "support"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "154094 review on User Story 140089",
-      "f1766929340598": "2025-12-24T16:46"
+      "f1766917553886": "154460 Reports >> Dashboard: invalid values at, 154094 review on User Story 140089",
+      "f1766929340598": "2025-12-29T12:54"
     },
     {
       "isVacation": true,
@@ -383,7 +383,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "154098 Alameda Mobile App Integration, 154502 Alameda LDM - BBM Integration, 154621 Alameda_BBM_SchemaHandler service",
-      "f1766929340598": "2025-12-29T18:00"
+      "f1766929340598": "2025-12-30T18:00"
     },
     {
       "isVacation": false,
@@ -400,7 +400,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "153090 Alameda GAMCA Integration, 153522 Integ>> Add Discount API Issues, 153038 result didn't save in LDM",
-      "f1766929340598": "2025-12-29T18:00"
+      "f1766929340598": "2025-12-30T18:00"
     },
     {
       "isVacation": false,
@@ -428,7 +428,7 @@
         "support"
       ],
       "f1766917553886": "154274 Activate SAP on New Alameda Enviroment, 154292 display error when insert Result message, 154295 display error when register with order",
-      "f1766929340598": "2025-12-29T18:00"
+      "f1766929340598": "2025-12-30T18:00"
     },
     {
       "isVacation": true,
@@ -462,7 +462,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "146890 Update Batch Details and Order Details",
-      "f1766929340598": "2025-12-29T18:00"
+      "f1766929340598": "2025-12-30T18:00"
     },
     {
       "isVacation": false,
@@ -617,7 +617,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "71136 Internal CR - Dynamic Registration: Registration, 141960 Al Borg KSA - TAT: Create",
-      "f1766929340598": "2025-12-29T18:00"
+      "f1766929340598": "2025-12-30T18:00"
     },
     {
       "isVacation": false,
@@ -642,7 +642,7 @@
       "isVacation": false,
       "vacationEnd": "",
       "f1766917553886": "148455 Al Farabi > Update Nphies Integration, 154603 Administration >> Financial >> Contract price",
-      "f1766929340598": "2025-12-29T18:00"
+      "f1766929340598": "2025-12-30T18:00"
     },
     {
       "isVacation": false,
@@ -760,7 +760,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "150662 Internal CR - Analyzer Setup: Add",
-      "f1766929340598": "2025-12-29T18:00"
+      "f1766929340598": "2025-12-30T18:00"
     },
     {
       "name": "Mustafa Mamdoh",
@@ -862,7 +862,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "153198 Add New SMS Provider [mshastra], 153282 ADAFSA : Human API - Add",
-      "f1766929340598": "2025-12-29T18:00"
+      "f1766929340598": "2025-12-30T18:00"
     },
     {
       "isVacation": false,
@@ -933,8 +933,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "140089 Create new dashboard screen for Material, 154460 Reports >> Dashboard: invalid values at, 154363 Issue at Executive Summary Charts, Specifically",
-      "f1766929340598": "2025-12-29T18:00"
+      "f1766917553886": "140089 Create new dashboard screen for Material, 154363 Issue at Executive Summary Charts, Specifically",
+      "f1766929340598": "2025-12-30T18:00"
     },
     {
       "isVacation": false,
@@ -950,8 +950,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154637 Get Raw data >> display call, 154627 Get Result (Raw Data) >> The, 153179 Swiss LDM - Athir Ibtegration >",
-      "f1766929340598": "2025-12-30T07:53"
+      "f1766917553886": "153179 Swiss LDM - Athir Ibtegration >, 153515 Al Farabi Lab - AMAD Integration, 153517 Al Farabi Lab - Internal MMS",
+      "f1766929340598": "2025-12-30T18:00"
     },
     {
       "isVacation": true,
@@ -1013,7 +1013,9 @@
       "Est Test Finish": "",
       "Assigned To Tester": "",
       "CustomResolvedDate": "",
-      "Original Estimation": "\"2\""
+      "Original Estimation": "\"2\"",
+      "f1766917553886": "",
+      "f1766929340598": ""
     }
   ],
   "fields": [
@@ -1196,5 +1198,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-30T08:23:24.810Z"
+  "timestamp": "2025-12-30T08:39:47.745Z"
 }
