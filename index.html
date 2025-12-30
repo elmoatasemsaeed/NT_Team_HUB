@@ -460,9 +460,9 @@ renderAll = function() {
 
 // تعديل وظيفة renderAll لتشمل الفحص التلقائي عند كل عملية تحديث
 const originalRenderAll = renderAll;
-renderAll = function() {
+renderAll = async function() { // أضفنا async هنا
     // نقوم بالفحص أولاً ثم الرندرة الأصلية
-    checkVacationExpirations();
+    await checkVacationExpirations(); // أضفنا await هنا لانتظار عملية الحفظ
     originalRenderAll();
 };
 
@@ -1037,6 +1037,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
