@@ -829,20 +829,28 @@
     const popupListContainer = document.getElementById('popupList');
     popupListContainer.className = "flex flex-col gap-6 w-full"; 
     
+// البحث عن الجزء الخاص بـ popupListContainer.innerHTML داخل وظيفة showDetailsExtended استبدله بهذا:
+
     if (Object.keys(groupedByArea).length > 0) {
-        popupListContainer.innerHTML = Object.keys(groupedByArea).sort().map(areaName => `
+        popupListContainer.innerHTML = Object.keys(groupedByArea).sort().map(areaName => {
+            const countInArea = groupedByArea[areaName].length; // حساب العدد في هذه المنطقة
+            
+            return `
             <div class="w-full">
                 <div class="flex items-center gap-2 mb-3">
                     <div class="h-2 w-2 bg-blue-600 rounded-full"></div>
-                    <h4 class="text-sm font-black text-gray-500 uppercase tracking-widest">${areaName}</h4>
+                    <h4 class="text-sm font-black text-gray-500 uppercase tracking-widest">
+                        ${areaName} 
+                        <span class="ml-2 px-2 py-0.5 bg-gray-100 text-blue-600 rounded-full text-[10px] border border-gray-200">
+                            ${countInArea}
+                        </span>
+                    </h4>
                     <div class="flex-1 h-[1px] bg-gray-200"></div>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     ${groupedByArea[areaName].map(e => {
-                        // حساب الحالة والوقت المتبقي
                         const status = getAvailabilityStatus(e);
-                        
                         return `
                         <div class="p-4 border rounded-xl ${e.isVacation ? 'bg-red-50' : 'bg-white'} shadow-sm border-gray-100 flex flex-col justify-between">
                             <div>
@@ -858,7 +866,6 @@
                                         </div>
                                     ` : ''}
                                 </div>
-                                
                                 <div class="mt-2 text-xs">
                                     ${!e.isVacation ? `
                                         <div class="space-y-1 pt-2 border-t border-gray-50">
@@ -875,7 +882,7 @@
                     `}).join('')}
                 </div>
             </div>
-        `).join('');
+        `}).join('');
     } else {
         popupListContainer.innerHTML = '<div class="text-center py-10 w-full text-gray-400">No members found</div>';
     }
@@ -984,6 +991,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
