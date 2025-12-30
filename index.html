@@ -998,11 +998,86 @@ function checkAvailableDevs() {
         showToast(message);
     }
 }
+        // دالة معالجة رفع ملف CSV
+function handleCSVUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const content = e.target.result;
+        // تقسيم الأسطر
+        const lines = content.split('\n').filter(line => line.trim() !== "");
+        
+        // استخراج العناوين (أول سطر)
+        const headers = lines[0].split(',').map(h => h.trim());
+        
+        // تحويل البيانات إلى مصفوفة كائنات
+        const parsedData = lines.slice(1).map(line => {
+            const values = line.split(',');
+            const obj = {};
+            headers.forEach((header, i) => {
+                obj[header] = values[i] ? values[i].trim() : "";
+            });
+            return obj;
+        });
+
+        // تخزين البيانات مؤقتاً في نافذة المتصفح وتفعيل زر البدء
+        window.pendingCSVData = parsedData;
+        
+        const btnStart = document.getElementById('btnStartProcess');
+        if (btnStart) {
+            btnStart.disabled = false;
+            btnStart.classList.remove('opacity-50', 'cursor-not-allowed');
+            alert(`تم تحميل الملف بنجاح! تم العثور على ${parsedData.length} سجل.`);
+        }
+    };
+    reader.readAsText(file);
+}
+
+// دالة بدء المعالجة (التي يتم استدعاؤها عند الضغط على زر Start)
+async function startAutomationProcess() {
+    if (!window.pendingCSVData || window.pendingCSVData.length === 0) {
+        alert("لا توجد بيانات للمعالجة. يرجى رفع ملف CSV أولاً.");
+        return;
+    }
+
+    if (confirm(`هل أنت متأكد من تحديث بيانات ${window.pendingCSVData.length} موظف؟`)) {
+        try {
+            // منطق التحديث: البحث عن الموظف بالاسم وتحديث بياناته
+            window.pendingCSVData.forEach(csvItem => {
+                const empIndex = employees.findIndex(e => e.name === csvItem.name);
+                if (empIndex !== -1) {
+                    // تحديث الموظف الموجود
+                    employees[empIndex] = { ...employees[empIndex], ...csvItem };
+                } else {
+                    // إضافة موظف جديد إذا لم يكن موجوداً
+                    employees.push(csvItem);
+                }
+            });
+
+            // حفظ التغييرات (استدعاء دالة save الموجودة في كودك)
+            await save();
+            alert("تم تحديث البيانات بنجاح!");
+            
+            // إعادة تعيين الواجهة
+            window.pendingCSVData = null;
+            document.getElementById('btnStartProcess').disabled = true;
+            renderEmployees(); // إعادة رسم الجدول
+        } catch (error) {
+            console.error("خطأ أثناء المعالجة:", error);
+            alert("حدث خطأ أثناء حفظ البيانات.");
+        }
+    }
+}
     </script>
+    
     <script src="automation.js"></script>
+    
 </body>
 </body>
 </html>
+
 
 
 
