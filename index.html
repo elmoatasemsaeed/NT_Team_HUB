@@ -804,19 +804,20 @@
 
 function showDetailsExtended(label, roles, isVac, filterField = 'area') {
     const roleList = roles.split(',');
-    // جلب معرفات الحقول (مع التأكد من المسميات)
+    
+    // جلب معرف حقل التاسك الحالية
     const taskField = fieldsConfig.find(f => f.label === 'Current Task');
     const taskId = taskField ? taskField.id : 'f1766917553886';
 
-    // 1. الفلترة الأساسية:
-    // نفلتر بناءً على الحقل (area أو workingIn) + الأدوار + حالة الإجازة
+    // فلترة الموظفين بناءً على الحقل (Area أو WorkingIn)
     let list = employees.filter(e => {
         const val = e[filterField];
+        // التعامل مع الحقول التي قد تكون مصفوفة أو نص عادي
         const fieldMatch = Array.isArray(val) ? val.includes(label) : val === label;
         return fieldMatch && roleList.includes(e.role) && e.isVacation === isVac;
     });
 
-    // 2. تجميع الموظفين حسب الـ Area لترتيب العرض
+    // تجميع النتائج حسب الـ Area لترتيب العرض
     const groupedByArea = list.reduce((acc, emp) => {
         const areaName = Array.isArray(emp.area) ? emp.area[0] : (emp.area || 'Unassigned');
         if (!acc[areaName]) acc[areaName] = [];
@@ -824,15 +825,17 @@ function showDetailsExtended(label, roles, isVac, filterField = 'area') {
         return acc;
     }, {});
 
-    // تحديث عنوان البوب أب
-    const fieldLabel = filterField === 'workingIn' ? 'Stream' : 'Area';
-    document.getElementById('popupTitle').innerText = `${label} (${fieldLabel}) - ${isVac ? 'On Vacation' : 'Active'}`;
+    // تحديث العنوان
+    const typeLabel = filterField === 'workingIn' ? 'Stream' : 'Area';
+    document.getElementById('popupTitle').innerText = `${label} (${typeLabel}) - ${isVac ? 'Vacation Members' : 'Active Members'}`;
     
     const popupListContainer = document.getElementById('popupList');
     popupListContainer.className = "flex flex-col gap-6 w-full"; 
     
-    if (Object.keys(groupedByArea).length > 0) {
-        popupListContainer.innerHTML = Object.keys(groupedByArea).sort().map(areaName => {
+    const areas = Object.keys(groupedByArea).sort();
+
+    if (areas.length > 0) {
+        popupListContainer.innerHTML = areas.map(areaName => {
             const countInArea = groupedByArea[areaName].length;
             
             return `
@@ -865,44 +868,39 @@ function showDetailsExtended(label, roles, isVac, filterField = 'area') {
                                             <div class="text-[8px] text-gray-500 mt-1 font-medium">${status.sub}</div>
                                         </div>
                                     ` : `
-                                        <div class="px-2 py-0.5 bg-red-100 text-red-700 rounded text-[9px] font-bold uppercase">Vacation</div>
+                                        <div class="px-2 py-0.5 bg-red-100 text-red-700 rounded text-[9px] font-bold uppercase text-center min-w-[70px]">Vacation</div>
                                     `}
                                 </div>
                                 <div class="mt-2 text-xs">
                                     ${!e.isVacation ? `
                                         <div class="space-y-1 pt-2 border-t border-gray-50">
-                                            <div class="flex justify-between"><span class="font-bold text-gray-400 uppercase text-[9px]">Task:</span> <span class="text-gray-800 font-medium">${e[taskId] || 'None'}</span></div>
+                                            <div class="flex justify-between"><span class="font-bold text-gray-400 uppercase text-[9px]">Task:</span> <span class="text-gray-800 font-medium">${e[taskId] || 'No Task'}</span></div>
                                             <div class="flex justify-between"><span class="font-bold text-gray-400 uppercase text-[9px]">Stream:</span> <span class="text-gray-800">${e.workingIn || 'N/A'}</span></div>
                                         </div>` 
                                     : `
-                                        <div class="text-red-600 font-bold italic mt-2 flex items-center gap-1 p-2 bg-white/50 rounded-lg border border-red-100">
+                                        <div class="text-red-600 font-bold italic mt-2 flex items-center gap-1 p-2 bg-white/50 rounded-lg border border-red-100 text-[10px]">
                                             <i data-lucide="calendar" class="w-3 h-3"></i> Returns: ${e.vacationEnd || 'N/A'}
                                         </div>`}
                                 </div>
                             </div>
                         </div>
-                    `}).join('')}
+                    `;
+                    }).join('')}
                 </div>
             </div>
-        `}).join('');
+            `;
+        }).join('');
     } else {
-        popupListContainer.innerHTML = '<div class="text-center py-10 w-full text-gray-400">No members found in this category</div>';
+        popupListContainer.innerHTML = `
+            <div class="flex flex-col items-center justify-center py-12 text-gray-400">
+                <i data-lucide="users" class="w-12 h-12 mb-2 opacity-20"></i>
+                <p>No members found in this category</p>
+            </div>`;
     }
     
     document.getElementById('detailsPopup').classList.remove('hidden');
-    lucide.createIcons();
-} else {
-        popupListContainer.innerHTML = '<div class="text-center py-10 w-full text-gray-400">No members found</div>';
-    }
-    
-    document.getElementById('detailsPopup').classList.remove('hidden');
-    lucide.createIcons();
-} else {
-        popupListContainer.innerHTML = '<div class="text-center py-10 w-full text-gray-400">No members found</div>';
-    }
-    
-    document.getElementById('detailsPopup').classList.remove('hidden');
-    lucide.createIcons(); // لتفعيل أيقونات التقويم داخل البوب أب
+    // لتفعيل الأيقونات الجديدة
+    if (window.lucide) lucide.createIcons();
 }
 async function updateTaskInline(empIndex, newValue) {
     const TASK_FIELD_ID = 'f1766917553886';
@@ -1005,6 +1003,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
