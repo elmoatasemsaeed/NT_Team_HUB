@@ -204,7 +204,7 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "153919 Execution, 153918 Preparation, 154481 Screen take time to display search",
+      "f1766917553886": "153919 Execution, 153918 Preparation, 154634 Updating one TAT value clears the",
       "f1766929340598": "2025-12-31T11:58"
     },
     {
@@ -399,7 +399,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153090 Alameda GAMCA Integration, 153522 Integ>> Add Discount API Issues, 153038 result didn't save in LDM",
+      "f1766917553886": "153090 Alameda GAMCA Integration, 153038 result didn't save in LDM",
       "f1766929340598": "2025-12-30T18:00"
     },
     {
@@ -488,8 +488,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154599 #Alameda: CBC is printed at two, 154605 #Patient report: the reference range overlap",
-      "f1766929340598": "2025-12-29T14:58"
+      "f1766917553886": "154618 #Alameda: The cumulative report is not, 154612 Alameda: Antimicrobial Column Does Not Start, 154599 #Alameda: CBC is printed at two",
+      "f1766929340598": "2025-12-29T16:20"
     },
     {
       "isVacation": false,
@@ -540,8 +540,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154618 #Alameda: The cumulative report is not, 154612 Alameda: Antimicrobial Column Does Not Start, 153999 DB Task SWISS LIVE  i",
-      "f1766929340598": "2025-12-29T16:20"
+      "f1766917553886": "153999 DB Task SWISS LIVE  i",
+      "f1766929340598": "2025-12-18T12:20"
     },
     {
       "isVacation": false,
@@ -574,7 +574,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "ر Sample Log >> Sample Type &, 152972 Reload & Unload Screen Display more",
+      "f1766917553886": "153890 Sample Log >> Sample Type &, 152972 Reload & Unload Screen Display more",
       "f1766929340598": "2025-12-16T12:57"
     },
     {
@@ -985,8 +985,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "151083 Home Visits - Web Application: Display",
-      "f1766929340598": "2025-12-29T13:45"
+      "f1766917553886": "154617 Visit No. Search does not override, 151083 Home Visits - Web Application: Display",
+      "f1766929340598": "2025-12-30T11:34"
     },
     {
       "name": "Yasmine Abdelwahed",
@@ -1198,5 +1198,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-30T09:24:16.597Z"
+  "timestamp": "2025-12-30T09:47:31.665Z"
 }
