@@ -431,7 +431,7 @@
       "f1766929340598": "2025-12-30T18:00"
     },
     {
-      "isVacation": true,
+      "isVacation": false,
       "vacationEnd": "2025-12-29",
       "name": "Ibrahim Ahmed Abo El-Fadl",
       "role": "Dev",
@@ -829,7 +829,7 @@
       "f1766929340598": ""
     },
     {
-      "isVacation": true,
+      "isVacation": false,
       "vacationEnd": "2025-12-29",
       "name": "Salah Abdelhakeem",
       "role": "Senior tester",
@@ -1198,5 +1198,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-30T08:39:47.745Z"
+  "timestamp": "2025-12-30T09:13:30.064Z"
 }
