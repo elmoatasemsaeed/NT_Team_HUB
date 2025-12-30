@@ -13,8 +13,8 @@
         "Senior"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "154711 Collector gender mismatch validation popup is",
+      "f1766929340598": "2025-12-30T12:45"
     },
     {
       "isVacation": false,
@@ -146,7 +146,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "151792 Al Borg KSA - TAT: Create",
+      "f1766917553886": "151792 Al Borg KSA - TAT: Create, 154712 The system has incorrect behavior when",
       "f1766929340598": "2025-12-30T18:00"
     },
     {
@@ -259,8 +259,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "154665 CR 151082 - Preparation, 154648 CR 151083 - Preparation, 154059 Edit Mode Allows Saving Without Any",
-      "f1766929340598": "2025-12-30T10:00"
+      "f1766917553886": "154666 CR 151082 - Execution, 154649 CR 151083 - Execution, 154617 Visit No. Search does not override",
+      "f1766929340598": "2025-12-30T15:22"
     },
     {
       "isVacation": false,
@@ -302,7 +302,7 @@
       "area": "Registration",
       "workingIn": "Iteration",
       "custom_1766503160857": [],
-      "f1766917553886": "154049 BUG_001: registration parameter page load and",
+      "f1766917553886": "154049 BUG_001: registration parameter page load and, 152651 preparation",
       "f1766929340598": "2025-12-18T15:33"
     },
     {
@@ -427,7 +427,7 @@
       "workingIn": [
         "support"
       ],
-      "f1766917553886": "154274 Activate SAP on New Alameda Enviroment, 154292 display error when insert Result message, 154295 display error when register with order",
+      "f1766917553886": "154274 Activate SAP on New Alameda Enviroment, 154295 display error when register with order, 154294 display error when cancel order",
       "f1766929340598": "2025-12-30T18:00"
     },
     {
@@ -540,7 +540,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153999 DB Task SWISS LIVE  i",
+      "f1766917553886": "153999 DB Task SWISS LIVE  i, 153724 the panic value display in a",
       "f1766929340598": "2025-12-18T12:20"
     },
     {
@@ -616,7 +616,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "141960 Al Borg KSA - TAT: Create",
+      "f1766917553886": "71136 Internal CR - Dynamic Registration: Registration, 141960 Al Borg KSA - TAT: Create",
       "f1766929340598": "2025-12-30T18:00"
     },
     {
@@ -641,8 +641,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154603 Administration >> Financial >> Contract price",
-      "f1766929340598": "2025-12-29T13:54"
+      "f1766917553886": "148455 Al Farabi > Update Nphies Integration",
+      "f1766929340598": "2025-12-30T18:00"
     },
     {
       "isVacation": false,
@@ -670,8 +670,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "150326 [Integ] #Local 2019 : Duplicated results",
+      "f1766929340598": "2025-11-03T13:25"
     },
     {
       "isVacation": false,
@@ -707,7 +707,7 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154358 Service_Saving action on screen of Assign",
+      "f1766917553886": "154358 Service_Saving action on screen of Assign, 152750 CR#150759_Bug001_I Can't Add new record for",
       "f1766929340598": "2025-12-24T16:22"
     },
     {
@@ -769,7 +769,7 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154445 Save on Dynamic Reg is dimed",
+      "f1766917553886": "154445 Save on Dynamic Reg is dimed, 135108 Search Registration: When Reserve a compatible",
       "f1766929340598": "2025-12-25T12:44"
     },
     {
@@ -933,8 +933,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154363 Issue at Executive Summary Charts, Specifically",
-      "f1766929340598": "2025-12-24T15:57"
+      "f1766917553886": "140089 Create new dashboard screen for Material, 154363 Issue at Executive Summary Charts, Specifically",
+      "f1766929340598": "2025-12-30T18:00"
     },
     {
       "isVacation": false,
@@ -985,8 +985,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154617 Visit No. Search does not override, 151083 Home Visits - Web Application: Display",
-      "f1766929340598": "2025-12-30T11:34"
+      "f1766917553886": "154626 Dependent filters do not when changing, 151083 Home Visits - Web Application: Display",
+      "f1766929340598": "2025-12-30T12:54"
     },
     {
       "name": "Yasmine Abdelwahed",
@@ -995,8 +995,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154447 Outsource >> Error while getting Details, 154314 Execution, 153724 the panic value display in a",
-      "f1766929340598": "2025-12-25T13:23"
+      "f1766917553886": "154314 Execution, 153540 Review task for Execution Activity, 152166 Notification_ Result Attachment not sent with",
+      "f1766929340598": "2025-12-24T12:00"
     },
     {
       "ID": "\"135108\"",
@@ -1198,5 +1198,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-30T11:26:23.740Z"
+  "timestamp": "2025-12-30T11:26:28.425Z"
 }
