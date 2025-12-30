@@ -323,7 +323,7 @@
       "f1766929340598": "2025-12-29T12:54"
     },
     {
-      "isVacation": true,
+      "isVacation": false,
       "vacationEnd": "2025-12-30",
       "name": "Eslam Saleh",
       "role": "Senior",
@@ -340,7 +340,7 @@
       "f1766929340598": ""
     },
     {
-      "isVacation": true,
+      "isVacation": false,
       "vacationEnd": "2025-12-30",
       "name": "Esraa Abdelsalam",
       "role": "Dev",
@@ -954,7 +954,7 @@
       "f1766929340598": "2025-12-30T18:00"
     },
     {
-      "isVacation": true,
+      "isVacation": false,
       "vacationEnd": "2025-12-30",
       "name": "Yahia Hassan",
       "role": "Dev",
@@ -1198,5 +1198,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-30T09:13:30.064Z"
+  "timestamp": "2025-12-30T09:18:59.332Z"
 }
