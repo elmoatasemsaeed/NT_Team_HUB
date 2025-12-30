@@ -146,7 +146,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "151792 Al Borg KSA - TAT: Create, 154712 The system has incorrect behavior when",
+      "f1766917553886": "151792 Al Borg KSA - TAT: Create",
       "f1766929340598": "2025-12-30T18:00"
     },
     {
@@ -160,7 +160,7 @@
       "workingIn": [
         "support"
       ],
-      "f1766917553886": "154650 Get Result (Raw Data) >> The, 154611 Get Result (Raw Data) >> Unable",
+      "f1766917553886": "154650 Get Result (Raw Data) >> The, 154611 Get Result (Raw Data) >> Unable, 152518 Contact Admin Error",
       "f1766929340598": "2025-12-30T08:56"
     },
     {
@@ -243,8 +243,8 @@
         "Front and Financial"
       ],
       "workingIn": "Senior",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "152478 BD016: Review on CR",
+      "f1766929340598": "2025-11-23T08:00"
     },
     {
       "isVacation": false,
@@ -259,7 +259,7 @@
         "Iteration"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "154666 CR 151082 - Execution, 154649 CR 151083 - Execution, 154617 Visit No. Search does not override",
+      "f1766917553886": "154666 CR 151082 - Execution, 154724 On the way Visit status design, 154649 CR 151083 - Execution",
       "f1766929340598": "2025-12-30T15:22"
     },
     {
@@ -302,7 +302,7 @@
       "area": "Registration",
       "workingIn": "Iteration",
       "custom_1766503160857": [],
-      "f1766917553886": "154049 BUG_001: registration parameter page load and, 152651 preparation",
+      "f1766917553886": "154049 BUG_001: registration parameter page load and, 152651 preparation, 152703 BUG_002: Total service amount displays wrong",
       "f1766929340598": "2025-12-18T15:33"
     },
     {
@@ -382,7 +382,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154098 Alameda Mobile App Integration, 154502 Alameda LDM - BBM Integration, 154621 Alameda_BBM_SchemaHandler service",
+      "f1766917553886": "154502 Alameda LDM - BBM Integration, 154098 Alameda Mobile App Integration, 154621 Alameda_BBM_SchemaHandler service",
       "f1766929340598": "2025-12-30T18:00"
     },
     {
@@ -399,7 +399,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153090 Alameda GAMCA Integration, 153038 result didn't save in LDM",
+      "f1766917553886": "153090 Alameda GAMCA Integration, 153038 result didn't save in LDM, 152702 Error while send message to LDM",
       "f1766929340598": "2025-12-30T18:00"
     },
     {
@@ -540,7 +540,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153999 DB Task SWISS LIVE  i, 153724 the panic value display in a",
+      "f1766917553886": "153999 DB Task SWISS LIVE  i",
       "f1766929340598": "2025-12-18T12:20"
     },
     {
@@ -589,8 +589,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "رجب",
-      "f1766917553886": "154359 CR-(148807) - Issue detected in report, 154036 CR_(148807) - Print Customized Reports Header, 153720 Branch Arabic name is not retrieved",
-      "f1766929340598": "2025-12-25T10:00"
+      "f1766917553886": "154719 wrong action occurred When the delayed, 153721 the unit column do not display, 154712 The system has incorrect behavior when",
+      "f1766929340598": "2025-12-30T14:51"
     },
     {
       "name": "Mohamed Elgmmal",
@@ -616,7 +616,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "71136 Internal CR - Dynamic Registration: Registration, 141960 Al Borg KSA - TAT: Create",
+      "f1766917553886": "141960 Al Borg KSA - TAT: Create",
       "f1766929340598": "2025-12-30T18:00"
     },
     {
@@ -641,8 +641,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "148455 Al Farabi > Update Nphies Integration",
-      "f1766929340598": "2025-12-30T18:00"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "isVacation": false,
@@ -670,7 +670,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154709 SAP Inbound >> when Recieve lonic, 150326 [Integ] #Local 2019 : Duplicated results",
+      "f1766917553886": "154709 SAP Inbound >> when Recieve lonic",
       "f1766929340598": "2025-12-30T14:55"
     },
     {
@@ -769,7 +769,7 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154445 Save on Dynamic Reg is dimed, 135108 Search Registration: When Reserve a compatible",
+      "f1766917553886": "154445 Save on Dynamic Reg is dimed",
       "f1766929340598": "2025-12-25T12:44"
     },
     {
@@ -815,7 +815,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "151082 Home Visits - Web Application: Apply, 154361 Bulk action collector is matched only",
+      "f1766917553886": "151082 Home Visits - Web Application: Apply",
       "f1766929340598": "2025-12-30T09:09"
     },
     {
@@ -933,8 +933,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "140089 Create new dashboard screen for Material, 154363 Issue at Executive Summary Charts, Specifically",
-      "f1766929340598": "2025-12-30T18:00"
+      "f1766917553886": "154363 Issue at Executive Summary Charts, Specifically",
+      "f1766929340598": "2025-12-24T15:57"
     },
     {
       "isVacation": false,
@@ -985,8 +985,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154626 Dependent filters do not when changing, 151083 Home Visits - Web Application: Display",
-      "f1766929340598": "2025-12-30T12:54"
+      "f1766917553886": "154727 Can not change \"on the way\", 154626 Dependent filters do not reset when, 151083 Home Visits - Web Application: Display",
+      "f1766929340598": "2025-12-30T14:52"
     },
     {
       "name": "Yasmine Abdelwahed",
@@ -995,7 +995,7 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154314 Execution, 153540 Review task for Execution Activity, 152166 Notification_ Result Attachment not sent with",
+      "f1766917553886": "154314 Execution, 153540 Review task for Execution Activity",
       "f1766929340598": "2025-12-24T12:00"
     },
     {
@@ -1198,5 +1198,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-30T12:30:33.276Z"
+  "timestamp": "2025-12-30T14:21:11.526Z"
 }
