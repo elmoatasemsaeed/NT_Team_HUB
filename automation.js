@@ -28,36 +28,14 @@ function calculateFinishDate(startDateStr, effortHours) {
         }
 
         // ضبط وقت البداية ليكون 9 صباحاً كحد أدنى
-       // ابحث عن هذا السطر في الكود:
-if (current.getHours() < 9) current.setHours(9, 0, 0, 0);
-
-// وقم بتغيير المنطق لضمان عدم حدوث ترحيل في التوقيت:
-function calculateFinishDate(startDateStr, effortHours) {
-    if (!startDateStr || !effortHours) return null;
-    
-    // إنشاء التاريخ مع التأكد أنه يعامل كتوقيت محلي
-    let current = new Date(startDateStr);
-    
-    // إذا فشل المتصفح في فهم التوقيت المحلي، نقوم بضبطه يدوياً
-    let remaining = parseFloat(effortHours);
-    
-    if (isNaN(remaining)) return null;
-
-    while (remaining > 0) {
-        // تخطي الجمعة والسبت
-        if (current.getDay() === 5 || current.getDay() === 6) {
-            current.setDate(current.getDate() + (current.getDay() === 5 ? 2 : 1));
-            current.setHours(9, 0, 0, 0); // تأكيد الساعة 9 صباحاً
-        }
-
-        // التعديل الجوهري هنا:
-        // نستخدم setHours بشكل مباشر لضبط الساعة 9 صباحاً 
-        // وتصفير الدقائق والثواني تماماً
-        if (current.getHours() < 9) {
-            current.setHours(9, 0, 0, 0);
-        }
+        if (current.getHours() < 9) current.setHours(9, 0, 0, 0);
         
-        // ... باقي الكود
+        // إذا كان الوقت الحالي بعد 8 مساءً، ننتقل لليوم التالي
+        if (current.getHours() >= 20) {
+            current.setDate(current.getDate() + 1);
+            current.setHours(9, 0, 0, 0);
+            continue;
+        }
 
         // حساب الساعات المتبقية في نافذة اليوم (بحد أقصى 5 ساعات عمل أو حتى الساعة 8 مساءً)
         let workDayEnd = new Date(current);
