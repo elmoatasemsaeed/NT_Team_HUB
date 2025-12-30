@@ -218,15 +218,15 @@
       "f1766929340598": "2025-12-28T12:45"
     },
     {
-      "isVacation": false,
-      "vacationEnd": "",
+      "isVacation": true,
+      "vacationEnd": "2025-12-31",
       "name": "Aya Saed Mustafa Mohamad Bayoumi",
       "role": "Dev",
       "area": [
         "Registration"
       ],
       "workingIn": [
-        "Iteration"
+        "Regression"
       ],
       "custom_1766584922755": "",
       "f1766864203478": "",
@@ -1198,5 +1198,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-30T10:00:14.550Z"
+  "timestamp": "2025-12-30T11:25:09.091Z"
 }
