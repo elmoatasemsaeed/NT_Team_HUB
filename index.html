@@ -717,12 +717,21 @@ const renderSection = (emps) => {
     document.getElementById('devCapacityGrid').innerHTML = AREAS_NO_BORG.filter(a => isVisible(a, 'dev')).map(a => renderCard(a, ['Dev','Senior'], 'blue', 'area')).join('');
     document.getElementById('testerCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'tester')).map(a => renderCard(a, ['Tester','Senior tester'], 'green', 'area')).join('');
 
-    // رندرة كروت الـ Work Streams
-    // Developers: تم استبعاد "البرج" من الظهور هنا أيضاً بناءً على طلبك
-    document.getElementById('devWorkStreamGrid').innerHTML = WORK_STREAMS.filter(ws => ws !== "البرج").map(ws => renderCard(ws, ['Dev','Senior'], 'purple', 'workingIn')).join('');
-    
-    // Testers: تم استبدال Senior بـ Senior tester في الفلتر
-    document.getElementById('testerWorkStreamGrid').innerHTML = WORK_STREAMS.map(ws => renderCard(ws, ['Tester','Senior tester'], 'orange', 'workingIn')).join('');
+   // ... داخل وظيفة updateCapacity
+
+// رندرة كروت الـ Work Streams
+// Developers: استبعاد "البرج" واستبعاد "Team Leader"
+document.getElementById('devWorkStreamGrid').innerHTML = WORK_STREAMS
+    .filter(ws => ws !== "البرج")
+    .map(ws => renderCard(ws, ['Dev','Senior'], 'purple', 'workingIn'))
+    .join('');
+
+// Testers: استبعاد "Team Leader" (يتم ذلك تلقائياً داخل renderCard عبر الفلتر)
+document.getElementById('testerWorkStreamGrid').innerHTML = WORK_STREAMS
+    .map(ws => renderCard(ws, ['Tester','Senior tester'], 'orange', 'workingIn'))
+    .join('');
+
+// ... باقي الوظيفة
 
     // تحديث التوتال (يستبعد Team Leader تلقائياً)
     document.getElementById('devTotalLabel').innerText = "Total: " + employees.filter(e => ['Dev','Senior'].includes(e.role) && !e.isVacation && e.role !== "Team Leader").length;
@@ -1045,6 +1054,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
