@@ -412,13 +412,42 @@
         });
 
         // --- Core Rendering ---
-        function renderAll() { 
-            updateCapacity(); 
-            renderAvailabilityView();
-            renderTable(); 
-            renderDynamicForm(); 
-            lucide.createIcons(); 
+        // 1. وظيفة فحص انتهاء الإجازات وتحديث الحالة تلقائياً
+async function checkVacationExpirations() {
+    let hasChanges = false;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // ضبط الوقت لبداية اليوم للمقارنة العادلة
+
+    employees.forEach(emp => {
+        // إذا كان الموظف في إجازة ولديه تاريخ عودة
+        if (emp.isVacation && emp.vacationEnd) {
+            const returnDate = new Date(emp.vacationEnd);
+            
+            // إذا كان تاريخ العودة هو اليوم أو قبل اليوم
+            if (returnDate <= today) {
+                emp.isVacation = false; // إلغاء علامة الإجازة
+                // emp.vacationEnd = ""; // اختياري: إذا أردت مسح التاريخ بعد العودة
+                hasChanges = true;
+                console.log(`Auto-Sync: ${emp.name} is now Active.`);
+            }
         }
+    });
+
+    // إذا حدث أي تغيير، نقوم بحفظ البيانات فوراً في السحابة (GitHub)
+    if (hasChanges) {
+        await save(false); // حفظ بدون إعادة تحميل الصفحة بالكامل
+    }
+}
+
+// 2. تعديل وظيفة renderAll لتشمل الفحص التلقائي
+function renderAll() { 
+    checkVacationExpirations(); // تشغيل الفحص في كل مرة يفتح فيها البرنامج
+    updateCapacity(); 
+    renderAvailabilityView();
+    renderTable(); 
+    renderDynamicForm(); 
+    lucide.createIcons(); 
+}
 
         function renderDynamicForm() {
             document.getElementById('dynamicFieldsContainer').innerHTML = fieldsConfig.map(f => {
@@ -991,6 +1020,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
