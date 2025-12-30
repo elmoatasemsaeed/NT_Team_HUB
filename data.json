@@ -954,8 +954,8 @@
       "f1766929340598": "2025-12-30T18:00"
     },
     {
-      "isVacation": false,
-      "vacationEnd": "2025-12-30",
+      "isVacation": true,
+      "vacationEnd": "2025-12-31",
       "name": "Yahia Hassan",
       "role": "Dev",
       "area": [
@@ -1198,5 +1198,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-30T11:25:09.091Z"
+  "timestamp": "2025-12-30T11:26:23.740Z"
 }
