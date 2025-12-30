@@ -802,22 +802,21 @@
         function addNewChartConfig() { chartsConfig.push({ id: 'c'+Date.now(), title: 'Analysis', targetField: 'area', type: 'doughnut' }); openChartsSetupModal(); }
         async function saveChartsConfig() { await save(); document.getElementById('chartsSetupModal').classList.add('hidden'); }
 
-function showDetailsExtended(label, roles, isVac, filterField = 'area') {
+  function showDetailsExtended(label, roles, isVac, filterField = 'area') {
     const roleList = roles.split(',');
-    
-    // جلب معرف حقل التاسك الحالية
     const taskField = fieldsConfig.find(f => f.label === 'Current Task');
     const taskId = taskField ? taskField.id : 'f1766917553886';
+    const finishTimeField = fieldsConfig.find(f => f.label === 'T. Finish Time');
+    const finishTimeId = finishTimeField ? finishTimeField.id : 'f1766929340598';
 
-    // فلترة الموظفين بناءً على الحقل (Area أو WorkingIn)
+    // 1. الفلترة الأساسية للموظفين
     let list = employees.filter(e => {
         const val = e[filterField];
-        // التعامل مع الحقول التي قد تكون مصفوفة أو نص عادي
         const fieldMatch = Array.isArray(val) ? val.includes(label) : val === label;
         return fieldMatch && roleList.includes(e.role) && e.isVacation === isVac;
     });
 
-    // تجميع النتائج حسب الـ Area لترتيب العرض
+    // 2. تجميع الموظفين حسب الـ Area
     const groupedByArea = list.reduce((acc, emp) => {
         const areaName = Array.isArray(emp.area) ? emp.area[0] : (emp.area || 'Unassigned');
         if (!acc[areaName]) acc[areaName] = [];
@@ -825,37 +824,27 @@ function showDetailsExtended(label, roles, isVac, filterField = 'area') {
         return acc;
     }, {});
 
-    // تحديث العنوان
-    const typeLabel = filterField === 'workingIn' ? 'Stream' : 'Area';
-    document.getElementById('popupTitle').innerText = `${label} (${typeLabel}) - ${isVac ? 'Vacation Members' : 'Active Members'}`;
+    document.getElementById('popupTitle').innerText = `${label} - ${isVac ? 'On Vacation' : 'Active Members'}`;
     
     const popupListContainer = document.getElementById('popupList');
     popupListContainer.className = "flex flex-col gap-6 w-full"; 
     
-    const areas = Object.keys(groupedByArea).sort();
-
-    if (areas.length > 0) {
-        popupListContainer.innerHTML = areas.map(areaName => {
-            const countInArea = groupedByArea[areaName].length;
-            
-            return `
+    if (Object.keys(groupedByArea).length > 0) {
+        popupListContainer.innerHTML = Object.keys(groupedByArea).sort().map(areaName => `
             <div class="w-full">
                 <div class="flex items-center gap-2 mb-3">
                     <div class="h-2 w-2 bg-blue-600 rounded-full"></div>
-                    <h4 class="text-sm font-black text-gray-500 uppercase tracking-widest">
-                        ${areaName} 
-                        <span class="ml-2 px-2 py-0.5 bg-gray-100 text-blue-600 rounded-full text-[10px] border border-gray-200">
-                            ${countInArea}
-                        </span>
-                    </h4>
+                    <h4 class="text-sm font-black text-gray-500 uppercase tracking-widest">${areaName}</h4>
                     <div class="flex-1 h-[1px] bg-gray-200"></div>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     ${groupedByArea[areaName].map(e => {
+                        // حساب الحالة والوقت المتبقي
                         const status = getAvailabilityStatus(e);
+                        
                         return `
-                        <div class="p-4 border rounded-xl ${e.isVacation ? 'bg-red-50 border-red-100' : 'bg-white border-gray-100'} shadow-sm flex flex-col justify-between">
+                        <div class="p-4 border rounded-xl ${e.isVacation ? 'bg-red-50' : 'bg-white'} shadow-sm border-gray-100 flex flex-col justify-between">
                             <div>
                                 <div class="flex justify-between items-start mb-2">
                                     <div>
@@ -867,40 +856,32 @@ function showDetailsExtended(label, roles, isVac, filterField = 'area') {
                                             <div class="px-2 py-0.5 rounded text-[9px] font-bold uppercase ${status.class}">${status.label}</div>
                                             <div class="text-[8px] text-gray-500 mt-1 font-medium">${status.sub}</div>
                                         </div>
-                                    ` : `
-                                        <div class="px-2 py-0.5 bg-red-100 text-red-700 rounded text-[9px] font-bold uppercase text-center min-w-[70px]">Vacation</div>
-                                    `}
+                                    ` : ''}
                                 </div>
+                                
                                 <div class="mt-2 text-xs">
                                     ${!e.isVacation ? `
                                         <div class="space-y-1 pt-2 border-t border-gray-50">
-                                            <div class="flex justify-between"><span class="font-bold text-gray-400 uppercase text-[9px]">Task:</span> <span class="text-gray-800 font-medium">${e[taskId] || 'No Task'}</span></div>
+                                            <div class="flex justify-between"><span class="font-bold text-gray-400 uppercase text-[9px]">Task:</span> <span class="text-gray-800 font-medium">${e[taskId] || 'None'}</span></div>
                                             <div class="flex justify-between"><span class="font-bold text-gray-400 uppercase text-[9px]">Stream:</span> <span class="text-gray-800">${e.workingIn || 'N/A'}</span></div>
                                         </div>` 
                                     : `
-                                        <div class="text-red-600 font-bold italic mt-2 flex items-center gap-1 p-2 bg-white/50 rounded-lg border border-red-100 text-[10px]">
+                                        <div class="text-red-500 font-bold italic mt-2 flex items-center gap-1">
                                             <i data-lucide="calendar" class="w-3 h-3"></i> Returns: ${e.vacationEnd || 'N/A'}
                                         </div>`}
                                 </div>
                             </div>
                         </div>
-                    `;
-                    }).join('')}
+                    `}).join('')}
                 </div>
             </div>
-            `;
-        }).join('');
+        `).join('');
     } else {
-        popupListContainer.innerHTML = `
-            <div class="flex flex-col items-center justify-center py-12 text-gray-400">
-                <i data-lucide="users" class="w-12 h-12 mb-2 opacity-20"></i>
-                <p>No members found in this category</p>
-            </div>`;
+        popupListContainer.innerHTML = '<div class="text-center py-10 w-full text-gray-400">No members found</div>';
     }
     
     document.getElementById('detailsPopup').classList.remove('hidden');
-    // لتفعيل الأيقونات الجديدة
-    if (window.lucide) lucide.createIcons();
+    lucide.createIcons(); // لتفعيل أيقونات التقويم داخل البوب أب
 }
 async function updateTaskInline(empIndex, newValue) {
     const TASK_FIELD_ID = 'f1766917553886';
@@ -998,91 +979,11 @@ function checkAvailableDevs() {
         showToast(message);
     }
 }
-        // دالة معالجة رفع ملف CSV
-function handleCSVUpload(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        const content = e.target.result;
-        // تقسيم الأسطر
-        const lines = content.split('\n').filter(line => line.trim() !== "");
-        
-        // استخراج العناوين (أول سطر)
-        const headers = lines[0].split(',').map(h => h.trim());
-        
-        // تحويل البيانات إلى مصفوفة كائنات
-        const parsedData = lines.slice(1).map(line => {
-            const values = line.split(',');
-            const obj = {};
-            headers.forEach((header, i) => {
-                obj[header] = values[i] ? values[i].trim() : "";
-            });
-            return obj;
-        });
-
-        // تخزين البيانات مؤقتاً في نافذة المتصفح وتفعيل زر البدء
-        window.pendingCSVData = parsedData;
-        
-        const btnStart = document.getElementById('btnStartProcess');
-        if (btnStart) {
-            btnStart.disabled = false;
-            btnStart.classList.remove('opacity-50', 'cursor-not-allowed');
-            alert(`تم تحميل الملف بنجاح! تم العثور على ${parsedData.length} سجل.`);
-        }
-    };
-    reader.readAsText(file);
-}
-
-// دالة بدء المعالجة (التي يتم استدعاؤها عند الضغط على زر Start)
-async function startAutomationProcess() {
-    if (!window.pendingCSVData || window.pendingCSVData.length === 0) {
-        alert("لا توجد بيانات للمعالجة. يرجى رفع ملف CSV أولاً.");
-        return;
-    }
-
-    if (confirm(`هل أنت متأكد من تحديث بيانات ${window.pendingCSVData.length} موظف؟`)) {
-        try {
-            // منطق التحديث: البحث عن الموظف بالاسم وتحديث بياناته
-            window.pendingCSVData.forEach(csvItem => {
-                const empIndex = employees.findIndex(e => e.name === csvItem.name);
-                if (empIndex !== -1) {
-                    // تحديث الموظف الموجود
-                    employees[empIndex] = { ...employees[empIndex], ...csvItem };
-                } else {
-                    // إضافة موظف جديد إذا لم يكن موجوداً
-                    employees.push(csvItem);
-                }
-            });
-
-            // حفظ التغييرات (استدعاء دالة save الموجودة في كودك)
-            await save();
-            alert("تم تحديث البيانات بنجاح!");
-            
-            // إعادة تعيين الواجهة
-            window.pendingCSVData = null;
-            document.getElementById('btnStartProcess').disabled = true;
-            renderEmployees(); // إعادة رسم الجدول
-        } catch (error) {
-            console.error("خطأ أثناء المعالجة:", error);
-            alert("حدث خطأ أثناء حفظ البيانات.");
-        }
-    }
-}
     </script>
-    
     <script src="automation.js"></script>
-    
 </body>
 </body>
 </html>
-
-
-
-
-
-
 
 
 
