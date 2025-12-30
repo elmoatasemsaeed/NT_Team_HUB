@@ -1016,6 +1016,23 @@
       "Original Estimation": "\"2\"",
       "f1766917553886": "",
       "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Abdullah Omara",
+      "role": "Dev",
+      "area": [
+        "Front and Financial"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "",
+      "f1766929340598": ""
     }
   ],
   "fields": [
@@ -1198,5 +1215,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-30T14:24:56.951Z"
+  "timestamp": "2025-12-30T14:47:32.571Z"
 }
