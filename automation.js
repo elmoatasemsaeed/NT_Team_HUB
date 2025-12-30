@@ -64,14 +64,12 @@ function processCSVRow(row) {
 
     switch(type) {
         case "User Story":
-            // Dev Rule
             if (row["Assigned To"]) {
                 assignee = cleanName(row["Assigned To"]);
                 let effort = row["Est Dev Effort"] || 0;
                 finishDate = effort > 0 ? calculateFinishDate(row["Activated Date"], effort) : new Date();
                 if (effort == 0) finishDate.setHours(20,0,0,0);
             } 
-            // Tester Rule (إذا كان هناك Tester)
             else if (row["Assigned To Tester"]) {
                 assignee = cleanName(row["Assigned To Tester"]);
                 finishDate = calculateFinishDate(row["CustomResolvedDate"], row["Est Test Effort"]);
@@ -83,33 +81,24 @@ function processCSVRow(row) {
             assignee = cleanName(row["Assigned To"]);
             finishDate = calculateFinishDate(row["Activated Date"], row["Original Estimation"]);
             break;
-     //   case "Support Log":
-       //     assignee = cleanName(row["Assigned To"]);
-         //   finishDate = new Date(row["Est Dev Finish"]);
-           // break;
     }
 
     return { assignee, finishDate, id: row["ID"], title: row["Title"] };
 }
 
-// ... (اترك الجزء العلوي من الملف كما هو حتى نهاية دالة startAutomationProcess)
-
-// 4. دالة بدء المعالجة الرئيسية (المعدلة)
+// 4. دالة بدء المعالجة الرئيسية
 async function startAutomationProcess() {
     if (!uploadedCSVData) return;
     
-    // إشعار البدء
     if (typeof showToast === 'function') showToast("Starting Smart Process...");
 
-    // تصفير بيانات الموظفين الحالية للمهام المحددة
     employees.forEach(emp => {
-        emp.f1766917553886 = ""; // حقل المهام
-        emp.f1766929340598 = ""; // حقل التاريخ
+        emp.f1766917553886 = ""; 
+        emp.f1766929340598 = ""; 
     });
 
     const tasksPerEmployee = {};
 
-    // معالجة كل الأسطر من ملف CSV
     uploadedCSVData.forEach(row => {
         const result = processCSVRow(row);
         if (result.assignee && result.finishDate) {
@@ -118,7 +107,6 @@ async function startAutomationProcess() {
         }
     });
 
-    // قاعدة التجميع (أبعد 3 مهام)
     for (let name in tasksPerEmployee) {
         let empTasks = tasksPerEmployee[name];
         empTasks.sort((a, b) => b.finishDate - a.finishDate);
@@ -136,22 +124,18 @@ async function startAutomationProcess() {
         }
     }
 
-    // 5. التزامن مع GitHub باستخدام الدالة الأساسية في index.html
     await syncProcessedDataToGitHub();
 }
 
 async function syncProcessedDataToGitHub() {
-    // التأكد من وجود التوكن في الحقل المخصص له
     const token = document.getElementById('ghTokenInput').value;
     if(!token) {
         alert("Please provide GitHub Token first!");
         return;
     }
     
-    // تحديث التوكن في الإعدادات العامة
     githubConfig.token = token; 
 
-    // استدعاء دالة الرفع الأساسية الموجودة في index.html
     const success = await syncToGitHub(); 
 
     if (success) {
@@ -188,3 +172,4 @@ function handleCSVUpload(event) {
         reader.readAsBinaryString(file);
     }
 }
+// تم حذف القوس الزائد من هنا ليعمل الملف بشكل صحيح
