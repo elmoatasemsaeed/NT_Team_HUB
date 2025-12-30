@@ -13,8 +13,8 @@
         "Senior"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "154711 Collector gender mismatch validation popup is",
-      "f1766929340598": "2025-12-30T12:45"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "isVacation": false,
@@ -231,8 +231,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153725 the report body design do not",
-      "f1766929340598": "2025-12-21T16:15"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "isVacation": false,
@@ -259,8 +259,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "154666 CR 151082 - Execution, 154724 On the way Visit status design, 154649 CR 151083 - Execution",
-      "f1766929340598": "2025-12-30T15:22"
+      "f1766917553886": "154726 Wrong confirmation flow when confirming \"on, 154666 CR 151082 - Execution, 154727 Can not change \"on the way\"",
+      "f1766929340598": "2025-12-30T15:32"
     },
     {
       "isVacation": false,
@@ -383,7 +383,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154502 Alameda LDM - BBM Integration, 154098 Alameda Mobile App Integration, 154621 Alameda_BBM_SchemaHandler service",
+      "f1766917553886": "154098 Alameda Mobile App Integration, 154502 Alameda LDM - BBM Integration, 154621 Alameda_BBM_SchemaHandler service",
       "f1766929340598": "2025-12-30T18:00"
     },
     {
@@ -541,8 +541,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153999 DB Task SWISS LIVE  i",
-      "f1766929340598": "2025-12-18T12:20"
+      "f1766917553886": "153725 the report body design do not, 153999 DB Task SWISS LIVE  i",
+      "f1766929340598": "2025-12-21T16:15"
     },
     {
       "isVacation": false,
@@ -590,8 +590,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "رجب",
-      "f1766917553886": "154719 wrong action occurred When the delayed, 153721 the unit column do not display, 154712 The system has incorrect behavior when",
-      "f1766929340598": "2025-12-30T14:51"
+      "f1766917553886": "154693 At service and patient status Data, 154719 wrong action occurred When the delayed, 153721 the unit column do not display",
+      "f1766929340598": "2025-12-30T15:27"
     },
     {
       "name": "Mohamed Elgmmal",
@@ -816,8 +816,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "151082 Home Visits - Web Application: Apply",
-      "f1766929340598": "2025-12-30T09:09"
+      "f1766917553886": "154711 Collector gender mismatch validation popup is, 151082 Home Visits - Web Application: Apply",
+      "f1766929340598": "2025-12-30T12:45"
     },
     {
       "name": "Saddam Raees",
@@ -906,7 +906,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153138 New Barch Registration _ Register incomplete, 146435 MRC - Initiating registration directly from, 153604 execution",
+      "f1766917553886": "153138 New Batch Registration _ Register incomplete, 146435 MRC - Initiating registration directly from, 153604 execution",
       "f1766929340598": "2025-12-30T13:28"
     },
     {
@@ -986,8 +986,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154727 Can not change \"on the way\", 154626 Dependent filters do not reset when, 151083 Home Visits - Web Application: Display",
-      "f1766929340598": "2025-12-30T14:52"
+      "f1766917553886": "154626 Dependent filters do not reset when, 151083 Home Visits - Web Application: Display",
+      "f1766929340598": "2025-12-30T12:54"
     },
     {
       "name": "Yasmine Abdelwahed",
@@ -1032,7 +1032,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "123",
+      "f1766917553886": "",
       "f1766929340598": ""
     }
   ],
@@ -1216,5 +1216,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-30T15:18:52.542Z"
+  "timestamp": "2025-12-30T15:19:23.009Z"
 }
