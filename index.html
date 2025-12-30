@@ -542,23 +542,13 @@ function renderAll() {
     const WORKING_IN_FIELD_ID = 'workingIn'; // معرف حقل Working In
 
 const renderSection = (emps) => {
-    // الترتيب الجديد: الأولوية للسنيور ثم منطقة العمل
+    // Convert to string safely even if it's an array or null
     const sortedEmps = [...emps].sort((a, b) => {
-        const roleA = (a.role || '').toLowerCase();
-        const roleB = (b.role || '').toLowerCase();
-        
-        const isSeniorA = roleA.includes('senior');
-        const isSeniorB = roleB.includes('senior');
-
-        // 1. إذا كان أحدهما سنيور والآخر لا، السنيور يظهر أولاً
-        if (isSeniorA && !isSeniorB) return -1;
-        if (!isSeniorA && isSeniorB) return 1;
-
-        // 2. إذا كان كلاهما سنيور أو كلاهما عادي، نرتب حسب Working In أبجدياً
-        const areaA = (a.workingIn || '').toLowerCase();
-        const areaB = (b.workingIn || '').toLowerCase();
-        return areaA.localeCompare(areaB);
+        const valA = String(a[WORKING_IN_FIELD_ID] || '').toLowerCase();
+        const valB = String(b[WORKING_IN_FIELD_ID] || '').toLowerCase();
+        return valA.localeCompare(valB);
     });
+    // ... rest of the function
 
     const uniqueAreas = [...new Set(sortedEmps.flatMap(e => {
         if (!e.area) return ['Unassigned'];
@@ -1040,6 +1030,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
