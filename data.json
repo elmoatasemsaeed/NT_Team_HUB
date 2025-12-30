@@ -997,6 +997,23 @@
       "vacationEnd": "",
       "f1766917553886": "154447 Outsource >> Error while getting Details, 154314 Execution, 153724 the panic value display in a",
       "f1766929340598": "2025-12-25T13:23"
+    },
+    {
+      "ID": "\"135108\"",
+      "Work Item Type": "\"Bug\"",
+      "Title": "\"Search Registration: When Reserve a compatible sample from sample info then un-reserve from add service screen button on the right un-reserve not done.\"",
+      "Assigned To": "\"Mustafa Mamdoh <mustafa.mohamed@nationaltechnology.net>\"",
+      "State": "\"Active\"",
+      "Tags": "\"Eng Sameh; hold\"",
+      "Changed Date": "\"12/29/2025 1:41:52 PM\"",
+      "Est Dev Finish": "",
+      "Est Dev Effort": "",
+      "Est Test Effort": "",
+      "Activated Date": "\"3/13/2025 12:17:17 PM\"",
+      "Est Test Finish": "",
+      "Assigned To Tester": "",
+      "CustomResolvedDate": "",
+      "Original Estimation": "\"2\""
     }
   ],
   "fields": [
@@ -1179,5 +1196,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-29T18:02:13.052Z"
+  "timestamp": "2025-12-30T08:20:57.382Z"
 }
