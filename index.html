@@ -671,7 +671,7 @@ const renderSection = (emps) => {
     // 1. استبعاد "Team Leader" من قائمة المناطق الأساسية
     const AREAS = (areaField && areaField.options) ? areaField.options.filter(a => a !== "Team Leader") : [];
     // 2. إنشاء قائمة مناطق للمطورين لا تحتوي على "البرج"
-    const AREAS_NO_BORG = AREAS.filter(a => a !== "البرج");
+    const AREAS_NO_BORG = AREAS.filter(a => a !== "elBORG");
     
     const workInField = fieldsConfig.find(f => f.id === 'workingIn');
     const WORK_STREAMS = (workInField && workInField.options) ? workInField.options : [];
@@ -717,7 +717,7 @@ const renderSection = (emps) => {
 
     // رندرة كروت المطورين (استبعاد البرج واستبعاد Team Leader)
     document.getElementById('devWorkStreamGrid').innerHTML = WORK_STREAMS
-        .filter(ws => ws !== "البرج" && ws !== "Team Leader")
+        .filter(ws => ws !== "elBORG" && ws !== "Team Leader")
         .map(ws => renderCard(ws, ['Dev','Senior'], 'purple', 'workingIn'))
         .join('');
 
@@ -1051,6 +1051,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
