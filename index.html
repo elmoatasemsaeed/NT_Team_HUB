@@ -399,17 +399,32 @@
             }
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-            const savedData = localStorage.getItem(STORAGE_KEY);
-            if (savedData) {
-                const data = JSON.parse(savedData);
-                document.getElementById('userInput').value = data.user || '';
-                document.getElementById('passInput').value = data.pass || '';
-                document.getElementById('ghTokenInput').value = data.token || '';
-                document.getElementById('rememberMe').checked = true;
-            }
-        });
+        window.addEventListener('DOMContentLoaded', async () => {
+    lucide.createIcons();
+    
+    // 1. جلب البيانات المحفوظة من المتصفح
+    const savedData = localStorage.getItem(STORAGE_KEY);
+    
+    if (savedData) {
+        const data = JSON.parse(savedData);
+        
+        // 2. تعبئة الحقول تلقائياً (اختياري لتحسين تجربة المستخدم)
+        document.getElementById('userInput').value = data.user || '';
+        document.getElementById('passInput').value = data.pass || '';
+        document.getElementById('ghTokenInput').value = data.token || '';
+        document.getElementById('rememberMe').checked = true;
+
+        // 3. محاولة تسجيل الدخول التلقائي
+        if (data.user && data.pass && data.token) {
+            // إظهار رسالة تحميل بسيطة
+            document.getElementById('loadingStatus').classList.remove('hidden');
+            document.getElementById('loadingStatus').innerText = "Auto-logging in...";
+            
+            // استدعاء وظيفة الفحص الأصلية لديك
+            await checkLogin();
+        }
+    }
+});
 
         // --- Core Rendering ---
         // 1. وظيفة فحص انتهاء الإجازات وتحديث الحالة تلقائياً
@@ -1030,6 +1045,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
