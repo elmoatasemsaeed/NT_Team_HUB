@@ -302,7 +302,7 @@
       "area": "Registration",
       "workingIn": "Iteration",
       "custom_1766503160857": [],
-      "f1766917553886": "154049 BUG_001: registration parameter page load and, 152651 preparation",
+      "f1766917553886": "154049 BUG_001: registration parameter page load and",
       "f1766929340598": "2025-12-18T15:33"
     },
     {
@@ -616,7 +616,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "71136 Internal CR - Dynamic Registration: Registration, 141960 Al Borg KSA - TAT: Create",
+      "f1766917553886": "141960 Al Borg KSA - TAT: Create",
       "f1766929340598": "2025-12-30T18:00"
     },
     {
@@ -641,8 +641,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "148455 Al Farabi > Update Nphies Integration, 154603 Administration >> Financial >> Contract price",
-      "f1766929340598": "2025-12-30T18:00"
+      "f1766917553886": "154603 Administration >> Financial >> Contract price",
+      "f1766929340598": "2025-12-29T13:54"
     },
     {
       "isVacation": false,
@@ -670,8 +670,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "150326 [Integ] #Local 2019 : Duplicated results",
-      "f1766929340598": "2025-11-03T13:25"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "isVacation": false,
@@ -707,7 +707,7 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154358 Service_Saving action on screen of Assign, 152750 CR#150759_Bug001_I Can't Add new record for",
+      "f1766917553886": "154358 Service_Saving action on screen of Assign",
       "f1766929340598": "2025-12-24T16:22"
     },
     {
@@ -769,7 +769,7 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154445 Save on Dynamic Reg is dimed, 135108 Search Registration: When Reserve a compatible",
+      "f1766917553886": "154445 Save on Dynamic Reg is dimed",
       "f1766929340598": "2025-12-25T12:44"
     },
     {
@@ -933,8 +933,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "140089 Create new dashboard screen for Material, 154363 Issue at Executive Summary Charts, Specifically",
-      "f1766929340598": "2025-12-30T18:00"
+      "f1766917553886": "154363 Issue at Executive Summary Charts, Specifically",
+      "f1766929340598": "2025-12-24T15:57"
     },
     {
       "isVacation": false,
@@ -1198,5 +1198,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-30T09:47:31.665Z"
+  "timestamp": "2025-12-30T10:00:14.550Z"
 }
