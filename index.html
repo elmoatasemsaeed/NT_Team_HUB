@@ -412,13 +412,39 @@
         });
 
         // --- Core Rendering ---
-        function renderAll() { 
-            updateCapacity(); 
-            renderAvailabilityView();
-            renderTable(); 
-            renderDynamicForm(); 
-            lucide.createIcons(); 
+     // وظيفة لفحص الموظفين الذين انتهت اجازتهم اليوم أو قبل اليوم
+async function checkVacationExpirations() {
+    let hasChanges = false;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // ضبط الوقت للبداية لمقارنة التواريخ فقط
+
+    employees.forEach(emp => {
+        if (emp.isVacation && emp.vacationEnd) {
+            const returnDate = new Date(emp.vacationEnd);
+            
+            // إذا كان تاريخ العودة أصغر من أو يساوي تاريخ اليوم
+            if (returnDate <= today) {
+                emp.isVacation = false;
+                emp.vacationEnd = ""; // مسح تاريخ الإجازة
+                hasChanges = true;
+                console.log(`System: Vacation ended for ${emp.name}. Status updated to Active.`);
+            }
         }
+    });
+
+    if (hasChanges) {
+        // حفظ التغييرات في السحابة (GitHub) وتحديث الواجهة
+        await save(true); 
+    }
+}
+
+// تعديل وظيفة renderAll لتشمل الفحص التلقائي عند كل عملية تحديث
+const originalRenderAll = renderAll;
+renderAll = function() {
+    // نقوم بالفحص أولاً ثم الرندرة الأصلية
+    checkVacationExpirations();
+    originalRenderAll();
+};
 
         function renderDynamicForm() {
             document.getElementById('dynamicFieldsContainer').innerHTML = fieldsConfig.map(f => {
@@ -991,6 +1017,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
