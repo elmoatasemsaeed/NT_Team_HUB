@@ -668,9 +668,10 @@ const renderSection = (emps) => {
 
        function updateCapacity() {
     const areaField = fieldsConfig.find(f => f.id === 'area');
-    // 1. استبعاد "Team Leader" و "البرج" من القائمة الأساسية للمناطق (Areas)
+    // 1. استبعاد "Team Leader" من قائمة المناطق الأساسية
     const AREAS = (areaField && areaField.options) ? areaField.options.filter(a => a !== "Team Leader") : [];
-    const AREAS_NO_BORG = AREAS.filter(a => a !== "البرج"); // قائمة بدون "البرج" خاصة للمطورين
+    // 2. إنشاء قائمة مناطق للمطورين لا تحتوي على "البرج"
+    const AREAS_NO_BORG = AREAS.filter(a => a !== "البرج");
     
     const workInField = fieldsConfig.find(f => f.id === 'workingIn');
     const WORK_STREAMS = (workInField && workInField.options) ? workInField.options : [];
@@ -681,13 +682,14 @@ const renderSection = (emps) => {
         const matches = employees.filter(e => {
             const val = e[filterField];
             const fieldMatch = Array.isArray(val) ? val.includes(label) : val === label;
-            // استبعاد "Team Leader" من أي حسابات داخل الكروت
+            // استبعاد Team Leader من الحسابات داخل الكروت
             return fieldMatch && roleFilter.includes(e.role) && e.role !== "Team Leader";
         });
 
         const active = matches.filter(e => !e.isVacation);
         const vac = matches.filter(e => e.isVacation);
 
+        // تفاصيل المناطق داخل الكارت (تستبعد Team Leader تلقائياً من AREAS أعلاه)
         const detailsHtml = AREAS.map(areaName => {
             const count = active.filter(e => {
                 const empArea = e.area;
@@ -713,33 +715,28 @@ const renderSection = (emps) => {
             </div>`;
     };
 
-    // رندرة كروت الـ Capacity (تم استخدام AREAS_NO_BORG للمطورين)
+    // رندرة كروت المطورين (استبعاد البرج واستبعاد Team Leader)
+    document.getElementById('devWorkStreamGrid').innerHTML = WORK_STREAMS
+        .filter(ws => ws !== "البرج" && ws !== "Team Leader")
+        .map(ws => renderCard(ws, ['Dev','Senior'], 'purple', 'workingIn'))
+        .join('');
+
+    // رندرة كروت المختبرين (استبعاد Team Leader)
+    document.getElementById('testerWorkStreamGrid').innerHTML = WORK_STREAMS
+        .filter(ws => ws !== "Team Leader")
+        .map(ws => renderCard(ws, ['Tester','Senior tester'], 'orange', 'workingIn'))
+        .join('');
+
+    // رندرة كروت الـ Capacity العادية (بالتنسيق القديم)
     document.getElementById('devCapacityGrid').innerHTML = AREAS_NO_BORG.filter(a => isVisible(a, 'dev')).map(a => renderCard(a, ['Dev','Senior'], 'blue', 'area')).join('');
     document.getElementById('testerCapacityGrid').innerHTML = AREAS.filter(a => isVisible(a, 'tester')).map(a => renderCard(a, ['Tester','Senior tester'], 'green', 'area')).join('');
 
-   // ... داخل وظيفة updateCapacity
-
-// رندرة كروت الـ Work Streams
-// Developers: استبعاد "البرج" واستبعاد "Team Leader"
-document.getElementById('devWorkStreamGrid').innerHTML = WORK_STREAMS
-    .filter(ws => ws !== "البرج")
-    .map(ws => renderCard(ws, ['Dev','Senior'], 'purple', 'workingIn'))
-    .join('');
-
-// Testers: استبعاد "Team Leader" (يتم ذلك تلقائياً داخل renderCard عبر الفلتر)
-document.getElementById('testerWorkStreamGrid').innerHTML = WORK_STREAMS
-    .map(ws => renderCard(ws, ['Tester','Senior tester'], 'orange', 'workingIn'))
-    .join('');
-
-// ... باقي الوظيفة
-
-    // تحديث التوتال (يستبعد Team Leader تلقائياً)
+    // تحديث التوتال (استبعاد Team Leader)
     document.getElementById('devTotalLabel').innerText = "Total: " + employees.filter(e => ['Dev','Senior'].includes(e.role) && !e.isVacation && e.role !== "Team Leader").length;
     document.getElementById('testerTotalLabel').innerText = "Total: " + employees.filter(e => ['Tester','Senior tester'].includes(e.role) && !e.isVacation && e.role !== "Team Leader").length;
     
     renderCharts();
-}
-        function renderCharts() {
+}        function renderCharts() {
             const chartsGrid = document.getElementById('dynamicChartsGrid');
             chartsGrid.innerHTML = '';
             activeCharts.forEach(c => c.destroy());
@@ -1054,6 +1051,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
