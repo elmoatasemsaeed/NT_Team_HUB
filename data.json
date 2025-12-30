@@ -160,8 +160,8 @@
       "workingIn": [
         "support"
       ],
-      "f1766917553886": "154611 Get Result (Raw Data) >> Unable",
-      "f1766929340598": "2025-12-30T07:41"
+      "f1766917553886": "154650 Get Result (Raw Data) >> The, 154611 Get Result (Raw Data) >> Unable",
+      "f1766929340598": "2025-12-30T08:56"
     },
     {
       "name": "Ahmed Mohamed Farag",
@@ -488,8 +488,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154605 #Patient report: the reference range overlap",
-      "f1766929340598": "2025-12-29T14:14"
+      "f1766917553886": "154599 #Alameda: CBC is printed at two, 154605 #Patient report: the reference range overlap",
+      "f1766929340598": "2025-12-29T14:58"
     },
     {
       "isVacation": false,
@@ -540,7 +540,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154618 #Alameda: The cumulative report is not, 154612 Alameda: Antimicrobial Column Does Not Start, 154599 #Alameda: CBC is printed at two",
+      "f1766917553886": "154618 #Alameda: The cumulative report is not, 154612 Alameda: Antimicrobial Column Does Not Start, 153999 DB Task SWISS LIVE  i",
       "f1766929340598": "2025-12-29T16:20"
     },
     {
@@ -599,7 +599,7 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154222 CR_150719 >> Execution, 152115 Missing Descriptive Error Message when Action",
+      "f1766917553886": "154222 CR_150719 >> Execution",
       "f1766929340598": "2025-12-30T12:00"
     },
     {
@@ -1198,5 +1198,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-30T09:18:59.332Z"
+  "timestamp": "2025-12-30T09:20:16.729Z"
 }
