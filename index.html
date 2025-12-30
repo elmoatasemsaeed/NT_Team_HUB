@@ -415,27 +415,32 @@
         // 1. وظيفة فحص انتهاء الإجازات وتحديث الحالة تلقائياً
 async function checkVacationExpirations() {
     let hasChanges = false;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // ضبط الوقت لبداية اليوم للمقارنة العادلة
+    // ضبط تاريخ اليوم ليكون في بداية اليوم 00:00 مقارنة بالتوقيت المحلي
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
 
     employees.forEach(emp => {
-        // إذا كان الموظف في إجازة ولديه تاريخ عودة
         if (emp.isVacation && emp.vacationEnd) {
-            const returnDate = new Date(emp.vacationEnd);
+            const resDate = new Date(emp.vacationEnd);
+            const returnTime = new Date(resDate.getFullYear(), resDate.getMonth(), resDate.getDate()).getTime();
             
-            // إذا كان تاريخ العودة هو اليوم أو قبل اليوم
-            if (returnDate <= today) {
-                emp.isVacation = false; // إلغاء علامة الإجازة
-                // emp.vacationEnd = ""; // اختياري: إذا أردت مسح التاريخ بعد العودة
+            // إذا كان تاريخ العودة هو اليوم أو مر عليه زمن
+            if (returnTime <= today) {
+                emp.isVacation = false;
+                // لا نمسح تاريخ العودة ليبقى كمرجع، ولكن نلغي علامة الإجازة
                 hasChanges = true;
-                console.log(`Auto-Sync: ${emp.name} is now Active.`);
             }
         }
     });
 
-    // إذا حدث أي تغيير، نقوم بحفظ البيانات فوراً في السحابة (GitHub)
     if (hasChanges) {
-        await save(false); // حفظ بدون إعادة تحميل الصفحة بالكامل
+        console.log("Vacation status auto-updated. Syncing with Cloud...");
+        // إرسال البيانات المحدثة لـ GitHub فوراً
+        const success = await syncToGitHub(); 
+        if (success) {
+            renderAll(); // إعادة الرندرة بعد التأكد من الحفظ
+            showToast("System Auto-Update: Some members are now Active!");
+        }
     }
 }
 
@@ -1020,6 +1025,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
