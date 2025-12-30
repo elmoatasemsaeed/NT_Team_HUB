@@ -285,6 +285,15 @@
     </div>
 
     <script>
+        function renderAll() {
+    renderDynamicForm();
+    renderTable();
+    updateCapacity();
+    renderAvailabilityView();
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+}
         // --- Core Configuration ---
         const githubConfig = { 
             repoPath: 'elmoatasemsaeed/NT_Team_HUB', 
@@ -413,24 +422,35 @@
 
         // --- Core Rendering ---
      // وظيفة لفحص الموظفين الذين انتهت اجازتهم اليوم أو قبل اليوم
+// وظيفة لفحص الموظفين الذين انتهت اجازتهم
 async function checkVacationExpirations() {
     let hasChanges = false;
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // ضبط الوقت للبداية لمقارنة التواريخ فقط
+    today.setHours(0, 0, 0, 0);
 
     employees.forEach(emp => {
         if (emp.isVacation && emp.vacationEnd) {
             const returnDate = new Date(emp.vacationEnd);
-            
-            // إذا كان تاريخ العودة أصغر من أو يساوي تاريخ اليوم
             if (returnDate <= today) {
                 emp.isVacation = false;
-                emp.vacationEnd = ""; // مسح تاريخ الإجازة
+                emp.vacationEnd = ""; 
                 hasChanges = true;
-                console.log(`System: Vacation ended for ${emp.name}. Status updated to Active.`);
             }
         }
     });
+
+    if (hasChanges) {
+        // حفظ التغييرات في السحابة
+        await save(true); 
+    }
+}
+
+// نعدل دالة renderAll لتشمل الفحص دائماً
+const mainRender = renderAll;
+renderAll = function() {
+    checkVacationExpirations();
+    mainRender();
+};
 
     if (hasChanges) {
         // حفظ التغييرات في السحابة (GitHub) وتحديث الواجهة
@@ -1017,6 +1037,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
