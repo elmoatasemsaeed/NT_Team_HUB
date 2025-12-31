@@ -428,7 +428,7 @@
       "workingIn": [
         "support"
       ],
-      "f1766917553886": "154274 Activate SAP on New Alameda Enviroment, 154295 display error when register with order, 154294 display error when cancel order",
+      "f1766917553886": "154274 Activate SAP on New Alameda Emenviront, 154295 display error when register with order, 154294 display error when cancel order",
       "f1766929340598": "2025-12-31T18:00"
     },
     {
@@ -1216,5 +1216,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-31T10:55:13.533Z"
+  "timestamp": "2025-12-31T11:14:15.514Z"
 }
