@@ -147,7 +147,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "151792 Al Borg KSA - TAT: Create",
-      "f1766929340598": "2025-12-30T18:00"
+      "f1766929340598": "2025-12-31T18:00"
     },
     {
       "isVacation": false,
@@ -160,8 +160,8 @@
       "workingIn": [
         "support"
       ],
-      "f1766917553886": "154650 Get Result (Raw Data) >> The, 154611 Get Result (Raw Data) >> Unable, 152518 Contact Admin Error",
-      "f1766929340598": "2025-12-30T08:56"
+      "f1766917553886": "154611 Get Result (Raw Data) >> Unable, 152518 Contact Admin Error, 152433 Add New Registration>> Contact admin error",
+      "f1766929340598": "2025-12-30T07:41"
     },
     {
       "name": "Ahmed Mohamed Farag",
@@ -170,7 +170,7 @@
       "workingIn": "elBORG",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154552 Returned Reason NOT displayed @ Returned, 154466 Critical issue at Slow movement items, 151738 Execution",
+      "f1766917553886": "154552 Returned Reason NOT displayed @ Returned, 154466 Critical issue at Slow movement items, 154363 Issue at Executive Summary Charts, Specifically",
       "f1766929340598": "2025-12-29T10:53"
     },
     {
@@ -204,7 +204,7 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "153919 Execution, 153918 Preparation, 154634 Updating one TAT value clears the",
+      "f1766917553886": "153919 Execution, 154496 System can't delete the customized service, 154629 System incorrectly allows saving when STAT",
       "f1766929340598": "2025-12-31T11:58"
     },
     {
@@ -214,8 +214,8 @@
       "workingIn": "elBORG",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154519 #151209_Registration_Create Duplicated ACCs For One Registration, 153917 Result Log >> Pending Status is",
-      "f1766929340598": "2025-12-28T12:45"
+      "f1766917553886": "153917 Result Log >> Pending Status is",
+      "f1766929340598": "2025-12-21T16:32"
     },
     {
       "isVacation": false,
@@ -243,8 +243,8 @@
         "Front and Financial"
       ],
       "workingIn": "Senior",
-      "f1766917553886": "152478 BD016: Review on CR",
-      "f1766929340598": "2025-11-23T08:00"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "isVacation": false,
@@ -259,8 +259,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "154726 Wrong confirmation flow when confirming \"on, 154666 CR 151082 - Execution, 154727 Can not change \"on the way\"",
-      "f1766929340598": "2025-12-30T15:32"
+      "f1766917553886": "154751 Validation popups close when clicking outside, 154666 CR 151082 - Execution, 154724 On the way Visit status design",
+      "f1766929340598": "2025-12-31T08:30"
     },
     {
       "isVacation": false,
@@ -291,8 +291,8 @@
       "workingIn": [
         "Iteration"
       ],
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "154759 Review",
+      "f1766929340598": "2025-12-31T09:08"
     },
     {
       "isVacation": false,
@@ -384,7 +384,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "154098 Alameda Mobile App Integration, 154502 Alameda LDM - BBM Integration, 154621 Alameda_BBM_SchemaHandler service",
-      "f1766929340598": "2025-12-30T18:00"
+      "f1766929340598": "2025-12-31T18:00"
     },
     {
       "isVacation": false,
@@ -401,7 +401,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "153090 Alameda GAMCA Integration, 153038 result didn't save in LDM, 152702 Error while send message to LDM",
-      "f1766929340598": "2025-12-30T18:00"
+      "f1766929340598": "2025-12-31T18:00"
     },
     {
       "isVacation": false,
@@ -429,7 +429,7 @@
         "support"
       ],
       "f1766917553886": "154274 Activate SAP on New Alameda Enviroment, 154295 display error when register with order, 154294 display error when cancel order",
-      "f1766929340598": "2025-12-30T18:00"
+      "f1766929340598": "2025-12-31T18:00"
     },
     {
       "isVacation": false,
@@ -463,7 +463,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "146890 Update Batch Details and Order Details",
-      "f1766929340598": "2025-12-30T18:00"
+      "f1766929340598": "2025-12-31T18:00"
     },
     {
       "isVacation": false,
@@ -541,8 +541,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153725 the report body design do not, 153999 DB Task SWISS LIVE  i",
-      "f1766929340598": "2025-12-21T16:15"
+      "f1766917553886": "153999 DB Task SWISS LIVE  i",
+      "f1766929340598": "2025-12-18T12:20"
     },
     {
       "isVacation": false,
@@ -590,8 +590,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "رجب",
-      "f1766917553886": "154693 At service and patient status Data, 154719 wrong action occurred When the delayed, 153721 the unit column do not display",
-      "f1766929340598": "2025-12-30T15:27"
+      "f1766917553886": "154719 wrong action occurred When the delayed, 154745 Processing Branch field does not follow, 153721 the unit column do not display",
+      "f1766929340598": "2025-12-31T07:52"
     },
     {
       "name": "Mohamed Elgmmal",
@@ -618,7 +618,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "141960 Al Borg KSA - TAT: Create",
-      "f1766929340598": "2025-12-30T18:00"
+      "f1766929340598": "2025-12-31T18:00"
     },
     {
       "isVacation": false,
@@ -725,7 +725,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "151969 Impact of Regex pattern for the, 151968 Define a regular expression pattern for, 153071 Incorrect service-level amounts in ElectronicInvoice_Invoice for",
+      "f1766917553886": "151969 Impact of Regex pattern for the, 153071 Incorrect service-level amounts in ElectronicInvoice_Invoice for",
       "f1766929340598": "2025-12-29T10:00"
     },
     {
@@ -761,7 +761,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "150662 Internal CR - Analyzer Setup: Add",
-      "f1766929340598": "2025-12-30T18:00"
+      "f1766929340598": "2025-12-31T18:00"
     },
     {
       "name": "Mustafa Mamdoh",
@@ -816,8 +816,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154711 Collector gender mismatch validation popup is, 151082 Home Visits - Web Application: Apply",
-      "f1766929340598": "2025-12-30T12:45"
+      "f1766917553886": "151082 Home Visits - Web Application: Apply",
+      "f1766929340598": "2025-12-30T09:09"
     },
     {
       "name": "Saddam Raees",
@@ -862,8 +862,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153198 Add New SMS Provider [mshastra], 153282 ADAFSA : Human API - Add",
-      "f1766929340598": "2025-12-30T18:00"
+      "f1766917553886": "153282 ADAFSA : Human API - Add, 153198 Add New SMS Provider [mshastra]",
+      "f1766929340598": "2025-12-31T18:00"
     },
     {
       "isVacation": false,
@@ -916,8 +916,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154124 Execution, 153135 Barch Registration _ Inserting Patient No., 153040 Registration @ edit mode _ All",
-      "f1766929340598": "2025-12-28T12:00"
+      "f1766917553886": "154723 Preparation, 154124 Execution, 153135 Barch Registration _ Inserting Patient No.",
+      "f1766929340598": "2026-01-01T10:53"
     },
     {
       "isVacation": false,
@@ -934,8 +934,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154363 Issue at Executive Summary Charts, Specifically",
-      "f1766929340598": "2025-12-24T15:57"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "isVacation": false,
@@ -952,7 +952,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "153179 Swiss LDM - Athir Ibtegration >, 153515 Al Farabi Lab - AMAD Integration, 153517 Al Farabi Lab - Internal MMS",
-      "f1766929340598": "2025-12-30T18:00"
+      "f1766929340598": "2025-12-31T18:00"
     },
     {
       "isVacation": false,
@@ -986,8 +986,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154626 Dependent filters do not reset when, 151083 Home Visits - Web Application: Display",
-      "f1766929340598": "2025-12-30T12:54"
+      "f1766917553886": "154761 Visit List and Log - Visit",
+      "f1766929340598": "2025-12-31T09:18"
     },
     {
       "name": "Yasmine Abdelwahed",
@@ -1216,5 +1216,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-31T09:11:36.345Z"
+  "timestamp": "2025-12-31T09:12:19.095Z"
 }
