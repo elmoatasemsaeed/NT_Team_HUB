@@ -259,8 +259,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "154751 Validation popups close when clicking outside, 154666 CR 151082 - Execution, 154724 On the way Visit status design",
-      "f1766929340598": "2025-12-31T08:30"
+      "f1766917553886": "154762 Visit list Status Chips displayed in, 154761 Visit List and Log - Visit, 154666 CR 151082 - Execution",
+      "f1766929340598": "2025-12-31T11:04"
     },
     {
       "isVacation": false,
@@ -353,8 +353,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "138714 Al Borg UAE - Patient Reports",
-      "f1766929340598": "2025-12-28T08:51"
+      "f1766917553886": "151975 Update EPHI patient reports Header &, 153342 TR012 --> Add new 3 fields, 138714 Al Borg UAE - Patient Reports",
+      "f1766929340598": "2026-01-01T10:30"
     },
     {
       "isVacation": false,
@@ -428,7 +428,7 @@
       "workingIn": [
         "support"
       ],
-      "f1766917553886": "154274 Activate SAP on New Alameda Emenviront, 154295 display error when register with order, 154294 display error when cancel order",
+      "f1766917553886": "154274 Activate SAP on New Alameda Enviroment, 154295 display error when register with order, 154294 display error when cancel order",
       "f1766929340598": "2025-12-31T18:00"
     },
     {
@@ -506,8 +506,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "154769 Preparation",
+      "f1766929340598": "2025-12-31T11:11"
     },
     {
       "isVacation": false,
@@ -816,8 +816,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "151082 Home Visits - Web Application: Apply",
-      "f1766929340598": "2025-12-30T09:09"
+      "f1766917553886": "154767 Assigned Collector name is not updated, 151082 Home Visits - Web Application: Apply",
+      "f1766929340598": "2025-12-31T11:38"
     },
     {
       "name": "Saddam Raees",
@@ -916,7 +916,7 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154723 Preparation, 154124 Execution, 153135 Barch Registration _ Inserting Patient No.",
+      "f1766917553886": "154723 Preparation, 154764 Regression, 154765 Regression",
       "f1766929340598": "2026-01-01T10:53"
     },
     {
@@ -986,8 +986,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154761 Visit List and Log - Visit",
-      "f1766929340598": "2025-12-31T09:18"
+      "f1766917553886": "154768 Screen popups do not blur side",
+      "f1766929340598": "2025-12-31T12:43"
     },
     {
       "name": "Yasmine Abdelwahed",
@@ -1216,5 +1216,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-31T11:14:15.514Z"
+  "timestamp": "2025-12-31T11:18:18.444Z"
 }
