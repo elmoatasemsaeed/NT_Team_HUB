@@ -67,7 +67,7 @@
       "f1766929340598": "2025-12-22T12:00"
     },
     {
-      "isVacation": true,
+      "isVacation": false,
       "vacationEnd": "2026-01-01",
       "name": "Adel Salah El-Din Mahmoud",
       "role": "Dev",
@@ -1216,5 +1216,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2025-12-31T15:14:54.106Z"
+  "timestamp": "2026-01-01T09:16:16.298Z"
 }
