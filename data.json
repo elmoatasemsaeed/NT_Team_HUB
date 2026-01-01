@@ -147,7 +147,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "151792 Al Borg KSA - TAT: Create",
-      "f1766929340598": "2025-12-31T18:00"
+      "f1766929340598": "2026-01-01T18:00"
     },
     {
       "isVacation": false,
@@ -204,7 +204,7 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "153919 Execution, 154496 System can't delete the customized service, 154629 System incorrectly allows saving when STAT",
+      "f1766917553886": "153919 Execution, 153918 Preparation, 153164 Execution",
       "f1766929340598": "2025-12-31T11:58"
     },
     {
@@ -259,8 +259,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "154767 Assigned Collector name is not updated, 154059 Edit Mode Allows Saving Without Any, 154428 Inconsistent collector filtering logic for area",
-      "f1766929340598": "2025-12-31T11:38"
+      "f1766917553886": "154791 Assign to dropdown default value disappear, 154059 Edit Mode Allows Saving Without Any, 154428 Inconsistent collector filtering logic for area",
+      "f1766929340598": "2025-12-31T16:09"
     },
     {
       "isVacation": false,
@@ -276,8 +276,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154138 Preparation Task for CR154012, 154018 Preparation task for CR 154013, 153139 Action button is not appearing in",
-      "f1766929340598": "2025-12-23T17:23"
+      "f1766917553886": "154796 Preparation Task CR 153669, 154138 Preparation Task for CR154012, 154018 Preparation task for CR 154013",
+      "f1766929340598": "2026-01-01T10:52"
     },
     {
       "isVacation": false,
@@ -291,8 +291,8 @@
       "workingIn": [
         "Iteration"
       ],
-      "f1766917553886": "154789 Review",
-      "f1766929340598": "2025-12-31T15:41"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "isVacation": false,
@@ -302,8 +302,8 @@
       "area": "Registration",
       "workingIn": "Iteration",
       "custom_1766503160857": [],
-      "f1766917553886": "154221 BUG_017:  service visibility does not, 154049 BUG_001: registration parameter page load and, 152651 preparation",
-      "f1766929340598": "2025-12-31T09:17"
+      "f1766917553886": "154783 BUG_021:  system retrieve default payer, 154285 while add existed reservation number with, 154236 BUG_018:  VAT disappear and do",
+      "f1766929340598": "2026-01-04T11:26"
     },
     {
       "isVacation": false,
@@ -319,8 +319,8 @@
         "support"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "154460 Reports >> Dashboard: invalid values at, 154094 review on User Story 140089",
-      "f1766929340598": "2025-12-29T12:54"
+      "f1766917553886": "154798 Exception at log when creating new, 154460 Reports >> Dashboard: invalid values at, 154094 review on User Story 140089",
+      "f1766929340598": "2026-01-01T09:00"
     },
     {
       "isVacation": false,
@@ -384,7 +384,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "154098 Alameda Mobile App Integration, 154502 Alameda LDM - BBM Integration, 154621 Alameda_BBM_SchemaHandler service",
-      "f1766929340598": "2025-12-31T18:00"
+      "f1766929340598": "2026-01-01T18:00"
     },
     {
       "isVacation": false,
@@ -401,7 +401,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "153090 Alameda GAMCA Integration, 153038 result didn't save in LDM, 152702 Error while send message to LDM",
-      "f1766929340598": "2025-12-31T18:00"
+      "f1766929340598": "2026-01-01T18:00"
     },
     {
       "isVacation": false,
@@ -429,7 +429,7 @@
         "support"
       ],
       "f1766917553886": "154274 Activate SAP on New Alameda Enviroment, 154295 display error when register with order, 154294 display error when cancel order",
-      "f1766929340598": "2025-12-31T18:00"
+      "f1766929340598": "2026-01-01T18:00"
     },
     {
       "isVacation": false,
@@ -463,7 +463,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "146890 Update Batch Details and Order Details",
-      "f1766929340598": "2025-12-31T18:00"
+      "f1766929340598": "2026-01-01T18:00"
     },
     {
       "isVacation": false,
@@ -506,8 +506,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153669 Alborg KSA - Claim Form -",
-      "f1766929340598": "2025-12-31T18:00"
+      "f1766917553886": "149929 Al-Farabi Labs - Claims: Copy the, 153669 Alborg KSA - Claim Form -, 154781 TR012 : Copy Claim  Arabic",
+      "f1766929340598": "2026-01-01T18:00"
     },
     {
       "isVacation": false,
@@ -618,7 +618,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "141960 Al Borg KSA - TAT: Create",
-      "f1766929340598": "2025-12-31T18:00"
+      "f1766929340598": "2026-01-01T18:00"
     },
     {
       "isVacation": false,
@@ -725,8 +725,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "151969 Impact of Regex pattern for the, 153071 Incorrect service-level amounts in ElectronicInvoice_Invoice for",
-      "f1766929340598": "2025-12-29T10:00"
+      "f1766917553886": "154788 Preparation for CR, 151969 Impact of Regex pattern for the, 153071 Incorrect service-level amounts in ElectronicInvoice_Invoice for",
+      "f1766929340598": "2026-01-01T08:17"
     },
     {
       "isVacation": false,
@@ -761,7 +761,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "150662 Internal CR - Analyzer Setup: Add",
-      "f1766929340598": "2025-12-31T18:00"
+      "f1766929340598": "2026-01-01T18:00"
     },
     {
       "name": "Mustafa Mamdoh",
@@ -816,8 +816,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "154793 Wrong logic is applied for close",
+      "f1766929340598": "2025-12-31T17:54"
     },
     {
       "name": "Saddam Raees",
@@ -862,8 +862,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153198 Add New SMS Provider [mshastra], 153282 ADAFSA : Human API - Add",
-      "f1766929340598": "2025-12-31T18:00"
+      "f1766917553886": "153282 ADAFSA : Human API - Add, 153198 Add New SMS Provider [mshastra]",
+      "f1766929340598": "2026-01-01T18:00"
     },
     {
       "isVacation": false,
@@ -906,8 +906,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153138 New Batch Registration _ Register incomplete, 146435 MRC - Initiating registration directly from, 153604 execution",
-      "f1766929340598": "2025-12-30T13:28"
+      "f1766917553886": "151929 Dynamic Reg _ Merge Samples Poup, 146435 MRC - Initiating registration directly from, 153604 execution",
+      "f1766929340598": "2026-01-01T10:54"
     },
     {
       "name": "Sara Mustafa",
@@ -952,7 +952,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "153179 Swiss LDM - Athir Ibtegration >, 153515 Al Farabi Lab - AMAD Integration, 153517 Al Farabi Lab - Internal MMS",
-      "f1766929340598": "2025-12-31T18:00"
+      "f1766929340598": "2026-01-01T18:00"
     },
     {
       "isVacation": false,
@@ -986,8 +986,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "154787 Select all checkbox remains selected after",
+      "f1766929340598": "2025-12-31T17:10"
     },
     {
       "name": "Yasmine Abdelwahed",
@@ -1216,5 +1216,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-01T09:16:16.298Z"
+  "timestamp": "2026-01-01T09:17:48.105Z"
 }
