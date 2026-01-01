@@ -259,8 +259,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "154791 Assign to dropdown default value disappear, 154059 Edit Mode Allows Saving Without Any, 154428 Inconsistent collector filtering logic for area",
-      "f1766929340598": "2025-12-31T16:09"
+      "f1766917553886": "154787 Select all checkbox remains selected after, 154791 Assign to dropdown default value disappear, 154428 Inconsistent collector filtering logic for area",
+      "f1766929340598": "2025-12-31T17:10"
     },
     {
       "isVacation": false,
@@ -319,8 +319,8 @@
         "support"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "154798 Exception at log when creating new, 154460 Reports >> Dashboard: invalid values at, 154094 review on User Story 140089",
-      "f1766929340598": "2026-01-01T09:00"
+      "f1766917553886": "154094 review on User Story 140089",
+      "f1766929340598": "2025-12-24T16:46"
     },
     {
       "isVacation": false,
@@ -506,7 +506,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "149929 Al-Farabi Labs - Claims: Copy the, 153669 Alborg KSA - Claim Form -, 154781 TR012 : Copy Claim  Arabic",
+      "f1766917553886": "149929 Al-Farabi Labs - Claims: Copy the, 153669 Alborg KSA - Claim Form -, 154781 TR013 : Copy Claim  Arabic",
       "f1766929340598": "2026-01-01T18:00"
     },
     {
@@ -725,8 +725,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154788 Preparation for CR, 151969 Impact of Regex pattern for the, 153071 Incorrect service-level amounts in ElectronicInvoice_Invoice for",
-      "f1766929340598": "2026-01-01T08:17"
+      "f1766917553886": "131278 Internal CRs - Registration Templates: Move, 154826 BD005 |  Update Mapping of, 151969 Impact of Regex pattern for the",
+      "f1766929340598": "2026-01-01T18:00"
     },
     {
       "isVacation": false,
@@ -862,7 +862,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153282 ADAFSA : Human API - Add, 153198 Add New SMS Provider [mshastra]",
+      "f1766917553886": "153198 Add New SMS Provider [mshastra], 153282 ADAFSA : Human API - Add",
       "f1766929340598": "2026-01-01T18:00"
     },
     {
@@ -986,8 +986,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154787 Select all checkbox remains selected after",
-      "f1766929340598": "2025-12-31T17:10"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "name": "Yasmine Abdelwahed",
@@ -1216,5 +1216,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-01T09:17:48.105Z"
+  "timestamp": "2026-01-01T11:57:12.443Z"
 }
