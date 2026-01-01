@@ -748,7 +748,7 @@
     },
     {
       "isVacation": true,
-      "vacationEnd": "",
+      "vacationEnd": "2026-01-02",
       "name": "Mustafa Ahmed",
       "role": "Dev",
       "area": [
@@ -1216,5 +1216,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-01T13:50:34.698Z"
+  "timestamp": "2026-01-01T13:50:48.996Z"
 }
