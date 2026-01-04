@@ -2,17 +2,14 @@
   "employees": [
     {
       "isVacation": false,
-      "vacationEnd": "",
-      "name": "Abdelmoniem Mohamed Abdelmoniem",
-      "role": "Senior",
-      "area": [
-        "Integration",
-        "ADFACA"
-      ],
-      "workingIn": [
-        "Senior"
-      ],
+      "vacationEnd": "2026-03-01",
+      "name": "",
+      "role": "Dev",
+      "area": [],
+      "workingIn": [],
       "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
       "f1766917553886": "",
       "f1766929340598": ""
     },
@@ -1216,5 +1213,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-04T14:40:53.604Z"
+  "timestamp": "2026-01-04T14:41:05.230Z"
 }
