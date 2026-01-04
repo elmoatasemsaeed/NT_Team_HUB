@@ -791,7 +791,7 @@
       "f1766929340598": ""
     },
     {
-      "isVacation": false,
+      "isVacation": true,
       "vacationEnd": "2025-12-31",
       "name": "Ola Gamal",
       "role": "Dev",
@@ -1216,5 +1216,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-04T14:36:39.821Z"
+  "timestamp": "2026-01-04T14:40:52.911Z"
 }
