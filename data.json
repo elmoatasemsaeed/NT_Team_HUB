@@ -81,8 +81,8 @@
       "f1766929340598": ""
     },
     {
-      "isVacation": false,
-      "vacationEnd": "",
+      "isVacation": true,
+      "vacationEnd": "2026-01-24",
       "name": "Ahmed Abdelhakeem",
       "role": "Dev",
       "area": [
@@ -1219,5 +1219,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-04T14:45:23.716Z"
+  "timestamp": "2026-01-05T09:14:23.927Z"
 }
