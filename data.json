@@ -303,7 +303,7 @@
       "area": "Registration",
       "workingIn": "Iteration",
       "custom_1766503160857": [],
-      "f1766917553886": "155013 BUG_022: system allow adding service with, 154774 preparation, 154285 while add existed reservation number with",
+      "f1766917553886": "155013 BUG_022: system allow adding service with, 154884 preparation, 154774 preparation",
       "f1766929340598": "2026-01-04T15:25"
     },
     {
@@ -354,8 +354,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "151975 Update EPHI patient reports Header &, 138714 Al Borg UAE - Patient Reports",
-      "f1766929340598": "2026-01-01T10:30"
+      "f1766917553886": "154985 Some issue detected in Molecular Detection, 151975 Update EPHI patient reports Header &, 138714 Al Borg UAE - Patient Reports",
+      "f1766929340598": "2026-01-05T14:26"
     },
     {
       "isVacation": false,
@@ -507,8 +507,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155066 preparation task for cr 154201, 155056 execution task for cr 149929, 154201 MedLab - Electronic Invoice: Copy patient",
-      "f1766929340598": "2026-01-05T16:12"
+      "f1766917553886": "154201 MedLab - Electronic Invoice: Copy patient, 152870 Update Payment screen by adding an, 149929 Al-Farabi Labs - Claims: Copy the",
+      "f1766929340598": "2026-01-05T08:53"
     },
     {
       "isVacation": false,
@@ -675,7 +675,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "131278 Internal CRs - Registration Templates: Move, 154815 FD002 | Update Validation of EmptyPatientAge, 154816 FD001 | Add Section of ",
+      "f1766917553886": "131278 Internal CRs - Registration Templates: Move, 154824 BD010 |  Remove EmptyPatientAge and, 154827 BD008 |  Update save Registration",
       "f1766929340598": "2026-01-05T18:00"
     },
     {
@@ -818,7 +818,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153282 ADAFSA : Human API - Add, 153198 Add New SMS Provider [mshastra]",
+      "f1766917553886": "153198 Add New SMS Provider [mshastra], 153282 ADAFSA : Human API - Add",
       "f1766929340598": "2026-01-05T18:00"
     },
     {
@@ -1154,5 +1154,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-05T13:17:47.394Z"
+  "timestamp": "2026-01-05T13:43:52.754Z"
 }
