@@ -33,52 +33,42 @@
       "f1766929340598": ""
     },
     {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Abdelrahman Elbetar",
+      "name": "Ahmed Mohamed Farag",
       "role": "Tester",
-      "area": [
-        "Integration",
-        "Mobile App",
-        "Automation"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766917553886": "154699 Writing TestCases For Samples Under Custody, 154698 Writing TestCases For Sample Re-Imaging ANGA, 154697 Writing TestCases For User Branch ANGA",
-      "f1766929340598": "2025-12-30T10:34"
-    },
-    {
+      "area": "elBORG",
+      "workingIn": "elBORG",
       "isVacation": false,
       "vacationEnd": "",
-      "name": "Abdullah Helal",
-      "role": "Dev",
-      "area": [
-        "Integration",
-        "Mobile App"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "هنسحبه من الهوم فيزيت تدريجيا",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "154028 Visit list - Select all checkbox",
-      "f1766929340598": "2026-01-04T09:27"
+      "f1766917553886": "154980 Reports >> Dashboard: Returned items duplicate, 154982 Issue at Fast Movement Items Chart, 154857 Standing Orders & Back Orders Don't",
+      "f1766929340598": "2026-01-05T07:48"
     },
     {
+      "name": "Alaa Ezzat",
+      "role": "Tester",
+      "area": "elBORG",
+      "workingIn": "elBORG",
       "isVacation": false,
       "vacationEnd": "",
-      "name": "Abdullah Nasser",
-      "role": "Senior tester",
-      "area": [
-        "Integration",
-        "LDM_Integration"
-      ],
-      "workingIn": [
-        "support"
-      ],
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "name": "Amr Sameh",
+      "role": "Tester",
+      "area": "elBORG",
+      "workingIn": "elBORG",
+      "isVacation": false,
+      "vacationEnd": "",
+      "f1766917553886": "153917 Result Log >> Pending Status is",
+      "f1766929340598": "2025-12-21T16:32"
+    },
+    {
+      "name": "Mohamed Sayed Masry Rezk",
+      "role": "Tester",
+      "area": "elBORG",
+      "workingIn": "elBORG",
+      "isVacation": false,
+      "vacationEnd": "",
       "f1766917553886": "",
       "f1766929340598": ""
     },
@@ -89,6 +79,134 @@
       "role": "Dev",
       "area": [
         "Front and Financial"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Bardis Khamees",
+      "role": "Senior",
+      "area": [
+        "Front and Financial"
+      ],
+      "workingIn": "Senior",
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Bassem Ayman Morsy",
+      "role": "Tester",
+      "area": [
+        "Front and Financial"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "155046 Wrong “To Date” printed on Arabic, 154138 Preparation Task for CR154012, 154018 Preparation task for CR 154013",
+      "f1766929340598": "2026-01-05T09:00"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Karim El-Saeed Gabr",
+      "role": "Dev",
+      "area": [
+        "Front and Financial"
+      ],
+      "workingIn": [
+        "Regression"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Mahmoud Ahmed Mahmoud Ahmed",
+      "role": "Dev",
+      "area": [
+        "Front and Financial"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "154201 MedLab - Electronic Invoice: Copy patient, 155056 execution task for cr 149929, 149929 Al-Farabi Labs - Claims: Copy the",
+      "f1766929340598": "2026-01-05T18:00"
+    },
+    {
+      "name": "Mohamed Elgmmal",
+      "role": "Tester",
+      "area": "Front and Financial",
+      "workingIn": "Iteration",
+      "isVacation": false,
+      "vacationEnd": "",
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "name": "Mohamed Ibrahim",
+      "role": "Tester",
+      "area": "Front and Financial",
+      "workingIn": "Iteration",
+      "isVacation": false,
+      "vacationEnd": "",
+      "f1766917553886": "152999 Financial >> Administration >> Financial>> Contract, 153078 Financial >> Claims >> Financial claims, 152906 Financial >> Claims >> Financial claims",
+      "f1766929340598": "2025-12-31T16:25"
+    },
+    {
+      "name": "Saddam Raees",
+      "role": "Tester",
+      "area": "Front and Financial",
+      "workingIn": "Iteration",
+      "isVacation": false,
+      "vacationEnd": "",
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Samar Mahmoud Abdelraouf Algammal",
+      "role": "Dev",
+      "area": [
+        "Front and Financial"
+      ],
+      "workingIn": [
+        "support"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "2025-12-29",
+      "name": "Salah Abdelhakeem",
+      "role": "Senior tester",
+      "area": [
+        "Front and Financial",
+        "Automation"
       ],
       "workingIn": [
         "Iteration"
@@ -117,37 +235,6 @@
       "f1766929340598": ""
     },
     {
-      "isVacation": true,
-      "vacationEnd": "2026-01-24",
-      "name": "Ahmed Abdelhakeem",
-      "role": "Dev",
-      "area": [
-        "Registration"
-      ],
-      "workingIn": [
-        "support"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Ahmed Alshennawi",
-      "role": "Tester",
-      "area": [
-        "LDM_Integration"
-      ],
-      "workingIn": [
-        "support"
-      ],
-      "f1766917553886": "153090 Alameda GAMCA Integration",
-      "f1766929340598": "2026-01-05T18:00"
-    },
-    {
       "isVacation": false,
       "vacationEnd": "",
       "name": "Ahmed Bassiony",
@@ -168,10 +255,28 @@
     {
       "isVacation": false,
       "vacationEnd": "",
-      "name": "Ahmed Hafez",
+      "name": "Reem Ali",
       "role": "Dev",
       "area": [
-        "Internal lab"
+        "Home Visit"
+      ],
+      "workingIn": [
+        "support",
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "154622 Home Visit - Mobile Collector Application",
+      "f1766929340598": "2026-01-05T18:00"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Yara Mohsen",
+      "role": "Dev",
+      "area": [
+        "Home Visit"
       ],
       "workingIn": [
         "Iteration"
@@ -179,103 +284,42 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "151792 Al Borg KSA - TAT: Create",
-      "f1766929340598": "2025-12-30T12:00"
+      "f1766917553886": "154620 Home Visit - Add Visit: Apply, 154677 Home Visit - Areas Setup: Rename",
+      "f1766929340598": "2026-01-05T18:00"
     },
     {
       "isVacation": false,
       "vacationEnd": "",
-      "name": "Ahmed Khaled Mubark",
-      "role": "Tester",
-      "area": [
-        "LDM_Integration"
-      ],
-      "workingIn": [
-        "support"
-      ],
-      "f1766917553886": "154611 Get Result (Raw Data) >> Unable",
-      "f1766929340598": "2025-12-30T07:41"
-    },
-    {
-      "name": "Ahmed Mohamed Farag",
-      "role": "Tester",
-      "area": "elBORG",
-      "workingIn": "elBORG",
-      "isVacation": false,
-      "vacationEnd": "",
-      "f1766917553886": "154980 Reports >> Dashboard: Returned items duplicate, 154982 Issue at Fast Movement Items Chart, 154857 Standing Orders & Back Orders Don't",
-      "f1766929340598": "2026-01-05T07:48"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Ahmed Saed",
-      "role": "Tester",
-      "area": [
-        "LDM_Integration"
-      ],
-      "workingIn": [
-        "support"
-      ],
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "name": "Alaa Ezzat",
-      "role": "Tester",
-      "area": "elBORG",
-      "workingIn": "elBORG",
-      "isVacation": false,
-      "vacationEnd": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "name": "Ammar Yasser Ahmed",
-      "role": "Tester",
-      "area": "Internal lab",
-      "workingIn": "Iteration",
-      "isVacation": false,
-      "vacationEnd": "",
-      "f1766917553886": "154492 Internal Target Screen missing filtration grid, 154494 Service count in \"Default Service TAT\", 155032 Error message display after click on",
-      "f1766929340598": "2026-01-05T08:00"
-    },
-    {
-      "name": "Amr Sameh",
-      "role": "Tester",
-      "area": "elBORG",
-      "workingIn": "elBORG",
-      "isVacation": false,
-      "vacationEnd": "",
-      "f1766917553886": "153917 Result Log >> Pending Status is",
-      "f1766929340598": "2025-12-21T16:32"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "2025-12-31",
-      "name": "Aya Saed Mustafa Mohamad Bayoumi",
+      "name": "Saleh Abdulrahim Attia",
       "role": "Dev",
       "area": [
-        "Registration"
+        "Integration",
+        "ADFACA"
       ],
       "workingIn": [
-        "support"
+        "Iteration"
       ],
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153193 Cash and Credit Prices Not Restored",
-      "f1766929340598": "2026-01-04T12:39"
+      "f1766917553886": "153282 ADAFSA : Human API - Add, 153198 Add New SMS Provider [mshastra]",
+      "f1766929340598": "2026-01-05T18:00"
     },
     {
       "isVacation": false,
-      "vacationEnd": "",
-      "name": "Bardis Khamees",
-      "role": "Senior",
+      "vacationEnd": "2025-12-31",
+      "name": "Yahia Hassan",
+      "role": "Dev",
       "area": [
-        "Front and Financial"
+        "Integration",
+        "ADFACA"
       ],
-      "workingIn": "Senior",
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
       "f1766917553886": "",
       "f1766929340598": ""
     },
@@ -298,31 +342,14 @@
     {
       "isVacation": false,
       "vacationEnd": "",
-      "name": "Bassem Ayman Morsy",
-      "role": "Tester",
+      "name": "Abdullah Nasser",
+      "role": "Senior tester",
       "area": [
-        "Front and Financial"
+        "Integration",
+        "LDM_Integration"
       ],
       "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "155046 Wrong “To Date” printed on Arabic, 154138 Preparation Task for CR154012, 154018 Preparation task for CR 154013",
-      "f1766929340598": "2026-01-05T09:00"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Bothyna Abdelmoniem",
-      "role": "Tester",
-      "area": [
-        "Internal lab",
-        "Integration"
-      ],
-      "workingIn": [
-        "Iteration"
+        "support"
       ],
       "f1766917553886": "",
       "f1766929340598": ""
@@ -330,13 +357,20 @@
     {
       "isVacation": false,
       "vacationEnd": "",
-      "name": "Dina Ahmed",
-      "role": "Tester",
-      "area": "Registration",
-      "workingIn": "Iteration",
-      "custom_1766503160857": [],
-      "f1766917553886": "155013 BUG_022: system allow adding service with, 154774 preparation, 154285 while add existed reservation number with",
-      "f1766929340598": "2026-01-04T15:25"
+      "name": "Sherif Eldorf",
+      "role": "Dev",
+      "area": [
+        "Integration",
+        "MMS"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "isVacation": false,
@@ -357,20 +391,99 @@
     },
     {
       "isVacation": false,
-      "vacationEnd": "2025-12-30",
-      "name": "Eslam Saleh",
-      "role": "Senior",
+      "vacationEnd": "",
+      "name": "Abdullah Helal",
+      "role": "Dev",
       "area": [
+        "Integration",
         "Mobile App"
       ],
       "workingIn": [
-        "Senior"
+        "Iteration"
+      ],
+      "custom_1766584922755": "هنسحبه من الهوم فيزيت تدريجيا",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "154028 Visit list - Select all checkbox",
+      "f1766929340598": "2026-01-04T09:27"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Abdelrahman Elbetar",
+      "role": "Tester",
+      "area": [
+        "Integration",
+        "Mobile App",
+        "Automation"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766917553886": "154699 Writing TestCases For Samples Under Custody, 154698 Writing TestCases For Sample Re-Imaging ANGA, 154697 Writing TestCases For User Branch ANGA",
+      "f1766929340598": "2025-12-30T10:34"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Mariam Okab",
+      "role": "Tester",
+      "area": [
+        "Integration",
+        "Mobile App",
+        "Automation"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Nehal Elbana ",
+      "role": "Tester",
+      "area": [
+        "Integration",
+        "Mobile App",
+        "Automation"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Ahmed Hafez",
+      "role": "Dev",
+      "area": [
+        "Internal lab"
+      ],
+      "workingIn": [
+        "Iteration"
       ],
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "151792 Al Borg KSA - TAT: Create",
+      "f1766929340598": "2025-12-30T12:00"
+    },
+    {
+      "name": "Ammar Yasser Ahmed",
+      "role": "Tester",
+      "area": "Internal lab",
+      "workingIn": "Iteration",
+      "isVacation": false,
+      "vacationEnd": "",
+      "f1766917553886": "154492 Internal Target Screen missing filtration grid, 154494 Service count in \"Default Service TAT\", 155032 Error message display after click on",
+      "f1766929340598": "2026-01-05T08:00"
     },
     {
       "isVacation": false,
@@ -390,14 +503,174 @@
       "f1766929340598": "2026-01-01T10:30"
     },
     {
+      "name": "Mahmoud Ab Omar",
+      "role": "Tester",
+      "area": "Internal lab",
+      "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "name": "Fatma Fayed",
+      "f1766917553886": "154612 Alameda: Antimicrobial Column Does Not Start, 154618 #Alameda: The cumulative report is not, 154599 #Alameda: CBC is printed at two",
+      "f1766929340598": "2025-12-31T14:26"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Mahmoud Mohamed Mahmoud Salama",
+      "role": "Dev",
+      "area": [
+        "Internal lab"
+      ],
+      "workingIn": [
+        "support"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "153999 DB Task SWISS LIVE  i",
+      "f1766929340598": "2025-12-18T12:20"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Mohamad Samy Sayed Abdelkhalek",
+      "role": "Dev",
+      "area": [
+        "Internal lab"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "153890 Sample Log >> Sample Type &, 152972 Reload & Unload Screen Display more",
+      "f1766929340598": "2025-12-16T12:57"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Mohamed Abomosallam",
+      "role": "Tester",
+      "area": [
+        "Internal lab"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "رجب",
+      "f1766917553886": "154772 Pre-Analytical Total Sample count is incorrect, 153721 the unit column do not display, 154359 CR-(148807) - Issue detected in report",
+      "f1766929340598": "2026-01-05T12:10"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Mohamed Ismail",
       "role": "Senior",
       "area": [
-        "Registration"
+        "Internal lab"
       ],
       "workingIn": "Senior",
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "2026-01-02",
+      "name": "Mustafa Ahmed",
+      "role": "Dev",
+      "area": [
+        "Internal lab"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "141960 Al Borg KSA - TAT: Create",
+      "f1766929340598": "2026-01-05T18:00"
+    },
+    {
+      "isVacation": true,
+      "vacationEnd": "2026-03-01",
+      "name": "Ola Gamal",
+      "role": "Dev",
+      "area": [
+        "Internal lab"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "name": "Yasmine Abdelwahed",
+      "role": "Tester",
+      "area": "Internal lab",
+      "workingIn": "Iteration",
+      "isVacation": false,
+      "vacationEnd": "",
+      "f1766917553886": "154200 Analyzer name not display at Result, 154314 Execution, 153540 Review task for Execution Activity",
+      "f1766929340598": "2026-01-04T11:14"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Bothyna Abdelmoniem",
+      "role": "Tester",
+      "area": [
+        "Internal lab",
+        "Integration"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Ahmed Alshennawi",
+      "role": "Tester",
+      "area": [
+        "LDM_Integration"
+      ],
+      "workingIn": [
+        "support"
+      ],
+      "f1766917553886": "153090 Alameda GAMCA Integration",
+      "f1766929340598": "2026-01-05T18:00"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Ahmed Khaled Mubark",
+      "role": "Tester",
+      "area": [
+        "LDM_Integration"
+      ],
+      "workingIn": [
+        "support"
+      ],
+      "f1766917553886": "154611 Get Result (Raw Data) >> Unable",
+      "f1766929340598": "2025-12-30T07:41"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Ahmed Saed",
+      "role": "Tester",
+      "area": [
+        "LDM_Integration"
+      ],
+      "workingIn": [
+        "support"
+      ],
       "f1766917553886": "",
       "f1766929340598": ""
     },
@@ -466,215 +739,6 @@
     },
     {
       "isVacation": false,
-      "vacationEnd": "2025-12-29",
-      "name": "Ibrahim Ahmed Abo El-Fadl Ahmed",
-      "role": "Dev",
-      "area": [
-        "Registration"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "124153 Alborg KSA - Query service fee, 155001 Dev Preapration, 154995 Dev Preparation",
-      "f1766929340598": "2026-01-05T10:30"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Islam kamal",
-      "role": "Senior",
-      "area": [
-        "Mobile App"
-      ],
-      "workingIn": [
-        "Senior"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "146890 Update Batch Details and Order Details",
-      "f1766929340598": "2026-01-05T18:00"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Karim El-Saeed Gabr",
-      "role": "Dev",
-      "area": [
-        "Front and Financial"
-      ],
-      "workingIn": [
-        "Regression"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "name": "Mahmoud Ab Omar",
-      "role": "Tester",
-      "area": "Internal lab",
-      "workingIn": "Iteration",
-      "isVacation": false,
-      "vacationEnd": "",
-      "f1766917553886": "154612 Alameda: Antimicrobial Column Does Not Start, 154618 #Alameda: The cumulative report is not, 154599 #Alameda: CBC is printed at two",
-      "f1766929340598": "2025-12-31T14:26"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mahmoud Ahmed Mahmoud Ahmed",
-      "role": "Dev",
-      "area": [
-        "Front and Financial"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "154201 MedLab - Electronic Invoice: Copy patient, 155056 execution task for cr 149929, 149929 Al-Farabi Labs - Claims: Copy the",
-      "f1766929340598": "2026-01-05T18:00"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mahmoud Elghoraqy",
-      "role": "Dev",
-      "area": [
-        "Mobile App"
-      ],
-      "workingIn": [
-        "support",
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mahmoud Mohamed Mahmoud Salama",
-      "role": "Dev",
-      "area": [
-        "Internal lab"
-      ],
-      "workingIn": [
-        "support"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "153999 DB Task SWISS LIVE  i",
-      "f1766929340598": "2025-12-18T12:20"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mariam Okab",
-      "role": "Tester",
-      "area": [
-        "Integration",
-        "Mobile App",
-        "Automation"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mohamad Samy Sayed Abdelkhalek",
-      "role": "Dev",
-      "area": [
-        "Internal lab"
-      ],
-      "workingIn": [
-        "support"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "153890 Sample Log >> Sample Type &, 152972 Reload & Unload Screen Display more",
-      "f1766929340598": "2025-12-16T12:57"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mohamed Abomosallam",
-      "role": "Tester",
-      "area": [
-        "Internal lab"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "رجب",
-      "f1766917553886": "154772 Pre-Analytical Total Sample count is incorrect, 153721 the unit column do not display, 154359 CR-(148807) - Issue detected in report",
-      "f1766929340598": "2026-01-05T12:10"
-    },
-    {
-      "name": "Mohamed Elgmmal",
-      "role": "Tester",
-      "area": "Front and Financial",
-      "workingIn": "Iteration",
-      "isVacation": false,
-      "vacationEnd": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mohamed Fawzy",
-      "role": "Team Lead",
-      "area": [
-        "Team Leader"
-      ],
-      "workingIn": [
-        "Team Leader"
-      ],
-      "custom_1766584922755": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "name": "Mohamed Ibrahim",
-      "role": "Tester",
-      "area": "Front and Financial",
-      "workingIn": "Iteration",
-      "isVacation": false,
-      "vacationEnd": "",
-      "f1766917553886": "152999 Financial >> Administration >> Financial>> Contract, 153078 Financial >> Claims >> Financial claims, 152906 Financial >> Claims >> Financial claims",
-      "f1766929340598": "2025-12-31T16:25"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mohamed Ismail",
-      "role": "Senior",
-      "area": [
-        "Internal lab"
-      ],
-      "workingIn": "Senior",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "isVacation": false,
       "vacationEnd": "",
       "name": "Mohamed Refaat Khalifa Rifaei",
       "role": "Dev",
@@ -708,14 +772,165 @@
       "f1766929340598": "2026-01-05T18:00"
     },
     {
-      "name": "Mohamed Sayed Masry Rezk",
-      "role": "Tester",
-      "area": "elBORG",
-      "workingIn": "elBORG",
       "isVacation": false,
       "vacationEnd": "",
+      "name": "Tarek Saad",
+      "role": "Dev",
+      "area": [
+        "LDM_Integration"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "153179 Swiss LDM - Athir Ibtegration >, 154703 when search by Review date >>, 154704 when search by Order ID >>",
+      "f1766929340598": "2026-01-05T18:00"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "2025-12-30",
+      "name": "Eslam Saleh",
+      "role": "Senior",
+      "area": [
+        "Mobile App"
+      ],
+      "workingIn": [
+        "Senior"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
       "f1766917553886": "",
       "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Islam kamal",
+      "role": "Senior",
+      "area": [
+        "Mobile App"
+      ],
+      "workingIn": [
+        "Senior"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "146890 Update Batch Details and Order Details",
+      "f1766929340598": "2026-01-05T18:00"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Mahmoud Elghoraqy",
+      "role": "Dev",
+      "area": [
+        "Mobile App"
+      ],
+      "workingIn": [
+        "support",
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Mostafa Soliman",
+      "role": "Dev",
+      "area": [
+        "Mobile App"
+      ],
+      "workingIn": [
+        "support",
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "isVacation": true,
+      "vacationEnd": "2026-01-24",
+      "name": "Ahmed Abdelhakeem",
+      "role": "Dev",
+      "area": [
+        "Registration"
+      ],
+      "workingIn": [
+        "support"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "2025-12-31",
+      "name": "Aya Saed Mustafa Mohamad Bayoumi",
+      "role": "Dev",
+      "area": [
+        "Registration"
+      ],
+      "workingIn": [
+        "support"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "153193 Cash and Credit Prices Not Restored",
+      "f1766929340598": "2026-01-04T12:39"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Dina Ahmed",
+      "role": "Tester",
+      "area": "Registration",
+      "workingIn": "Iteration",
+      "custom_1766503160857": [],
+      "f1766917553886": "155013 BUG_022: system allow adding service with, 154774 preparation, 154285 while add existed reservation number with",
+      "f1766929340598": "2026-01-04T15:25"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Fatma Fayed",
+      "role": "Senior",
+      "area": [
+        "Registration"
+      ],
+      "workingIn": "Senior",
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "2025-12-29",
+      "name": "Ibrahim Ahmed Abo El-Fadl Ahmed",
+      "role": "Dev",
+      "area": [
+        "Registration"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "124153 Alborg KSA - Query service fee, 155001 Dev Preapration, 154995 Dev Preparation",
+      "f1766929340598": "2026-01-05T10:30"
     },
     {
       "name": "Mostafa Mohamed",
@@ -745,170 +960,10 @@
       "f1766929340598": "2026-01-05T18:00"
     },
     {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mostafa Soliman",
-      "role": "Dev",
-      "area": [
-        "Mobile App"
-      ],
-      "workingIn": [
-        "support",
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "2026-01-02",
-      "name": "Mustafa Ahmed",
-      "role": "Dev",
-      "area": [
-        "Internal lab"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "141960 Al Borg KSA - TAT: Create",
-      "f1766929340598": "2026-01-05T18:00"
-    },
-    {
       "name": "Mustafa Mamdoh",
       "role": "Tester",
       "area": "Registration",
       "workingIn": "Iteration",
-      "isVacation": false,
-      "vacationEnd": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Nehal Elbana ",
-      "role": "Tester",
-      "area": [
-        "Integration",
-        "Mobile App",
-        "Automation"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "isVacation": true,
-      "vacationEnd": "2026-03-01",
-      "name": "Ola Gamal",
-      "role": "Dev",
-      "area": [
-        "Internal lab"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Reem Ali",
-      "role": "Dev",
-      "area": [
-        "Home Visit"
-      ],
-      "workingIn": [
-        "support",
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "154622 Home Visit - Mobile Collector Application",
-      "f1766929340598": "2026-01-05T18:00"
-    },
-    {
-      "name": "Saddam Raees",
-      "role": "Tester",
-      "area": "Front and Financial",
-      "workingIn": "Iteration",
-      "isVacation": false,
-      "vacationEnd": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "2025-12-29",
-      "name": "Salah Abdelhakeem",
-      "role": "Senior tester",
-      "area": [
-        "Front and Financial",
-        "Automation"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Saleh Abdulrahim Attia",
-      "role": "Dev",
-      "area": [
-        "Integration",
-        "ADFACA"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "153282 ADAFSA : Human API - Add, 153198 Add New SMS Provider [mshastra]",
-      "f1766929340598": "2026-01-05T18:00"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Samar Mahmoud Abdelraouf Algammal",
-      "role": "Dev",
-      "area": [
-        "Front and Financial"
-      ],
-      "workingIn": [
-        "support"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "name": "Sameh Abdellatef",
-      "role": "Team Lead",
-      "area": "Team Leader",
-      "workingIn": "Team Leader",
       "isVacation": false,
       "vacationEnd": "",
       "f1766917553886": "",
@@ -944,82 +999,27 @@
     {
       "isVacation": false,
       "vacationEnd": "",
-      "name": "Sherif Eldorf",
-      "role": "Dev",
+      "name": "Mohamed Fawzy",
+      "role": "Team Lead",
       "area": [
-        "Integration",
-        "MMS"
+        "Team Leader"
       ],
       "workingIn": [
-        "Iteration"
+        "Team Leader"
       ],
       "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
       "f1766917553886": "",
       "f1766929340598": ""
     },
     {
+      "name": "Sameh Abdellatef",
+      "role": "Team Lead",
+      "area": "Team Leader",
+      "workingIn": "Team Leader",
       "isVacation": false,
       "vacationEnd": "",
-      "name": "Tarek Saad",
-      "role": "Dev",
-      "area": [
-        "LDM_Integration"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "153179 Swiss LDM - Athir Ibtegration >, 154703 when search by Review date >>, 154704 when search by Order ID >>",
-      "f1766929340598": "2026-01-05T18:00"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "2025-12-31",
-      "name": "Yahia Hassan",
-      "role": "Dev",
-      "area": [
-        "Integration",
-        "ADFACA"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
       "f1766917553886": "",
       "f1766929340598": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Yara Mohsen",
-      "role": "Dev",
-      "area": [
-        "Home Visit"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "154620 Home Visit - Add Visit: Apply, 154677 Home Visit - Areas Setup: Rename",
-      "f1766929340598": "2026-01-05T18:00"
-    },
-    {
-      "name": "Yasmine Abdelwahed",
-      "role": "Tester",
-      "area": "Internal lab",
-      "workingIn": "Iteration",
-      "isVacation": false,
-      "vacationEnd": "",
-      "f1766917553886": "154200 Analyzer name not display at Result, 154314 Execution, 153540 Review task for Execution Activity",
-      "f1766929340598": "2026-01-04T11:14"
     }
   ],
   "fields": [
@@ -1202,5 +1202,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-05T09:40:56.403Z"
+  "timestamp": "2026-01-05T12:49:25.016Z"
 }
