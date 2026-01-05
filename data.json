@@ -60,8 +60,8 @@
       "workingIn": [
         "support"
       ],
-      "f1766917553886": "154079 #Integ >>Integration Monitor >>",
-      "f1766929340598": "2025-12-22T12:00"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "isVacation": false,
@@ -108,8 +108,8 @@
       "workingIn": [
         "support"
       ],
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "153090 Alameda GAMCA Integration",
+      "f1766929340598": "2026-01-05T18:00"
     },
     {
       "isVacation": false,
@@ -144,7 +144,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "151792 Al Borg KSA - TAT: Create",
-      "f1766929340598": "2026-01-04T18:00"
+      "f1766929340598": "2025-12-30T12:00"
     },
     {
       "isVacation": false,
@@ -167,8 +167,8 @@
       "workingIn": "elBORG",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154857 Standing Orders & Back Orders Don't, 154363 Issue at Executive Summary Charts, Specifically, 151738 Execution",
-      "f1766929340598": "2026-01-04T09:00"
+      "f1766917553886": "154980 Reports >> Dashboard: Returned items duplicate, 154982 Issue at Fast Movement Items Chart, 154857 Standing Orders & Back Orders Don't",
+      "f1766929340598": "2026-01-05T07:48"
     },
     {
       "isVacation": false,
@@ -201,8 +201,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154977 Excel Upload Does Not Update Data, 153919 Execution, 153918 Preparation",
-      "f1766929340598": "2026-01-04T10:16"
+      "f1766917553886": "154492 Internal Target Screen missing filtration grid, 154494 Service count in \"Default Service TAT\", 155032 Error message display after click on",
+      "f1766929340598": "2026-01-05T08:00"
     },
     {
       "name": "Amr Sameh",
@@ -256,8 +256,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "154988 clicking keyboard enter in any input, 154962 No collectors displayed when selecting Only, 154991 Role & Country - Select is",
-      "f1766929340598": "2026-01-04T16:25"
+      "f1766917553886": "155006 Mobile No. field validation is missing, 154793 Wrong logic is applied for close, 152490 Assign Visit -  UI does",
+      "f1766929340598": "2026-01-04T16:58"
     },
     {
       "isVacation": false,
@@ -273,8 +273,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154797 Execution Task For CR 153669, 154138 Preparation Task for CR154012, 154018 Preparation task for CR 154013",
-      "f1766929340598": "2026-01-04T16:41"
+      "f1766917553886": "155046 Wrong “To Date” printed on Arabic, 154138 Preparation Task for CR154012, 154018 Preparation task for CR 154013",
+      "f1766929340598": "2026-01-05T09:00"
     },
     {
       "isVacation": false,
@@ -350,7 +350,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "151975 Update EPHI patient reports Header &, 153342 TR012 --> Add new 3 fields, 138714 Al Borg UAE - Patient Reports",
+      "f1766917553886": "151975 Update EPHI patient reports Header &, 138714 Al Borg UAE - Patient Reports",
       "f1766929340598": "2026-01-01T10:30"
     },
     {
@@ -381,7 +381,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "154098 Alameda Mobile App Integration, 154621 Alameda_BBM_SchemaHandler service, 153218 The Result and Admission message gets",
-      "f1766929340598": "2026-01-04T18:00"
+      "f1766929340598": "2026-01-05T18:00"
     },
     {
       "isVacation": true,
@@ -397,8 +397,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153090 Alameda GAMCA Integration, 153038 result didn't save in LDM, 152702 Error while send message to LDM",
-      "f1766929340598": "2026-01-04T18:00"
+      "f1766917553886": "153038 result didn't save in LDM, 152702 Error while send message to LDM",
+      "f1766929340598": "2025-12-02T11:03"
     },
     {
       "isVacation": false,
@@ -426,7 +426,7 @@
         "support"
       ],
       "f1766917553886": "154274 Activate SAP on New Alameda Enviroment, 154613 Outbound Message issuse, 154295 display error when register with order",
-      "f1766929340598": "2026-01-04T18:00"
+      "f1766929340598": "2026-01-05T18:00"
     },
     {
       "isVacation": false,
@@ -460,7 +460,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "146890 Update Batch Details and Order Details",
-      "f1766929340598": "2026-01-04T18:00"
+      "f1766929340598": "2026-01-05T18:00"
     },
     {
       "isVacation": false,
@@ -503,8 +503,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "152870 Update Payment screen by adding an, 155024 Preparation, 149929 Al-Farabi Labs - Claims: Copy the",
-      "f1766929340598": "2026-01-04T18:00"
+      "f1766917553886": "154201 MedLab - Electronic Invoice: Copy patient, 155056 execution task for cr 149929, 149929 Al-Farabi Labs - Claims: Copy the",
+      "f1766929340598": "2026-01-05T18:00"
     },
     {
       "isVacation": false,
@@ -587,8 +587,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "رجب",
-      "f1766917553886": "153721 the unit column do not display, 154359 CR-(148807) - Issue detected in report, 154036 CR_(148807) - Print Customized Reports Header",
-      "f1766929340598": "2025-12-30T14:43"
+      "f1766917553886": "154772 Pre-Analytical Total Sample count is incorrect, 153721 the unit column do not display, 154359 CR-(148807) - Issue detected in report",
+      "f1766929340598": "2026-01-05T12:10"
     },
     {
       "name": "Mohamed Elgmmal",
@@ -597,8 +597,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154222 CR_150719 >> Execution",
-      "f1766929340598": "2025-12-30T12:00"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "isVacation": false,
@@ -614,8 +614,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "141960 Al Borg KSA - TAT: Create, 152296 Execution",
-      "f1766929340598": "2026-01-04T18:00"
+      "f1766917553886": "152296 Execution",
+      "f1766929340598": "2026-01-04T16:54"
     },
     {
       "isVacation": false,
@@ -685,8 +685,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153515 Al Farabi Lab - AMAD Integration",
-      "f1766929340598": "2026-01-04T18:00"
+      "f1766917553886": "153515 Al Farabi Lab - AMAD Integration, 155011 Reviewed samples are not returned if",
+      "f1766929340598": "2026-01-05T18:00"
     },
     {
       "name": "Mohamed Sayed Masry Rezk",
@@ -723,7 +723,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "131278 Internal CRs - Registration Templates: Move, 154815 FD002 | Update Validation of EmptyPatientAge, 154816 FD001 | Add Section of ",
-      "f1766929340598": "2026-01-04T18:00"
+      "f1766929340598": "2026-01-05T18:00"
     },
     {
       "isVacation": false,
@@ -757,8 +757,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "150662 Internal CR - Analyzer Setup: Add",
-      "f1766929340598": "2026-01-04T18:00"
+      "f1766917553886": "141960 Al Borg KSA - TAT: Create",
+      "f1766929340598": "2026-01-05T18:00"
     },
     {
       "name": "Mustafa Mamdoh",
@@ -819,8 +819,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154793 Wrong logic is applied for close",
-      "f1766929340598": "2025-12-31T17:54"
+      "f1766917553886": "154622 Home Visit - Mobile Collector Application",
+      "f1766929340598": "2026-01-05T18:00"
     },
     {
       "name": "Saddam Raees",
@@ -847,8 +847,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155000 CR_150719 >> Review CR's Execution, 155029 CR_153669 >> Review CR's Execution",
-      "f1766929340598": "2026-01-04T15:28"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "isVacation": false,
@@ -866,7 +866,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "153282 ADAFSA : Human API - Add, 153198 Add New SMS Provider [mshastra]",
-      "f1766929340598": "2026-01-04T18:00"
+      "f1766929340598": "2026-01-05T18:00"
     },
     {
       "isVacation": false,
@@ -954,8 +954,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153179 Swiss LDM - Athir Ibtegration >, 153517 Al Farabi Lab - Internal MMS, 154703 when search by Review date >>",
-      "f1766929340598": "2026-01-04T18:00"
+      "f1766917553886": "153179 Swiss LDM - Athir Ibtegration >, 154703 when search by Review date >>, 154704 when search by Order ID >>",
+      "f1766929340598": "2026-01-05T18:00"
     },
     {
       "isVacation": false,
@@ -989,8 +989,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154677 Home Visit - Areas Setup: Rename, 155006 Mobile No. field validation is missing",
-      "f1766929340598": "2026-01-04T18:00"
+      "f1766917553886": "154620 Home Visit - Add Visit: Apply, 154677 Home Visit - Areas Setup: Rename",
+      "f1766929340598": "2026-01-05T18:00"
     },
     {
       "name": "Yasmine Abdelwahed",
@@ -1219,5 +1219,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-05T09:14:23.927Z"
+  "timestamp": "2026-01-05T09:31:53.556Z"
 }
