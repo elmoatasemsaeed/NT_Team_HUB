@@ -1,19 +1,6 @@
 {
   "employees": [
     {
-      "isVacation": false,
-      "vacationEnd": "2026-03-01",
-      "name": "",
-      "role": "Dev",
-      "area": [],
-      "workingIn": [],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
       "ID": "\"135108\"",
       "Work Item Type": "\"Bug\"",
       "Title": "\"Search Registration: When Reserve a compatible sample from sample info then un-reserve from add service screen button on the right un-reserve not done.\"",
@@ -1187,5 +1174,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-05T12:56:01.718Z"
+  "timestamp": "2026-01-05T12:56:32.613Z"
 }
