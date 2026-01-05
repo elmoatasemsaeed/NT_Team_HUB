@@ -87,11 +87,14 @@ function processCSVRow(row) {
 }
 
 // 4. دالة بدء المعالجة الرئيسية
+// 4. دالة بدء المعالجة الرئيسية المحدثة
 async function startAutomationProcess() {
     if (!uploadedCSVData) return;
     
+    // إظهار تنبيه ببدء المعالجة الذكية
     if (typeof showToast === 'function') showToast("Starting Smart Process...");
 
+    // إعداد البيانات وتصفير الحقول المخصصة للموظفين قبل التحديث
     employees.forEach(emp => {
         emp.f1766917553886 = ""; 
         emp.f1766929340598 = ""; 
@@ -99,6 +102,7 @@ async function startAutomationProcess() {
 
     const tasksPerEmployee = {};
 
+    // معالجة كل سطر في ملف CSV المرفوع
     uploadedCSVData.forEach(row => {
         const result = processCSVRow(row);
         if (result.assignee && result.finishDate) {
@@ -107,6 +111,7 @@ async function startAutomationProcess() {
         }
     });
 
+    // توزيع المهام على الموظفين وتحديد آخر موعد انتهاء
     for (let name in tasksPerEmployee) {
         let empTasks = tasksPerEmployee[name];
         empTasks.sort((a, b) => b.finishDate - a.finishDate);
@@ -124,7 +129,33 @@ async function startAutomationProcess() {
         }
     }
 
-    await syncProcessedDataToGitHub();
+    // المزامنة مع GitHub مع إضافة رسائل توضح حالة الـ Deployment
+    const token = document.getElementById('ghTokenInput').value;
+    if(!token) {
+        alert("Please provide GitHub Token first!");
+        return;
+    }
+    
+    githubConfig.token = token; 
+
+    // إظهار رسالة للمستخدم أن البيانات تُرفع الآن
+    if (typeof showToast === 'function') showToast("Uploading data to GitHub...");
+
+    const success = await syncToGitHub();
+
+    if (success) {
+        // رسالة توضح أن الرفع تم، وجارٍ انتظار معالجة GitHub (Deployment)
+        if (typeof showToast === 'function') {
+            showToast("Sync Successful! Waiting for GitHub Deployment (30s)...");
+        }
+        
+        // تأخير إعادة التحميل لمدة 30 ثانية لضمان ظهور البيانات الجديدة
+        setTimeout(() => {
+            location.reload();
+        }, 30000); 
+    } else {
+        alert("Sync Failed! Please check your Token or Internet connection.");
+    }
 }
 
 async function syncProcessedDataToGitHub() {
