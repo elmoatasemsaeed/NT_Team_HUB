@@ -188,10 +188,12 @@
       "name": "Samar Mahmoud Abdelraouf Algammal",
       "role": "Dev",
       "area": [
+        "Internal lab",
         "Front and Financial"
       ],
       "workingIn": [
-        "support"
+        "support",
+        "Iteration"
       ],
       "custom_1766584922755": "",
       "f1766864203478": "",
@@ -1202,5 +1204,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-05T12:49:25.016Z"
+  "timestamp": "2026-01-05T12:49:53.610Z"
 }
