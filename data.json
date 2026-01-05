@@ -244,8 +244,8 @@
         "Front and Financial"
       ],
       "workingIn": "Senior",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "155093 TR015: Review on CR, 155064 BD016: Review on CR",
+      "f1766929340598": "2026-01-05T13:12"
     },
     {
       "isVacation": false,
@@ -260,7 +260,7 @@
         "Iteration"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "155006 Mobile No. field validation is missing, 154793 Wrong logic is applied for close, 152490 Assign Visit -  UI does",
+      "f1766917553886": "155006 Mobile No. field validation is missing, 152490 Assign Visit -  UI does",
       "f1766929340598": "2026-01-04T16:58"
     },
     {
@@ -292,8 +292,8 @@
       "workingIn": [
         "Iteration"
       ],
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "155084 Review",
+      "f1766929340598": "2026-01-05T12:11"
     },
     {
       "isVacation": false,
@@ -446,7 +446,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "124153 Alborg KSA - Query service fee, 155001 Dev Preapration, 154995 Dev Preparation",
+      "f1766917553886": "124153 Alborg KSA - Query service fee, 155001 Dev Preapration, 154319 Registration >> Search registration >> During",
       "f1766929340598": "2026-01-05T10:30"
     },
     {
@@ -507,8 +507,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154201 MedLab - Electronic Invoice: Copy patient, 155056 execution task for cr 149929, 149929 Al-Farabi Labs - Claims: Copy the",
-      "f1766929340598": "2026-01-05T18:00"
+      "f1766917553886": "155066 preparation task for cr 154201, 155056 execution task for cr 149929, 154201 MedLab - Electronic Invoice: Copy patient",
+      "f1766929340598": "2026-01-05T16:12"
     },
     {
       "isVacation": false,
@@ -574,8 +574,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "رجب",
-      "f1766917553886": "154772 Pre-Analytical Total Sample count is incorrect, 153721 the unit column do not display, 154359 CR-(148807) - Issue detected in report",
-      "f1766929340598": "2026-01-05T12:10"
+      "f1766917553886": "153721 the unit column do not display, 154359 CR-(148807) - Issue detected in report, 154036 CR_(148807) - Print Customized Reports Header",
+      "f1766929340598": "2025-12-30T14:43"
     },
     {
       "name": "Mohamed Elgmmal",
@@ -944,7 +944,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154620 Home Visit - Add Visit: Apply, 154677 Home Visit - Areas Setup: Rename",
+      "f1766917553886": "154619 Home Visit - System Parameter Configuration:, 154620 Home Visit - Add Visit: Apply",
       "f1766929340598": "2026-01-05T18:00"
     },
     {
@@ -954,8 +954,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154200 Analyzer name not display at Result, 154314 Execution, 153540 Review task for Execution Activity",
-      "f1766929340598": "2026-01-04T11:14"
+      "f1766917553886": "153540 Review task for Execution Activity",
+      "f1766929340598": "2025-12-10T14:44"
     },
     {
       "isVacation": false,
@@ -971,8 +971,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "153515 Al Farabi Lab - AMAD Integration, 155011 Reviewed samples are not returned if",
+      "f1766929340598": "2026-01-05T18:00"
     }
   ],
   "fields": [
@@ -1155,5 +1155,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-05T12:56:36.461Z"
+  "timestamp": "2026-01-05T12:56:57.398Z"
 }
