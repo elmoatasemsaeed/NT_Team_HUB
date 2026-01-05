@@ -40,13 +40,41 @@
         .status-partial { background-color: #fef9c3; color: #854d0e; border: 1px solid #fef08a; }
         .status-busy { background-color: #f3f4f6; color: #374151; border: 1px solid #e5e7eb; }
 
-        @media print {
-            .tab-content { display: block !important; }
-            .tab-navigation, .no-print, .filter-input, .admin-only { display: none !important; }
-            .vacation-row { background-color: #fce8e6 !important; -webkit-print-color-adjust: exact; }
-            tr.hidden-by-filter { display: none !important; }
-            body { padding: 0; background: white; }
-            .google-card { border: none; box-shadow: none; }
+     @media print {
+            /* إخفاء كل محتوى الموقع الأساسي */
+            body > *:not(#detailsPopup) { display: none !important; }
+            
+            /* إظهار الـ Popup فقط وجعلها تأخذ كامل الصفحة */
+            #detailsPopup {
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                height: auto !important;
+                background: white !important;
+                display: block !important;
+                padding: 0 !important;
+            }
+
+            .large-modal {
+                width: 100% !important;
+                max-width: none !important;
+                max-height: none !important;
+                overflow: visible !important;
+                box-shadow: none !important;
+                border: none !important;
+                padding: 0 !important;
+            }
+
+            /* إخفاء العناصر غير المرغوبة في الطباعة داخل الـ Popup */
+            .no-print-section, button, i, .text-gray-400 { 
+                display: none !important; 
+            }
+
+            /* تحسين شكل النصوص للطباعة */
+            .text-blue-700 { color: #000 !important; }
+            .bg-gray-100 { background: transparent !important; border: 1px solid #eee !important; }
+            body { background: white !important; }
         }
     </style>
 </head>
@@ -273,14 +301,19 @@
         <div class="bg-white large-modal p-10 shadow-2xl"><h3 class="text-2xl font-bold mb-8 text-gray-800">Member Configuration</h3><form id="employeeForm" class="grid grid-cols-1 md:grid-cols-2 gap-6"><input type="hidden" id="editIndex"><div id="dynamicFieldsContainer" class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6"></div><div class="md:col-span-2 bg-rose-50 p-6 rounded-2xl border border-rose-100 flex flex-wrap items-center justify-between gap-4"><div class="flex items-center gap-4"><span class="font-bold text-rose-700">Set Vacation:</span><input type="checkbox" id="empIsVacation" class="w-6 h-6 accent-rose-600"></div><div class="flex items-center gap-4"><span class="font-bold text-rose-700">Return Date:</span><input type="date" id="empVacationEnd" class="p-2 border rounded-xl outline-none"></div></div><div class="md:col-span-2 flex gap-4 mt-4"><button type="button" onclick="closeModal()" class="flex-1 py-4 bg-gray-100 text-gray-600 rounded-xl font-bold uppercase">Cancel</button><button type="submit" class="flex-1 py-4 bg-blue-600 text-white rounded-xl font-bold uppercase shadow-lg">Save Data</button></div></form></div>
     </div>
 
-   <div id="detailsPopup" class="fixed inset-0 z-[2000] bg-black/50 hidden flex items-center justify-center p-4" onclick="closePopup()">
+<div id="detailsPopup" class="fixed inset-0 z-[2000] bg-black/50 hidden flex items-center justify-center p-4" onclick="closePopup()">
     <div class="bg-white large-modal shadow-2xl p-8" onclick="event.stopPropagation()">
         <div class="flex justify-between items-center border-b pb-4 mb-6">
             <h2 id="popupTitle" class="text-2xl font-black text-blue-700 uppercase"></h2>
-            <button onclick="closePopup()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-8 h-8"></i></button>
+            <div class="flex gap-2 no-print-section">
+                <button onclick="window.print()" class="px-4 py-2 bg-blue-50 text-blue-700 rounded-lg flex items-center gap-2 font-bold text-xs hover:bg-blue-100 transition-all border border-blue-200">
+                    <i data-lucide="printer" class="w-4 h-4"></i> PRINT REPORT
+                </button>
+                <button onclick="closePopup()" class="text-gray-400 hover:text-red-500"><i data-lucide="x" class="w-8 h-8"></i></button>
+            </div>
         </div>
         <div id="popupList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-        <button onclick="closePopup()" class="w-full mt-8 py-3 bg-gray-100 rounded-xl font-bold text-gray-600 uppercase">CLOSE</button>
+        <button onclick="closePopup()" class="w-full mt-8 py-3 bg-gray-100 rounded-xl font-bold text-gray-600 uppercase no-print-section">CLOSE</button>
     </div>
 </div>
 
@@ -890,7 +923,7 @@ const renderSection = (emps) => {
     document.getElementById('popupTitle').innerText = `${label} - ${isVac ? 'On Vacation' : 'Active Members'}`;
     
     const popupListContainer = document.getElementById('popupList');
-    popupListContainer.className = "flex flex-col gap-6 w-full"; 
+   popupListContainer.className = "grid grid-cols-1 gap-6 w-full"; // سيبقى عمود واحد في الموبايل ولكن الـ Grid يسمح بتوزيعه في الطباعة
     
 // البحث عن الجزء الخاص بـ popupListContainer.innerHTML داخل وظيفة showDetailsExtended استبدله بهذا:
 
@@ -1063,6 +1096,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
