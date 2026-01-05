@@ -639,23 +639,6 @@
     {
       "isVacation": false,
       "vacationEnd": "",
-      "name": "Mohamed fathy",
-      "role": "Dev",
-      "area": [
-        "Internal lab"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "152296 Execution",
-      "f1766929340598": "2026-01-04T16:54"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
       "name": "Mohamed Fawzy",
       "role": "Team Lead",
       "area": [
@@ -1219,5 +1202,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-05T09:35:48.543Z"
+  "timestamp": "2026-01-05T09:40:56.403Z"
 }
