@@ -171,7 +171,7 @@
       "workingIn": "elBORG",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154980 Reports >> Dashboard: Returned items duplicate, 154982 Issue at Fast Movement Items Chart, 154857 Standing Orders & Back Orders Don't",
+      "f1766917553886": "154980 Reports >> Dashboard: Returned items duplicate, 154982 Issue at Fast Movement Items Chart, 154363 Issue at Executive Summary Charts, Specifically",
       "f1766929340598": "2026-01-05T07:48"
     },
     {
@@ -675,7 +675,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "131278 Internal CRs - Registration Templates: Move, 154824 BD010 |  Remove EmptyPatientAge and, 154827 BD008 |  Update save Registration",
+      "f1766917553886": "131278 Internal CRs - Registration Templates: Move, 154824 BD010 |  Remove EmptyPatientAge and, 154817 FD001 | Remove Section of ",
       "f1766929340598": "2026-01-05T18:00"
     },
     {
@@ -1154,5 +1154,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-05T14:00:35.720Z"
+  "timestamp": "2026-01-05T14:11:11.079Z"
 }
