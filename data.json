@@ -988,6 +988,23 @@
       "vacationEnd": "",
       "f1766917553886": "154200 Analyzer name not display at Result, 154314 Execution, 153540 Review task for Execution Activity",
       "f1766929340598": "2026-01-04T11:14"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Mohamed Salama",
+      "role": "Dev",
+      "area": [
+        "LDM_Integration"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "",
+      "f1766929340598": ""
     }
   ],
   "fields": [
@@ -1170,5 +1187,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-05T12:55:41.470Z"
+  "timestamp": "2026-01-05T12:56:01.718Z"
 }
