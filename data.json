@@ -691,23 +691,6 @@
       "f1766929340598": "2025-12-30T14:55"
     },
     {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mohamed Salama",
-      "role": "Dev",
-      "area": [
-        "LDM_Integration"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "153515 Al Farabi Lab - AMAD Integration, 155011 Reviewed samples are not returned if",
-      "f1766929340598": "2026-01-05T18:00"
-    },
-    {
       "name": "Mohamed Sayed Masry Rezk",
       "role": "Tester",
       "area": "elBORG",
@@ -1204,5 +1187,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-05T12:52:52.470Z"
+  "timestamp": "2026-01-05T12:55:07.800Z"
 }
