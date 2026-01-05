@@ -131,6 +131,10 @@
                             <i data-lucide="users" class="w-4 h-4 text-purple-600"></i> Setup Users
                         </button>
                     </div>
+                <div id="processingIndicator" class="hidden flex items-center gap-2 px-3 py-1 bg-amber-50 text-amber-700 border border-amber-200 rounded-full animate-pulse">
+    <i data-lucide="refresh-cw" class="w-3 h-3 animate-spin"></i>
+    <span class="text-[10px] font-bold uppercase">Cloud Processing...</span>
+</div>
                 </div>
                 <div class="relative dropdown admin-only border-l pl-2">
                     <button class="bg-emerald-50 text-emerald-700 px-4 py-2 rounded shadow-sm hover:bg-emerald-100 transition-all font-bold flex items-center gap-2 border border-emerald-200">
@@ -1096,6 +1100,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
