@@ -98,8 +98,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "155133 issue in create event",
+      "f1766929340598": "2026-01-06T09:38"
     },
     {
       "isVacation": false,
@@ -113,7 +113,7 @@
         "support"
       ],
       "f1766917553886": "153090 Alameda GAMCA Integration",
-      "f1766929340598": "2026-01-05T18:00"
+      "f1766929340598": "2026-01-06T18:00"
     },
     {
       "isVacation": false,
@@ -277,8 +277,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155046 Wrong “To Date” printed on Arabic, 154138 Preparation Task for CR154012, 154018 Preparation task for CR 154013",
-      "f1766929340598": "2026-01-05T09:00"
+      "f1766917553886": "154138 Preparation Task for CR154012, 154018 Preparation task for CR 154013, 153139 Action button is not appearing in",
+      "f1766929340598": "2025-12-23T17:23"
     },
     {
       "isVacation": false,
@@ -354,8 +354,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154985 Some issue detected in Molecular Detection, 151975 Update EPHI patient reports Header &, 138714 Al Borg UAE - Patient Reports",
-      "f1766929340598": "2026-01-05T14:26"
+      "f1766917553886": "155028 Some issue detected in neonatal screening, 151975 Update EPHI patient reports Header &, 138714 Al Borg UAE - Patient Reports",
+      "f1766929340598": "2026-01-06T09:35"
     },
     {
       "isVacation": false,
@@ -385,7 +385,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "154098 Alameda Mobile App Integration, 154621 Alameda_BBM_SchemaHandler service, 153218 The Result and Admission message gets",
-      "f1766929340598": "2026-01-05T18:00"
+      "f1766929340598": "2026-01-06T18:00"
     },
     {
       "isVacation": true,
@@ -430,7 +430,7 @@
         "support"
       ],
       "f1766917553886": "154274 Activate SAP on New Alameda Enviroment, 154613 Outbound Message issuse, 154295 display error when register with order",
-      "f1766929340598": "2026-01-05T18:00"
+      "f1766929340598": "2026-01-06T18:00"
     },
     {
       "isVacation": false,
@@ -464,7 +464,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "146890 Update Batch Details and Order Details",
-      "f1766929340598": "2026-01-05T18:00"
+      "f1766929340598": "2026-01-06T18:00"
     },
     {
       "isVacation": false,
@@ -574,8 +574,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "رجب",
-      "f1766917553886": "153721 the unit column do not display, 154359 CR-(148807) - Issue detected in report, 154036 CR_(148807) - Print Customized Reports Header",
-      "f1766929340598": "2025-12-30T14:43"
+      "f1766917553886": "154985 Some issue detected in Molecular Detection, 153721 the unit column do not display, 154359 CR-(148807) - Issue detected in report",
+      "f1766929340598": "2026-01-05T14:26"
     },
     {
       "name": "Mohamed Elgmmal",
@@ -676,7 +676,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "131278 Internal CRs - Registration Templates: Move, 154824 BD010 |  Remove EmptyPatientAge and, 154817 FD001 | Remove Section of ",
-      "f1766929340598": "2026-01-05T18:00"
+      "f1766929340598": "2026-01-06T18:00"
     },
     {
       "isVacation": false,
@@ -711,7 +711,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "141960 Al Borg KSA - TAT: Create",
-      "f1766929340598": "2026-01-05T18:00"
+      "f1766929340598": "2026-01-06T18:00"
     },
     {
       "name": "Mustafa Mamdoh",
@@ -772,8 +772,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154622 Home Visit - Mobile Collector Application",
-      "f1766929340598": "2026-01-05T18:00"
+      "f1766917553886": "154622 Home Visit - Mobile Collector Application, 155122 Incorrect handling of Proceed and Close",
+      "f1766929340598": "2026-01-06T18:00"
     },
     {
       "name": "Saddam Raees",
@@ -800,8 +800,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "155144 CR_149929 >> Review CR's Execution",
+      "f1766929340598": "2026-01-06T12:13"
     },
     {
       "isVacation": false,
@@ -818,8 +818,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153198 Add New SMS Provider [mshastra], 153282 ADAFSA : Human API - Add",
-      "f1766929340598": "2026-01-05T18:00"
+      "f1766917553886": "153282 ADAFSA : Human API - Add, 153198 Add New SMS Provider [mshastra]",
+      "f1766929340598": "2026-01-06T18:00"
     },
     {
       "isVacation": false,
@@ -909,7 +909,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "153179 Swiss LDM - Athir Ibtegration >, 154703 when search by Review date >>, 154704 when search by Order ID >>",
-      "f1766929340598": "2026-01-05T18:00"
+      "f1766929340598": "2026-01-06T18:00"
     },
     {
       "isVacation": false,
@@ -944,7 +944,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "154619 Home Visit - System Parameter Configuration:, 154620 Home Visit - Add Visit: Apply",
-      "f1766929340598": "2026-01-05T18:00"
+      "f1766929340598": "2026-01-06T18:00"
     },
     {
       "name": "Yasmine Abdelwahed",
@@ -953,8 +953,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "153540 Review task for Execution Activity",
-      "f1766929340598": "2025-12-10T14:44"
+      "f1766917553886": "155135 Review Task for Execution Activity, 153540 Review task for Execution Activity",
+      "f1766929340598": "2026-01-06T08:36"
     },
     {
       "isVacation": false,
@@ -971,7 +971,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "153515 Al Farabi Lab - AMAD Integration, 155011 Reviewed samples are not returned if",
-      "f1766929340598": "2026-01-05T18:00"
+      "f1766929340598": "2026-01-06T18:00"
     }
   ],
   "fields": [
@@ -1154,5 +1154,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-05T14:11:11.079Z"
+  "timestamp": "2026-01-06T11:02:51.815Z"
 }
