@@ -32,8 +32,8 @@
       "custom_1766584922755": "هنسحبه من الهوم فيزيت تدريجيا",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154028 Visit list - Select all checkbox",
-      "f1766929340598": "2026-01-04T09:27"
+      "f1766917553886": "155150 All collector counter value reset to, 154028 Visit list - Select all checkbox",
+      "f1766929340598": "2026-01-06T14:24"
     },
     {
       "isVacation": false,
@@ -260,8 +260,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "155006 Mobile No. field validation is missing, 152490 Assign Visit -  UI does",
-      "f1766929340598": "2026-01-04T16:58"
+      "f1766917553886": "155126 Dashboard - Visit list - System, 155122 Incorrect handling of Proceed and Close, 152490 Assign Visit -  UI does",
+      "f1766929340598": "2026-01-06T13:45"
     },
     {
       "isVacation": false,
@@ -354,8 +354,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155028 Some issue detected in neonatal screening, 151975 Update EPHI patient reports Header &, 138714 Al Borg UAE - Patient Reports",
-      "f1766929340598": "2026-01-06T09:35"
+      "f1766917553886": "155059 Some issue detected at COVID -, 151975 Update EPHI patient reports Header &, 138714 Al Borg UAE - Patient Reports",
+      "f1766929340598": "2026-01-06T14:09"
     },
     {
       "isVacation": false,
@@ -446,8 +446,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "124153 Alborg KSA - Query service fee, 155001 Dev Preapration, 154319 Registration >> Search registration >> During",
-      "f1766929340598": "2026-01-05T10:30"
+      "f1766917553886": "138837 Internal CR - LDM Error Screen:, 124153 Alborg KSA - Query service fee, 155001 Dev Preapration",
+      "f1766929340598": "2026-01-07T09:30"
     },
     {
       "isVacation": false,
@@ -507,8 +507,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154201 MedLab - Electronic Invoice: Copy patient, 152870 Update Payment screen by adding an, 149929 Al-Farabi Labs - Claims: Copy the",
-      "f1766929340598": "2026-01-05T08:53"
+      "f1766917553886": "155155 Design Issue —not according to CR, 154201 MedLab - Electronic Invoice: Copy patient, 152870 Update Payment screen by adding an",
+      "f1766929340598": "2026-01-06T13:35"
     },
     {
       "isVacation": false,
@@ -559,8 +559,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153890 Sample Log >> Sample Type &, 152972 Reload & Unload Screen Display more",
-      "f1766929340598": "2025-12-16T12:57"
+      "f1766917553886": "155172 Preparation, 153890 Sample Log >> Sample Type &, 152972 Reload & Unload Screen Display more",
+      "f1766929340598": "2026-01-06T16:39"
     },
     {
       "isVacation": false,
@@ -574,8 +574,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "رجب",
-      "f1766917553886": "154985 Some issue detected in Molecular Detection, 153721 the unit column do not display, 154359 CR-(148807) - Issue detected in report",
-      "f1766929340598": "2026-01-05T14:26"
+      "f1766917553886": "155028 Some issue detected in neonatal screening, 154985 Some issue detected in Molecular Detection, 153721 the unit column do not display",
+      "f1766929340598": "2026-01-06T09:35"
     },
     {
       "name": "Mohamed Elgmmal",
@@ -675,7 +675,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "131278 Internal CRs - Registration Templates: Move, 154824 BD010 |  Remove EmptyPatientAge and, 154817 FD001 | Remove Section of ",
+      "f1766917553886": "131278 Internal CRs - Registration Templates: Move, 151969 Impact of Regex pattern for the, 153071 Incorrect service-level amounts in ElectronicInvoice_Invoice for",
       "f1766929340598": "2026-01-06T18:00"
     },
     {
@@ -772,7 +772,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154622 Home Visit - Mobile Collector Application, 155122 Incorrect handling of Proceed and Close",
+      "f1766917553886": "154622 Home Visit - Mobile Collector Application",
       "f1766929340598": "2026-01-06T18:00"
     },
     {
@@ -800,8 +800,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155144 CR_149929 >> Review CR's Execution",
-      "f1766929340598": "2026-01-06T12:13"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "isVacation": false,
@@ -908,7 +908,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153179 Swiss LDM - Athir Ibtegration >, 154703 when search by Review date >>, 154704 when search by Order ID >>",
+      "f1766917553886": "153179 Swiss LDM - Athir Ibtegration >, 155050 Get Result Raw data >> display, 154703 when search by Review date >>",
       "f1766929340598": "2026-01-06T18:00"
     },
     {
@@ -1154,5 +1154,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-06T11:02:51.815Z"
+  "timestamp": "2026-01-06T14:22:03.768Z"
 }
