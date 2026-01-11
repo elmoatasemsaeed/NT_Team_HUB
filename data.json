@@ -65,8 +65,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155248 Preparation",
-      "f1766929340598": "2026-01-11T10:00"
+      "f1766917553886": "150180 Create new setup screen Resistant pattern, 155249 BD006 : Insert data into ResistancePattern",
+      "f1766929340598": "2026-01-15T07:15"
     },
     {
       "isVacation": false,
@@ -172,8 +172,8 @@
       "workingIn": "elBORG",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154982 Issue at Fast Movement Items Chart, 154277 Retrieved data not updated according to, 153193 Cash and Credit Prices Not Restored",
-      "f1766929340598": "2026-01-04T17:30"
+      "f1766917553886": "153193 Cash and Credit Prices Not Restored, 151738 Execution, 153159 Execution",
+      "f1766929340598": "2026-01-04T12:39"
     },
     {
       "isVacation": false,
@@ -261,8 +261,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "152490 Assign Visit -  UI does",
-      "f1766929340598": "2025-12-14T14:19"
+      "f1766917553886": "155377 Collector Field dropdown list selection is, 152490 Assign Visit -  UI does",
+      "f1766929340598": "2026-01-11T10:59"
     },
     {
       "isVacation": false,
@@ -293,8 +293,8 @@
       "workingIn": [
         "Iteration"
       ],
-      "f1766917553886": "155084 Review",
-      "f1766929340598": "2026-01-05T12:11"
+      "f1766917553886": "155340 Execution, 155084 Review",
+      "f1766929340598": "2026-01-11T07:30"
     },
     {
       "isVacation": false,
@@ -402,8 +402,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153038 result didn't save in LDM, 152702 Error while send message to LDM",
-      "f1766929340598": "2025-12-02T11:03"
+      "f1766917553886": "154632 Wareed Lab - NT Mobile APIs, 155408 Planning and Preparation",
+      "f1766929340598": "2026-01-11T18:00"
     },
     {
       "isVacation": false,
@@ -431,7 +431,7 @@
         "support"
       ],
       "f1766917553886": "154274 Activate SAP on New Alameda Enviroment, 155163 Get Result Raw data issues, 155162 Get Result Raw Data issues",
-      "f1766929340598": "2026-01-08T18:00"
+      "f1766929340598": "2026-01-11T18:00"
     },
     {
       "isVacation": false,
@@ -465,7 +465,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "146890 Update Batch Details and Order Details",
-      "f1766929340598": "2026-01-08T18:00"
+      "f1766929340598": "2026-01-11T18:00"
     },
     {
       "isVacation": false,
@@ -515,8 +515,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "144143 Update Correct Evidence Medical Labs –, 152870 Update Payment screen by adding an",
-      "f1766929340598": "2026-01-08T18:00"
+      "f1766917553886": "144143 Update Correct Evidence Medical Labs –, 153433 Internal CR - Create Proforma No., 155394 Preparation task for CR 144143",
+      "f1766929340598": "2026-01-11T18:00"
     },
     {
       "isVacation": false,
@@ -582,8 +582,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "رجب",
-      "f1766917553886": "155059 Some issue detected at COVID -, 155028 Some issue detected in neonatal screening, 154985 Some issue detected in Molecular Detection",
-      "f1766929340598": "2026-01-06T14:09"
+      "f1766917553886": "153721 the unit column do not display, 154359 CR-(148807) - Issue detected in report, 154036 CR_(148807) - Print Customized Reports Header",
+      "f1766929340598": "2025-12-30T14:43"
     },
     {
       "name": "Mohamed Elgmmal",
@@ -683,8 +683,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "151969 Impact of Regex pattern for the, 153071 Incorrect service-level amounts in ElectronicInvoice_Invoice for",
-      "f1766929340598": "2025-12-29T10:00"
+      "f1766917553886": "155402 Prepration for CR, 151969 Impact of Regex pattern for the, 153071 Incorrect service-level amounts in ElectronicInvoice_Invoice for",
+      "f1766929340598": "2026-01-11T15:18"
     },
     {
       "isVacation": false,
@@ -718,8 +718,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "141960 Al Borg KSA - TAT: Create",
-      "f1766929340598": "2026-01-08T18:00"
+      "f1766917553886": "141960 Al Borg KSA - TAT: Create, 151989 Internal CR - Comm Package Updates:, 155424 FD009: Add a checkbox control and",
+      "f1766929340598": "2026-01-11T18:00"
     },
     {
       "name": "Mustafa Mamdoh",
@@ -780,8 +780,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154622 Home Visit - Mobile Collector Application, 154695 Home Visits - Users: Add new",
-      "f1766929340598": "2026-01-08T18:00"
+      "f1766917553886": "154695 Home Visits - Users: Add new",
+      "f1766929340598": "2026-01-11T18:00"
     },
     {
       "name": "Saddam Raees",
@@ -827,7 +827,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "153198 Add New SMS Provider [mshastra], 153282 ADAFSA : Human API - Add",
-      "f1766929340598": "2026-01-08T18:00"
+      "f1766929340598": "2026-01-11T18:00"
     },
     {
       "isVacation": false,
@@ -844,8 +844,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "151663 Nile Labs - Patient Reports: Update, 155387 TR013 --> Add header image with",
+      "f1766929340598": "2026-01-14T09:24"
     },
     {
       "name": "Sameh Abdellatef",
@@ -881,8 +881,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "154725 Execution, 154979 Regression, 151929 Dynamic Reg _ Merge Samples Poup",
-      "f1766929340598": "2026-01-05T10:00"
+      "f1766917553886": "155435 Preparation, 154725 Execution, 154979 Regression",
+      "f1766929340598": "2026-01-12T10:01"
     },
     {
       "isVacation": false,
@@ -899,8 +899,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155097 Issue at Items Below/Over Ordering Limit",
-      "f1766929340598": "2026-01-06T16:56"
+      "f1766917553886": "155211 MM | Client : Detailed Inventory, 155097 Issue at Items Below/Over Ordering Limit",
+      "f1766929340598": "2026-01-11T18:00"
     },
     {
       "isVacation": false,
@@ -917,7 +917,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "153179 Swiss LDM - Athir Ibtegration >, 154627 Get Result (Raw Data) >> The",
-      "f1766929340598": "2026-01-08T18:00"
+      "f1766929340598": "2026-01-11T18:00"
     },
     {
       "isVacation": false,
@@ -951,8 +951,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154620 Home Visit - Add Visit: Apply, 154694 Home Visits - Roles: Add new",
-      "f1766929340598": "2026-01-08T18:00"
+      "f1766917553886": "154694 Home Visits - Roles: Add new",
+      "f1766929340598": "2026-01-11T18:00"
     },
     {
       "name": "Yasmine Abdelwahed",
@@ -979,7 +979,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "153515 Al Farabi Lab - AMAD Integration",
-      "f1766929340598": "2026-01-08T18:00"
+      "f1766929340598": "2026-01-11T18:00"
     }
   ],
   "fields": [
@@ -1162,5 +1162,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-11T10:00:15.156Z"
+  "timestamp": "2026-01-11T15:46:42.095Z"
 }
