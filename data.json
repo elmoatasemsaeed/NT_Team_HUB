@@ -485,12 +485,19 @@
       "f1766929340598": ""
     },
     {
+      "isVacation": true,
+      "vacationEnd": "2026-01-12",
       "name": "Mahmoud Ab Omar",
       "role": "Tester",
-      "area": "Internal lab",
-      "workingIn": "Iteration",
-      "isVacation": false,
-      "vacationEnd": "",
+      "area": [
+        "Internal lab"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
       "f1766917553886": "155235 #CR>150181: Preparation, 154612 Alameda: Antimicrobial Column Does Not Start, 154618 #Alameda: The cumulative report is not",
       "f1766929340598": "2026-01-08T14:53"
     },
@@ -1155,5 +1162,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-11T09:56:02.065Z"
+  "timestamp": "2026-01-11T10:00:15.156Z"
 }
