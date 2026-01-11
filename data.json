@@ -389,7 +389,7 @@
       "f1766929340598": "2025-12-07T11:37"
     },
     {
-      "isVacation": true,
+      "isVacation": false,
       "vacationEnd": "2026-01-10",
       "name": "Hamza Ashry Hamza Abdelhafeez",
       "role": "Dev",
@@ -1155,5 +1155,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-08T17:45:41.860Z"
+  "timestamp": "2026-01-11T09:56:02.065Z"
 }
