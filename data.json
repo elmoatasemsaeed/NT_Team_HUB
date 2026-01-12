@@ -172,7 +172,7 @@
       "workingIn": "elBORG",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "153193 Cash and Credit Prices Not Restored, 151738 Execution, 153159 Execution",
+      "f1766917553886": "",
       "f1766929340598": "2026-01-04T12:39"
     },
     {
@@ -1162,5 +1162,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-12T10:22:03.442Z"
+  "timestamp": "2026-01-12T10:22:05.213Z"
 }
