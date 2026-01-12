@@ -373,6 +373,7 @@
                     if (content.users) { users = content.users; localStorage.setItem(USERS_KEY, JSON.stringify(users)); }
                     if (content.visibility) visibilityConfig = content.visibility;
                     if (content.charts) chartsConfig = content.charts;
+                    if (content.azure) {azureConfig = content.azure;}
                     renderAll();
                     if(manual) alert("Sync Success!");
                     return true;
@@ -389,6 +390,7 @@
             const fullData = { 
                 employees, 
                 fields: fieldsConfig, 
+                azure: azureConfig,
                 users, 
                 visibility: visibilityConfig, 
                 charts: chartsConfig, 
@@ -1188,6 +1190,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
