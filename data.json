@@ -498,7 +498,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155239 #CR>151975: Preparation, 155235 #CR>150181: Preparation, 154618 #Alameda: The cumulative report is not",
+      "f1766917553886": "155239 #CR>151975: Preparation, 154612 Alameda: Antimicrobial Column Does Not Start, 155235 #CR>150181: Preparation",
       "f1766929340598": "2026-01-12T12:24"
     },
     {
@@ -515,8 +515,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "144143 Update Correct Evidence Medical Labs –, 155397 AlBorg KSA - invoice form claim, 153433 Internal CR - Create Proforma No.",
-      "f1766929340598": "2026-01-12T18:00"
+      "f1766917553886": "155397 AlBorg KSA - invoice form claim, 153433 Internal CR - Create Proforma No., 155394 Preparation task for CR 144143",
+      "f1766929340598": "2026-01-13T07:15"
     },
     {
       "isVacation": false,
@@ -718,7 +718,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "141960 Al Borg KSA - TAT: Create, 151989 Internal CR - Comm Package Updates:, 155424 FD009: Add a checkbox control and",
+      "f1766917553886": "141960 Al Borg KSA - TAT: Create, 151989 Internal CR - Comm Package Updates:, 152487 Alameda gp - Microbiology Statistics: Add",
       "f1766929340598": "2026-01-12T18:00"
     },
     {
@@ -1162,5 +1162,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-12T11:15:38.248Z"
+  "timestamp": "2026-01-12T11:15:46.086Z"
 }
