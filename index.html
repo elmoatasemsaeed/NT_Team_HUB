@@ -1122,38 +1122,44 @@ function checkAvailableDevs() {
         location.reload();
     }
 }
-        function saveAzureSettings() {
-    const org = document.getElementById('azOrg').value.trim();
-    const project = document.getElementById('azProject').value.trim();
-    const queryId = document.getElementById('azQueryId').value.trim();
-    const pat = document.getElementById('azPat').value.trim();
+        async function saveAzureSettings() {
+    // 1. جلب القيم من واجهة المستخدم وتحديث كائن الإعدادات
+    azureConfig = {
+        org: document.getElementById('azOrg').value.trim(),
+        project: document.getElementById('azProject').value.trim(),
+        queryId: document.getElementById('azQueryId').value.trim(),
+        pat: document.getElementById('azPat').value.trim()
+    };
 
-    if (!org || !project || !queryId || !pat) {
-        showToast("Please fill all Azure settings fields", "error");
+    // التحقق من إدخال البيانات الأساسية
+    if (!azureConfig.org || !azureConfig.project || !azureConfig.pat) {
+        showToast("Please fill in all Azure settings fields", "error");
         return;
     }
 
-    // 1. تخزين البيانات في المتغير العام الذي يُرفع لـ GitHub
-    if (!fullData.azureConfig) fullData.azureConfig = {};
-    
-    fullData.azureConfig = {
-        org: org,
-        project: project,
-        queryId: queryId,
-        pat: pat
+    // 2. حفظ البيانات محلياً في المتصفح كما طلبت
+    // ملاحظة: نستخدم 'azure_settings_backup' أو أي اسم تفضله لتمييزها عن بيانات الموظفين
+    const dataToSave = {
+        employees: employees,
+        fields: fieldsConfig,
+        users: users,
+        visibility: visibilityConfig,
+        charts: chartsConfig,
+        azure: azureConfig
     };
+    localStorage.setItem('teamHubData', JSON.stringify(dataToSave));
 
-    // 2. حفظ البيانات "فوق" على GitHub
-    // ملاحظة: تأكد من أن دالة syncToGitHub موجودة وتعمل لديك
-    syncToGitHub("Updated Azure Cloud Configuration").then(() => {
-        showToast("Azure settings saved permanently to cloud!");
-        
-        // إغلاق المودال بعد الحفظ
-        const modal = document.getElementById('setupModal');
-        if (modal) modal.classList.add('hidden');
-    }).catch(err => {
-        showToast("Error saving to cloud: " + err.message, "error");
-    });
+    // 3. رفع الإعدادات الجديدة إلى GitHub لضمان مزامنتها مع الفريق
+    try {
+        const success = await syncToGitHub(); // استدعاء الدالة المحدثة
+        if (success) {
+            showToast("Azure Settings saved and synced successfully!");
+            closeAzureSetupModal();
+        }
+    } catch (error) {
+        console.error("Error saving Azure settings:", error);
+        showToast("Failed to sync settings to GitHub", "error");
+    }
 }
         function loadAzureSettingsToUI() {
     if (fullData && fullData.azureConfig) {
@@ -1206,6 +1212,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
