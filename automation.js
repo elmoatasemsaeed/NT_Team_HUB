@@ -204,19 +204,14 @@ function handleCSVUpload(event) {
     }
 }
 // متغير لتخزين الإعدادات (يتم تحميله من JSON)
-let azureConfig = { 
-    pat: "", 
-    queryId: "3bff197e-a88f-4263-9410-92b150d4497f", 
-    org: "", 
-    project: "" 
-};
+let azureSettings = { pat: "", queryId: "3bff197e-a88f-4263-9410-92b150d4497f", org: "", project: "" };
 
 // دالة فتح مودال الإعدادات
 function openAzureSetupModal() {
-    document.getElementById('azOrg').value = azureConfig.org || "";
-    document.getElementById('azProject').value = azureConfig.project || "";
-    document.getElementById('azQueryId').value = azureConfig.queryId || "";
-    document.getElementById('azPat').value = azureConfig.pat || "";
+    document.getElementById('azOrg').value = azureSettings.org || "";
+    document.getElementById('azProject').value = azureSettings.project || "";
+    document.getElementById('azQueryId').value = azureSettings.queryId || "";
+    document.getElementById('azPat').value = azureSettings.pat || "";
     document.getElementById('azureSetupModal').classList.remove('hidden');
     lucide.createIcons();
 }
@@ -227,12 +222,13 @@ function closeAzureSetupModal() {
 
 // دالة حفظ الإعدادات ورفعها لـ GitHub
 async function saveAzureSettings() {
-    azureConfig.org = document.getElementById('azOrg').value;
-    azureConfig.project = document.getElementById('azProject').value;
-    azureConfig.queryId = document.getElementById('azQueryId').value;
-    azureConfig.pat = document.getElementById('azPat').value;
+    azureSettings.org = document.getElementById('azOrg').value;
+    azureSettings.project = document.getElementById('azProject').value;
+    azureSettings.queryId = document.getElementById('azQueryId').value;
+    azureSettings.pat = document.getElementById('azPat').value;
     
-if(!azureConfig.pat || !azureConfig.org) return alert("Please fill at least PAT and Org");
+    if(!azureSettings.pat || !azureSettings.org) return alert("Please fill at least PAT and Org");
+
     // نستخدم دالة المزامنة الأصلية لحفظ الإعدادات في data.json
     const success = await syncToGitHub(); 
     if(success) {
@@ -252,11 +248,11 @@ async function fetchFromAzure() {
     if (typeof showToast === 'function') showToast("Connecting to Azure DevOps...");
     
     try {
-        const authHeader = 'Basic ' + btoa(':' + azureConfig.pat);
+        const authHeader = 'Basic ' + btoa(':' + azureSettings.pat);
         
         // 1. تنفيذ الكويري للحصول على الـ IDs
         // ملاحظة: بما أنها Link Query، سنحصل على علاقات (relations)
-        const queryUrl = `https://dev.azure.com/${azureConfig.org}/${azureSettings.project}/_apis/wit/wiql/${azureSettings.queryId}?api-version=6.0`;
+        const queryUrl = `https://dev.azure.com/${azureSettings.org}/${azureSettings.project}/_apis/wit/wiql/${azureSettings.queryId}?api-version=6.0`;
         const queryRes = await fetch(queryUrl, { headers: { 'Authorization': authHeader } });
         
         if (!queryRes.ok) throw new Error("Azure Query Failed. Check PAT and Org name.");
