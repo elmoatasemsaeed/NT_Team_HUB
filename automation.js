@@ -232,8 +232,7 @@ async function saveAzureSettings() {
     azureConfig.queryId = document.getElementById('azQueryId').value;
     azureConfig.pat = document.getElementById('azPat').value;
     
-    if(!azureSettings.pat || !azureSettings.org) return alert("Please fill at least PAT and Org");
-
+if(!azureConfig.pat || !azureConfig.org) return alert("Please fill at least PAT and Org");
     // نستخدم دالة المزامنة الأصلية لحفظ الإعدادات في data.json
     const success = await syncToGitHub(); 
     if(success) {
@@ -253,11 +252,11 @@ async function fetchFromAzure() {
     if (typeof showToast === 'function') showToast("Connecting to Azure DevOps...");
     
     try {
-        const authHeader = 'Basic ' + btoa(':' + azureSettings.pat);
+        const authHeader = 'Basic ' + btoa(':' + azureConfig.pat);
         
         // 1. تنفيذ الكويري للحصول على الـ IDs
         // ملاحظة: بما أنها Link Query، سنحصل على علاقات (relations)
-        const queryUrl = `https://dev.azure.com/${azureSettings.org}/${azureSettings.project}/_apis/wit/wiql/${azureSettings.queryId}?api-version=6.0`;
+        const queryUrl = `https://dev.azure.com/${azureConfig.org}/${azureSettings.project}/_apis/wit/wiql/${azureSettings.queryId}?api-version=6.0`;
         const queryRes = await fetch(queryUrl, { headers: { 'Authorization': authHeader } });
         
         if (!queryRes.ok) throw new Error("Azure Query Failed. Check PAT and Org name.");
