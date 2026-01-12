@@ -1,4 +1,11 @@
 {
+  "azureSettings": {
+    "pat": "",
+    "queryId": "3bff197e-a88f-4263-9410-92b150d4497f",
+    "organization": "NTDotNet",
+    "project": ""
+  },
+{
   "employees": [
     {
       "isVacation": false,
