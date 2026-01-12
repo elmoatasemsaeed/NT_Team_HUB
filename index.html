@@ -386,56 +386,40 @@
         }
 
         async function syncToGitHub() {
-    if (!githubConfig.token || !githubConfig.repo || !githubConfig.path) {
-        showToast("GitHub configuration is missing!", "error");
-        return;
-    }
-
-    const url = `https://api.github.com/repos/${githubConfig.owner}/${githubConfig.repo}/contents/${githubConfig.path}`;
-
-    try {
-        // 1. جلب الـ SHA الحالي للملف من GitHub لتجنب الـ Conflict (409)
-        const getRes = await fetch(url, {
-            headers: { "Authorization": `token ${githubConfig.token}` }
-        });
-        
-        if (getRes.ok) {
-            const fileData = await getRes.json();
-            githubConfig.sha = fileData.sha; // تحديث الـ SHA بأحدث نسخة موجودة على السيرفر
+            if (!githubConfig.token) return false;
+            const fullData = { 
+                employees, 
+                fields: fieldsConfig, 
+                azure: azureConfig,
+                users, 
+                visibility: visibilityConfig, 
+                charts: chartsConfig, 
+                timestamp: new Date().toISOString() 
+            };
+            try {
+                const url = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}`;
+                const body = { 
+                    message: "Update Data Hub", 
+                    content: btoa(unescape(encodeURIComponent(JSON.stringify(fullData, null, 2)))), 
+                    branch: githubConfig.branch, 
+                    sha: githubConfig.sha 
+                };
+                const response = await fetch(url, { 
+                    method: 'PUT', 
+                    headers: { 'Authorization': `token ${githubConfig.token}` }, 
+                    body: JSON.stringify(body) 
+                });
+                if (response.ok) { 
+                    const resData = await response.json(); 
+                    githubConfig.sha = resData.content.sha;
+                    return true;
+                }
+                return false;
+            } catch (err) { 
+                console.error("Sync Error:", err); 
+                return false;
+            }
         }
-
-        // 2. تحضير البيانات المراد رفعها
-        const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
-        
-        const body = {
-            message: `Update data.json - ${new Date().toLocaleString()}`,
-            content: content,
-            sha: githubConfig.sha // إرسال الـ SHA الجديد
-        };
-
-        // 3. تنفيذ عملية الرفع
-        const putRes = await fetch(url, {
-            method: "PUT",
-            headers: {
-                "Authorization": `token ${githubConfig.token}`,
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(body)
-        });
-
-        if (putRes.ok) {
-            const resData = await putRes.json();
-            githubConfig.sha = resData.content.sha; // تحديث الـ SHA للعملية القادمة
-            showToast("Successfully synced to GitHub!");
-        } else {
-            const error = await putRes.json();
-            throw new Error(error.message);
-        }
-    } catch (err) {
-        console.error("GitHub Sync Error:", err);
-        showToast(`Sync failed: ${err.message}`, "error");
-    }
-}
 
         async function checkLogin() {
             const userVal = document.getElementById('userInput').value.trim().toLowerCase();
@@ -1122,44 +1106,38 @@ function checkAvailableDevs() {
         location.reload();
     }
 }
-        async function saveAzureSettings() {
-    // 1. جلب القيم من واجهة المستخدم وتحديث كائن الإعدادات
-    azureConfig = {
-        org: document.getElementById('azOrg').value.trim(),
-        project: document.getElementById('azProject').value.trim(),
-        queryId: document.getElementById('azQueryId').value.trim(),
-        pat: document.getElementById('azPat').value.trim()
-    };
+        function saveAzureSettings() {
+    const org = document.getElementById('azOrg').value.trim();
+    const project = document.getElementById('azProject').value.trim();
+    const queryId = document.getElementById('azQueryId').value.trim();
+    const pat = document.getElementById('azPat').value.trim();
 
-    // التحقق من إدخال البيانات الأساسية
-    if (!azureConfig.org || !azureConfig.project || !azureConfig.pat) {
-        showToast("Please fill in all Azure settings fields", "error");
+    if (!org || !project || !queryId || !pat) {
+        showToast("Please fill all Azure settings fields", "error");
         return;
     }
 
-    // 2. حفظ البيانات محلياً في المتصفح كما طلبت
-    // ملاحظة: نستخدم 'azure_settings_backup' أو أي اسم تفضله لتمييزها عن بيانات الموظفين
-    const dataToSave = {
-        employees: employees,
-        fields: fieldsConfig,
-        users: users,
-        visibility: visibilityConfig,
-        charts: chartsConfig,
-        azure: azureConfig
+    // 1. تخزين البيانات في المتغير العام الذي يُرفع لـ GitHub
+    if (!fullData.azureConfig) fullData.azureConfig = {};
+    
+    fullData.azureConfig = {
+        org: org,
+        project: project,
+        queryId: queryId,
+        pat: pat
     };
-    localStorage.setItem('teamHubData', JSON.stringify(dataToSave));
 
-    // 3. رفع الإعدادات الجديدة إلى GitHub لضمان مزامنتها مع الفريق
-    try {
-        const success = await syncToGitHub(); // استدعاء الدالة المحدثة
-        if (success) {
-            showToast("Azure Settings saved and synced successfully!");
-            closeAzureSetupModal();
-        }
-    } catch (error) {
-        console.error("Error saving Azure settings:", error);
-        showToast("Failed to sync settings to GitHub", "error");
-    }
+    // 2. حفظ البيانات "فوق" على GitHub
+    // ملاحظة: تأكد من أن دالة syncToGitHub موجودة وتعمل لديك
+    syncToGitHub("Updated Azure Cloud Configuration").then(() => {
+        showToast("Azure settings saved permanently to cloud!");
+        
+        // إغلاق المودال بعد الحفظ
+        const modal = document.getElementById('setupModal');
+        if (modal) modal.classList.add('hidden');
+    }).catch(err => {
+        showToast("Error saving to cloud: " + err.message, "error");
+    });
 }
         function loadAzureSettingsToUI() {
     if (fullData && fullData.azureConfig) {
@@ -1212,9 +1190,6 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
-
-
-
 
 
 
