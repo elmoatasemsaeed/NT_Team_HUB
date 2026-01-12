@@ -298,7 +298,8 @@ async function fetchFromAzure() {
 
         const batchData = await batchRes.json();
 
-        // 3. تحويل البيانات لتناسب منطق البرنامج وتطابق أسماء الحقول الجديدة
+      // ... داخل دالة fetchFromAzure بعد سطر batchData.value.map ...
+
         uploadedCSVData = batchData.value.map(item => {
             const f = item.fields;
             return {
@@ -310,11 +311,16 @@ async function fetchFromAzure() {
                 "Activated Date": f["Microsoft.VSTS.Common.ActivatedDate"] || "",
                 "Est Dev Effort": f["MyCompany.MyProcess.EstDevEffort"] || 0,
                 "Est Test Effort": f["MyCompany.MyProcess.EstTestEffort"] || 0,
-                "Tester": f["MyCompany.MyProcess.Tester"] || "",
-                "Resolved Date": f["Custom.CustomResolvedDate"] || "",
+                "Assigned To Tester": f["MyCompany.MyProcess.Tester"] || "", // تعديل المسمى ليتوافق مع Logic المعالجة
+                "CustomResolvedDate": f["Custom.CustomResolvedDate"] || "", // تعديل المسمى ليتوافق مع Logic المعالجة
                 "Original Estimation": f["NT.OriginalEstimation"] || 0
             };
         });
+
+        showToast(`Ready! Fetched ${uploadedCSVData.length} items from Azure.`);
+
+        // إضافة هذا السطر لتشغيل المعالجة فوراً وإظهار البيانات
+        await startAutomationProcess();
 
         // 4. تفعيل زر البدء وتحديث الواجهة
         const btn = document.getElementById('btnStartProcess');
