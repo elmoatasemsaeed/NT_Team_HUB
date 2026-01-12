@@ -386,40 +386,56 @@
         }
 
         async function syncToGitHub() {
-            if (!githubConfig.token) return false;
-            const fullData = { 
-                employees, 
-                fields: fieldsConfig, 
-                azure: azureConfig,
-                users, 
-                visibility: visibilityConfig, 
-                charts: chartsConfig, 
-                timestamp: new Date().toISOString() 
-            };
-            try {
-                const url = `https://api.github.com/repos/${githubConfig.repoPath}/contents/${githubConfig.filePath}`;
-                const body = { 
-                    message: "Update Data Hub", 
-                    content: btoa(unescape(encodeURIComponent(JSON.stringify(fullData, null, 2)))), 
-                    branch: githubConfig.branch, 
-                    sha: githubConfig.sha 
-                };
-                const response = await fetch(url, { 
-                    method: 'PUT', 
-                    headers: { 'Authorization': `token ${githubConfig.token}` }, 
-                    body: JSON.stringify(body) 
-                });
-                if (response.ok) { 
-                    const resData = await response.json(); 
-                    githubConfig.sha = resData.content.sha;
-                    return true;
-                }
-                return false;
-            } catch (err) { 
-                console.error("Sync Error:", err); 
-                return false;
-            }
+    if (!githubConfig.token || !githubConfig.repo || !githubConfig.path) {
+        showToast("GitHub configuration is missing!", "error");
+        return;
+    }
+
+    const url = `https://api.github.com/repos/${githubConfig.owner}/${githubConfig.repo}/contents/${githubConfig.path}`;
+
+    try {
+        // 1. جلب الـ SHA الحالي للملف من GitHub لتجنب الـ Conflict (409)
+        const getRes = await fetch(url, {
+            headers: { "Authorization": `token ${githubConfig.token}` }
+        });
+        
+        if (getRes.ok) {
+            const fileData = await getRes.json();
+            githubConfig.sha = fileData.sha; // تحديث الـ SHA بأحدث نسخة موجودة على السيرفر
         }
+
+        // 2. تحضير البيانات المراد رفعها
+        const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+        
+        const body = {
+            message: `Update data.json - ${new Date().toLocaleString()}`,
+            content: content,
+            sha: githubConfig.sha // إرسال الـ SHA الجديد
+        };
+
+        // 3. تنفيذ عملية الرفع
+        const putRes = await fetch(url, {
+            method: "PUT",
+            headers: {
+                "Authorization": `token ${githubConfig.token}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(body)
+        });
+
+        if (putRes.ok) {
+            const resData = await putRes.json();
+            githubConfig.sha = resData.content.sha; // تحديث الـ SHA للعملية القادمة
+            showToast("Successfully synced to GitHub!");
+        } else {
+            const error = await putRes.json();
+            throw new Error(error.message);
+        }
+    } catch (err) {
+        console.error("GitHub Sync Error:", err);
+        showToast(`Sync failed: ${err.message}`, "error");
+    }
+}
 
         async function checkLogin() {
             const userVal = document.getElementById('userInput').value.trim().toLowerCase();
@@ -1190,6 +1206,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
