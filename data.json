@@ -1,10 +1,4 @@
 {
-  "azureSettings": {
-    "pat": "",
-    "queryId": "3bff197e-a88f-4263-9410-92b150d4497f",
-    "organization": "NTDotNet",
-    "project": ""
-  },
   "employees": [
     {
       "isVacation": false,
@@ -491,7 +485,7 @@
       "f1766929340598": ""
     },
     {
-      "isVacation": true,
+      "isVacation": false,
       "vacationEnd": "2026-01-12",
       "name": "Mahmoud Ab Omar",
       "role": "Tester",
@@ -1168,5 +1162,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-11T15:46:42.095Z"
+  "timestamp": "2026-01-12T09:51:06.477Z"
 }
