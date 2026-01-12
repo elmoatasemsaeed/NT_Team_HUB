@@ -1104,6 +1104,58 @@ function checkAvailableDevs() {
         location.reload();
     }
 }
+        function saveAzureSettings() {
+    const org = document.getElementById('azOrg').value.trim();
+    const project = document.getElementById('azProject').value.trim();
+    const queryId = document.getElementById('azQueryId').value.trim();
+    const pat = document.getElementById('azPat').value.trim();
+
+    if (!org || !project || !queryId || !pat) {
+        showToast("Please fill all Azure settings fields", "error");
+        return;
+    }
+
+    // 1. تخزين البيانات في المتغير العام الذي يُرفع لـ GitHub
+    if (!fullData.azureConfig) fullData.azureConfig = {};
+    
+    fullData.azureConfig = {
+        org: org,
+        project: project,
+        queryId: queryId,
+        pat: pat
+    };
+
+    // 2. حفظ البيانات "فوق" على GitHub
+    // ملاحظة: تأكد من أن دالة syncToGitHub موجودة وتعمل لديك
+    syncToGitHub("Updated Azure Cloud Configuration").then(() => {
+        showToast("Azure settings saved permanently to cloud!");
+        
+        // إغلاق المودال بعد الحفظ
+        const modal = document.getElementById('setupModal');
+        if (modal) modal.classList.add('hidden');
+    }).catch(err => {
+        showToast("Error saving to cloud: " + err.message, "error");
+    });
+}
+        function loadAzureSettingsToUI() {
+    if (fullData && fullData.azureConfig) {
+        const config = fullData.azureConfig;
+        if (document.getElementById('azOrg')) document.getElementById('azOrg').value = config.org || '';
+        if (document.getElementById('azProject')) document.getElementById('azProject').value = config.project || '';
+        if (document.getElementById('azQueryId')) document.getElementById('azQueryId').value = config.queryId || '';
+        if (document.getElementById('azPat')) document.getElementById('azPat').value = config.pat || '';
+        
+        console.log("Azure settings loaded from cloud.");
+    }
+}
+
+// استدعِ هذه الدالة بعد نجاح عملية الـ fetch لملف data.json
+// مثال: 
+// .then(data => { 
+//    fullData = data; 
+//    loadAzureSettingsToUI(); 
+//    renderAll(); 
+// })
     </script>
     <script src="automation.js"></script>
     <div id="azureSetupModal" class="fixed inset-0 z-[5000] hidden bg-black/50 flex items-center justify-center p-4">
@@ -1136,6 +1188,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
