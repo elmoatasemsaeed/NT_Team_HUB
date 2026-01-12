@@ -1071,12 +1071,6 @@
       "options": []
     }
   ],
-  "azureConfig": {
-    "org": "",
-    "project": "",
-    "queryId": "",
-    "pat": ""
-  },
   "users": [
     {
       "username": "admin",
@@ -1168,5 +1162,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-12T10:25:01.758Z"
+  "timestamp": "2026-01-12T11:14:08.734Z"
 }
