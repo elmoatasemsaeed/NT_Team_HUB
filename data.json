@@ -1071,6 +1071,12 @@
       "options": []
     }
   ],
+  "azureConfig": {
+    "org": "",
+    "project": "",
+    "queryId": "",
+    "pat": ""
+  },
   "users": [
     {
       "username": "admin",
