@@ -203,4 +203,107 @@ function handleCSVUpload(event) {
         reader.readAsBinaryString(file);
     }
 }
-// تم حذف القوس الزائد من هنا ليعمل الملف بشكل صحيح
+// متغير لتخزين الإعدادات (يتم تحميله من JSON)
+let azureSettings = { pat: "", queryId: "3bff197e-a88f-4263-9410-92b150d4497f", org: "", project: "" };
+
+// دالة فتح مودال الإعدادات
+function openAzureSetupModal() {
+    document.getElementById('azOrg').value = azureSettings.org || "";
+    document.getElementById('azProject').value = azureSettings.project || "";
+    document.getElementById('azQueryId').value = azureSettings.queryId || "";
+    document.getElementById('azPat').value = azureSettings.pat || "";
+    document.getElementById('azureSetupModal').classList.remove('hidden');
+    lucide.createIcons();
+}
+
+function closeAzureSetupModal() {
+    document.getElementById('azureSetupModal').classList.add('hidden');
+}
+
+// دالة حفظ الإعدادات ورفعها لـ GitHub
+async function saveAzureSettings() {
+    azureSettings.org = document.getElementById('azOrg').value;
+    azureSettings.project = document.getElementById('azProject').value;
+    azureSettings.queryId = document.getElementById('azQueryId').value;
+    azureSettings.pat = document.getElementById('azPat').value;
+    
+    if(!azureSettings.pat || !azureSettings.org) return alert("Please fill at least PAT and Org");
+
+    // نستخدم دالة المزامنة الأصلية لحفظ الإعدادات في data.json
+    const success = await syncToGitHub(); 
+    if(success) {
+        showToast("Azure Settings Saved Successfully!");
+        closeAzureSetupModal();
+    }
+}
+
+// الدالة الرئيسية لجلب البيانات من Azure
+async function fetchFromAzure() {
+    if (!azureSettings.pat || !azureSettings.org) {
+        alert("Please configure Azure Settings first (PAT, Org, Project).");
+        openAzureSetupModal();
+        return;
+    }
+
+    if (typeof showToast === 'function') showToast("Connecting to Azure DevOps...");
+    
+    try {
+        const authHeader = 'Basic ' + btoa(':' + azureSettings.pat);
+        
+        // 1. تنفيذ الكويري للحصول على الـ IDs
+        const queryUrl = `https://dev.azure.com/${azureSettings.org}/${azureSettings.project}/_apis/wit/wiql/${azureSettings.queryId}?api-version=6.0`;
+        const queryRes = await fetch(queryUrl, { headers: { 'Authorization': authHeader } });
+        
+        if (!queryRes.ok) throw new Error("Azure Query Failed. Check PAT and Org name.");
+        const queryData = await queryRes.json();
+        const ids = queryData.workItems.map(wi => wi.id);
+
+        if (ids.length === 0) return showToast("No items found in Azure Query.");
+
+        // 2. جلب تفاصيل الـ Work Items في دفعة واحدة (Batch)
+        const batchUrl = `https://dev.azure.com/${azureSettings.org}/${azureSettings.project}/_apis/wit/workitemsbatch?api-version=6.0`;
+        const batchRes = await fetch(batchUrl, {
+            method: 'POST',
+            headers: { 'Authorization': authHeader, 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                ids: ids,
+                fields: [
+                    "System.Id", "System.Title", "System.WorkItemType", "System.AssignedTo",
+                    "Microsoft.VSTS.Common.ActivatedDate", "Microsoft.VSTS.Scheduling.OriginalEstimate",
+                    "Microsoft.VSTS.Common.ResolvedDate", "Custom.EstDevEffort", "Custom.AssignedToTester", "Custom.EstTestEffort"
+                ]
+            })
+        });
+
+        const batchData = await batchRes.json();
+
+        // 3. تحويل البيانات لتناسب منطق processCSVRow الحالي
+        uploadedCSVData = batchData.value.map(item => {
+            const f = item.fields;
+            return {
+                "ID": item.id,
+                "Title": f["System.Title"],
+                "Work Item Type": f["System.WorkItemType"],
+                "Assigned To": f["System.AssignedTo"] ? f["System.AssignedTo"].displayName : "",
+                "Activated Date": f["Microsoft.VSTS.Common.ActivatedDate"],
+                "Original Estimation": f["Microsoft.VSTS.Scheduling.OriginalEstimate"],
+                "CustomResolvedDate": f["Microsoft.VSTS.Common.ResolvedDate"],
+                "Est Dev Effort": f["Custom.EstDevEffort"] || 0,
+                "Assigned To Tester": f["Custom.AssignedToTester"] || "",
+                "Est Test Effort": f["Custom.EstTestEffort"] || 0
+            };
+        });
+
+        // 4. تفعيل زر البدء
+        const btn = document.getElementById('btnStartProcess');
+        btn.disabled = false;
+        btn.classList.remove('text-gray-400', 'cursor-not-allowed');
+        btn.classList.add('text-emerald-700', 'hover:bg-emerald-50');
+        
+        showToast(`Ready! Fetched ${uploadedCSVData.length} items from Azure.`);
+        
+    } catch (error) {
+        console.error(error);
+        alert("Azure Error: " + error.message);
+    }
+}
