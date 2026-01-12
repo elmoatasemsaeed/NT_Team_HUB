@@ -237,7 +237,7 @@ async function saveAzureSettings() {
     }
 }
 
-// الدالة الرئيسية لجلب البيانات من Azure
+// الدالة الرئيسية لجلب البيانات من Azure بعد تعديل الحقول لتطابق الكويري
 async function fetchFromAzure() {
     if (!azureSettings.pat || !azureSettings.org) {
         alert("Please configure Azure Settings first (PAT, Org, Project).");
@@ -251,16 +251,29 @@ async function fetchFromAzure() {
         const authHeader = 'Basic ' + btoa(':' + azureSettings.pat);
         
         // 1. تنفيذ الكويري للحصول على الـ IDs
+        // ملاحظة: بما أنها Link Query، سنحصل على علاقات (relations)
         const queryUrl = `https://dev.azure.com/${azureSettings.org}/${azureSettings.project}/_apis/wit/wiql/${azureSettings.queryId}?api-version=6.0`;
         const queryRes = await fetch(queryUrl, { headers: { 'Authorization': authHeader } });
         
         if (!queryRes.ok) throw new Error("Azure Query Failed. Check PAT and Org name.");
         const queryData = await queryRes.json();
-        const ids = queryData.workItems.map(wi => wi.id);
+
+        // استخراج الـ IDs الفريدة من علاقات الكويري (Source and Target)
+        let ids = [];
+        if (queryData.workItemRelations) {
+            const allIds = new Set();
+            queryData.workItemRelations.forEach(rel => {
+                if (rel.source) allIds.add(rel.source.id);
+                if (rel.target) allIds.add(rel.target.id);
+            });
+            ids = Array.from(allIds);
+        } else if (queryData.workItems) {
+            ids = queryData.workItems.map(wi => wi.id);
+        }
 
         if (ids.length === 0) return showToast("No items found in Azure Query.");
 
-        // 2. جلب تفاصيل الـ Work Items في دفعة واحدة (Batch)
+        // 2. جلب تفاصيل الـ Work Items بناءً على الحقول الموجودة في الكويري الخاصة بك
         const batchUrl = `https://dev.azure.com/${azureSettings.org}/${azureSettings.project}/_apis/wit/workitemsbatch?api-version=6.0`;
         const batchRes = await fetch(batchUrl, {
             method: 'POST',
@@ -268,42 +281,53 @@ async function fetchFromAzure() {
             body: JSON.stringify({
                 ids: ids,
                 fields: [
-                    "System.Id", "System.Title", "System.WorkItemType", "System.AssignedTo",
-                    "Microsoft.VSTS.Common.ActivatedDate", "Microsoft.VSTS.Scheduling.OriginalEstimate",
-                    "Microsoft.VSTS.Common.ResolvedDate", "Custom.EstDevEffort", "Custom.AssignedToTester", "Custom.EstTestEffort"
+                    "System.Id",
+                    "System.WorkItemType",
+                    "System.Title",
+                    "System.AssignedTo",
+                    "System.State",
+                    "Microsoft.VSTS.Common.ActivatedDate",
+                    "MyCompany.MyProcess.EstDevEffort",
+                    "MyCompany.MyProcess.EstTestEffort",
+                    "MyCompany.MyProcess.Tester",
+                    "Custom.CustomResolvedDate",
+                    "NT.OriginalEstimation"
                 ]
             })
         });
 
         const batchData = await batchRes.json();
 
-        // 3. تحويل البيانات لتناسب منطق processCSVRow الحالي
+        // 3. تحويل البيانات لتناسب منطق البرنامج وتطابق أسماء الحقول الجديدة
         uploadedCSVData = batchData.value.map(item => {
             const f = item.fields;
             return {
                 "ID": item.id,
-                "Title": f["System.Title"],
                 "Work Item Type": f["System.WorkItemType"],
-                "Assigned To": f["System.AssignedTo"] ? f["System.AssignedTo"].displayName : "",
-                "Activated Date": f["Microsoft.VSTS.Common.ActivatedDate"],
-                "Original Estimation": f["Microsoft.VSTS.Scheduling.OriginalEstimate"],
-                "CustomResolvedDate": f["Microsoft.VSTS.Common.ResolvedDate"],
-                "Est Dev Effort": f["Custom.EstDevEffort"] || 0,
-                "Assigned To Tester": f["Custom.AssignedToTester"] || "",
-                "Est Test Effort": f["Custom.EstTestEffort"] || 0
+                "Title": f["System.Title"],
+                "Assigned To": f["System.AssignedTo"] ? (f["System.AssignedTo"].displayName || f["System.AssignedTo"]) : "",
+                "State": f["System.State"],
+                "Activated Date": f["Microsoft.VSTS.Common.ActivatedDate"] || "",
+                "Est Dev Effort": f["MyCompany.MyProcess.EstDevEffort"] || 0,
+                "Est Test Effort": f["MyCompany.MyProcess.EstTestEffort"] || 0,
+                "Tester": f["MyCompany.MyProcess.Tester"] || "",
+                "Resolved Date": f["Custom.CustomResolvedDate"] || "",
+                "Original Estimation": f["NT.OriginalEstimation"] || 0
             };
         });
 
-        // 4. تفعيل زر البدء
+        // 4. تفعيل زر البدء وتحديث الواجهة
         const btn = document.getElementById('btnStartProcess');
-        btn.disabled = false;
-        btn.classList.remove('text-gray-400', 'cursor-not-allowed');
-        btn.classList.add('text-emerald-700', 'hover:bg-emerald-50');
+        if (btn) {
+            btn.disabled = false;
+            btn.classList.remove('text-gray-400', 'cursor-not-allowed');
+            btn.classList.add('text-emerald-700', 'hover:bg-emerald-50');
+        }
         
         showToast(`Ready! Fetched ${uploadedCSVData.length} items from Azure.`);
         
     } catch (error) {
-        console.error(error);
+        console.error("Detailed Error:", error);
         alert("Azure Error: " + error.message);
     }
 }
