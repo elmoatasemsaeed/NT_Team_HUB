@@ -14,7 +14,7 @@
         "Iteration"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "",
+      "f1766917553886": "154699 Writing TestCases For Samples Under Custody, 154698 Writing TestCases For Sample Re-Imaging ANGA, 154697 Writing TestCases For User Branch ANGA",
       "f1766929340598": "2025-12-30T10:34"
     },
     {
@@ -32,7 +32,7 @@
       "custom_1766584922755": "هنسحبه من الهوم فيزيت تدريجيا",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
+      "f1766917553886": "154028 Visit list - Select all checkbox",
       "f1766929340598": "2026-01-04T09:27"
     },
     {
@@ -65,8 +65,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "150180 Create new setup screen Resistant pattern, 155255 BD009 : Update data in ResistancePattern, 155249 BD006 : Insert data into ResistancePattern",
+      "f1766929340598": "2026-01-15T07:15"
     },
     {
       "isVacation": false,
@@ -172,7 +172,7 @@
       "workingIn": "elBORG",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "",
+      "f1766917553886": "153193 Cash and Credit Prices Not Restored, 151738 Execution, 153159 Execution",
       "f1766929340598": "2026-01-04T12:39"
     },
     {
@@ -216,7 +216,7 @@
       "workingIn": "elBORG",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "",
+      "f1766917553886": "153917 Result Log >> Pending Status is",
       "f1766929340598": "2025-12-21T16:32"
     },
     {
@@ -261,7 +261,7 @@
         "Iteration"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "",
+      "f1766917553886": "155377 Collector Field dropdown list selection is, 152490 Assign Visit -  UI does",
       "f1766929340598": "2026-01-11T10:59"
     },
     {
@@ -293,7 +293,7 @@
       "workingIn": [
         "Iteration"
       ],
-      "f1766917553886": "",
+      "f1766917553886": "155340 Execution, 155084 Review",
       "f1766929340598": "2026-01-11T07:30"
     },
     {
@@ -464,7 +464,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
+      "f1766917553886": "146890 Update Batch Details and Order Details",
       "f1766929340598": "2026-01-12T18:00"
     },
     {
@@ -826,7 +826,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
+      "f1766917553886": "153198 Add New SMS Provider [mshastra], 153282 ADAFSA : Human API - Add",
       "f1766929340598": "2026-01-12T18:00"
     },
     {
@@ -899,7 +899,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
+      "f1766917553886": "155211 MM | Client : Detailed Inventory, 155097 Issue at Items Below/Over Ordering Limit",
       "f1766929340598": "2026-01-12T18:00"
     },
     {
@@ -1162,5 +1162,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-12T10:24:52.896Z"
+  "timestamp": "2026-01-12T10:25:01.758Z"
 }
