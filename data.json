@@ -32,7 +32,7 @@
       "custom_1766584922755": "هنسحبه من الهوم فيزيت تدريجيا",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
+      "f1766917553886": "154028 Visit list - Select all checkbox",
       "f1766929340598": "2026-01-04T09:27"
     },
     {
@@ -65,7 +65,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "150180 Create new setup screen Resistant pattern, 155249 BD006 : Insert data into ResistancePattern",
+      "f1766917553886": "150180 Create new setup screen Resistant pattern, 155255 BD009 : Update data in ResistancePattern, 155249 BD006 : Insert data into ResistancePattern",
       "f1766929340598": "2026-01-15T07:15"
     },
     {
@@ -99,8 +99,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155133 issue in create event",
-      "f1766929340598": "2026-01-06T09:38"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "isVacation": false,
@@ -206,8 +206,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "153919 Execution, 153918 Preparation",
-      "f1766929340598": "2025-12-31T11:58"
+      "f1766917553886": "155254 Preparation, 153919 Execution, 153918 Preparation",
+      "f1766929340598": "2026-01-13T08:00"
     },
     {
       "name": "Amr Sameh",
@@ -278,7 +278,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154138 Preparation Task for CR154012, 154018 Preparation task for CR 154013, 153139 Action button is not appearing in",
+      "f1766917553886": "154138 Preparation Task for CR154012, 154018 Preparation task for CR 154013",
       "f1766929340598": "2025-12-23T17:23"
     },
     {
@@ -402,8 +402,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154632 Wareed Lab - NT Mobile APIs, 155408 Planning and Preparation",
-      "f1766929340598": "2026-01-11T18:00"
+      "f1766917553886": "154632 Wareed Lab - NT Mobile APIs, 155532 Create CancelRegistration API, 155408 Planning and Preparation",
+      "f1766929340598": "2026-01-12T18:00"
     },
     {
       "isVacation": false,
@@ -431,7 +431,7 @@
         "support"
       ],
       "f1766917553886": "154274 Activate SAP on New Alameda Enviroment, 155163 Get Result Raw data issues, 155162 Get Result Raw Data issues",
-      "f1766929340598": "2026-01-11T18:00"
+      "f1766929340598": "2026-01-12T18:00"
     },
     {
       "isVacation": false,
@@ -464,8 +464,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": "2026-01-11T18:00"
+      "f1766917553886": "146890 Update Batch Details and Order Details",
+      "f1766929340598": "2026-01-12T18:00"
     },
     {
       "isVacation": false,
@@ -498,8 +498,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155235 #CR>150181: Preparation, 154612 Alameda: Antimicrobial Column Does Not Start, 154618 #Alameda: The cumulative report is not",
-      "f1766929340598": "2026-01-08T14:53"
+      "f1766917553886": "155239 #CR>151975: Preparation, 155235 #CR>150181: Preparation, 154612 Alameda: Antimicrobial Column Does Not Start",
+      "f1766929340598": "2026-01-12T12:24"
     },
     {
       "isVacation": false,
@@ -515,8 +515,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "144143 Update Correct Evidence Medical Labs –, 153433 Internal CR - Create Proforma No., 155394 Preparation task for CR 144143",
-      "f1766929340598": "2026-01-11T18:00"
+      "f1766917553886": "144143 Update Correct Evidence Medical Labs –, 155397 AlBorg KSA - invoice form claim, 153433 Internal CR - Create Proforma No.",
+      "f1766929340598": "2026-01-12T18:00"
     },
     {
       "isVacation": false,
@@ -567,8 +567,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155179 BD002 - Backend: Create new endpoint, 152874 Alameda gp - Timestamp report :, 155178 FD010 - Front end : Map",
-      "f1766929340598": "2026-01-12T08:03"
+      "f1766917553886": "152874 Alameda gp - Timestamp report :, 155179 BD002 - Backend: Create new endpoint, 155178 FD010 - Front end : Map",
+      "f1766929340598": "2026-01-12T18:00"
     },
     {
       "isVacation": false,
@@ -617,8 +617,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "152999 Financial >> Administration >> Financial>> Contract, 153078 Financial >> Claims >> Financial claims, 152906 Financial >> Claims >> Financial claims",
-      "f1766929340598": "2025-12-31T16:25"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "isVacation": false,
@@ -683,8 +683,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155402 Prepration for CR, 151969 Impact of Regex pattern for the, 153071 Incorrect service-level amounts in ElectronicInvoice_Invoice for",
-      "f1766929340598": "2026-01-11T15:18"
+      "f1766917553886": "152191 Alborg KSA - System Parameters Setup -, 155542 prepartion, 155512 BD009 | add fonts for general",
+      "f1766929340598": "2026-01-12T18:00"
     },
     {
       "isVacation": false,
@@ -719,7 +719,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "141960 Al Borg KSA - TAT: Create, 151989 Internal CR - Comm Package Updates:, 155424 FD009: Add a checkbox control and",
-      "f1766929340598": "2026-01-11T18:00"
+      "f1766929340598": "2026-01-12T18:00"
     },
     {
       "name": "Mustafa Mamdoh",
@@ -781,7 +781,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "154695 Home Visits - Users: Add new",
-      "f1766929340598": "2026-01-11T18:00"
+      "f1766929340598": "2026-01-12T18:00"
     },
     {
       "name": "Saddam Raees",
@@ -826,8 +826,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": "2026-01-11T18:00"
+      "f1766917553886": "153198 Add New SMS Provider [mshastra], 153282 ADAFSA : Human API - Add",
+      "f1766929340598": "2026-01-12T18:00"
     },
     {
       "isVacation": false,
@@ -881,8 +881,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "155435 Preparation, 154725 Execution, 154979 Regression",
-      "f1766929340598": "2026-01-12T10:01"
+      "f1766917553886": "155517 Preparation, 155437 Preparation, 155435 Preparation",
+      "f1766929340598": "2026-01-13T12:00"
     },
     {
       "isVacation": false,
@@ -899,8 +899,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": "2026-01-11T18:00"
+      "f1766917553886": "155211 MM | Client : Detailed Inventory, 155097 Issue at Items Below/Over Ordering Limit",
+      "f1766929340598": "2026-01-12T18:00"
     },
     {
       "isVacation": false,
@@ -917,7 +917,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "153179 Swiss LDM - Athir Ibtegration >, 154627 Get Result (Raw Data) >> The",
-      "f1766929340598": "2026-01-11T18:00"
+      "f1766929340598": "2026-01-12T18:00"
     },
     {
       "isVacation": false,
@@ -952,7 +952,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "154694 Home Visits - Roles: Add new",
-      "f1766929340598": "2026-01-11T18:00"
+      "f1766929340598": "2026-01-12T18:00"
     },
     {
       "name": "Yasmine Abdelwahed",
@@ -978,8 +978,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153515 Al Farabi Lab - AMAD Integration",
-      "f1766929340598": "2026-01-11T18:00"
+      "f1766917553886": "153515 Al Farabi Lab - AMAD Integration, 155534 Create GetAccessionDetails Endpoint",
+      "f1766929340598": "2026-01-12T18:00"
     }
   ],
   "fields": [
@@ -1162,5 +1162,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-12T10:01:46.373Z"
+  "timestamp": "2026-01-12T10:03:42.202Z"
 }
