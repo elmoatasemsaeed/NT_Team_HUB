@@ -204,14 +204,19 @@ function handleCSVUpload(event) {
     }
 }
 // متغير لتخزين الإعدادات (يتم تحميله من JSON)
-let azureSettings = { pat: "", queryId: "3bff197e-a88f-4263-9410-92b150d4497f", org: "", project: "" };
+let azureConfig = { 
+    pat: "", 
+    queryId: "3bff197e-a88f-4263-9410-92b150d4497f", 
+    org: "", 
+    project: "" 
+};
 
 // دالة فتح مودال الإعدادات
 function openAzureSetupModal() {
-    document.getElementById('azOrg').value = azureSettings.org || "";
-    document.getElementById('azProject').value = azureSettings.project || "";
-    document.getElementById('azQueryId').value = azureSettings.queryId || "";
-    document.getElementById('azPat').value = azureSettings.pat || "";
+    document.getElementById('azOrg').value = azureConfig.org || "";
+    document.getElementById('azProject').value = azureConfig.project || "";
+    document.getElementById('azQueryId').value = azureConfig.queryId || "";
+    document.getElementById('azPat').value = azureConfig.pat || "";
     document.getElementById('azureSetupModal').classList.remove('hidden');
     lucide.createIcons();
 }
@@ -222,10 +227,10 @@ function closeAzureSetupModal() {
 
 // دالة حفظ الإعدادات ورفعها لـ GitHub
 async function saveAzureSettings() {
-    azureSettings.org = document.getElementById('azOrg').value;
-    azureSettings.project = document.getElementById('azProject').value;
-    azureSettings.queryId = document.getElementById('azQueryId').value;
-    azureSettings.pat = document.getElementById('azPat').value;
+    azureConfig.org = document.getElementById('azOrg').value;
+    azureConfig.project = document.getElementById('azProject').value;
+    azureConfig.queryId = document.getElementById('azQueryId').value;
+    azureConfig.pat = document.getElementById('azPat').value;
     
     if(!azureSettings.pat || !azureSettings.org) return alert("Please fill at least PAT and Org");
 
