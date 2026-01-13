@@ -208,8 +208,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "153919 Execution, 153918 Preparation",
-      "f1766929340598": "2025-12-31T11:58"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "name": "Amr Sameh",
@@ -517,8 +517,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155631 the Loyalty Point Balance is not, 155397 AlBorg KSA - invoice form claim, 153433 Internal CR - Create Proforma No.",
-      "f1766929340598": "2026-01-13T08:29"
+      "f1766917553886": "155865 TR014 : Add نقاط الولاء Label, 155843 #150535_Review CR's Test Cases / Excution, 155631 the Loyalty Point Balance is not",
+      "f1766929340598": "2026-01-13T13:12"
     },
     {
       "isVacation": false,
@@ -730,8 +730,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "155799 Branches not opened give an Error.",
+      "f1766929340598": "2026-01-13T11:31"
     },
     {
       "isVacation": false,
@@ -810,8 +810,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155776 CR_144143 >> Review CR's Execution",
-      "f1766929340598": "2026-01-13T08:36"
+      "f1766917553886": "155855 CR_153433 >> Review CR's Prepartion &",
+      "f1766929340598": "2026-01-13T14:30"
     },
     {
       "isVacation": false,
@@ -873,8 +873,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155799 Branches not opened give an Error., 153604 execution, 153603 preparation",
-      "f1766929340598": "2026-01-13T11:31"
+      "f1766917553886": "153604 execution, 153603 preparation",
+      "f1766929340598": "2025-12-18T07:33"
     },
     {
       "name": "Sara Mustafa",
@@ -980,7 +980,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153515 Al Farabi Lab - AMAD Integration, 155832 Create Validate Mobile OTP EndPoint, 155737 Create Send MobileOTP Endpoint",
+      "f1766917553886": "153515 Al Farabi Lab - AMAD Integration, 155832 Create Validate Mobile OTP EndPoint",
       "f1766929340598": "2026-01-13T18:00"
     }
   ],
@@ -1164,5 +1164,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-13T12:03:43.117Z"
+  "timestamp": "2026-01-13T12:48:17.366Z"
 }
