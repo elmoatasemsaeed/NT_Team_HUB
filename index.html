@@ -1106,11 +1106,14 @@ function checkAvailableDevs() {
         location.reload();
     }
 }
-        function saveAzureSettings() {
-    const org = document.getElementById('azOrg').value.trim();
-    const project = document.getElementById('azProject').value.trim();
-    const queryId = document.getElementById('azQueryId').value.trim();
-    const pat = document.getElementById('azPat').value.trim();
+        ffunction saveAzureSettings() {
+    // تأكد أن المتغير المستخدم هنا هو azureConfig
+    azureConfig = { 
+        org: document.getElementById('azOrg').value,
+        project: document.getElementById('azProject').value,
+        queryId: document.getElementById('azQueryId').value,
+        pat: document.getElementById('azPat').value
+    };
 
     if (!org || !project || !queryId || !pat) {
         showToast("Please fill all Azure settings fields", "error");
@@ -1190,6 +1193,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
