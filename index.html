@@ -356,7 +356,7 @@
         let activeCharts = [];
         let currentEditingFieldIndex = null;
         let currentSort = { column: null, direction: 'asc' };
-
+        let azureConfig = { org: '', project: '', queryId: '', pat: '' };
         // --- Logic: Authentication & Synchronization ---
         async function loadFromGitHub(manual = false) {
             if (!githubConfig.token) { if (manual) alert("No Token provided!"); return false; }
@@ -1193,6 +1193,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
