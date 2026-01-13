@@ -633,8 +633,8 @@
       "f1766929340598": ""
     },
     {
-      "isVacation": false,
-      "vacationEnd": "",
+      "isVacation": true,
+      "vacationEnd": "2026-01-14",
       "name": "Mohamed Refaat Khalifa Rifaei",
       "role": "Dev",
       "area": [
@@ -1162,5 +1162,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-13T09:58:25.979Z"
+  "timestamp": "2026-01-13T10:16:44.970Z"
 }
