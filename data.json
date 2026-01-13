@@ -885,7 +885,7 @@
       "f1766929340598": "2026-01-13T12:00"
     },
     {
-      "isVacation": true,
+      "isVacation": false,
       "vacationEnd": "2026-01-13",
       "name": "Sherif Eldorf",
       "role": "Dev",
@@ -1162,5 +1162,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-12T13:20:25.321Z"
+  "timestamp": "2026-01-13T07:39:29.919Z"
 }
