@@ -207,8 +207,8 @@ function handleCSVUpload(event) {
 let azureConfig = { 
     pat: "", 
     queryId: "3bff197e-a88f-4263-9410-92b150d4497f", 
-    org: "", 
-    project: "" 
+    org: "NTDotNet", 
+    project: "LDM" 
 };
 
 // دالة فتح مودال الإعدادات
