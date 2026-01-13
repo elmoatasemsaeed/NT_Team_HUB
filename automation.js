@@ -204,19 +204,14 @@ function handleCSVUpload(event) {
     }
 }
 // متغير لتخزين الإعدادات (يتم تحميله من JSON)
-let azureConfig = { 
-    pat: "", 
-    queryId: "3bff197e-a88f-4263-9410-92b150d4497f", 
-    org: "NTDotNet", 
-    project: "LDM" 
-};
+let azureSettings = { pat: "", queryId: "3bff197e-a88f-4263-9410-92b150d4497f", org: "", project: "" };
 
 // دالة فتح مودال الإعدادات
 function openAzureSetupModal() {
-    document.getElementById('azOrg').value = azureConfig.org || "";
-    document.getElementById('azProject').value = azureConfig.project || "";
-    document.getElementById('azQueryId').value = azureConfig.queryId || "";
-    document.getElementById('azPat').value = azureConfig.pat || "";
+    document.getElementById('azOrg').value = azureSettings.org || "";
+    document.getElementById('azProject').value = azureSettings.project || "";
+    document.getElementById('azQueryId').value = azureSettings.queryId || "";
+    document.getElementById('azPat').value = azureSettings.pat || "";
     document.getElementById('azureSetupModal').classList.remove('hidden');
     lucide.createIcons();
 }
@@ -227,10 +222,10 @@ function closeAzureSetupModal() {
 
 // دالة حفظ الإعدادات ورفعها لـ GitHub
 async function saveAzureSettings() {
-    azureConfig.org = document.getElementById('azOrg').value;
-    azureConfig.project = document.getElementById('azProject').value;
-    azureConfig.queryId = document.getElementById('azQueryId').value;
-    azureConfig.pat = document.getElementById('azPat').value;
+    azureSettings.org = document.getElementById('azOrg').value;
+    azureSettings.project = document.getElementById('azProject').value;
+    azureSettings.queryId = document.getElementById('azQueryId').value;
+    azureSettings.pat = document.getElementById('azPat').value;
     
     if(!azureSettings.pat || !azureSettings.org) return alert("Please fill at least PAT and Org");
 
@@ -303,8 +298,7 @@ async function fetchFromAzure() {
 
         const batchData = await batchRes.json();
 
-      // ... داخل دالة fetchFromAzure بعد سطر batchData.value.map ...
-
+        // 3. تحويل البيانات لتناسب منطق البرنامج وتطابق أسماء الحقول الجديدة
         uploadedCSVData = batchData.value.map(item => {
             const f = item.fields;
             return {
@@ -316,16 +310,11 @@ async function fetchFromAzure() {
                 "Activated Date": f["Microsoft.VSTS.Common.ActivatedDate"] || "",
                 "Est Dev Effort": f["MyCompany.MyProcess.EstDevEffort"] || 0,
                 "Est Test Effort": f["MyCompany.MyProcess.EstTestEffort"] || 0,
-                "Assigned To Tester": f["MyCompany.MyProcess.Tester"] || "", // تعديل المسمى ليتوافق مع Logic المعالجة
-                "CustomResolvedDate": f["Custom.CustomResolvedDate"] || "", // تعديل المسمى ليتوافق مع Logic المعالجة
+                "Tester": f["MyCompany.MyProcess.Tester"] || "",
+                "Resolved Date": f["Custom.CustomResolvedDate"] || "",
                 "Original Estimation": f["NT.OriginalEstimation"] || 0
             };
         });
-
-        showToast(`Ready! Fetched ${uploadedCSVData.length} items from Azure.`);
-
-        // إضافة هذا السطر لتشغيل المعالجة فوراً وإظهار البيانات
-        await startAutomationProcess();
 
         // 4. تفعيل زر البدء وتحديث الواجهة
         const btn = document.getElementById('btnStartProcess');
