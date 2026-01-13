@@ -235,8 +235,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "155803 When search by any Acc No",
+      "f1766929340598": "2026-01-13T15:18"
     },
     {
       "isVacation": false,
@@ -295,8 +295,8 @@
       "workingIn": [
         "Iteration"
       ],
-      "f1766917553886": "155795 Review, 155790 Review, 155340 Execution",
-      "f1766929340598": "2026-01-13T14:13"
+      "f1766917553886": "155889 Review, 155883 Review, 155790 Review",
+      "f1766929340598": "2026-01-13T15:50"
     },
     {
       "isVacation": false,
@@ -306,8 +306,8 @@
       "area": "Registration",
       "workingIn": "Iteration",
       "custom_1766503160857": [],
-      "f1766917553886": "155543 execution, 155591 preparation, 155013 BUG_022: system allow adding service with",
-      "f1766929340598": "2026-01-12T17:26"
+      "f1766917553886": "154775 execution, 155543 execution, 155591 preparation",
+      "f1766929340598": "2026-01-14T08:34"
     },
     {
       "isVacation": false,
@@ -357,7 +357,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "151550 Metra Labs - Patient Reports: Update, 155373 TR013 --> Add header image with, 151975 Update EPHI patient reports Header &",
+      "f1766917553886": "151550 Metra Labs - Patient Reports: Update, 155376 TR014 --> Bind new data to, 155375 TR013 --> Add watermark with its",
       "f1766929340598": "2026-01-15T07:15"
     },
     {
@@ -500,7 +500,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155241 #CR>151975: Execution, 155236 #CR>150181: Execution",
+      "f1766917553886": "155241 #CR>151975: Execution, 155236 #CR>150181: Execution, 155808 #CR150181: the Drop down of Resistant",
       "f1766929340598": "2026-01-14T12:00"
     },
     {
@@ -517,8 +517,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155865 TR014 : Add نقاط الولاء Label, 155843 #150535_Review CR's Test Cases / Excution, 155631 the Loyalty Point Balance is not",
-      "f1766929340598": "2026-01-13T13:12"
+      "f1766917553886": "155886 Discount Not Applied to Total Discount, 155631 the Loyalty Point Balance is not, 153433 Internal CR - Create Proforma No.",
+      "f1766929340598": "2026-01-13T15:18"
     },
     {
       "isVacation": false,
@@ -584,8 +584,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "رجب",
-      "f1766917553886": "155261 Execution, 153721 the unit column do not display, 154036 CR_(148807) - Print Customized Reports Header",
-      "f1766929340598": "2026-01-21T11:00"
+      "f1766917553886": "153721 the unit column do not display, 154036 CR_(148807) - Print Customized Reports Header, 153725 the report body design do not",
+      "f1766929340598": "2025-12-30T14:43"
     },
     {
       "name": "Mohamed Elgmmal",
@@ -720,7 +720,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "151989 Internal CR - Comm Package Updates:, 152487 Alameda gp - Microbiology Statistics: Add, 155424 FD009: Add a checkbox control and",
+      "f1766917553886": "151989 Internal CR - Comm Package Updates:, 155424 FD009: Add a checkbox control and",
       "f1766929340598": "2026-01-13T18:00"
     },
     {
@@ -730,8 +730,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "155799 Branches not opened give an Error.",
-      "f1766929340598": "2026-01-13T11:31"
+      "f1766917553886": "155857 When Login branches which migrated appeared, 155804 Error on View Details when open, 155838 Clinical Groups not appeared on LDM",
+      "f1766929340598": "2026-01-13T14:19"
     },
     {
       "isVacation": false,
@@ -810,8 +810,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155855 CR_153433 >> Review CR's Prepartion &",
-      "f1766929340598": "2026-01-13T14:30"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "isVacation": false,
@@ -980,7 +980,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153515 Al Farabi Lab - AMAD Integration, 155832 Create Validate Mobile OTP EndPoint",
+      "f1766917553886": "153515 Al Farabi Lab - AMAD Integration, 155876 Create Forget Password Endpoint",
       "f1766929340598": "2026-01-13T18:00"
     }
   ],
@@ -1164,5 +1164,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-13T12:48:17.366Z"
+  "timestamp": "2026-01-13T14:15:27.614Z"
 }
