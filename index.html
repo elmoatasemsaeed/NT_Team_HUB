@@ -170,6 +170,14 @@
     <i data-lucide="log-out" class="w-4 h-4"></i> Logout
 </button>
                 <button onclick="openModal()" class="admin-only bg-[#1a73e8] text-white px-6 py-2 rounded shadow hover:bg-blue-700 transition-all font-medium">+ Add Member</button>
+
+                <button onclick="openAzureSetupModal()" class="w-full text-left px-4 py-3 hover:bg-sky-50 flex items-center gap-2 text-sm border-b">
+    <i data-lucide="cloud-cog" class="w-4 h-4 text-sky-600"></i> Azure Setup
+</button>
+
+<button onclick="fetchFromAzure()" class="w-full text-left px-3 py-3 hover:bg-sky-50 flex items-center gap-2 text-sm rounded-lg transition-all">
+    <i data-lucide="cloud-lightning" class="w-4 h-4 text-sky-600"></i> Sync from Azure
+</button>
             </div>
         </header>
 
@@ -365,6 +373,7 @@
                     if (content.users) { users = content.users; localStorage.setItem(USERS_KEY, JSON.stringify(users)); }
                     if (content.visibility) visibilityConfig = content.visibility;
                     if (content.charts) chartsConfig = content.charts;
+                    if (content.azure) {azureConfig = content.azure;}
                     renderAll();
                     if(manual) alert("Sync Success!");
                     return true;
@@ -381,6 +390,7 @@
             const fullData = { 
                 employees, 
                 fields: fieldsConfig, 
+                azure: azureConfig,
                 users, 
                 visibility: visibilityConfig, 
                 charts: chartsConfig, 
@@ -1096,11 +1106,93 @@ function checkAvailableDevs() {
         location.reload();
     }
 }
+        function saveAzureSettings() {
+    const org = document.getElementById('azOrg').value.trim();
+    const project = document.getElementById('azProject').value.trim();
+    const queryId = document.getElementById('azQueryId').value.trim();
+    const pat = document.getElementById('azPat').value.trim();
+
+    if (!org || !project || !queryId || !pat) {
+        showToast("Please fill all Azure settings fields", "error");
+        return;
+    }
+
+    // 1. تخزين البيانات في المتغير العام الذي يُرفع لـ GitHub
+    if (!fullData.azureConfig) fullData.azureConfig = {};
+    
+    fullData.azureConfig = {
+        org: org,
+        project: project,
+        queryId: queryId,
+        pat: pat
+    };
+
+    // 2. حفظ البيانات "فوق" على GitHub
+    // ملاحظة: تأكد من أن دالة syncToGitHub موجودة وتعمل لديك
+    syncToGitHub("Updated Azure Cloud Configuration").then(() => {
+        showToast("Azure settings saved permanently to cloud!");
+        
+        // إغلاق المودال بعد الحفظ
+        const modal = document.getElementById('setupModal');
+        if (modal) modal.classList.add('hidden');
+    }).catch(err => {
+        showToast("Error saving to cloud: " + err.message, "error");
+    });
+}
+        function loadAzureSettingsToUI() {
+    if (fullData && fullData.azureConfig) {
+        const config = fullData.azureConfig;
+        if (document.getElementById('azOrg')) document.getElementById('azOrg').value = config.org || '';
+        if (document.getElementById('azProject')) document.getElementById('azProject').value = config.project || '';
+        if (document.getElementById('azQueryId')) document.getElementById('azQueryId').value = config.queryId || '';
+        if (document.getElementById('azPat')) document.getElementById('azPat').value = config.pat || '';
+        
+        console.log("Azure settings loaded from cloud.");
+    }
+}
+
+// استدعِ هذه الدالة بعد نجاح عملية الـ fetch لملف data.json
+// مثال: 
+// .then(data => { 
+//    fullData = data; 
+//    loadAzureSettingsToUI(); 
+//    renderAll(); 
+// })
     </script>
     <script src="automation.js"></script>
+    <div id="azureSetupModal" class="fixed inset-0 z-[5000] hidden bg-black/50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-8 shadow-2xl max-w-md w-full">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-bold text-gray-800">Azure DevOps Integration</h3>
+            <button onclick="closeAzureSetupModal()" class="text-gray-400 hover:text-red-500"><i data-lucide="x"></i></button>
+        </div>
+        <div class="space-y-4">
+            <div>
+                <label class="block text-[10px] font-bold text-gray-400 uppercase mb-1">Organization Name</label>
+                <input type="text" id="azOrg" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-sky-500" placeholder="e.g. MyOrg">
+            </div>
+            <div>
+                <label class="block text-[10px] font-bold text-gray-400 uppercase mb-1">Project Name</label>
+                <input type="text" id="azProject" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-sky-500" placeholder="e.g. MyProject">
+            </div>
+            <div>
+                <label class="block text-[10px] font-bold text-gray-400 uppercase mb-1">Query ID</label>
+                <input type="text" id="azQueryId" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-sky-500" placeholder="3bff197e-...">
+            </div>
+            <div>
+                <label class="block text-[10px] font-bold text-gray-400 uppercase mb-1">Personal Access Token (PAT)</label>
+                <input type="password" id="azPat" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-sky-500" placeholder="Paste Azure PAT">
+            </div>
+            <button onclick="saveAzureSettings()" class="w-full py-3 bg-sky-600 text-white rounded-xl font-bold hover:bg-sky-700 transition-all">SAVE & SYNC TO CLOUD</button>
+        </div>
+    </div>
+</div>
 </body>
 </body>
 </html>
+
+
+
 
 
 
