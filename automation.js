@@ -151,10 +151,10 @@ async function startAutomationProcess() {
             showToast("Sync Successful! Waiting for GitHub Deployment (30s)...");
         }
         
-        // تأخير إعادة التحميل لمدة 30 ثانية لضمان ظهور البيانات الجديدة
+        // تأخير إعادة التحميل لمدة 90 ثانية لضمان ظهور البيانات الجديدة
         setTimeout(() => {
             location.reload();
-        }, 30000); 
+        }, 90000); 
     } else {
         alert("Sync Failed! Please check your Token or Internet connection.");
     }
