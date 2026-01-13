@@ -295,7 +295,7 @@
       "workingIn": [
         "Iteration"
       ],
-      "f1766917553886": "155795 Execution, 155790 Review, 155340 Execution",
+      "f1766917553886": "155795 Review, 155790 Review, 155340 Execution",
       "f1766929340598": "2026-01-13T14:13"
     },
     {
@@ -1164,5 +1164,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-13T11:58:01.862Z"
+  "timestamp": "2026-01-13T12:02:33.875Z"
 }
