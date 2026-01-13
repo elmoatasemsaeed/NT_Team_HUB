@@ -8,7 +8,9 @@ let uploadedCSVData = null;
 // 1. تنظيف الأسماء وتحويلها
 function cleanName(rawName) {
     if (!rawName) return "";
-    return rawName.split('<')[0].trim();
+    // التأكد من تحويل القيمة إلى نص قبل عمل split
+    const nameStr = String(rawName); 
+    return nameStr.split('<')[0].trim();
 }
 
 // 2. محرك الجدولة الذكي (The 5-Hour Logic Engine)
