@@ -16,8 +16,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154699 Writing TestCases For Samples Under Custody, 154698 Writing TestCases For Sample Re-Imaging ANGA, 154697 Writing TestCases For User Branch ANGA",
-      "f1766929340598": "2025-12-30T10:34"
+      "f1766917553886": "155911 Test Wareed APIs, 154699 Writing TestCases For Samples Under Custody, 154698 Writing TestCases For Sample Re-Imaging ANGA",
+      "f1766929340598": "2026-01-13T17:04"
     },
     {
       "isVacation": false,
@@ -150,7 +150,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "150181 Alameda - Update Culture Results screen, 151792 Al Borg KSA - TAT: Create",
+      "f1766917553886": "150181 Alameda - Update Culture Results screen",
       "f1766929340598": "2026-01-13T18:00"
     },
     {
@@ -295,8 +295,8 @@
       "workingIn": [
         "Iteration"
       ],
-      "f1766917553886": "155889 Review, 155883 Review, 155790 Review",
-      "f1766929340598": "2026-01-13T15:50"
+      "f1766917553886": "155883 Review, 155340 Execution, 155084 Review",
+      "f1766929340598": "2026-01-13T15:45"
     },
     {
       "isVacation": false,
@@ -306,7 +306,7 @@
       "area": "Registration",
       "workingIn": "Iteration",
       "custom_1766503160857": [],
-      "f1766917553886": "154775 execution, 155543 execution, 155591 preparation",
+      "f1766917553886": "154775 execution, 155591 preparation, 155013 BUG_022: system allow adding service with",
       "f1766929340598": "2026-01-14T08:34"
     },
     {
@@ -685,7 +685,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "152837 Khedr lab - Define a service, 155620 FD005 | add dropDowns  and, 155542 prepartion",
+      "f1766917553886": "152837 Khedr lab - Define a service, 155620 FD005 | add dropDowns  and, 151969 Impact of Regex pattern for the",
       "f1766929340598": "2026-01-13T18:00"
     },
     {
@@ -1164,5 +1164,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-13T14:15:27.614Z"
+  "timestamp": "2026-01-13T15:03:45.098Z"
 }
