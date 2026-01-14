@@ -49,8 +49,8 @@
       "workingIn": [
         "support"
       ],
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "155538 Label 1: \"Director:\"  & Label, 155540 Received by & inspection should be",
+      "f1766929340598": "2026-01-14T10:03"
     },
     {
       "isVacation": false,
@@ -67,8 +67,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "150180 Create new setup screen Resistant pattern, 155251 BD002 : Get all data or, 155255 BD009 : Update data in ResistancePattern",
-      "f1766929340598": "2026-01-15T07:15"
+      "f1766917553886": "155258 BD006 : Insert data into Auditing, 150180 Create new setup screen Resistant pattern, 155257 BD009 : Delete data from ResistancePattern",
+      "f1766929340598": "2026-01-15T07:45"
     },
     {
       "isVacation": false,
@@ -208,8 +208,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "155250 Preparation",
+      "f1766929340598": "2026-01-15T08:00"
     },
     {
       "name": "Amr Sameh",
@@ -263,7 +263,7 @@
         "Iteration"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "155372 Execution, 155964 Execution",
+      "f1766917553886": "155372 Execution, 155960 \"Country\" field selecting \"select all\" option, 155948 \"Country , Governorate and Area\" dropdown",
       "f1766929340598": "2026-01-15T08:27"
     },
     {
@@ -357,7 +357,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "151550 Metra Labs - Patient Reports: Update, 155376 TR014 --> Bind new data to, 155375 TR013 --> Add watermark with its",
+      "f1766917553886": "151550 Metra Labs - Patient Reports: Update, 151975 Update EPHI patient reports Header &, 138714 Al Borg UAE - Patient Reports",
       "f1766929340598": "2026-01-15T07:15"
     },
     {
@@ -500,7 +500,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155241 #CR>151975: Execution, 155236 #CR>150181: Execution, 155808 #CR150181: the Drop down of Resistant",
+      "f1766917553886": "155241 #CR>151975: Execution, 155236 #CR>150181: Execution",
       "f1766929340598": "2026-01-14T12:00"
     },
     {
@@ -730,8 +730,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "155857 When Login branches which migrated appeared, 155804 Error on View Details when open, 155838 Clinical Groups not appeared on LDM",
-      "f1766929340598": "2026-01-13T14:19"
+      "f1766917553886": "155838 Clinical Groups not appeared on LDM",
+      "f1766929340598": "2026-01-13T13:43"
     },
     {
       "isVacation": false,
@@ -883,7 +883,7 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "155517 Preparation, 155529 Special Character \"#\" is not defined, 154979 Regression",
+      "f1766917553886": "155517 Preparation, 155529 Special Character \"#\" is not defined, 151929 Dynamic Reg _ Merge Samples Poup",
       "f1766929340598": "2026-01-14T09:00"
     },
     {
@@ -901,7 +901,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155211 MM | Client : Detailed Inventory, 155540 Received by & inspection should be, 155759 preparation task for CR 155211",
+      "f1766917553886": "155211 MM | Client : Detailed Inventory, 155759 preparation task for CR 155211, 155097 Issue at Items Below/Over Ordering Limit",
       "f1766929340598": "2026-01-14T18:00"
     },
     {
@@ -953,7 +953,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154694 Home Visits - Roles: Add new",
+      "f1766917553886": "154694 Home Visits - Roles: Add new, 155962 Area dropdown does not restore all",
       "f1766929340598": "2026-01-14T18:00"
     },
     {
@@ -963,8 +963,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "155699 Execution, 155135 Review Task for Execution Activity, 153890 Sample Log >> Sample Type &",
-      "f1766929340598": "2026-01-13T07:44"
+      "f1766917553886": "155982 Review task for Execution Activity, 155699 Execution, 155135 Review Task for Execution Activity",
+      "f1766929340598": "2026-01-14T10:06"
     },
     {
       "isVacation": false,
@@ -1164,5 +1164,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-14T07:34:43.913Z"
+  "timestamp": "2026-01-14T09:40:49.710Z"
 }
