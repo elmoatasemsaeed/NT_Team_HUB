@@ -472,7 +472,7 @@
     {
       "isVacation": false,
       "vacationEnd": "",
-      "name": "Karim El-Saeed Gabr",
+      "name": "Karim El-Saeed Gabr Megahed Attia",
       "role": "Dev",
       "area": [
         "Front and Financial"
@@ -650,6 +650,23 @@
       "f1766864338124": "",
       "f1766917553886": "",
       "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Mohamed Salama",
+      "role": "Dev",
+      "area": [
+        "LDM_Integration"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "153515 Al Farabi Lab - AMAD Integration",
+      "f1766929340598": "2026-01-14T18:00"
     },
     {
       "name": "Mohamed Sayed Masry Rezk",
@@ -965,23 +982,6 @@
       "vacationEnd": "",
       "f1766917553886": "155982 Review task for Execution Activity, 155699 Execution, 155135 Review Task for Execution Activity",
       "f1766929340598": "2026-01-14T10:06"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mohamed Salama",
-      "role": "Dev",
-      "area": [
-        "LDM_Integration"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "153515 Al Farabi Lab - AMAD Integration",
-      "f1766929340598": "2026-01-14T18:00"
     }
   ],
   "fields": [
@@ -1164,5 +1164,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-14T12:44:19.581Z"
+  "timestamp": "2026-01-14T12:49:07.004Z"
 }
