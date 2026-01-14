@@ -206,7 +206,7 @@ function handleCSVUpload(event) {
     }
 }
 // متغير لتخزين الإعدادات (يتم تحميله من JSON)
-let azureSettings = { pat: "EvZprueAFS5OmjugVJsScDYXYRwyvVmNOuofTLSoEe9PB89hBYPsJQQJ99CAACAAAAAcrDqRAAASAZDO1XIe", queryId: "3bff197e-a88f-4263-9410-92b150d4497f", org: "NTDotNet", project: "LDM" };
+let azureSettings = { pat: "AoB1abgSvV8PqESlQxMRC3j90GLfwNauraNt2NqOqWO5HQsw0PdJJQQJ99CAACAAAAAcrDqRAAASAZDO3mwb", queryId: "3bff197e-a88f-4263-9410-92b150d4497f", org: "NTDotNet", project: "LDM" };
 
 // دالة فتح مودال الإعدادات
 function openAzureSetupModal() {
