@@ -890,8 +890,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155975 BUG_002: Results Date :result date didn't, 153604 execution, 153603 preparation",
-      "f1766929340598": "2026-01-14T11:50"
+      "f1766917553886": "156056 BUG_003: system retrieve default payer While, 155975 BUG_002: Results Date :result date didn't, 153604 execution",
+      "f1766929340598": "2026-01-14T13:55"
     },
     {
       "name": "Sara Mustafa",
@@ -1164,5 +1164,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-14T12:55:56.113Z"
+  "timestamp": "2026-01-14T12:56:10.338Z"
 }
