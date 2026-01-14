@@ -151,7 +151,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "150181 Alameda - Update Culture Results screen",
-      "f1766929340598": "2026-01-13T18:00"
+      "f1766929340598": "2026-01-14T18:00"
     },
     {
       "isVacation": false,
@@ -263,8 +263,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "155372 Execution, 155964 Execution",
+      "f1766929340598": "2026-01-15T08:27"
     },
     {
       "isVacation": false,
@@ -280,8 +280,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155749 smoke test for alameda, 154138 Preparation Task for CR154012, 154018 Preparation task for CR 154013",
-      "f1766929340598": "2026-01-13T08:00"
+      "f1766917553886": "155913 Branch Is Not Cleared When Changing, 155886 Discount Not Applied to Total Discount, 155749 smoke test for alameda",
+      "f1766929340598": "2026-01-13T15:58"
     },
     {
       "isVacation": false,
@@ -306,8 +306,8 @@
       "area": "Registration",
       "workingIn": "Iteration",
       "custom_1766503160857": [],
-      "f1766917553886": "154775 execution, 155591 preparation, 155013 BUG_022: system allow adding service with",
-      "f1766929340598": "2026-01-14T08:34"
+      "f1766917553886": "155013 BUG_022: system allow adding service with, 154884 preparation, 154285 while add existed reservation number with",
+      "f1766929340598": "2026-01-04T15:25"
     },
     {
       "isVacation": false,
@@ -341,7 +341,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "148696 Home Visit - Chemist Mobile App, 148697 Home Visit - Chemist Mobile App",
-      "f1766929340598": "2026-01-13T18:00"
+      "f1766929340598": "2026-01-14T18:00"
     },
     {
       "isVacation": false,
@@ -405,7 +405,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "154632 Wareed Lab - NT Mobile APIs, 155815 Create AddNewOrder API",
-      "f1766929340598": "2026-01-13T18:00"
+      "f1766929340598": "2026-01-14T18:00"
     },
     {
       "isVacation": false,
@@ -433,7 +433,7 @@
         "support"
       ],
       "f1766917553886": "154274 Activate SAP on New Alameda Enviroment, 155163 Get Result Raw data issues, 155162 Get Result Raw Data issues",
-      "f1766929340598": "2026-01-13T18:00"
+      "f1766929340598": "2026-01-14T18:00"
     },
     {
       "isVacation": false,
@@ -449,8 +449,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155785 BD010 | Create Task for new, 155002 FD005 | Implement the design of, 138837 Internal CR - LDM Error Screen:",
-      "f1766929340598": "2026-01-13T10:59"
+      "f1766917553886": "154601 khedr lab - Update panels setup, 154602 Khedr Lab - System should display, 155785 BD010 | Create Task for new",
+      "f1766929340598": "2026-01-14T18:00"
     },
     {
       "isVacation": false,
@@ -467,7 +467,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "146890 Update Batch Details and Order Details",
-      "f1766929340598": "2026-01-13T18:00"
+      "f1766929340598": "2026-01-14T18:00"
     },
     {
       "isVacation": false,
@@ -517,8 +517,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155886 Discount Not Applied to Total Discount, 155631 the Loyalty Point Balance is not, 153433 Internal CR - Create Proforma No.",
-      "f1766929340598": "2026-01-13T15:18"
+      "f1766917553886": "155631 the Loyalty Point Balance is not, 153433 Internal CR - Create Proforma No., 144143 Update Correct Evidence Medical Labs –",
+      "f1766929340598": "2026-01-13T08:29"
     },
     {
       "isVacation": false,
@@ -569,8 +569,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "152874 Alameda gp - Timestamp report :, 155179 BD002 - Backend: Create new endpoint",
-      "f1766929340598": "2026-01-13T18:00"
+      "f1766917553886": "155954 BD010 - Create and configure new, 152874 Alameda gp - Timestamp report :, 155179 BD002 - Backend: Create new endpoint",
+      "f1766929340598": "2026-01-15T10:00"
     },
     {
       "isVacation": false,
@@ -685,8 +685,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "152837 Khedr lab - Define a service, 155620 FD005 | add dropDowns  and, 151969 Impact of Regex pattern for the",
-      "f1766929340598": "2026-01-13T18:00"
+      "f1766917553886": "152837 Khedr lab - Define a service, 155622 FD002 |  validate dates and, 155623 BD008 | ensure save data for",
+      "f1766929340598": "2026-01-14T18:00"
     },
     {
       "isVacation": false,
@@ -721,7 +721,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "151989 Internal CR - Comm Package Updates:, 155424 FD009: Add a checkbox control and",
-      "f1766929340598": "2026-01-13T18:00"
+      "f1766929340598": "2026-01-14T18:00"
     },
     {
       "name": "Mustafa Mamdoh",
@@ -783,7 +783,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "154695 Home Visits - Users: Add new",
-      "f1766929340598": "2026-01-13T18:00"
+      "f1766929340598": "2026-01-14T18:00"
     },
     {
       "name": "Saddam Raees",
@@ -829,7 +829,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "153282 ADAFSA : Human API - Add",
-      "f1766929340598": "2026-01-13T18:00"
+      "f1766929340598": "2026-01-14T18:00"
     },
     {
       "isVacation": false,
@@ -846,7 +846,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "151663 Nile Labs - Patient Reports: Update, 155388 TR013 --> Add footer image with, 155387 TR013 --> Add header image with",
+      "f1766917553886": "151663 Nile Labs - Patient Reports: Update, 155389 TR013 --> Add watermark with its, 155388 TR013 --> Add footer image with",
       "f1766929340598": "2026-01-14T09:24"
     },
     {
@@ -902,7 +902,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "155211 MM | Client : Detailed Inventory, 155540 Received by & inspection should be, 155759 preparation task for CR 155211",
-      "f1766929340598": "2026-01-13T18:00"
+      "f1766929340598": "2026-01-14T18:00"
     },
     {
       "isVacation": false,
@@ -918,8 +918,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153179 Swiss LDM - Athir Ibtegration >, 154627 Get Result (Raw Data) >> The",
-      "f1766929340598": "2026-01-13T18:00"
+      "f1766917553886": "153179 Swiss LDM - Athir Ibtegration >, 155839 Al Farabi Lab - Update MMS, 154627 Get Result (Raw Data) >> The",
+      "f1766929340598": "2026-01-14T18:00"
     },
     {
       "isVacation": false,
@@ -937,7 +937,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "155207 MM | Client: Backend of CR",
-      "f1766929340598": "2026-01-13T18:00"
+      "f1766929340598": "2026-01-14T18:00"
     },
     {
       "isVacation": false,
@@ -954,7 +954,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "154694 Home Visits - Roles: Add new",
-      "f1766929340598": "2026-01-13T18:00"
+      "f1766929340598": "2026-01-14T18:00"
     },
     {
       "name": "Yasmine Abdelwahed",
@@ -980,8 +980,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153515 Al Farabi Lab - AMAD Integration, 155876 Create Forget Password Endpoint",
-      "f1766929340598": "2026-01-13T18:00"
+      "f1766917553886": "153515 Al Farabi Lab - AMAD Integration",
+      "f1766929340598": "2026-01-14T18:00"
     }
   ],
   "fields": [
@@ -1164,5 +1164,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-14T07:30:13.656Z"
+  "timestamp": "2026-01-14T07:34:43.913Z"
 }
