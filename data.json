@@ -483,8 +483,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "152632 Web result doesn't respect Undo-Review action",
+      "f1766929340598": "2026-01-01T13:33"
     },
     {
       "isVacation": false,
@@ -900,8 +900,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "155517 Preparation, 155529 Special Character \"#\" is not defined, 151929 Dynamic Reg _ Merge Samples Poup",
-      "f1766929340598": "2026-01-14T09:00"
+      "f1766917553886": "155436 Execution, 155517 Preparation, 155529 Special Character \"#\" is not defined",
+      "f1766929340598": "2026-01-15T09:00"
     },
     {
       "isVacation": false,
@@ -1164,5 +1164,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-14T12:49:07.004Z"
+  "timestamp": "2026-01-14T12:53:56.680Z"
 }
