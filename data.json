@@ -150,7 +150,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "150181 Alameda - Update Culture Results screen",
+      "f1766917553886": "150181 Alameda - Update Culture Results screen, 150546 Alameda gp - Search by test",
       "f1766929340598": "2026-01-15T18:00"
     },
     {
@@ -263,8 +263,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "155372 Execution, 155383 Add Visit , Patient - Country,, 155959 Updating a dependent field clears all",
-      "f1766929340598": "2026-01-15T08:27"
+      "f1766917553886": "155380 Clicking Close in gender mismatch confirmation, 155372 Execution, 155964 Execution",
+      "f1766929340598": "2026-01-15T11:01"
     },
     {
       "isVacation": false,
@@ -280,8 +280,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155913 Branch Is Not Cleared When Changing, 155886 Discount Not Applied to Total Discount, 155631 the Loyalty Point Balance is not",
-      "f1766929340598": "2026-01-14T11:35"
+      "f1766917553886": "155886 Discount Not Applied to Total Discount, 155631 the Loyalty Point Balance is not, 155749 smoke test for alameda",
+      "f1766929340598": "2026-01-13T15:18"
     },
     {
       "isVacation": false,
@@ -306,8 +306,8 @@
       "area": "Registration",
       "workingIn": "Iteration",
       "custom_1766503160857": [],
-      "f1766917553886": "156056 BUG_003: system retrieve default payer While, 155958 BUG_001: system should retrieve system parameter, 155013 BUG_022: system allow adding service with",
-      "f1766929340598": "2026-01-14T13:55"
+      "f1766917553886": "156127 BUG_006: IN CASE OF SERVICE NOT, 156126 BUG_005:  MAXIMUM DATE does not, 156125 BUG_004:  Total Walkin price do",
+      "f1766929340598": "2026-01-15T09:41"
     },
     {
       "isVacation": false,
@@ -357,7 +357,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "151550 Metra Labs - Patient Reports: Update, 156099 Investigation in steps for watermark, 151975 Update EPHI patient reports Header &",
+      "f1766917553886": "151550 Metra Labs - Patient Reports: Update, 156070 Urine Culture Web Result Report doesn't, 151975 Update EPHI patient reports Header &",
       "f1766929340598": "2026-01-19T08:52"
     },
     {
@@ -500,8 +500,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "156010 #CR150181: The result screen is not, 155241 #CR>151975: Execution, 155236 #CR>150181: Execution",
-      "f1766929340598": "2026-01-14T14:23"
+      "f1766917553886": "155241 #CR>151975: Execution, 155236 #CR>150181: Execution",
+      "f1766929340598": "2026-01-14T12:00"
     },
     {
       "isVacation": false,
@@ -584,8 +584,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "رجب",
-      "f1766917553886": "153721 the unit column do not display, 154036 CR_(148807) - Print Customized Reports Header, 153725 the report body design do not",
-      "f1766929340598": "2025-12-30T14:43"
+      "f1766917553886": "156115 the total sample at pre analytical, 153721 the unit column do not display, 154036 CR_(148807) - Print Customized Reports Header",
+      "f1766929340598": "2026-01-15T10:29"
     },
     {
       "name": "Mohamed Elgmmal",
@@ -702,7 +702,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "152837 Khedr lab - Define a service, 155622 FD002 |  validate dates and, 155623 BD008 | ensure save data for",
+      "f1766917553886": "152837 Khedr lab - Define a service",
       "f1766929340598": "2026-01-15T18:00"
     },
     {
@@ -737,7 +737,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "152057 AlBorg KSA - Search Results screen: At, 152487 Alameda gp - Microbiology Statistics: Add, 155424 FD009: Add a checkbox control and",
+      "f1766917553886": "149618 Alameda - Microbiology Statistics: At \"Organism, 152057 AlBorg KSA - Search Results screen: At, 152487 Alameda gp - Microbiology Statistics: Add",
       "f1766929340598": "2026-01-15T18:00"
     },
     {
@@ -799,7 +799,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154695 Home Visits - Users: Add new",
+      "f1766917553886": "154695 Home Visits - Users: Add new, 155741 Home Visit - Patients Addresses: Add",
       "f1766929340598": "2026-01-15T18:00"
     },
     {
@@ -918,7 +918,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155211 MM | Client : Detailed Inventory, 155097 Issue at Items Below/Over Ordering Limit",
+      "f1766917553886": "154013 Client: Create a new page \"Product, 155211 MM | Client : Detailed Inventory, 156131 Frontend : add Product manufacturer Module",
       "f1766929340598": "2026-01-15T18:00"
     },
     {
@@ -970,7 +970,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154694 Home Visits - Roles: Add new",
+      "f1766917553886": "154694 Home Visits - Roles: Add new, 155739 Home Visit - Countries: Add a, 155740 Home Visit - Governorates: Add a",
       "f1766929340598": "2026-01-15T18:00"
     },
     {
@@ -1164,5 +1164,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-15T07:33:41.208Z"
+  "timestamp": "2026-01-15T11:36:20.946Z"
 }
