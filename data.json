@@ -16,8 +16,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "156198 Writing Test Cases For Wareed APIs, 156197 Regression On API's For Solved Issues, 156084 Writing TestCases For Wareed APIs",
-      "f1766929340598": "2026-01-18T07:15"
+      "f1766917553886": "156355 Writing Test Cases For Wareed APIs, 156350 Review Wareed  API Documentation, 156356 Regression On Wareed APis",
+      "f1766929340598": "2026-01-19T09:47"
     },
     {
       "isVacation": false,
@@ -67,8 +67,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155258 BD006 : Insert data into Auditing, 150180 Create new setup screen Resistant pattern, 155257 BD009 : Delete data from ResistancePattern",
-      "f1766929340598": "2026-01-15T07:45"
+      "f1766917553886": "150180 Create new setup screen Resistant pattern",
+      "f1766929340598": "2026-01-15T07:15"
     },
     {
       "isVacation": false,
@@ -150,7 +150,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "150181 Alameda - Update Culture Results screen, 150546 Alameda gp - Search by test, 156143 #CR150181: The Urine culture screen is",
+      "f1766917553886": "150181 Alameda - Update Culture Results screen, 150546 Alameda gp - Search by test, 156160 BD001 Filter result formmated tests by",
       "f1766929340598": "2026-01-18T18:00"
     },
     {
@@ -295,8 +295,8 @@
       "workingIn": [
         "Iteration"
       ],
-      "f1766917553886": "155889 Review, 155883 Review, 155340 Execution",
-      "f1766929340598": "2026-01-14T17:03"
+      "f1766917553886": "154640 Home Visit Collector App - Visit, 155889 Review, 155883 Review",
+      "f1766929340598": "2026-01-18T18:00"
     },
     {
       "isVacation": false,
@@ -323,8 +323,8 @@
         "support"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "154094 review on User Story 140089",
-      "f1766929340598": "2025-12-24T16:46"
+      "f1766917553886": "156336 Status filter not working, 156338 product category name and code are, 154094 review on User Story 140089",
+      "f1766929340598": "2026-01-18T15:08"
     },
     {
       "isVacation": false,
@@ -340,8 +340,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "148696 Home Visit - Chemist Mobile App, 148697 Home Visit - Chemist Mobile App",
-      "f1766929340598": "2026-01-18T18:00"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "isVacation": false,
@@ -357,7 +357,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "151550 Metra Labs - Patient Reports: Update, 155779 #CR151975: Incorrect Processing Unit Displayed in, 151975 Update EPHI patient reports Header &",
+      "f1766917553886": "151550 Metra Labs - Patient Reports: Update, 151975 Update EPHI patient reports Header &, 138714 Al Borg UAE - Patient Reports",
       "f1766929340598": "2026-01-19T08:52"
     },
     {
@@ -369,8 +369,8 @@
         "Registration"
       ],
       "workingIn": "Senior",
-      "f1766917553886": "156263 BD016:REview Back on User Story 154602, 156260 FD011:Review Front On UserStory #154602",
-      "f1766929340598": "2026-01-18T12:08"
+      "f1766917553886": "156346 Review USER STORY 131278 ReviewBugs And",
+      "f1766929340598": "2026-01-18T15:36"
     },
     {
       "isVacation": false,
@@ -500,8 +500,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155727 #CR-151975: The CBC report is printed, 155780 #CR151975: the reference range overlap if, 155241 #CR>151975: Execution",
-      "f1766929340598": "2026-01-15T14:17"
+      "f1766917553886": "156324 #CR151975: The correct Logo and Sample, 156137 #150181: The resistant pattern is disappear, 156143 #CR150181: The Urine culture screen is",
+      "f1766929340598": "2026-01-18T15:07"
     },
     {
       "isVacation": false,
@@ -517,8 +517,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153715 Internal CR - Financial Claims: Add, 155972 Preparation Task For CR151551, 144143 Update Correct Evidence Medical Labs –",
-      "f1766929340598": "2026-01-18T11:30"
+      "f1766917553886": "156321 Execution Task For 153715, 156319 preparation task for CR 153715, 156295 Preparation",
+      "f1766929340598": "2026-01-18T16:43"
     },
     {
       "isVacation": false,
@@ -569,7 +569,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "149617 MOH Tabuk Cluster - Search by, 155954 BD010 - Create and configure new, 152874 Alameda gp - Timestamp report :",
+      "f1766917553886": "149617 MOH Tabuk Cluster - Search by, 149621 Alameda - Corrected tests Report -, 156323 FD005 - Webform UI : Add",
       "f1766929340598": "2026-01-18T18:00"
     },
     {
@@ -584,8 +584,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "رجب",
-      "f1766917553886": "156178 the result of the Molecular Detection, 154036 CR_(148807) - Print Customized Reports Header, 153725 the report body design do not",
-      "f1766929340598": "2026-01-15T15:42"
+      "f1766917553886": "154036 CR_(148807) - Print Customized Reports Header, 153804 verified date value display in a",
+      "f1766929340598": "2025-12-21T17:17"
     },
     {
       "name": "Mohamed Elgmmal",
@@ -737,7 +737,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "149618 Alameda - Microbiology Statistics: At \"Organism, 152057 AlBorg KSA - Search Results screen: At, 155424 FD009: Add a checkbox control and",
+      "f1766917553886": "149618 Alameda - Microbiology Statistics: At \"Organism, 152057 AlBorg KSA - Search Results screen: At, 152487 Alameda gp - Microbiology Statistics: Add",
       "f1766929340598": "2026-01-18T18:00"
     },
     {
@@ -799,7 +799,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154695 Home Visits - Users: Add new, 155741 Home Visit - Patients Addresses: Add",
+      "f1766917553886": "154695 Home Visits - Users: Add new, 155741 Home Visit - Patients Addresses: Add, 156165 Visit List - System allows changing",
       "f1766929340598": "2026-01-18T18:00"
     },
     {
@@ -845,8 +845,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "156096 Update Odoo Service to sent Representative",
+      "f1766929340598": "2026-01-18T18:00"
     },
     {
       "isVacation": false,
@@ -900,7 +900,7 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "156194 Tim Stamp Report Page Fail to, 156070 Urine Culture Web Result Report doesn't, 155436 Execution",
+      "f1766917553886": "156194 Tim Stamp Report Page Fail to, 155436 Execution, 155517 Preparation",
       "f1766929340598": "2026-01-18T10:15"
     },
     {
@@ -918,7 +918,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154013 Client: Create a new page \"Product, 156129 Frontend : add Product Manufacture Grid, 155097 Issue at Items Below/Over Ordering Limit",
+      "f1766917553886": "154013 Client: Create a new page \"Product, 155209 MM | Client: Backend of CR, 156129 Frontend : add Product Manufacture Grid",
       "f1766929340598": "2026-01-18T18:00"
     },
     {
@@ -953,7 +953,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155207 MM | Client: Backend of CR",
+      "f1766917553886": "155206 MM | Client Portal : Backend, 155207 MM | Client: Backend of CR",
       "f1766929340598": "2026-01-18T18:00"
     },
     {
@@ -1164,5 +1164,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-18T10:35:35.080Z"
+  "timestamp": "2026-01-18T16:25:19.970Z"
 }
