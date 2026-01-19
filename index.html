@@ -191,16 +191,16 @@
         </header>
 
         <div class="flex border-b border-gray-200 mb-6 no-print tab-navigation overflow-x-auto">
-            <button onclick="switchTab('capacityTab', this)" id="defaultTab" class="tab-btn px-6 py-3 font-bold text-gray-500 border-b-2 border-transparent hover:text-blue-600 transition-all active whitespace-nowrap">
-                <div class="flex items-center gap-2"><i data-lucide="layout-dashboard" class="w-4 h-4"></i> Capacity Overview</div>
-            </button>
-            <button onclick="switchTab('availabilityTab', this)" class="tab-btn px-6 py-3 font-bold text-gray-500 border-b-2 border-transparent hover:text-blue-600 transition-all whitespace-nowrap">
-                <div class="flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4"></i> Availability View</div>
-            </button>
-            <button onclick="switchTab('tableTab', this)" class="tab-btn px-6 py-3 font-bold text-gray-500 border-b-2 border-transparent hover:text-blue-600 transition-all whitespace-nowrap">
-                <div class="flex items-center gap-2"><i data-lucide="list" class="w-4 h-4"></i> Team Table</div>
-            </button>
+    <button onclick="switchTab('capacityTab', this)" id="defaultTab" ...>...</button>
+    <button onclick="switchTab('availabilityTab', this)" ...>...</button>
+    <button onclick="switchTab('tableTab', this)" ...>...</button>
+    
+    <button onclick="switchTab('externalSiteTab', this)" class="tab-btn px-6 py-3 font-bold text-gray-500 border-b-2 border-transparent hover:text-blue-600 transition-all whitespace-nowrap">
+        <div class="flex items-center gap-2">
+            <i data-lucide="external-link" class="w-4 h-4"></i> Current Iteration
         </div>
+    </button>
+</div>
              
         <div id="capacityTab" class="tab-content">
              <div id="workStreamGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 no-print">
@@ -268,15 +268,7 @@
                     </button>
                 </div>
             </div>
-            <div id="externalSiteTab" class="tab-content hidden h-[80vh]">
-    <div class="w-full h-full rounded-2xl overflow-hidden border shadow-sm">
-        <iframe 
-            src="https://elmoatasemsaeed.github.io/Current_iteration/" 
-            class="w-full h-full border-none"
-            title="External Site View">
-        </iframe>
-    </div>
-</div>
+           
             <div class="google-card overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-sm" id="employeeTable">
@@ -350,7 +342,15 @@
 
 <div id="toastContainer" class="fixed bottom-5 right-5 z-[5000] space-y-3 pointer-events-none"></div>
     </div>
-
+ <div id="externalSiteTab" class="tab-content hidden h-[80vh]">
+    <div class="w-full h-full rounded-2xl overflow-hidden border shadow-sm">
+        <iframe 
+            src="https://elmoatasemsaeed.github.io/Current_iteration/" 
+            class="w-full h-full border-none"
+            title="External Site View">
+        </iframe>
+    </div>
+</div>
     <script>
         // --- Core Configuration ---
         const githubConfig = { 
@@ -1154,6 +1154,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
