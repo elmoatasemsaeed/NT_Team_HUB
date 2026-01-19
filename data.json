@@ -35,7 +35,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "156174 Wareed - Integration - Integration with, 155985 Visit List - \"Select All\" in, 154028 Visit list - Select all checkbox",
-      "f1766929340598": "2026-01-18T18:00"
+      "f1766929340598": "2026-01-19T18:00"
     },
     {
       "isVacation": false,
@@ -150,8 +150,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "150181 Alameda - Update Culture Results screen, 150546 Alameda gp - Search by test, 156160 BD001 Filter result formmated tests by",
-      "f1766929340598": "2026-01-18T18:00"
+      "f1766917553886": "150546 Alameda gp - Search by test, 156160 BD001 Filter result formmated tests by",
+      "f1766929340598": "2026-01-19T18:00"
     },
     {
       "isVacation": false,
@@ -208,8 +208,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "155256 Execution",
+      "f1766929340598": "2026-01-20T11:00"
     },
     {
       "name": "Amr Sameh",
@@ -295,8 +295,8 @@
       "workingIn": [
         "Iteration"
       ],
-      "f1766917553886": "154640 Home Visit Collector App - Visit, 155889 Review, 155883 Review",
-      "f1766929340598": "2026-01-18T18:00"
+      "f1766917553886": "156393 Review, 155889 Review, 155883 Review",
+      "f1766929340598": "2026-01-19T10:27"
     },
     {
       "isVacation": false,
@@ -357,8 +357,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "151550 Metra Labs - Patient Reports: Update, 151975 Update EPHI patient reports Header &, 138714 Al Borg UAE - Patient Reports",
-      "f1766929340598": "2026-01-19T08:52"
+      "f1766917553886": "155933 the processing branch short name display, 151550 Metra Labs - Patient Reports: Update, 151975 Update EPHI patient reports Header &",
+      "f1766929340598": "2026-01-19T12:30"
     },
     {
       "isVacation": false,
@@ -369,8 +369,8 @@
         "Registration"
       ],
       "workingIn": "Senior",
-      "f1766917553886": "156346 Review USER STORY 131278 ReviewBugs And",
-      "f1766929340598": "2026-01-18T15:36"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "isVacation": false,
@@ -387,8 +387,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "156318 Adjust the date time from &",
+      "f1766929340598": "2026-01-19T08:00"
     },
     {
       "isVacation": false,
@@ -405,7 +405,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "154632 Wareed Lab - NT Mobile APIs",
-      "f1766929340598": "2026-01-18T18:00"
+      "f1766929340598": "2026-01-19T18:00"
     },
     {
       "isVacation": false,
@@ -449,8 +449,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154601 khedr lab - Update panels setup, 154602 Khedr Lab - System should display, 138837 Internal CR - LDM Error Screen:",
-      "f1766929340598": "2026-01-18T18:00"
+      "f1766917553886": "154602 Khedr Lab - System should display, 156415 preparation, 138837 Internal CR - LDM Error Screen:",
+      "f1766929340598": "2026-01-19T18:00"
     },
     {
       "isVacation": false,
@@ -500,8 +500,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "156324 #CR151975: The correct Logo and Sample, 156137 #150181: The resistant pattern is disappear, 156143 #CR150181: The Urine culture screen is",
-      "f1766929340598": "2026-01-18T15:07"
+      "f1766917553886": "156362 #CR151181: The Accreditation photo at report, 155241 #CR>151975: Execution",
+      "f1766929340598": "2026-01-19T09:27"
     },
     {
       "isVacation": false,
@@ -517,7 +517,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "156321 Execution Task For 153715, 156319 preparation task for CR 153715, 156295 Preparation",
+      "f1766917553886": "156321 Execution Task For 153715, 156319 preparation task for CR 153715",
       "f1766929340598": "2026-01-18T16:43"
     },
     {
@@ -569,8 +569,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "149617 MOH Tabuk Cluster - Search by, 149621 Alameda - Corrected tests Report -, 156323 FD005 - Webform UI : Add",
-      "f1766929340598": "2026-01-18T18:00"
+      "f1766917553886": "156325 BD001 - Webform Backend : Add, 149617 MOH Tabuk Cluster - Search by, 149621 Alameda - Corrected tests Report -",
+      "f1766929340598": "2026-01-20T09:45"
     },
     {
       "isVacation": false,
@@ -666,7 +666,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "153515 Al Farabi Lab - AMAD Integration",
-      "f1766929340598": "2026-01-18T18:00"
+      "f1766929340598": "2026-01-19T18:00"
     },
     {
       "name": "Mohamed Sayed Masry Rezk",
@@ -702,8 +702,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154202 Alnas Hospital - HL7 Orders: Auto, 156280 preparation, 156252 BD009 | Update Payload from front",
-      "f1766929340598": "2026-01-18T18:00"
+      "f1766917553886": "154202 Alnas Hospital - HL7 Orders: Auto, 156252 BD009 | Update Payload from front, 152837 Khedr lab - Define a service",
+      "f1766929340598": "2026-01-19T18:00"
     },
     {
       "isVacation": false,
@@ -738,7 +738,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "149618 Alameda - Microbiology Statistics: At \"Organism, 152057 AlBorg KSA - Search Results screen: At, 152487 Alameda gp - Microbiology Statistics: Add",
-      "f1766929340598": "2026-01-18T18:00"
+      "f1766929340598": "2026-01-19T18:00"
     },
     {
       "name": "Mustafa Mamdoh",
@@ -747,8 +747,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "156124 When Search by any Service on, 156024 When Search by any old patient, 155977 Contract not retrieved on edit registration",
-      "f1766929340598": "2026-01-18T09:47"
+      "f1766917553886": "156024 When Search by any old patient, 155977 Contract not retrieved on edit registration, 155969 When Print Job order to any",
+      "f1766929340598": "2026-01-18T09:31"
     },
     {
       "isVacation": false,
@@ -800,7 +800,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "154695 Home Visits - Users: Add new, 155741 Home Visit - Patients Addresses: Add, 156165 Visit List - System allows changing",
-      "f1766929340598": "2026-01-18T18:00"
+      "f1766929340598": "2026-01-19T18:00"
     },
     {
       "name": "Saddam Raees",
@@ -845,8 +845,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "156096 Update Odoo Service to sent Representative",
-      "f1766929340598": "2026-01-18T18:00"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "isVacation": false,
@@ -919,7 +919,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "154013 Client: Create a new page \"Product, 155209 MM | Client: Backend of CR, 156129 Frontend : add Product Manufacture Grid",
-      "f1766929340598": "2026-01-18T18:00"
+      "f1766929340598": "2026-01-19T18:00"
     },
     {
       "isVacation": false,
@@ -936,7 +936,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "153179 Swiss LDM - Athir Ibtegration >, 154274 Activate SAP on New Alameda Enviroment, 155839 Al Farabi Lab - Update MMS",
-      "f1766929340598": "2026-01-18T18:00"
+      "f1766929340598": "2026-01-19T18:00"
     },
     {
       "isVacation": false,
@@ -953,8 +953,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155206 MM | Client Portal : Backend, 155207 MM | Client: Backend of CR",
-      "f1766929340598": "2026-01-18T18:00"
+      "f1766917553886": "155206 MM | Client Portal : Backend, 155207 MM | Client: Backend of CR, 156380 Create Products Index component",
+      "f1766929340598": "2026-01-19T18:00"
     },
     {
       "isVacation": false,
@@ -970,8 +970,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154694 Home Visits - Roles: Add new, 155739 Home Visit - Countries: Add a, 155740 Home Visit - Governorates: Add a",
-      "f1766929340598": "2026-01-18T18:00"
+      "f1766917553886": "154681 Home Visit - Assign Visit: Add, 154694 Home Visits - Roles: Add new, 155739 Home Visit - Countries: Add a",
+      "f1766929340598": "2026-01-19T18:00"
     },
     {
       "name": "Yasmine Abdelwahed",
@@ -980,8 +980,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "156186 Result Screen >> Error display while, 156140 Test Setup >> Culture test setup, 155982 Review task for Execution Activity",
-      "f1766929340598": "2026-01-18T08:52"
+      "f1766917553886": "155981 Review Task for Preparation Activity, 156186 Result Screen >> Error display while, 156140 Test Setup >> Culture test setup",
+      "f1766929340598": "2026-01-19T10:52"
     }
   ],
   "fields": [
@@ -1164,5 +1164,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-18T16:25:19.970Z"
+  "timestamp": "2026-01-19T10:37:24.736Z"
 }
