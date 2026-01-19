@@ -77,6 +77,10 @@
             .bg-gray-100 { background: transparent !important; border: 1px solid #eee !important; }
             body { background: white !important; }
         }
+        #externalSiteTab iframe {
+    background: white;
+    min-height: 700px; /* يمكنك تعديل الطول حسب الحاجة */
+}
     </style>
 </head>
 <body class="p-4 md:p-6">
@@ -179,6 +183,11 @@
     <i data-lucide="cloud-lightning" class="w-4 h-4 text-sky-600"></i> Sync from Azure
 </button>
             </div>
+            <button onclick="switchTab('externalSiteTab', this)" class="tab-btn px-6 py-3 font-bold text-gray-500 border-b-2 border-transparent hover:text-blue-600 transition-all whitespace-nowrap">
+    <div class="flex items-center gap-2">
+        <i data-lucide="external-link" class="w-4 h-4"></i> Current Iteration
+    </div>
+</button>
         </header>
 
         <div class="flex border-b border-gray-200 mb-6 no-print tab-navigation overflow-x-auto">
@@ -259,6 +268,15 @@
                     </button>
                 </div>
             </div>
+            <div id="externalSiteTab" class="tab-content hidden h-[80vh]">
+    <div class="w-full h-full rounded-2xl overflow-hidden border shadow-sm">
+        <iframe 
+            src="https://elmoatasemsaeed.github.io/Current_iteration/" 
+            class="w-full h-full border-none"
+            title="External Site View">
+        </iframe>
+    </div>
+</div>
             <div class="google-card overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-sm" id="employeeTable">
@@ -1136,6 +1154,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
