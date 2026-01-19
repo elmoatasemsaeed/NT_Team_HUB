@@ -190,12 +190,17 @@
 </button>
         </header>
 
-        <div class="flex border-b border-gray-200 mb-6 no-print tab-navigation overflow-x-auto">
-    <button onclick="switchTab('capacityTab', this)" id="defaultTab" ...>...</button>
-    <button onclick="switchTab('availabilityTab', this)" ...>...</button>
-    <button onclick="switchTab('tableTab', this)" ...>...</button>
-    
-    <button onclick="switchTab('externalSiteTab', this)" class="tab-btn px-6 py-3 font-bold text-gray-500 border-b-2 border-transparent hover:text-blue-600 transition-all whitespace-nowrap">
+   <div class="flex border-b border-gray-200 mb-6 no-print tab-navigation overflow-x-auto flex-nowrap items-center">
+    <button onclick="switchTab('capacityTab', this)" id="defaultTab" class="tab-btn px-6 py-3 font-bold text-gray-500 border-b-2 border-transparent hover:text-blue-600 transition-all whitespace-nowrap flex-shrink-0">
+        Capacity
+    </button>
+    <button onclick="switchTab('availabilityTab', this)" class="tab-btn px-6 py-3 font-bold text-gray-500 border-b-2 border-transparent hover:text-blue-600 transition-all whitespace-nowrap flex-shrink-0">
+        Availability
+    </button>
+    <button onclick="switchTab('tableTab', this)" class="tab-btn px-6 py-3 font-bold text-gray-500 border-b-2 border-transparent hover:text-blue-600 transition-all whitespace-nowrap flex-shrink-0">
+        Table View
+    </button>
+    <button onclick="switchTab('externalSiteTab', this)" class="tab-btn px-6 py-3 font-bold text-gray-500 border-b-2 border-transparent hover:text-blue-600 transition-all whitespace-nowrap flex-shrink-0">
         <div class="flex items-center gap-2">
             <i data-lucide="external-link" class="w-4 h-4"></i> Current Iteration
         </div>
@@ -1154,6 +1159,7 @@ function checkAvailableDevs() {
 </body>
 </body>
 </html>
+
 
 
 
