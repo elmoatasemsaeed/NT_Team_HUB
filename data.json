@@ -499,7 +499,7 @@
     },
     {
       "isVacation": true,
-      "vacationEnd": "2026-01-23",
+      "vacationEnd": "2026-01-27",
       "name": "Karim El-Saeed Gabr Megahed Attia",
       "role": "Dev",
       "area": [
@@ -1159,5 +1159,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-20T08:57:41.667Z"
+  "timestamp": "2026-01-20T09:10:54.363Z"
 }
