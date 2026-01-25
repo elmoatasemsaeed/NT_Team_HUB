@@ -24,8 +24,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "157151 Frontend: Reset visit info on area, 156959 Assign Visit - selecting or deselecting",
-      "f1766929340598": "2026-01-25T08:18"
+      "f1766917553886": "156959 Assign Visit - selecting or deselecting",
+      "f1766929340598": "2026-01-22T09:14"
     },
     {
       "isVacation": false,
@@ -150,8 +150,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "156849 Update ANGA Drugs Mobile APIs, 157162 Get Branch Sample Comment >> data",
+      "f1766929340598": "2026-01-25T18:00"
     },
     {
       "isVacation": false,
@@ -257,7 +257,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "149618 Alameda - Microbiology Statistics: At \"Organism, 149620 Alameda - Results: For each Test,, 152487 Alameda gp - Microbiology Statistics: Add",
+      "f1766917553886": "138397 ALhassa - Rejected Samples Alarm: Update, 149618 Alameda - Microbiology Statistics: At \"Organism, 149620 Alameda - Results: For each Test,",
       "f1766929340598": "2026-01-25T18:00"
     },
     {
@@ -393,8 +393,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "157003 Empty space remains when Lab Director",
+      "f1766929340598": "2026-01-25T08:00"
     },
     {
       "isVacation": false,
@@ -408,8 +408,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "رجب",
-      "f1766917553886": "156931 the visit status chips counter display, 156932 Execution, 154036 CR_(148807) - Print Customized Reports Header",
-      "f1766929340598": "2026-01-22T11:03"
+      "f1766917553886": "156932 Execution, 154036 CR_(148807) - Print Customized Reports Header",
+      "f1766929340598": "2026-01-22T07:29"
     },
     {
       "isVacation": false,
@@ -494,8 +494,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "156958 #CR150546: Nonnumeric Value column is disabled, 156957 #CR150546: The Test Type column is, 156773 #CR150546: Execution",
-      "f1766929340598": "2026-01-22T14:44"
+      "f1766917553886": "156773 #CR150546: Execution, 155241 #CR>151975: Execution",
+      "f1766929340598": "2026-01-22T12:00"
     },
     {
       "isVacation": true,
@@ -608,8 +608,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155839 Al Farabi Lab - Update MMS, 157011 problem analysis, code review and refactor",
-      "f1766929340598": "2026-01-25T18:00"
+      "f1766917553886": "157011 problem analysis, code review and refactor",
+      "f1766929340598": "2026-01-22T12:40"
     },
     {
       "isVacation": false,
@@ -730,8 +730,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "155400 Visit list - \"No Auto-refresh\" option, 155985 Visit List - \"Select All\" in, 157048 Add Visit - (Area , Governorate",
-      "f1766929340598": "2026-01-22T14:36"
+      "f1766917553886": "155371 Execution, 155964 Execution",
+      "f1766929340598": "2026-01-22T09:00"
     },
     {
       "isVacation": false,
@@ -1159,5 +1159,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-25T08:17:19.931Z"
+  "timestamp": "2026-01-25T10:02:23.925Z"
 }
