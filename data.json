@@ -24,8 +24,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154681 Home Visit - Assign Visit: Add",
-      "f1766929340598": "2026-01-21T18:00"
+      "f1766917553886": "157151 Frontend: Reset visit info on area, 156959 Assign Visit - selecting or deselecting",
+      "f1766929340598": "2026-01-25T08:18"
     },
     {
       "isVacation": false,
@@ -42,8 +42,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154012 Client: Create a new page \"Product, 155206 MM | Client Portal : Backend, 155207 MM | Client: Backend of CR",
-      "f1766929340598": "2026-01-21T18:00"
+      "f1766917553886": "155206 MM | Client Portal : Backend",
+      "f1766929340598": "2026-01-25T18:00"
     },
     {
       "isVacation": false,
@@ -77,8 +77,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154013 Client: Create a new page \"Product, 156724 Frontend :add product-category-combobox in particular component, 156723 Frontend : add -product-manufacturer-combobox in particular",
-      "f1766929340598": "2026-01-21T18:00"
+      "f1766917553886": "156483 Create Product details(Add/Edit) Component, 155097 Issue at Items Below/Over Ordering Limit",
+      "f1766929340598": "2026-01-19T16:38"
     },
     {
       "name": "Sara Mustafa",
@@ -87,8 +87,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "155438 Execution, 156575 Urine Culture & Urine analysis web, 156418 \"Export to Excel\" button Displaying Issue",
-      "f1766929340598": "2026-01-21T07:05"
+      "f1766917553886": "155518 Execution, 155438 Execution, 156575 Urine Culture & Urine analysis web",
+      "f1766929340598": "2026-01-25T07:55"
     },
     {
       "isVacation": false,
@@ -104,8 +104,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153604 execution, 153603 preparation",
-      "f1766929340598": "2025-12-18T07:33"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "name": "Sameh Abdellatef",
@@ -196,8 +196,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154695 Home Visits - Users: Add new, 155741 Home Visit - Patients Addresses: Add, 156728 Edit User - System allows saving",
-      "f1766929340598": "2026-01-21T18:00"
+      "f1766917553886": "154695 Home Visits - Users: Add new, 155741 Home Visit - Patients Addresses: Add",
+      "f1766929340598": "2026-01-25T18:00"
     },
     {
       "isVacation": true,
@@ -240,8 +240,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "156400 If Acc have more than one, 156590 When Load Services on Registration give, 155969 When Print Job order to any",
-      "f1766929340598": "2026-01-20T15:28"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "isVacation": false,
@@ -258,7 +258,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "149618 Alameda - Microbiology Statistics: At \"Organism, 149620 Alameda - Results: For each Test,, 152487 Alameda gp - Microbiology Statistics: Add",
-      "f1766929340598": "2026-01-21T18:00"
+      "f1766929340598": "2026-01-25T18:00"
     },
     {
       "isVacation": false,
@@ -276,7 +276,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "154170 Wareed Lab - Mobile App: Create, 156503 implementing the design of profile screen",
-      "f1766929340598": "2026-01-21T18:00"
+      "f1766929340598": "2026-01-25T18:00"
     },
     {
       "isVacation": false,
@@ -292,8 +292,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154202 Alnas Hospital - HL7 Orders: Auto",
-      "f1766929340598": "2026-01-21T18:00"
+      "f1766917553886": "156719 Critical Results Log returns no data, 154202 Alnas Hospital - HL7 Orders: Auto",
+      "f1766929340598": "2026-01-25T09:00"
     },
     {
       "name": "Mostafa Mohamed",
@@ -329,8 +329,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154515 Wareed Lab - Genesys WhatsApp Integration",
-      "f1766929340598": "2026-01-21T18:00"
+      "f1766917553886": "154515 Wareed Lab - Genesys WhatsApp Integration, 157033 Extra services are returned with status, 156988 Patient address is not overwritten in",
+      "f1766929340598": "2026-01-25T18:00"
     },
     {
       "isVacation": false,
@@ -383,8 +383,8 @@
         "Team Leader"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "150444 Queuing all trigger and integration actions",
+      "f1766929340598": "2026-01-25T18:00"
     },
     {
       "name": "Mohamed Elgmmal",
@@ -408,8 +408,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "رجب",
-      "f1766917553886": "154036 CR_(148807) - Print Customized Reports Header, 153804 verified date value display in a",
-      "f1766929340598": "2025-12-21T17:17"
+      "f1766917553886": "156931 the visit status chips counter display, 156932 Execution, 154036 CR_(148807) - Print Customized Reports Header",
+      "f1766929340598": "2026-01-22T11:03"
     },
     {
       "isVacation": false,
@@ -425,8 +425,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154009 MRC - Patient Reports Updates, 156325 BD001 - Webform Backend : Add, 155954 BD010 - Create and configure new",
-      "f1766929340598": "2026-01-21T18:00"
+      "f1766917553886": "154009 MRC - Patient Reports Updates, 155350 Wateen Lab - Patient Reports Customization, 156817 TR012 --> Create new patient reports",
+      "f1766929340598": "2026-01-25T18:00"
     },
     {
       "isVacation": false,
@@ -460,8 +460,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "149074 Wareed Lab - Mobile App: Create, 149217 Wareed Lab - Mobile App: Create",
-      "f1766929340598": "2026-01-21T18:00"
+      "f1766917553886": "148995 Wareed Lab - Mobile App: Create, 149074 Wareed Lab - Mobile App: Create, 149217 Wareed Lab - Mobile App: Create",
+      "f1766929340598": "2026-01-25T18:00"
     },
     {
       "isVacation": false,
@@ -477,8 +477,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153717 Internal CR - Financial Claims: Bulk, 156406 BD002: Create Post API for Bulk, 156321 Execution Task For 153715",
-      "f1766929340598": "2026-01-21T18:00"
+      "f1766917553886": "156151 Copy the Claim forms from Smou, 153717 Internal CR - Financial Claims: Bulk, 156321 Execution Task For 153715",
+      "f1766929340598": "2026-01-26T07:19"
     },
     {
       "isVacation": false,
@@ -494,8 +494,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155241 #CR>151975: Execution",
-      "f1766929340598": "2026-01-14T12:00"
+      "f1766917553886": "156958 #CR150546: Nonnumeric Value column is disabled, 156957 #CR150546: The Test Type column is, 156773 #CR150546: Execution",
+      "f1766929340598": "2026-01-22T14:44"
     },
     {
       "isVacation": true,
@@ -545,8 +545,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154602 Khedr Lab - System should display, 155004 Update Result receipt for Alameda gp., 156702 TR012 | Update Report Design as",
-      "f1766929340598": "2026-01-21T18:00"
+      "f1766917553886": "154602 Khedr Lab - System should display, 155004 Update Result receipt for Alameda gp., 138837 Internal CR - LDM Error Screen:",
+      "f1766929340598": "2026-01-25T18:00"
     },
     {
       "isVacation": false,
@@ -559,7 +559,7 @@
       "workingIn": [
         "support"
       ],
-      "f1766917553886": "156510 if contain stat service it retrieved, 156463 when undo Review for service >>, 156428 when tab contain Reserved services other",
+      "f1766917553886": "156510 if contain stat service it retrieved, 156463 when undo Review for service >>, 156147 Reviewed Services issues",
       "f1766929340598": "2026-01-19T15:49"
     },
     {
@@ -590,8 +590,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154632 Wareed Lab - NT Mobile APIs, 156730 Add new Filter to GetUpcomingVisits (new, 156671 Planning and Preparation",
-      "f1766929340598": "2026-01-21T18:00"
+      "f1766917553886": "154632 Wareed Lab - NT Mobile APIs, 155145 Wareed Lab - Ayenati - Send, 156866 Apply separation between private and public",
+      "f1766929340598": "2026-01-25T18:00"
     },
     {
       "isVacation": false,
@@ -608,8 +608,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155839 Al Farabi Lab - Update MMS",
-      "f1766929340598": "2026-01-21T18:00"
+      "f1766917553886": "155839 Al Farabi Lab - Update MMS, 157011 problem analysis, code review and refactor",
+      "f1766929340598": "2026-01-25T18:00"
     },
     {
       "isVacation": false,
@@ -620,8 +620,8 @@
         "Registration"
       ],
       "workingIn": "Senior",
-      "f1766917553886": "156711 BD016:Review On CR154202, 156501 Fix Issues Of missing Parameters in",
-      "f1766929340598": "2026-01-21T10:30"
+      "f1766917553886": "156975 BD016:Review On CR 138837",
+      "f1766929340598": "2026-01-22T10:03"
     },
     {
       "isVacation": false,
@@ -654,7 +654,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "156487 Web Payment App, 155794 wareed lab - notification screen",
+      "f1766917553886": "156487 Web Payment App, 156850 Update ANGA Mobile, 157056 Sample Comments",
       "f1766929340598": "2026-01-29T08:08"
     },
     {
@@ -671,8 +671,8 @@
         "support"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "156223 Sulav Plus Iraq - Oracle LDM",
+      "f1766929340598": "2026-01-25T18:00"
     },
     {
       "isVacation": false,
@@ -682,8 +682,8 @@
       "area": "Registration",
       "workingIn": "Iteration",
       "custom_1766503160857": [],
-      "f1766917553886": "156416 execution, 156548 BUG_005: in case of cancel service, 156415 preparation",
-      "f1766929340598": "2026-01-25T08:19"
+      "f1766917553886": "156863 BUG_006: system retrieve remaining of , 156416 execution, 156548 BUG_005: in case of cancel service",
+      "f1766929340598": "2026-01-25T09:00"
     },
     {
       "isVacation": false,
@@ -697,8 +697,8 @@
       "workingIn": [
         "Iteration"
       ],
-      "f1766917553886": "155883 Review, 155340 Execution, 155084 Review",
-      "f1766929340598": "2026-01-13T15:45"
+      "f1766917553886": "157122 Execution, 157121 Preparation, 157123 Regression",
+      "f1766929340598": "2026-01-27T12:00"
     },
     {
       "isVacation": false,
@@ -714,8 +714,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154017 Execution task for CR 154013, 155886 Discount Not Applied to Total Discount, 155749 smoke test for alameda",
-      "f1766929340598": "2026-01-20T11:00"
+      "f1766917553886": "156560 preparation task for CR153717, 155886 Discount Not Applied to Total Discount, 155749 smoke test for alameda",
+      "f1766929340598": "2026-01-22T10:00"
     },
     {
       "isVacation": false,
@@ -730,8 +730,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "155371 Execution, 156163 Visit List - System allows changing, 156165 Visit List - System allows changing",
-      "f1766929340598": "2026-01-22T09:00"
+      "f1766917553886": "155400 Visit list - \"No Auto-refresh\" option, 155985 Visit List - \"Select All\" in, 157048 Add Visit - (Area , Governorate",
+      "f1766929340598": "2026-01-22T14:36"
     },
     {
       "isVacation": false,
@@ -759,8 +759,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "156573 Some issue detected in the report, 156395 the system do not display antibiotic",
-      "f1766929340598": "2026-01-20T12:34"
+      "f1766917553886": "156570 the Right side section do not",
+      "f1766929340598": "2026-01-22T17:11"
     },
     {
       "name": "Amr Sameh",
@@ -779,8 +779,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "155253 Execution, 156685 Resistant Pattern Screen Impact : in",
-      "f1766929340598": "2026-01-22T08:56"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "name": "Alaa Ezzat",
@@ -804,7 +804,7 @@
         "support"
       ],
       "f1766917553886": "156096 Update Odoo Service to sent Representative",
-      "f1766929340598": "2026-01-21T18:00"
+      "f1766929340598": "2026-01-25T18:00"
     },
     {
       "name": "Ahmed Mohamed Farag",
@@ -813,8 +813,8 @@
       "workingIn": "elBORG",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "151738 Execution",
-      "f1766929340598": "2025-12-15T12:00"
+      "f1766917553886": "156962 Branch Receipt Details >> Result Receipt, 156845 Execution",
+      "f1766929340598": "2026-01-22T11:31"
     },
     {
       "isVacation": false,
@@ -844,8 +844,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "150546 Alameda gp - Search by test, 156718 Critical Result Report returns no data, 156160 BD001 Filter result formmated tests by",
-      "f1766929340598": "2026-01-21T18:00"
+      "f1766917553886": "150546 Alameda gp - Search by test, 156718 Critical Result Report returns no data",
+      "f1766929340598": "2026-01-25T18:00"
     },
     {
       "isVacation": false,
@@ -924,7 +924,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "150541 SKUH - Patient Reports: For all, 156578 TR012 : Add QR Code to",
-      "f1766929340598": "2026-01-21T18:00"
+      "f1766929340598": "2026-01-25T18:00"
     },
     {
       "isVacation": false,
@@ -956,8 +956,8 @@
       "custom_1766584922755": "هنسحبه من الهوم فيزيت تدريجيا",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "156174 Wareed - Integration - Integration with, 155400 Visit list - \"No Auto-refresh\" option, 155985 Visit List - \"Select All\" in",
-      "f1766929340598": "2026-01-21T18:00"
+      "f1766917553886": "156174 Wareed - Integration - Integration with",
+      "f1766929340598": "2026-01-25T18:00"
     },
     {
       "isVacation": false,
@@ -975,8 +975,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "156716 Enhance Wareed API Tet Cases, 156652 QueryServicePrice API does not return service, 156582 GetUpcomingVisit API returns incorrect SampleCollectionLocation (INDOOR",
-      "f1766929340598": "2026-01-21T08:10"
+      "f1766917553886": "157064 Execute Wareed APIs Test Cases, 157091 Execute Wareed APIs Test Cases, 156716 Enhance Wareed API Tet Cases",
+      "f1766929340598": "2026-01-25T07:52"
     }
   ],
   "fields": [
@@ -1159,5 +1159,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-25T08:06:12.760Z"
+  "timestamp": "2026-01-25T08:17:19.931Z"
 }
