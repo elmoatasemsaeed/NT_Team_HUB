@@ -7,7 +7,7 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "157219 Review Task for Execution Activity, 157161 Worklist Screen Not Retrieve data correctly, 157176 Review Task for Execution Activity",
+      "f1766917553886": "157219 Review Task for Execution Activity, 157161 Worklist Screen Not Retrieve data correctly, 157188 Result Delivery >> Can't Print Report",
       "f1766929340598": "2026-01-25T13:49"
     },
     {
@@ -43,7 +43,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "155206 MM | Client Portal : Backend",
-      "f1766929340598": "2026-01-25T18:00"
+      "f1766929340598": "2026-01-26T18:00"
     },
     {
       "isVacation": false,
@@ -60,7 +60,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "156843 Update Future Care to Call home",
-      "f1766929340598": "2026-01-25T18:00"
+      "f1766929340598": "2026-01-26T18:00"
     },
     {
       "isVacation": false,
@@ -77,8 +77,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "156483 Create Product details(Add/Edit) Component, 155097 Issue at Items Below/Over Ordering Limit",
-      "f1766929340598": "2026-01-19T16:38"
+      "f1766917553886": "151325 MM | Client Portal : Add, 155097 Issue at Items Below/Over Ordering Limit",
+      "f1766929340598": "2026-01-26T18:00"
     },
     {
       "name": "Sara Mustafa",
@@ -168,8 +168,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "156640 CR_153717 >> Review CR's Preparation",
-      "f1766929340598": "2026-01-20T15:22"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "name": "Saddam Raees",
@@ -197,7 +197,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "154695 Home Visits - Users: Add new, 155741 Home Visit - Patients Addresses: Add",
-      "f1766929340598": "2026-01-25T18:00"
+      "f1766929340598": "2026-01-26T18:00"
     },
     {
       "isVacation": true,
@@ -257,8 +257,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "157194 FD005 Add control (dropdownlist / Textbox, 138397 ALhassa - Rejected Samples Alarm: Update, 149618 Alameda - Microbiology Statistics: At \"Organism",
-      "f1766929340598": "2026-01-26T07:26"
+      "f1766917553886": "138397 ALhassa - Rejected Samples Alarm: Update, 149618 Alameda - Microbiology Statistics: At \"Organism, 149620 Alameda - Results: For each Test,",
+      "f1766929340598": "2026-01-26T18:00"
     },
     {
       "isVacation": false,
@@ -276,7 +276,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "154170 Wareed Lab - Mobile App: Create, 156503 implementing the design of profile screen",
-      "f1766929340598": "2026-01-25T18:00"
+      "f1766929340598": "2026-01-26T18:00"
     },
     {
       "isVacation": false,
@@ -292,8 +292,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "157246 preparation for cr, 154202 Alnas Hospital - HL7 Orders: Auto",
-      "f1766929340598": "2026-01-25T15:17"
+      "f1766917553886": "154202 Alnas Hospital - HL7 Orders: Auto",
+      "f1766929340598": "2026-01-20T12:00"
     },
     {
       "name": "Mostafa Mohamed",
@@ -329,8 +329,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153549 Update Zatca Integration - Add New, 154515 Wareed Lab - Genesys WhatsApp Integration, 157033 Extra services are returned with status",
-      "f1766929340598": "2026-01-25T18:00"
+      "f1766917553886": "153549 Update Zatca Integration - Add New, 154515 Wareed Lab - Genesys WhatsApp Integration",
+      "f1766929340598": "2026-01-26T18:00"
     },
     {
       "isVacation": false,
@@ -383,8 +383,8 @@
         "Team Leader"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "150444 Queuing all trigger and integration actions",
-      "f1766929340598": "2026-01-25T18:00"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "name": "Mohamed Elgmmal",
@@ -425,8 +425,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154009 MRC - Patient Reports Updates, 155350 Wateen Lab - Patient Reports Customization, 156817 TR012 --> Create new patient reports",
-      "f1766929340598": "2026-01-25T18:00"
+      "f1766917553886": "156826 TR014 --> Bind DB data in, 154009 MRC - Patient Reports Updates, 155350 Wateen Lab - Patient Reports Customization",
+      "f1766929340598": "2026-01-27T08:15"
     },
     {
       "isVacation": false,
@@ -477,8 +477,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "156151 Copy the Claim forms from Smou, 153717 Internal CR - Financial Claims: Bulk, 156144 Wateen Lab - Claims: Create a",
-      "f1766929340598": "2026-01-26T07:19"
+      "f1766917553886": "153717 Internal CR - Financial Claims: Bulk, 156144 Wateen Lab - Claims: Create a, 156151 Copy the Claim forms from Smou",
+      "f1766929340598": "2026-01-26T18:00"
     },
     {
       "isVacation": false,
@@ -494,8 +494,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "157167 #CR150546: Error occur when save result, 156773 #CR150546: Execution, 155241 #CR>151975: Execution",
-      "f1766929340598": "2026-01-25T11:57"
+      "f1766917553886": "156773 #CR150546: Execution, 155241 #CR>151975: Execution",
+      "f1766929340598": "2026-01-22T12:00"
     },
     {
       "isVacation": true,
@@ -546,7 +546,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "154602 Khedr Lab - System should display, 138837 Internal CR - LDM Error Screen:",
-      "f1766929340598": "2026-01-25T18:00"
+      "f1766929340598": "2026-01-26T18:00"
     },
     {
       "isVacation": false,
@@ -591,7 +591,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "154632 Wareed Lab - NT Mobile APIs, 155145 Wareed Lab - Ayenati - Send, 157234 Integraiton: Review where is AsNoTracking is",
-      "f1766929340598": "2026-01-25T18:00"
+      "f1766929340598": "2026-01-26T18:00"
     },
     {
       "isVacation": false,
@@ -620,8 +620,8 @@
         "Registration"
       ],
       "workingIn": "Senior",
-      "f1766917553886": "157241 Investigate Code And Testing UI for, 156975 BD016:Review On CR 138837",
-      "f1766929340598": "2026-01-25T16:33"
+      "f1766917553886": "157298 Review Tasks and ExcelSheet CR156153, 156975 BD016:Review On CR 138837",
+      "f1766929340598": "2026-01-25T17:26"
     },
     {
       "isVacation": false,
@@ -671,8 +671,8 @@
         "support"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "151325 MM | Client Portal : Add",
-      "f1766929340598": "2026-01-25T18:00"
+      "f1766917553886": "157270 Edit screen displaying wrong product Category, 157265 Inactive Product categories and Product manufacturers, 157272 Cant delete Product category",
+      "f1766929340598": "2026-01-25T16:50"
     },
     {
       "isVacation": false,
@@ -697,7 +697,7 @@
       "workingIn": [
         "Iteration"
       ],
-      "f1766917553886": "157122 Execution, 157121 Preparation, 157123 Regression",
+      "f1766917553886": "157122 Execution, 157121 Preparation, 157206 Edit new governorate and delete new",
       "f1766929340598": "2026-01-27T12:00"
     },
     {
@@ -730,8 +730,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "157215 Age segment - Age segment name, 155964 Execution",
-      "f1766929340598": "2026-01-25T13:29"
+      "f1766917553886": "155964 Execution",
+      "f1766929340598": "2026-01-14T08:00"
     },
     {
       "isVacation": false,
@@ -769,8 +769,8 @@
       "workingIn": "elBORG",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "157171 #157155_No Data Retrieve In Acc Detailed, 157199 #157155_Add New Template Dynamic Page Displayed, 153917 Result Log >> Pending Status is",
-      "f1766929340598": "2026-01-25T14:13"
+      "f1766917553886": "153917 Result Log >> Pending Status is",
+      "f1766929340598": "2025-12-21T16:32"
     },
     {
       "name": "Ammar Yasser Ahmed",
@@ -845,7 +845,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "150546 Alameda gp - Search by test, 156718 Critical Result Report returns no data",
-      "f1766929340598": "2026-01-25T18:00"
+      "f1766929340598": "2026-01-26T18:00"
     },
     {
       "isVacation": false,
@@ -890,8 +890,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "157222 Financial >> Claims >> Create proforma, 157188 Result Delivery >> Can't Print Report",
-      "f1766929340598": "2026-01-25T14:37"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "isVacation": false,
@@ -924,7 +924,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "150541 SKUH - Patient Reports: For all, 156578 TR012 : Add QR Code to",
-      "f1766929340598": "2026-01-25T18:00"
+      "f1766929340598": "2026-01-26T18:00"
     },
     {
       "isVacation": false,
@@ -956,8 +956,8 @@
       "custom_1766584922755": "هنسحبه من الهوم فيزيت تدريجيا",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "156174 Wareed - Integration - Integration with",
-      "f1766929340598": "2026-01-25T18:00"
+      "f1766917553886": "156174 Wareed - Integration - Integration with, 157275 Creating a whole postman collection for",
+      "f1766929340598": "2026-01-26T18:00"
     },
     {
       "isVacation": false,
@@ -975,8 +975,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "157064 Execute Wareed APIs Test Cases, 157091 Execute Wareed APIs Test Cases, 156716 Enhance Wareed API Tet Cases",
-      "f1766929340598": "2026-01-25T07:52"
+      "f1766917553886": "157277 Regression On Resolved Bugs For Wareed, 157064 Execute Wareed APIs Test Cases, 157091 Execute Wareed APIs Test Cases",
+      "f1766929340598": "2026-01-26T07:34"
     }
   ],
   "fields": [
@@ -1159,5 +1159,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-25T14:26:26.726Z"
+  "timestamp": "2026-01-26T07:25:31.167Z"
 }
