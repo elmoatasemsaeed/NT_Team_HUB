@@ -24,8 +24,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "156959 Assign Visit - selecting or deselecting",
-      "f1766929340598": "2026-01-22T09:14"
+      "f1766917553886": "157337 mobile Api investigation, 156959 Assign Visit - selecting or deselecting",
+      "f1766929340598": "2026-01-26T09:35"
     },
     {
       "isVacation": false,
@@ -196,7 +196,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154695 Home Visits - Users: Add new, 155741 Home Visit - Patients Addresses: Add",
+      "f1766917553886": "154695 Home Visits - Users: Add new, 155741 Home Visit - Patients Addresses: Add, 157338 Home visit regression display at reassign",
       "f1766929340598": "2026-01-26T18:00"
     },
     {
@@ -292,8 +292,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154202 Alnas Hospital - HL7 Orders: Auto",
-      "f1766929340598": "2026-01-20T12:00"
+      "f1766917553886": "156153 Copy Wateen Lab Job Order from, 157319 TR012 | Add new fields for, 157320 BD010 | add job order header,",
+      "f1766929340598": "2026-01-26T18:00"
     },
     {
       "name": "Mostafa Mohamed",
@@ -329,7 +329,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "153549 Update Zatca Integration - Add New, 154515 Wareed Lab - Genesys WhatsApp Integration",
+      "f1766917553886": "152517 Add New Integration Option to flag, 153549 Update Zatca Integration - Add New, 154515 Wareed Lab - Genesys WhatsApp Integration",
       "f1766929340598": "2026-01-26T18:00"
     },
     {
@@ -393,8 +393,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "157322 CR_149620 >> Preparation",
+      "f1766929340598": "2026-01-26T12:28"
     },
     {
       "isVacation": false,
@@ -460,8 +460,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "157180 Add Print feature to app assist, 148995 Wareed Lab - Mobile App: Create, 149074 Wareed Lab - Mobile App: Create",
-      "f1766929340598": "2026-01-27T09:00"
+      "f1766917553886": "157336 Test Printer with all cases with, 157180 Add Print feature to app assist, 148995 Wareed Lab - Mobile App: Create",
+      "f1766929340598": "2026-01-27T10:00"
     },
     {
       "isVacation": false,
@@ -545,8 +545,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154602 Khedr Lab - System should display, 138837 Internal CR - LDM Error Screen:",
-      "f1766929340598": "2026-01-26T18:00"
+      "f1766917553886": "157329 Dev Preparation",
+      "f1766929340598": "2026-01-26T10:36"
     },
     {
       "isVacation": false,
@@ -590,7 +590,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154632 Wareed Lab - NT Mobile APIs, 155145 Wareed Lab - Ayenati - Send, 157234 Integraiton: Review where is AsNoTracking is",
+      "f1766917553886": "154632 Wareed Lab - NT Mobile APIs, 155145 Wareed Lab - Ayenati - Send",
       "f1766929340598": "2026-01-26T18:00"
     },
     {
@@ -671,8 +671,8 @@
         "support"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "157270 Edit screen displaying wrong product Category, 157265 Inactive Product categories and Product manufacturers, 157272 Cant delete Product category",
-      "f1766929340598": "2026-01-25T16:50"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "isVacation": false,
@@ -975,8 +975,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "157277 Regression On Resolved Bugs For Wareed, 157064 Execute Wareed APIs Test Cases, 157091 Execute Wareed APIs Test Cases",
-      "f1766929340598": "2026-01-26T07:34"
+      "f1766917553886": "157326 Service returned in QueryServicePrice API although, 157277 Regression On Resolved Bugs For Wareed, 157064 Execute Wareed APIs Test Cases",
+      "f1766929340598": "2026-01-26T09:19"
     }
   ],
   "fields": [
@@ -1159,5 +1159,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-26T07:25:31.167Z"
+  "timestamp": "2026-01-26T09:16:39.334Z"
 }
