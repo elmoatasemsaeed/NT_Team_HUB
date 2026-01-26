@@ -1083,6 +1083,11 @@
       "username": "a.ali",
       "password": "123",
       "role": "viewer"
+    },
+    {
+      "username": "nada",
+      "password": "123",
+      "role": "viewer"
     }
   ],
   "visibility": {
@@ -1159,5 +1164,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-26T09:16:39.334Z"
+  "timestamp": "2026-01-26T14:09:37.763Z"
 }
