@@ -911,24 +911,6 @@
     {
       "isVacation": false,
       "vacationEnd": "",
-      "name": "Abdullah Omara",
-      "role": "Dev",
-      "area": [
-        "Internal lab",
-        "Front and Financial"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "150541 SKUH - Patient Reports: For all, 156578 TR012 : Add QR Code to",
-      "f1766929340598": "2026-01-26T18:00"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
       "name": "Abdullah Nasser",
       "role": "Senior tester",
       "area": [
@@ -1164,5 +1146,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-26T14:09:37.763Z"
+  "timestamp": "2026-01-27T14:58:03.804Z"
 }
