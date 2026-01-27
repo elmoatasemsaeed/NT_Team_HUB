@@ -850,21 +850,6 @@
     {
       "isVacation": false,
       "vacationEnd": "",
-      "name": "Ahmed Bassiony",
-      "role": "Dev",
-      "area": [
-        "front end"
-      ],
-      "workingIn": [],
-      "custom_1766584922755": "احمد سمير",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
       "name": "Ahmed Alshennawi",
       "role": "Tester",
       "area": [
@@ -1146,5 +1131,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-01-27T15:00:17.602Z"
+  "timestamp": "2026-01-27T15:03:32.106Z"
 }
