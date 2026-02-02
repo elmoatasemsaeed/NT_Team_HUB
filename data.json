@@ -16,8 +16,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "158153 Execute Test Cases For Lab Visit, 157429 Tests are disabled and cannot be, 157491 Home Visit is Selected by Default",
-      "f1766929340598": "2026-02-01T11:33"
+      "f1766917553886": "158274 User can select past visit time/date, 158153 Execute Test Cases For Lab Visit, 157429 Tests are disabled and cannot be",
+      "f1766929340598": "2026-02-02T11:14"
     },
     {
       "isVacation": false,
@@ -34,7 +34,7 @@
       "custom_1766584922755": "هنسحبه من الهوم فيزيت تدريجيا",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154244 Regression - phase 2, 155957 Add new column named visit date,, 156174 Wareed - Integration - Integration with",
+      "f1766917553886": "154244 Regression - phase 2, 155952 Update the privileges tree for Users, 155957 Add new column named visit date,",
       "f1766929340598": "2026-02-02T18:00"
     },
     {
@@ -81,7 +81,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "156238 Wateen Lab - Cash Receipt Customization, 157856 TR011 | Create the report labels, 157755 TR014 | Set the report DB",
+      "f1766917553886": "156238 Wateen Lab - Cash Receipt Customization, 157861 TR012 | Append report controls &, 157755 TR014 | Set the report DB",
       "f1766929340598": "2026-02-02T18:00"
     },
     {
@@ -136,8 +136,8 @@
       "workingIn": "elBORG",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "157885 System display \"Some of the selected, 157224 Execution",
-      "f1766929340598": "2026-02-01T11:33"
+      "f1766917553886": "157224 Execution",
+      "f1766929340598": "2026-01-26T16:32"
     },
     {
       "isVacation": false,
@@ -197,8 +197,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "157775 Job order Report Popup doesn't open",
-      "f1766929340598": "2026-02-01T16:59"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "isVacation": false,
@@ -225,8 +225,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "158011 CR -155740- Preparation, 157780 CR -155739- Preparation, 158173 CR -155740- Execution",
-      "f1766929340598": "2026-02-02T09:20"
+      "f1766917553886": "157767 Execution, 158170 CR -155475- Execution, 158281 Add New Collection Area - Add",
+      "f1766929340598": "2026-02-03T12:00"
     },
     {
       "isVacation": false,
@@ -257,8 +257,8 @@
       "workingIn": [
         "Iteration"
       ],
-      "f1766917553886": "158202 AddVisit Api_internal server error, 158164 GetCollectionAreas Api_internal server error, 158166 GetCollectionAreaTimeSlots Api_internal server error",
-      "f1766929340598": "2026-02-01T13:26"
+      "f1766917553886": "158413 Add Visit Api_response issue, 158202 AddVisit Api_internal server error, 158164 GetCollectionAreas Api_internal server error",
+      "f1766929340598": "2026-02-02T11:52"
     },
     {
       "isVacation": false,
@@ -302,7 +302,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "156979 wareed Mobile app - Mocking web, 157748 Mocking App - Checkpoint 1.4: API, 157743 Mocking App - Checkpoint 1.3: Projects",
+      "f1766917553886": "156979 wareed Mobile app - Mocking web, 156487 Web Payment App",
       "f1766929340598": "2026-02-02T18:00"
     },
     {
@@ -428,8 +428,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "154171 Wareed Lab - Mobile App: Create",
+      "f1766929340598": "2026-02-02T18:00"
     },
     {
       "isVacation": false,
@@ -531,7 +531,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154009 MRC - Patient Reports Updates, 155350 Wateen Lab - Patient Reports Customization, 158325 TR012 --> Add Wateen Logo to",
+      "f1766917553886": "154009 MRC - Patient Reports Updates, 155350 Wateen Lab - Patient Reports Customization, 156822 TR012 --> Create new culture sub",
       "f1766929340598": "2026-02-02T18:00"
     },
     {
@@ -546,8 +546,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "رجب",
-      "f1766917553886": "158240 Preparation",
-      "f1766929340598": "2026-02-01T17:49"
+      "f1766917553886": "",
+      "f1766929340598": ""
     },
     {
       "name": "Mohamed Elgmmal",
@@ -682,7 +682,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154170 Wareed Lab - Mobile App: Create",
+      "f1766917553886": "154169 Wareed Lab - Mobile App: Create, 154170 Wareed Lab - Mobile App: Create",
       "f1766929340598": "2026-02-02T18:00"
     },
     {
@@ -807,7 +807,7 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "157724 Enhance LDM mobile manager \"Promotion\" screen, 158182 Database : Add Fields",
+      "f1766917553886": "157725 Create new screen for listing, adding,, 158371 preparation  tasks, 158377 Database : Create table\tMobile Message",
       "f1766929340598": "2026-02-02T18:00"
     },
     {
@@ -862,8 +862,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "157512 Execution, 157510 Execution, 157722 Web Result Reports Error",
-      "f1766929340598": "2026-02-01T13:56"
+      "f1766917553886": "157775 Job order Report Popup doesn't open, 157512 Execution, 157510 Execution",
+      "f1766929340598": "2026-02-01T16:59"
     },
     {
       "isVacation": false,
@@ -1146,5 +1146,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-02-02T07:44:47.334Z"
+  "timestamp": "2026-02-02T12:10:27.388Z"
 }
