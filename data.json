@@ -16,8 +16,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "158348 English texts appear on the Orders, 158274 User can select past visit time/date, 158153 Execute Test Cases For Lab Visit",
-      "f1766929340598": "2026-02-02T14:12"
+      "f1766917553886": "158153 Execute Test Cases For Lab Visit, 156355 Writing Test Cases For Wareed APIs, 156350 Review Wareed  API Documentation",
+      "f1766929340598": "2026-02-01T11:33"
     },
     {
       "isVacation": false,
@@ -34,8 +34,8 @@
       "custom_1766584922755": "هنسحبه من الهوم فيزيت تدريجيا",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154244 Regression - phase 2, 155952 Update the privileges tree for Users, 155957 Add new column named visit date,",
-      "f1766929340598": "2026-02-03T18:00"
+      "f1766917553886": "155952 Update the privileges tree for Users, 155957 Add new column named visit date,, 156174 Wareed - Integration - Integration with",
+      "f1766929340598": "2026-02-04T18:00"
     },
     {
       "isVacation": false,
@@ -49,8 +49,8 @@
       "workingIn": [
         "support"
       ],
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "158394 result msg not fired after acc",
+      "f1766929340598": "2026-02-04T09:05"
     },
     {
       "isVacation": false,
@@ -81,8 +81,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "156238 Wateen Lab - Cash Receipt Customization, 157861 TR012 | Append report controls &, 157755 TR014 | Set the report DB",
-      "f1766929340598": "2026-02-03T18:00"
+      "f1766917553886": "156238 Wateen Lab - Cash Receipt Customization, 157755 TR014 | Set the report DB",
+      "f1766929340598": "2026-02-04T18:00"
     },
     {
       "isVacation": false,
@@ -113,7 +113,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "150546 Alameda gp - Search by test, 157454 Meeting with advanced ibrahem, 156570 the Right side section do not",
-      "f1766929340598": "2026-02-03T18:00"
+      "f1766929340598": "2026-02-04T18:00"
     },
     {
       "isVacation": false,
@@ -136,8 +136,8 @@
       "workingIn": "elBORG",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "157897 Preparation, 157224 Execution",
-      "f1766929340598": "2026-02-02T17:12"
+      "f1766917553886": "157224 Execution",
+      "f1766929340598": "2026-01-26T16:32"
     },
     {
       "isVacation": false,
@@ -170,8 +170,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "157014 Preparation",
-      "f1766929340598": "2026-01-27T12:00"
+      "f1766917553886": "157015 Execution, 157014 Preparation",
+      "f1766929340598": "2026-02-08T12:00"
     },
     {
       "name": "Amr Sameh",
@@ -197,8 +197,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "158746 Batch Barcode Report doesn't follow Wateen, 158736 Processing Unit Short Name doesn't updated",
+      "f1766929340598": "2026-02-03T17:29"
     },
     {
       "isVacation": false,
@@ -209,8 +209,8 @@
         "Front and Financial"
       ],
       "workingIn": "Senior",
-      "f1766917553886": "155093 TR015: Review on CR, 155064 BD016: Review on CR",
-      "f1766929340598": "2026-01-05T13:12"
+      "f1766917553886": "157561 TR013: Review on CR, 157562 BD016: Review on CR, 155093 TR015: Review on CR",
+      "f1766929340598": "2026-02-04T07:20"
     },
     {
       "isVacation": false,
@@ -225,8 +225,8 @@
         "Iteration"
       ],
       "custom_1766584922755": "",
-      "f1766917553886": "157767 Execution, 158170 CR -155475- Execution, 158288 Collector - Incorrect Validation Toaster is",
-      "f1766929340598": "2026-02-03T12:00"
+      "f1766917553886": "158770 Setup screen - Status toggle design, 158210 Add Visit \"mobile number path\" -, 157767 Execution",
+      "f1766929340598": "2026-02-03T16:20"
     },
     {
       "isVacation": false,
@@ -257,8 +257,8 @@
       "workingIn": [
         "Iteration"
       ],
-      "f1766917553886": "158433 Get Patient Addresses _ error patient, 157122 Execution, 157206 Edit new governorate and delete new",
-      "f1766929340598": "2026-02-02T13:23"
+      "f1766917553886": "157121 Preparation, 158741 UpdatePatientAddresses Api_internal server error, 158750 GetCollectionAreas Api_ C in collection area",
+      "f1766929340598": "2026-02-05T07:04"
     },
     {
       "isVacation": false,
@@ -302,8 +302,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "156979 wareed Mobile app - Mocking web, 156487 Web Payment App",
-      "f1766929340598": "2026-02-03T18:00"
+      "f1766917553886": "158721 Mocking App - Collections, 156979 wareed Mobile app - Mocking web",
+      "f1766929340598": "2026-02-05T11:00"
     },
     {
       "isVacation": false,
@@ -349,8 +349,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "157466 Assuit University - 100 Million Integration",
-      "f1766929340598": "2026-02-03T18:00"
+      "f1766917553886": "157466 Assuit University - 100 Million Integration, 157849 Al Borg KSA - HealthCare system",
+      "f1766929340598": "2026-02-04T18:00"
     },
     {
       "isVacation": false,
@@ -366,8 +366,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154632 Wareed Lab - NT Mobile APIs, 155145 Wareed Lab - Ayenati - Send",
-      "f1766929340598": "2026-02-03T18:00"
+      "f1766917553886": "154632 Wareed Lab - NT Mobile APIs, 155145 Wareed Lab - Ayenati - Send, 158768 AddNewOrder API rejects service with Transfer",
+      "f1766929340598": "2026-02-04T18:00"
     },
     {
       "isVacation": false,
@@ -394,8 +394,8 @@
       "workingIn": [
         "support"
       ],
-      "f1766917553886": "156510 if contain stat service it retrieved, 156463 when undo Review for service >>, 156147 Reviewed Services issues",
-      "f1766929340598": "2026-01-19T15:49"
+      "f1766917553886": "158688 No message generated, 158663 Stage >> No message generated after, 156510 if contain stat service it retrieved",
+      "f1766929340598": "2026-02-03T11:53"
     },
     {
       "isVacation": false,
@@ -429,7 +429,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "154171 Wareed Lab - Mobile App: Create, 158362 Incorrect test progress status displayed on",
-      "f1766929340598": "2026-02-03T18:00"
+      "f1766929340598": "2026-02-04T18:00"
     },
     {
       "isVacation": false,
@@ -479,8 +479,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "158294 Preparation, 156321 Execution Task For 153715, 156319 preparation task for CR 153715",
-      "f1766929340598": "2026-02-02T10:41"
+      "f1766917553886": "146902 Enhanced Reports - Web result Trigger, 158765 BD006 : Prepare Data To Insert, 156321 Execution Task For 153715",
+      "f1766929340598": "2026-02-04T10:45"
     },
     {
       "isVacation": false,
@@ -498,7 +498,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "148995 Wareed Lab - Mobile App: Create, 149074 Wareed Lab - Mobile App: Create, 149217 Wareed Lab - Mobile App: Create",
-      "f1766929340598": "2026-02-03T18:00"
+      "f1766929340598": "2026-02-04T18:00"
     },
     {
       "isVacation": false,
@@ -531,8 +531,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154009 MRC - Patient Reports Updates, 155350 Wateen Lab - Patient Reports Customization, 156325 BD001 - Webform Backend : Add",
-      "f1766929340598": "2026-02-03T18:00"
+      "f1766917553886": "149621 Alameda - Corrected tests Report -, 154009 MRC - Patient Reports Updates, 155350 Wateen Lab - Patient Reports Customization",
+      "f1766929340598": "2026-02-04T18:00"
     },
     {
       "isVacation": false,
@@ -556,8 +556,8 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "158455 CR_152190 >> Preparation, 157227 Printing patient results generates an extra, 157228 Report Date is displayed as NULL",
-      "f1766929340598": "2026-02-02T17:55"
+      "f1766917553886": "158455 CR_152190 >> Preparation, 157419 CR_149620 >> Execution",
+      "f1766929340598": "2026-02-03T08:00"
     },
     {
       "isVacation": false,
@@ -593,8 +593,8 @@
         "Internal lab"
       ],
       "workingIn": "Senior",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "158798 Implement with copilot",
+      "f1766929340598": "2026-02-04T11:26"
     },
     {
       "isVacation": false,
@@ -611,7 +611,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "154633 Borg KSA - Extract Kuwait Patient, 158317 Mentoring Mohamed Aymen for production deployment",
-      "f1766929340598": "2026-02-03T18:00"
+      "f1766929340598": "2026-02-04T18:00"
     },
     {
       "isVacation": false,
@@ -627,8 +627,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "146956 Swiss Lab LDM - Athir HIS, 154570 Smou Labs WhatsApp Integrations - Javna, 158410 Update Odoo Integration - Handle Value",
-      "f1766929340598": "2026-02-03T18:00"
+      "f1766917553886": "146956 Swiss Lab LDM - Athir HIS, 154570 Smou Labs WhatsApp Integrations - Javna",
+      "f1766929340598": "2026-02-04T18:00"
     },
     {
       "name": "Mohamed Sayed Masry Rezk",
@@ -664,8 +664,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "156153 Copy Wateen Lab Job Order from, 158154 Mismatch Between Total Loyalty Points in, 154202 Alnas Hospital - HL7 Orders: Auto",
-      "f1766929340598": "2026-02-03T18:00"
+      "f1766917553886": "158154 Mismatch Between Total Loyalty Points in, 154202 Alnas Hospital - HL7 Orders: Auto",
+      "f1766929340598": "2026-02-02T16:02"
     },
     {
       "isVacation": false,
@@ -683,7 +683,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "154169 Wareed Lab - Mobile App: Create, 154170 Wareed Lab - Mobile App: Create",
-      "f1766929340598": "2026-02-03T18:00"
+      "f1766929340598": "2026-02-04T18:00"
     },
     {
       "isVacation": false,
@@ -700,7 +700,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "138397 ALhassa - Rejected Samples Alarm: Update, 149618 Alameda - Microbiology Statistics: At \"Organism, 152487 Alameda gp - Microbiology Statistics: Add",
-      "f1766929340598": "2026-02-03T18:00"
+      "f1766929340598": "2026-02-04T18:00"
     },
     {
       "name": "Mustafa Mamdoh",
@@ -762,7 +762,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "155472 Home Visits - District Areas: Create, 155473 Home Visits - Security Privileges: Add, 155474 Home Visits - Visits - Address:",
-      "f1766929340598": "2026-02-03T18:00"
+      "f1766929340598": "2026-02-04T18:00"
     },
     {
       "name": "Saddam Raees",
@@ -807,8 +807,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "158436 Popup name is wrong in Edit, 158182 Database : Add Fields",
-      "f1766929340598": "2026-02-03T07:15"
+      "f1766917553886": "157724 Enhance LDM mobile manager \"Promotion\" screen, 158807 Refactor code Front & Backend -investigation, 158182 Database : Add Fields",
+      "f1766929340598": "2026-02-04T18:00"
     },
     {
       "isVacation": false,
@@ -826,7 +826,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "152190 Alameda gp - Rejected Samples Alarm:, 158525 Waiting database, 155389 TR013 --> Add watermark with its",
-      "f1766929340598": "2026-02-03T18:00"
+      "f1766929340598": "2026-02-04T18:00"
     },
     {
       "name": "Sameh Abdellatef",
@@ -862,7 +862,7 @@
       "workingIn": "Iteration",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "158390 Barcode Report Error _ After Reservation, 158239 Sample ID doesn't display Branch short, 158260 Sample ID doesn't display Processing Unit",
+      "f1766917553886": "158390 Barcode Report Error _ After Reservation, 157512 Execution, 157722 Web Result Reports Error",
       "f1766929340598": "2026-02-02T17:56"
     },
     {
@@ -880,8 +880,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "155212 MM | Client : Batch receiving, 158268 Frontend : Add button and business, 157817 Stores >> Dispatch Order: Item and",
-      "f1766929340598": "2026-02-03T18:00"
+      "f1766917553886": "155212 MM | Client : Batch receiving, 158809 Reports >> Orphaned items: Wrong Printed, 158709 Reports - Dashboard - Executive Summary",
+      "f1766929340598": "2026-02-04T18:00"
     },
     {
       "isVacation": false,
@@ -897,8 +897,8 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
+      "f1766917553886": "158670 Incorrect Result Status = “Partially Reviewed”",
+      "f1766929340598": "2026-02-03T13:22"
     },
     {
       "isVacation": false,
@@ -933,7 +933,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "155475 Home Visits - Rename area across, 155477 Home Visits - System Parameters: Add, 155739 Home Visit - Countries: Add a",
-      "f1766929340598": "2026-02-03T18:00"
+      "f1766929340598": "2026-02-04T18:00"
     },
     {
       "name": "Yasmine Abdelwahed",
@@ -958,7 +958,7 @@
       "f1766864203478": "",
       "f1766864338124": "",
       "f1766917553886": "157412 [Technical] - Create Shared User controls",
-      "f1766929340598": "2026-02-03T18:00"
+      "f1766929340598": "2026-02-04T18:00"
     }
   ],
   "fields": [
@@ -1146,5 +1146,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-02-03T08:08:29.548Z"
+  "timestamp": "2026-02-04T07:48:56.517Z"
 }
