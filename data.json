@@ -1,24 +1,44 @@
 {
   "employees": [
     {
-      "name": "Yasmine Abdelwahed",
+      "name": "Mohamed Sayed Masry Rezk",
       "role": "Tester",
-      "area": "Internal lab",
-      "workingIn": "Iteration",
+      "area": "elBORG",
+      "workingIn": "elBORG",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "157676 Review Task for Execution Activity, 157444 Missing Data at Reports Header, 157508 Review Task for Execution Activity",
-      "f1766929340598": "2026-01-27T15:20"
+      "f1766917553886": "158257 execution",
+      "f1766929340598": "2026-02-03T07:23"
     },
     {
-      "name": "Sara Mustafa",
+      "name": "Amr Sameh",
       "role": "Tester",
-      "area": "Registration",
-      "workingIn": "Iteration",
+      "area": "elBORG",
+      "workingIn": "elBORG",
       "isVacation": false,
       "vacationEnd": "",
-      "f1766917553886": "158390 Barcode Report Error _ After Reservation, 157512 Execution, 157722 Web Result Reports Error",
-      "f1766929340598": "2026-02-02T17:56"
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "name": "Alaa Ezzat",
+      "role": "Tester",
+      "area": "elBORG",
+      "workingIn": "elBORG",
+      "isVacation": false,
+      "vacationEnd": "",
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "name": "Ahmed Mohamed Farag",
+      "role": "Tester",
+      "area": "elBORG",
+      "workingIn": "elBORG",
+      "isVacation": false,
+      "vacationEnd": "",
+      "f1766917553886": "157224 Execution",
+      "f1766929340598": "2026-01-26T16:32"
     },
     {
       "name": "Saddam Raees",
@@ -29,43 +49,6 @@
       "vacationEnd": "",
       "f1766917553886": "",
       "f1766929340598": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Nehal Elbana ",
-      "role": "Tester",
-      "area": [
-        "Integration",
-        "Mobile App",
-        "Automation"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "name": "Mustafa Mamdoh",
-      "role": "Tester",
-      "area": "Registration",
-      "workingIn": "Iteration",
-      "isVacation": false,
-      "vacationEnd": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "name": "Mohamed Sayed Masry Rezk",
-      "role": "Tester",
-      "area": "elBORG",
-      "workingIn": "elBORG",
-      "isVacation": false,
-      "vacationEnd": "",
-      "f1766917553886": "158257 execution",
-      "f1766929340598": "2026-02-03T07:23"
     },
     {
       "name": "Mohamed Ibrahim",
@@ -90,126 +73,6 @@
     {
       "isVacation": false,
       "vacationEnd": "",
-      "name": "Mohamed Abomosallam",
-      "role": "Tester",
-      "area": [
-        "Internal lab"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "رجب",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mariam Okab",
-      "role": "Tester",
-      "area": [
-        "Integration",
-        "Mobile App",
-        "Automation"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "2026-01-12",
-      "name": "Mahmoud Ab Omar",
-      "role": "Tester",
-      "area": [
-        "Internal lab"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "155241 #CR>151975: Execution",
-      "f1766929340598": "2026-01-14T12:00"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Heba Mohamed El Sayed",
-      "role": "Tester",
-      "area": [
-        "LDM_Integration"
-      ],
-      "workingIn": [
-        "support"
-      ],
-      "f1766917553886": "158688 No message generated, 158663 Stage >> No message generated after, 156510 if contain stat service it retrieved",
-      "f1766929340598": "2026-02-03T11:53"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Hassan Dwidar",
-      "role": "Tester",
-      "area": [
-        "LDM_Integration"
-      ],
-      "workingIn": [
-        "support"
-      ],
-      "f1766917553886": "156245 testing registration and cancel for device",
-      "f1766929340598": "2026-01-18T08:09"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Elhussein Ahmed",
-      "role": "Tester",
-      "area": [
-        "Integration",
-        "MMS",
-        "ADFACA"
-      ],
-      "workingIn": [
-        "support"
-      ],
-      "custom_1766584922755": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Dina Ahmed",
-      "role": "Tester",
-      "area": "Registration",
-      "workingIn": "Iteration",
-      "custom_1766503160857": [],
-      "f1766917553886": "158206 prepartion, 155013 BUG_022: system allow adding service with, 154884 preparation",
-      "f1766929340598": "2026-02-01T13:43"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Bothyna Abdelmoniem",
-      "role": "Tester",
-      "area": [
-        "Internal lab",
-        "Integration"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "f1766917553886": "157121 Preparation, 158741 UpdatePatientAddresses Api_internal server error, 158750 GetCollectionAreas Api_ C in collection area",
-      "f1766929340598": "2026-02-05T07:04"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
       "name": "Bassem Ayman Morsy",
       "role": "Tester",
       "area": [
@@ -227,267 +90,6 @@
     {
       "isVacation": false,
       "vacationEnd": "",
-      "name": "Bassant Abdelhamid",
-      "role": "Tester",
-      "area": [
-        "Integration",
-        "Home Visit"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766917553886": "158770 Setup screen - Status toggle design, 158210 Add Visit \"mobile number path\" -, 157767 Execution",
-      "f1766929340598": "2026-02-03T16:20"
-    },
-    {
-      "name": "Amr Sameh",
-      "role": "Tester",
-      "area": "elBORG",
-      "workingIn": "elBORG",
-      "isVacation": false,
-      "vacationEnd": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "name": "Ammar Yasser Ahmed",
-      "role": "Tester",
-      "area": "Internal lab",
-      "workingIn": "Iteration",
-      "isVacation": false,
-      "vacationEnd": "",
-      "f1766917553886": "157015 Execution, 157014 Preparation",
-      "f1766929340598": "2026-02-08T12:00"
-    },
-    {
-      "name": "Alaa Ezzat",
-      "role": "Tester",
-      "area": "elBORG",
-      "workingIn": "elBORG",
-      "isVacation": false,
-      "vacationEnd": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Ahmed Saed",
-      "role": "Tester",
-      "area": [
-        "LDM_Integration"
-      ],
-      "workingIn": [
-        "support"
-      ],
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "name": "Ahmed Mohamed Farag",
-      "role": "Tester",
-      "area": "elBORG",
-      "workingIn": "elBORG",
-      "isVacation": false,
-      "vacationEnd": "",
-      "f1766917553886": "157224 Execution",
-      "f1766929340598": "2026-01-26T16:32"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Ahmed Khaled Mubark",
-      "role": "Tester",
-      "area": [
-        "LDM_Integration"
-      ],
-      "workingIn": [
-        "support"
-      ],
-      "f1766917553886": "158236 Egyptian National ID Validation Error",
-      "f1766929340598": "2026-02-02T14:37"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Ahmed Alshennawi",
-      "role": "Tester",
-      "area": [
-        "LDM_Integration"
-      ],
-      "workingIn": [
-        "support"
-      ],
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Abdelrahman Elbetar",
-      "role": "Tester",
-      "area": [
-        "Integration",
-        "Mobile App",
-        "Automation"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "158153 Execute Test Cases For Lab Visit, 156355 Writing Test Cases For Wareed APIs, 156350 Review Wareed  API Documentation",
-      "f1766929340598": "2026-02-01T11:33"
-    },
-    {
-      "name": "Sameh Abdellatef",
-      "role": "Team Lead",
-      "area": "Team Leader",
-      "workingIn": "Team Leader",
-      "isVacation": false,
-      "vacationEnd": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mohamed Fawzy",
-      "role": "Team Lead",
-      "area": [
-        "Team Leader"
-      ],
-      "workingIn": [
-        "Team Leader"
-      ],
-      "custom_1766584922755": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "2025-12-29",
-      "name": "Salah Abdelhakeem",
-      "role": "Senior tester",
-      "area": [
-        "Front and Financial",
-        "Automation"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "name": "Mostafa Mohamed",
-      "role": "Senior tester",
-      "area": "Registration",
-      "workingIn": "Iteration",
-      "isVacation": false,
-      "vacationEnd": "",
-      "f1766917553886": "155975 BUG_002: Results Date :result date didn't",
-      "f1766929340598": "2026-01-14T11:50"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Abdullah Nasser",
-      "role": "Senior tester",
-      "area": [
-        "Integration",
-        "LDM_Integration"
-      ],
-      "workingIn": [
-        "support"
-      ],
-      "f1766917553886": "158394 result msg not fired after acc",
-      "f1766929340598": "2026-02-04T09:05"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mohamed Ismail",
-      "role": "Senior",
-      "area": [
-        "Internal lab"
-      ],
-      "workingIn": "Senior",
-      "f1766917553886": "158798 Implement with copilot",
-      "f1766929340598": "2026-02-04T11:26"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Islam kamal",
-      "role": "Senior",
-      "area": [
-        "Mobile App"
-      ],
-      "workingIn": [
-        "Senior"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "154171 Wareed Lab - Mobile App: Create, 158362 Incorrect test progress status displayed on",
-      "f1766929340598": "2026-02-04T18:00"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Gamal Kasem",
-      "role": "Senior",
-      "area": [
-        "LDM_Integration"
-      ],
-      "workingIn": [
-        "Iteration",
-        "Senior"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "157466 Assuit University - 100 Million Integration, 157849 Al Borg KSA - HealthCare system",
-      "f1766929340598": "2026-02-04T18:00"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Fatma Fayed",
-      "role": "Senior",
-      "area": [
-        "Registration"
-      ],
-      "workingIn": "Senior",
-      "f1766917553886": "158598 Preparation for US 154713, 155120 Alborg KSA - Users Configuration: Create, 156975 BD016:Review On CR 138837",
-      "f1766929340598": "2026-02-03T08:00"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "2025-12-30",
-      "name": "Eslam Saleh",
-      "role": "Senior",
-      "area": [
-        "Mobile App"
-      ],
-      "workingIn": [
-        "Senior"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "158721 Mocking App - Collections, 156979 wareed Mobile app - Mocking web",
-      "f1766929340598": "2026-02-05T11:00"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
       "name": "Bardis Khamees",
       "role": "Senior",
       "area": [
@@ -496,317 +98,6 @@
       "workingIn": "Senior",
       "f1766917553886": "157561 TR013: Review on CR, 157562 BD016: Review on CR, 155093 TR015: Review on CR",
       "f1766929340598": "2026-02-04T07:20"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Yara Mohsen",
-      "role": "Dev",
-      "area": [
-        "Home Visit"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "155475 Home Visits - Rename area across, 155477 Home Visits - System Parameters: Add, 155739 Home Visit - Countries: Add a",
-      "f1766929340598": "2026-02-04T18:00"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "2026-01-13",
-      "name": "Yahia Hassan",
-      "role": "Dev",
-      "area": [
-        "Integration",
-        "ADFACA"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Tarek Saad",
-      "role": "Dev",
-      "area": [
-        "LDM_Integration"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "158670 Incorrect Result Status = “Partially Reviewed”",
-      "f1766929340598": "2026-02-03T13:22"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "2026-01-13",
-      "name": "Sherif Eldorf",
-      "role": "Dev",
-      "area": [
-        "Integration",
-        "MMS"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "155212 MM | Client : Batch receiving, 158809 Reports >> Orphaned items: Wrong Printed, 158709 Reports - Dashboard - Executive Summary",
-      "f1766929340598": "2026-02-04T18:00"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Samir Mohamed Dagher",
-      "role": "Dev",
-      "area": [
-        "Registration"
-      ],
-      "workingIn": [
-        "support"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Samar Mahmoud Abdelraouf Algammal",
-      "role": "Dev",
-      "area": [
-        "Internal lab",
-        "Front and Financial"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "152190 Alameda gp - Rejected Samples Alarm:, 158525 Waiting database, 155389 TR013 --> Add watermark with its",
-      "f1766929340598": "2026-02-04T18:00"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Saleh Abdulrahim Attia",
-      "role": "Dev",
-      "area": [
-        "Integration",
-        "ADFACA"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "157724 Enhance LDM mobile manager \"Promotion\" screen, 158807 Refactor code Front & Backend -investigation, 158182 Database : Add Fields",
-      "f1766929340598": "2026-02-04T18:00"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Reem Ali",
-      "role": "Dev",
-      "area": [
-        "Home Visit"
-      ],
-      "workingIn": [
-        "support",
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "155472 Home Visits - District Areas: Create, 155473 Home Visits - Security Privileges: Add, 155474 Home Visits - Visits - Address:",
-      "f1766929340598": "2026-02-04T18:00"
-    },
-    {
-      "isVacation": true,
-      "vacationEnd": "2026-03-01",
-      "name": "Ola Gamal",
-      "role": "Dev",
-      "area": [
-        "Internal lab"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "2026-01-02",
-      "name": "Mustafa Ahmed",
-      "role": "Dev",
-      "area": [
-        "Internal lab"
-      ],
-      "workingIn": [
-        "Regression"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "138397 ALhassa - Rejected Samples Alarm: Update, 149618 Alameda - Microbiology Statistics: At \"Organism, 152487 Alameda gp - Microbiology Statistics: Add",
-      "f1766929340598": "2026-02-04T18:00"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mostafa Torad",
-      "role": "Dev",
-      "area": [
-        "front end"
-      ],
-      "workingIn": [],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "157412 [Technical] - Create Shared User controls",
-      "f1766929340598": "2026-02-04T18:00"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mostafa Soliman",
-      "role": "Dev",
-      "area": [
-        "Mobile App"
-      ],
-      "workingIn": [
-        "support",
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "154169 Wareed Lab - Mobile App: Create, 154170 Wareed Lab - Mobile App: Create",
-      "f1766929340598": "2026-02-04T18:00"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mostafa Osama Abdelatif",
-      "role": "Dev",
-      "area": [
-        "Registration"
-      ],
-      "workingIn": [
-        "support"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "158154 Mismatch Between Total Loyalty Points in, 154202 Alnas Hospital - HL7 Orders: Auto",
-      "f1766929340598": "2026-02-02T16:02"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mohamed Salama",
-      "role": "Dev",
-      "area": [
-        "LDM_Integration"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "146956 Swiss Lab LDM - Athir HIS, 154570 Smou Labs WhatsApp Integrations - Javna",
-      "f1766929340598": "2026-02-04T18:00"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "2026-01-14",
-      "name": "Mohamed Refaat Khalifa Rifaei",
-      "role": "Dev",
-      "area": [
-        "LDM_Integration"
-      ],
-      "workingIn": [
-        "support"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "154633 Borg KSA - Extract Kuwait Patient, 158317 Mentoring Mohamed Aymen for production deployment",
-      "f1766929340598": "2026-02-04T18:00"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mohamed Hany",
-      "role": "Dev",
-      "area": [
-        "Internal lab"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mohamad Samy Sayed Abdelkhalek",
-      "role": "Dev",
-      "area": [
-        "Internal lab"
-      ],
-      "workingIn": [
-        "Regression"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "149621 Alameda - Corrected tests Report -, 154009 MRC - Patient Reports Updates, 155350 Wateen Lab - Patient Reports Customization",
-      "f1766929340598": "2026-02-04T18:00"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
-      "name": "Mahmoud Elghoraqy",
-      "role": "Dev",
-      "area": [
-        "Mobile App"
-      ],
-      "workingIn": [
-        "support",
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "148995 Wareed Lab - Mobile App: Create, 149074 Wareed Lab - Mobile App: Create, 149217 Wareed Lab - Mobile App: Create",
-      "f1766929340598": "2026-02-04T18:00"
     },
     {
       "isVacation": false,
@@ -845,27 +136,11 @@
     {
       "isVacation": false,
       "vacationEnd": "2025-12-29",
-      "name": "Ibrahim Ahmed Abo El-Fadl Ahmed",
-      "role": "Dev",
+      "name": "Salah Abdelhakeem",
+      "role": "Senior tester",
       "area": [
-        "Registration"
-      ],
-      "workingIn": [
-        "support"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "156154 Copy the Sample Barcode from Smou",
-      "f1766929340598": "2026-01-26T17:43"
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "2026-01-10",
-      "name": "Hamza Ashry Hamza Abdelhafeez",
-      "role": "Dev",
-      "area": [
-        "LDM_Integration"
+        "Front and Financial",
+        "Automation"
       ],
       "workingIn": [
         "Iteration"
@@ -873,7 +148,377 @@
       "custom_1766584922755": "",
       "f1766864203478": "",
       "f1766864338124": "",
-      "f1766917553886": "154632 Wareed Lab - NT Mobile APIs, 155145 Wareed Lab - Ayenati - Send, 158768 AddNewOrder API rejects service with Transfer",
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Mostafa Torad",
+      "role": "Dev",
+      "area": [
+        "front end"
+      ],
+      "workingIn": [],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "157412 [Technical] - Create Shared User controls",
+      "f1766929340598": "2026-02-04T18:00"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "2026-01-01",
+      "name": "Adel Salah El-Din Mahmoud",
+      "role": "Dev",
+      "area": [
+        "front end"
+      ],
+      "workingIn": [],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Yara Mohsen",
+      "role": "Dev",
+      "area": [
+        "Home Visit"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "155475 Home Visits - Rename area across, 155477 Home Visits - System Parameters: Add, 155739 Home Visit - Countries: Add a",
+      "f1766929340598": "2026-02-04T18:00"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Reem Ali",
+      "role": "Dev",
+      "area": [
+        "Home Visit"
+      ],
+      "workingIn": [
+        "support",
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "155472 Home Visits - District Areas: Create, 155473 Home Visits - Security Privileges: Add, 155474 Home Visits - Visits - Address:",
+      "f1766929340598": "2026-02-04T18:00"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "2026-01-13",
+      "name": "Yahia Hassan",
+      "role": "Dev",
+      "area": [
+        "Integration",
+        "ADFACA"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Saleh Abdulrahim Attia",
+      "role": "Dev",
+      "area": [
+        "Integration",
+        "ADFACA"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "157724 Enhance LDM mobile manager \"Promotion\" screen, 158807 Refactor code Front & Backend -investigation, 158182 Database : Add Fields",
+      "f1766929340598": "2026-02-04T18:00"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Bassant Abdelhamid",
+      "role": "Tester",
+      "area": [
+        "Integration",
+        "Home Visit"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766917553886": "158770 Setup screen - Status toggle design, 158210 Add Visit \"mobile number path\" -, 157767 Execution",
+      "f1766929340598": "2026-02-03T16:20"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Abdullah Nasser",
+      "role": "Senior tester",
+      "area": [
+        "Integration",
+        "LDM_Integration"
+      ],
+      "workingIn": [
+        "support"
+      ],
+      "f1766917553886": "158394 result msg not fired after acc",
+      "f1766929340598": "2026-02-04T09:05"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "2026-01-13",
+      "name": "Sherif Eldorf",
+      "role": "Dev",
+      "area": [
+        "Integration",
+        "MMS"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "155212 MM | Client : Batch receiving, 158809 Reports >> Orphaned items: Wrong Printed, 158709 Reports - Dashboard - Executive Summary",
+      "f1766929340598": "2026-02-04T18:00"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Elhussein Ahmed",
+      "role": "Tester",
+      "area": [
+        "Integration",
+        "MMS",
+        "ADFACA"
+      ],
+      "workingIn": [
+        "support"
+      ],
+      "custom_1766584922755": "",
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Abdullah Helal",
+      "role": "Dev",
+      "area": [
+        "Integration",
+        "Mobile App"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "هنسحبه من الهوم فيزيت تدريجيا",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "155952 Update the privileges tree for Users, 155957 Add new column named visit date,, 156174 Wareed - Integration - Integration with",
+      "f1766929340598": "2026-02-04T18:00"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Nehal Elbana ",
+      "role": "Tester",
+      "area": [
+        "Integration",
+        "Mobile App",
+        "Automation"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Mariam Okab",
+      "role": "Tester",
+      "area": [
+        "Integration",
+        "Mobile App",
+        "Automation"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Abdelrahman Elbetar",
+      "role": "Tester",
+      "area": [
+        "Integration",
+        "Mobile App",
+        "Automation"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "158153 Execute Test Cases For Lab Visit, 156355 Writing Test Cases For Wareed APIs, 156350 Review Wareed  API Documentation",
+      "f1766929340598": "2026-02-01T11:33"
+    },
+    {
+      "name": "Yasmine Abdelwahed",
+      "role": "Tester",
+      "area": "Internal lab",
+      "workingIn": "Iteration",
+      "isVacation": false,
+      "vacationEnd": "",
+      "f1766917553886": "157676 Review Task for Execution Activity, 157444 Missing Data at Reports Header, 157508 Review Task for Execution Activity",
+      "f1766929340598": "2026-01-27T15:20"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Mohamed Abomosallam",
+      "role": "Tester",
+      "area": [
+        "Internal lab"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "رجب",
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "2026-01-12",
+      "name": "Mahmoud Ab Omar",
+      "role": "Tester",
+      "area": [
+        "Internal lab"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "155241 #CR>151975: Execution",
+      "f1766929340598": "2026-01-14T12:00"
+    },
+    {
+      "name": "Ammar Yasser Ahmed",
+      "role": "Tester",
+      "area": "Internal lab",
+      "workingIn": "Iteration",
+      "isVacation": false,
+      "vacationEnd": "",
+      "f1766917553886": "157015 Execution, 157014 Preparation",
+      "f1766929340598": "2026-02-08T12:00"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Mohamed Ismail",
+      "role": "Senior",
+      "area": [
+        "Internal lab"
+      ],
+      "workingIn": "Senior",
+      "f1766917553886": "158798 Implement with copilot",
+      "f1766929340598": "2026-02-04T11:26"
+    },
+    {
+      "isVacation": true,
+      "vacationEnd": "2026-03-01",
+      "name": "Ola Gamal",
+      "role": "Dev",
+      "area": [
+        "Internal lab"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "2026-01-02",
+      "name": "Mustafa Ahmed",
+      "role": "Dev",
+      "area": [
+        "Internal lab"
+      ],
+      "workingIn": [
+        "Regression"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "138397 ALhassa - Rejected Samples Alarm: Update, 149618 Alameda - Microbiology Statistics: At \"Organism, 152487 Alameda gp - Microbiology Statistics: Add",
+      "f1766929340598": "2026-02-04T18:00"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Mohamed Hany",
+      "role": "Dev",
+      "area": [
+        "Internal lab"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Mohamad Samy Sayed Abdelkhalek",
+      "role": "Dev",
+      "area": [
+        "Internal lab"
+      ],
+      "workingIn": [
+        "Regression"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "149621 Alameda - Corrected tests Report -, 154009 MRC - Patient Reports Updates, 155350 Wateen Lab - Patient Reports Customization",
       "f1766929340598": "2026-02-04T18:00"
     },
     {
@@ -895,23 +540,6 @@
     },
     {
       "isVacation": false,
-      "vacationEnd": "2025-12-31",
-      "name": "Aya Saed Mustafa Mohamad Bayoumi",
-      "role": "Dev",
-      "area": [
-        "Registration"
-      ],
-      "workingIn": [
-        "Iteration"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "158746 Batch Barcode Report doesn't follow Wateen, 158736 Processing Unit Short Name doesn't updated",
-      "f1766929340598": "2026-02-03T17:29"
-    },
-    {
-      "isVacation": false,
       "vacationEnd": "",
       "name": "Ahmed Hafez",
       "role": "Dev",
@@ -926,6 +554,386 @@
       "f1766864338124": "",
       "f1766917553886": "150546 Alameda gp - Search by test, 157454 Meeting with advanced ibrahem, 156570 the Right side section do not",
       "f1766929340598": "2026-02-04T18:00"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Samar Mahmoud Abdelraouf Algammal",
+      "role": "Dev",
+      "area": [
+        "Internal lab",
+        "Front and Financial"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "152190 Alameda gp - Rejected Samples Alarm:, 158525 Waiting database, 155389 TR013 --> Add watermark with its",
+      "f1766929340598": "2026-02-04T18:00"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Bothyna Abdelmoniem",
+      "role": "Tester",
+      "area": [
+        "Internal lab",
+        "Integration"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "f1766917553886": "157121 Preparation, 158741 UpdatePatientAddresses Api_internal server error, 158750 GetCollectionAreas Api_ C in collection area",
+      "f1766929340598": "2026-02-05T07:04"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Heba Mohamed El Sayed",
+      "role": "Tester",
+      "area": [
+        "LDM_Integration"
+      ],
+      "workingIn": [
+        "support"
+      ],
+      "f1766917553886": "158688 No message generated, 158663 Stage >> No message generated after, 156510 if contain stat service it retrieved",
+      "f1766929340598": "2026-02-03T11:53"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Hassan Dwidar",
+      "role": "Tester",
+      "area": [
+        "LDM_Integration"
+      ],
+      "workingIn": [
+        "support"
+      ],
+      "f1766917553886": "156245 testing registration and cancel for device",
+      "f1766929340598": "2026-01-18T08:09"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Ahmed Saed",
+      "role": "Tester",
+      "area": [
+        "LDM_Integration"
+      ],
+      "workingIn": [
+        "support"
+      ],
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Ahmed Khaled Mubark",
+      "role": "Tester",
+      "area": [
+        "LDM_Integration"
+      ],
+      "workingIn": [
+        "support"
+      ],
+      "f1766917553886": "158236 Egyptian National ID Validation Error",
+      "f1766929340598": "2026-02-02T14:37"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Ahmed Alshennawi",
+      "role": "Tester",
+      "area": [
+        "LDM_Integration"
+      ],
+      "workingIn": [
+        "support"
+      ],
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Gamal Kasem",
+      "role": "Senior",
+      "area": [
+        "LDM_Integration"
+      ],
+      "workingIn": [
+        "Iteration",
+        "Senior"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "157466 Assuit University - 100 Million Integration, 157849 Al Borg KSA - HealthCare system",
+      "f1766929340598": "2026-02-04T18:00"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Tarek Saad",
+      "role": "Dev",
+      "area": [
+        "LDM_Integration"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "158670 Incorrect Result Status = “Partially Reviewed”",
+      "f1766929340598": "2026-02-03T13:22"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Mohamed Salama",
+      "role": "Dev",
+      "area": [
+        "LDM_Integration"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "146956 Swiss Lab LDM - Athir HIS, 154570 Smou Labs WhatsApp Integrations - Javna",
+      "f1766929340598": "2026-02-04T18:00"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "2026-01-14",
+      "name": "Mohamed Refaat Khalifa Rifaei",
+      "role": "Dev",
+      "area": [
+        "LDM_Integration"
+      ],
+      "workingIn": [
+        "support"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "154633 Borg KSA - Extract Kuwait Patient, 158317 Mentoring Mohamed Aymen for production deployment",
+      "f1766929340598": "2026-02-04T18:00"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "2026-01-10",
+      "name": "Hamza Ashry Hamza Abdelhafeez",
+      "role": "Dev",
+      "area": [
+        "LDM_Integration"
+      ],
+      "workingIn": [
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "154632 Wareed Lab - NT Mobile APIs, 155145 Wareed Lab - Ayenati - Send, 158768 AddNewOrder API rejects service with Transfer",
+      "f1766929340598": "2026-02-04T18:00"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Islam kamal",
+      "role": "Senior",
+      "area": [
+        "Mobile App"
+      ],
+      "workingIn": [
+        "Senior"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "154171 Wareed Lab - Mobile App: Create, 158362 Incorrect test progress status displayed on",
+      "f1766929340598": "2026-02-04T18:00"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "2025-12-30",
+      "name": "Eslam Saleh",
+      "role": "Senior",
+      "area": [
+        "Mobile App"
+      ],
+      "workingIn": [
+        "Senior"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "158721 Mocking App - Collections, 156979 wareed Mobile app - Mocking web",
+      "f1766929340598": "2026-02-05T11:00"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Mostafa Soliman",
+      "role": "Dev",
+      "area": [
+        "Mobile App"
+      ],
+      "workingIn": [
+        "support",
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "154169 Wareed Lab - Mobile App: Create, 154170 Wareed Lab - Mobile App: Create",
+      "f1766929340598": "2026-02-04T18:00"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Mahmoud Elghoraqy",
+      "role": "Dev",
+      "area": [
+        "Mobile App"
+      ],
+      "workingIn": [
+        "support",
+        "Iteration"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "148995 Wareed Lab - Mobile App: Create, 149074 Wareed Lab - Mobile App: Create, 149217 Wareed Lab - Mobile App: Create",
+      "f1766929340598": "2026-02-04T18:00"
+    },
+    {
+      "name": "Sara Mustafa",
+      "role": "Tester",
+      "area": "Registration",
+      "workingIn": "Iteration",
+      "isVacation": false,
+      "vacationEnd": "",
+      "f1766917553886": "158390 Barcode Report Error _ After Reservation, 157512 Execution, 157722 Web Result Reports Error",
+      "f1766929340598": "2026-02-02T17:56"
+    },
+    {
+      "name": "Mustafa Mamdoh",
+      "role": "Tester",
+      "area": "Registration",
+      "workingIn": "Iteration",
+      "isVacation": false,
+      "vacationEnd": "",
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Dina Ahmed",
+      "role": "Tester",
+      "area": "Registration",
+      "workingIn": "Iteration",
+      "custom_1766503160857": [],
+      "f1766917553886": "158206 prepartion, 155013 BUG_022: system allow adding service with, 154884 preparation",
+      "f1766929340598": "2026-02-01T13:43"
+    },
+    {
+      "name": "Mostafa Mohamed",
+      "role": "Senior tester",
+      "area": "Registration",
+      "workingIn": "Iteration",
+      "isVacation": false,
+      "vacationEnd": "",
+      "f1766917553886": "155975 BUG_002: Results Date :result date didn't",
+      "f1766929340598": "2026-01-14T11:50"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Fatma Fayed",
+      "role": "Senior",
+      "area": [
+        "Registration"
+      ],
+      "workingIn": "Senior",
+      "f1766917553886": "158598 Preparation for US 154713, 155120 Alborg KSA - Users Configuration: Create, 156975 BD016:Review On CR 138837",
+      "f1766929340598": "2026-02-03T08:00"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Samir Mohamed Dagher",
+      "role": "Dev",
+      "area": [
+        "Registration"
+      ],
+      "workingIn": [
+        "support"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "",
+      "f1766929340598": ""
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "",
+      "name": "Mostafa Osama Abdelatif",
+      "role": "Dev",
+      "area": [
+        "Registration"
+      ],
+      "workingIn": [
+        "support"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "158154 Mismatch Between Total Loyalty Points in, 154202 Alnas Hospital - HL7 Orders: Auto",
+      "f1766929340598": "2026-02-02T16:02"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "2025-12-29",
+      "name": "Ibrahim Ahmed Abo El-Fadl Ahmed",
+      "role": "Dev",
+      "area": [
+        "Registration"
+      ],
+      "workingIn": [
+        "support"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "156154 Copy the Sample Barcode from Smou",
+      "f1766929340598": "2026-01-26T17:43"
+    },
+    {
+      "isVacation": false,
+      "vacationEnd": "2025-12-31",
+      "name": "Aya Saed Mustafa Mohamad Bayoumi",
+      "role": "Dev",
+      "area": [
+        "Registration"
+      ],
+      "workingIn": [
+        "Regression"
+      ],
+      "custom_1766584922755": "",
+      "f1766864203478": "",
+      "f1766864338124": "",
+      "f1766917553886": "158746 Batch Barcode Report doesn't follow Wateen, 158736 Processing Unit Short Name doesn't updated",
+      "f1766929340598": "2026-02-03T17:29"
     },
     {
       "isVacation": false,
@@ -945,37 +953,29 @@
       "f1766929340598": "2026-02-04T18:00"
     },
     {
+      "name": "Sameh Abdellatef",
+      "role": "Team Lead",
+      "area": "Team Leader",
+      "workingIn": "Team Leader",
       "isVacation": false,
-      "vacationEnd": "2026-01-01",
-      "name": "Adel Salah El-Din Mahmoud",
-      "role": "Dev",
-      "area": [
-        "front end"
-      ],
-      "workingIn": [],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
+      "vacationEnd": "",
       "f1766917553886": "",
       "f1766929340598": ""
     },
     {
       "isVacation": false,
       "vacationEnd": "",
-      "name": "Abdullah Helal",
-      "role": "Dev",
+      "name": "Mohamed Fawzy",
+      "role": "Team Lead",
       "area": [
-        "Integration",
-        "Mobile App"
+        "Team Leader"
       ],
       "workingIn": [
-        "Iteration"
+        "Team Leader"
       ],
-      "custom_1766584922755": "هنسحبه من الهوم فيزيت تدريجيا",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "155952 Update the privileges tree for Users, 155957 Add new column named visit date,, 156174 Wareed - Integration - Integration with",
-      "f1766929340598": "2026-02-04T18:00"
+      "custom_1766584922755": "",
+      "f1766917553886": "",
+      "f1766929340598": ""
     }
   ],
   "fields": [
@@ -1163,5 +1163,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-02-08T14:03:38.712Z"
+  "timestamp": "2026-02-08T14:04:55.311Z"
 }
