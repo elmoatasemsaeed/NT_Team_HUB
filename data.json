@@ -541,23 +541,6 @@
     {
       "isVacation": false,
       "vacationEnd": "",
-      "name": "Ahmed Hafez",
-      "role": "Dev",
-      "area": [
-        "Internal lab"
-      ],
-      "workingIn": [
-        "support"
-      ],
-      "custom_1766584922755": "",
-      "f1766864203478": "",
-      "f1766864338124": "",
-      "f1766917553886": "",
-      "f1766929340598": ""
-    },
-    {
-      "isVacation": false,
-      "vacationEnd": "",
       "name": "Samar Mahmoud Abdelraouf Algammal",
       "role": "Dev",
       "area": [
@@ -1163,5 +1146,5 @@
       "field": "area"
     }
   ],
-  "timestamp": "2026-03-16T09:11:22.017Z"
+  "timestamp": "2026-03-16T11:29:35.502Z"
 }
